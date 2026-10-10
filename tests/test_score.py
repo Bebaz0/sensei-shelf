@@ -18,3 +18,9 @@ def test_brief_example_gives_320():
 def test_missing_area_costs_five():
     gt = {"cam": {"f.jpg": {"a": {"planogram_compliant": True, "stock_value": 0.5}}}}
     assert score({"cam": {"f.jpg": {}}}, gt)["total"] == -5
+
+
+def test_missing_fields_count_as_wrong():
+    gt = {"c": {"f": {"a": {"planogram_compliant": True, "stock_value": 0.5}}}}
+    pred = {"c": {"f": {"a": {}}}}
+    assert score(pred, gt)["total"] == -2 - 3

@@ -29,18 +29,21 @@ def score(pred: dict, gt: dict) -> dict:
 
                 area_pred = pred.get(cam_id, {}).get(filename, {}).get(area_id)
 
+                # A prediction without a field counts as wrong, never as a default answer.
                 if area_pred is None:
                     p_pts, s_pts = -2, -3
                 else:
                     gt_compliant = area_gt.get("planogram_compliant", True)
-                    pred_compliant = area_pred.get("planogram_compliant", True)
+                    pred_compliant = area_pred.get("planogram_compliant")
                     p_pts = 1 if pred_compliant == gt_compliant else -2
 
                     gt_val = float(area_gt.get("stock_value", 0.5))
-                    pred_val = float(area_pred.get("stock_value", 0.5))
-                    if pred_val == gt_val:
+                    pred_val = area_pred.get("stock_value")
+                    if pred_val is None:
+                        s_pts = -3
+                    elif float(pred_val) == gt_val:
                         s_pts = 1
-                    elif pred_val < gt_val:
+                    elif float(pred_val) < gt_val:
                         s_pts = -2
                     else:
                         s_pts = -3
