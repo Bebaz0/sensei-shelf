@@ -143,3 +143,44 @@ def test_stacker_runs_on_synthetic_labels():
     planogram, labels, features, vlm = _synthetic()
     pred = stacker_lofo(labels, features, vlm, planogram)
     assert all(set(pred["6215"][fn]) == set(areas) for fn, areas in labels["6215"].items())
+
+
+def test_vectorised_matches_scalar_on_random_inputs():
+    import random
+    import numpy as np
+    from pipeline.decide.lofo import SOURCES, build_table, p_wrong_vec, stock_pred
+    rng = random.Random(1)
+    planogram = load_planogram()
+    cam = "6215"
+    labels, features, vlm = {cam: {}}, {cam: {}}, {cam: {}}
+    for f in range(3):
+        fn = f"{2000 + f}.jpg"
+        for area in planogram[cam]:
+            a = area["area_id"]
+            labels[cam].setdefault(fn, {})[a] = {"planogram_compliant": True, "stock_value": 0.5}
+            ans = lambda: rng.choice([None, {"stock": rng.choice(LEVELS), "fill_pct": rng.uniform(0, 100), "confidence": rng.random(),
+                                              "matches_expected": rng.random() < 0.7, "observed": rng.choice(["x", "empty", "occluded", "other"])}])
+            vlm[cam].setdefault(fn, {})[a] = {"gemini": ans(), "claude": ans()}
+            probs = lambda: (lambda w: {k: x / sum(w) for k, x in zip(LEVELS, w)})([rng.random() + 0.01 for _ in LEVELS])
+            features[cam].setdefault(fn, {})[a] = {k: v for k, v in {"knn": rng.choice([None, probs() | {"p_wrong": rng.random()}]),
+                                                                    "probe": rng.choice([None, probs()])}.items() if v}
+    params = {**PARAMS, "weights": {"gemini": 1.0, "claude": 0.5, "knn": 2.0, "probe": 1.5}, "knn_wrong_weight": 0.4, "stock_bias": 0.1}
+    t = build_table(labels, features, vlm, params["fill_sigma"])
+    idx = np.arange(len(t["T"]))
+    w = np.array([params["weights"][s] for s in SOURCES])
+    fb = np.array([params["fallback_p"][k] for k in LEVELS])
+    levels = stock_pred(t, idx, w, params["stock_bias"], fb)
+    pws = p_wrong_vec(t, idx, params["platt"]["a"], params["platt"]["b"], params["knn_wrong_weight"])
+    rows = decide_frames(sorted(set(t["frame"])), planogram, features, vlm, params)
+    flat = [r for fn in sorted(rows[cam]) for r in rows[cam][fn].values()]
+    assert [LEVELS.index(r["pred"]["stock_level"]) for r in flat] == list(levels)
+    assert np.allclose([r["p_wrong"] for r in flat], pws, atol=1e-3)
+
+
+def test_ablation_removes_a_source_from_p_wrong_too():
+    from pipeline.decide.lofo import restrict
+    feats = {"c": {"f": {"a": {"knn": {"p_wrong": 0.9}, "fill_ratio": 0.2}}}}
+    vlm = {"c": {"f": {"a": {"gemini": {"stock": "full"}, "claude": {"stock": "half"}}}}}
+    f2, v2 = restrict(feats, vlm, ("gemini",))
+    assert "knn" not in f2["c"]["f"]["a"] and f2["c"]["f"]["a"]["fill_ratio"] == 0.2
+    assert "claude" not in v2["c"]["f"]["a"] and "gemini" in v2["c"]["f"]["a"]

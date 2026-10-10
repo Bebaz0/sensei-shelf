@@ -48,7 +48,8 @@ def stacker_lofo(labels: dict, features: dict, vlm: dict, planogram: dict) -> di
     for i, frame in enumerate(frames):
         train = np.flatnonzero(frame_of != i)
         params = fit(t, train)
-        sub = to_submission(decide_frames([frame], planogram, features, vlm, params))
+        rows = decide_frames([frame], planogram, features, vlm, params)
+        sub = to_submission(rows)
         if len(set(t["T"][train])) > 1:
             lr = LogisticRegression(C=0.5, max_iter=2000).fit(X[train], t["T"][train])
             cam, fn = frame
@@ -57,8 +58,8 @@ def stacker_lofo(labels: dict, features: dict, vlm: dict, planogram: dict) -> di
                 level = stock_level(p, params["stock_bias"])
                 row = sub[cam][fn][keys[j][2]]
                 row["stock_level"], row["stock_value"] = level, STOCK_VALUES[level]
-                if level == "empty" and EMPTY_IS_COMPLIANT:
-                    row["planogram_compliant"] = True
+                # recompute compliance for the new level: both directions, not only "empty"
+                row["planogram_compliant"] = rows[cam][fn][keys[j][2]]["p_wrong"] <= 0.5 or (level == "empty" and EMPTY_IS_COMPLIANT)
         for cam, fs in sub.items():
             pred.setdefault(cam, {}).update(fs)
     return pred

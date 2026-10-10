@@ -14,6 +14,7 @@ frame with decide.decide_frames, then score all held-out predictions together. F
 import argparse
 import itertools
 import json
+import math
 from pathlib import Path
 
 import numpy as np
@@ -122,10 +123,23 @@ def fit(t: dict, idx: np.ndarray, allowed: tuple[str, ...] = SOURCES) -> dict:
     return params
 
 
+def restrict(features: dict, vlm: dict, allowed: tuple[str, ...]) -> tuple[dict, dict]:
+    """Drop every disallowed source from the inputs, so ablations change stock AND p_wrong (VLM, kNN)."""
+    def keep(area: dict | None, drop: tuple[str, ...]) -> dict | None:
+        return {k: v for k, v in area.items() if k not in drop} if isinstance(area, dict) else area
+    nest = lambda d, drop: {c: {f: {a: keep(v, drop) for a, v in areas.items()} for f, areas in fs.items()}
+                            for c, fs in d.items()}
+    return nest(features, tuple(s for s in ("knn", "probe") if s not in allowed)), \
+        nest(vlm, tuple(s for s in ("gemini", "claude") if s not in allowed))
+
+
 def lofo_predictions(
     labels: dict, features: dict, vlm: dict, planogram: dict, allowed: tuple[str, ...] = SOURCES,
+    probs: dict | None = None,
 ) -> dict:
-    """Submission-format predictions for every labelled frame, each made with parameters fitted without it."""
+    """Submission-format predictions for every labelled frame, each made with parameters fitted without it.
+    probs, if given, is filled with {(cam, filename, area_id): p_stock} for log-loss."""
+    features, vlm = restrict(features, vlm, allowed)
     t = build_table(labels, features, vlm, DEFAULT_PARAMS["fill_sigma"])
     frames = sorted(set(t["frame"]))
     if len(frames) < 2:
@@ -134,9 +148,10 @@ def lofo_predictions(
     pred: dict = {}
     for i, frame in enumerate(frames):
         params = fit(t, np.flatnonzero(frame_of != i), allowed)
-        if set(allowed) != set(SOURCES):
-            params["weights"] = {s: (w if s in allowed else 0.0) for s, w in params["weights"].items()}
-        sub = to_submission(decide_frames([frame], planogram, features, vlm, params))
+        rows = decide_frames([frame], planogram, features, vlm, params)
+        if probs is not None:
+            probs.update({(c, f, a): r["p_stock"] for c, fs in rows.items() for f, areas in fs.items() for a, r in areas.items()})
+        sub = to_submission(rows)
         for cam, fs in sub.items():
             pred.setdefault(cam, {}).update(fs)
     return pred
@@ -165,9 +180,17 @@ def _load(path: Path) -> dict:
     return json.loads(path.read_text()) if path.is_file() else {}
 
 
-def _row(name: str, pred: dict, gt: dict) -> str:
+def log_loss(probs: dict, gt: dict) -> float:
+    """Mean -log p(true level) over labelled areas: calibration of the stock probabilities, which the EV rule relies on."""
+    ll = [-math.log(max(probs[(c, f, a)][LEVEL_OF_VALUE[float(g["stock_value"])]], 1e-6))
+          for c, fs in gt.items() for f, areas in fs.items() for a, g in areas.items() if (c, f, a) in probs]
+    return sum(ll) / len(ll) if ll else float("nan")
+
+
+def _row(name: str, pred: dict, gt: dict, probs: dict | None = None) -> str:
     s, late = score_pred(pred, gt), score_pred(pred, late_subset(gt))
-    return (f"{name:16} total {s['total']:6} / {s['max']:<5} compliance {s['compliance']:5} stock {s['stock']:6}"
+    ll = f" logloss {log_loss(probs, gt):.3f}" if probs else ""
+    return (f"{name:16} total {s['total']:6} / {s['max']:<5} compliance {s['compliance']:5} stock {s['stock']:6}{ll}"
             f"  | late frames {late['total']:5} / {late['max']}")
 
 
@@ -198,4 +221,5 @@ if __name__ == "__main__":
             sets = {"prior only": (), **{f"{s} only": (s,) for s in SOURCES}, "vlm only": ("gemini", "claude"),
                     "no vlm": ("knn", "probe"), **sets}
         for name, allowed in sets.items():
-            print(_row(name, lofo_predictions(labels, features, vlm, planogram, allowed), labels))
+            probs: dict = {}
+            print(_row(name, lofo_predictions(labels, features, vlm, planogram, allowed, probs), labels, probs))
