@@ -24,7 +24,7 @@ Producer: `pipeline/crop` (A). Consumers: `pixel`, `vlm`, `decide`.
   "ctx": "out/crops/6215/1751052241_6215_2_ctx.png"
 }}}}
 ```
-`crop --images <dir> --append` merges new frames into the existing index and never deletes entries, so train crops stay available as the kNN and reference bank during a validation run. Without `--append` the index is rebuilt from the given folder. Crops are PNG. The warped crop is 256x256 with off-image pixels masked by `visible_fraction`; `ctx` is the axis-aligned crop padded 25% with the quad outline drawn.
+`crop --images <dir> --append` merges new frames into the existing index and never deletes entries, so train crops stay available as the kNN and reference bank during a validation run. Without `--append` the index is rebuilt from the given folder. Crops are PNG. `warp` is the quad flattened to 256x256 and saved as BGRA: alpha is 255 where the pixel comes from the image and 0 where the quad is off-image (those pixels are black). Read it with `cv2.IMREAD_UNCHANGED` to get the mask; a plain `cv2.imread` gives BGR. `visible_fraction` is the share of the warp with alpha > 0 (1.0 for all but the 5 partly off-image areas, down to 0.64). The warp does not keep the aspect ratio (a 260x80 quad becomes a square), which is fine for pixel features and kNN; the VLM should look at `ctx`. `ctx` is the axis-aligned BGR crop at camera resolution, padded 25% of the quad's bounding box per side, with the quad outlined in magenta (1 px) and grey (114) fill where it falls outside the image. Paths are relative to the repo root.
 
 ## features.json
 Producer: `pipeline/pixel` (B). Consumer: `decide`.

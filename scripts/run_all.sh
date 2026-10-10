@@ -10,6 +10,10 @@ cd "$(dirname "$0")/.."
 # Generated per run. Keep out/crops*, out/cache/ and out/frames_by_time/.
 rm -f out/run_frames.json out/features.json out/vlm.json out/results.json out/submission.json
 
+# Validation run on a fresh clone: build the train crops first, --append needs them as the kNN bank.
+if [ -n "${IMAGES:-}" ] && [ ! -s out/crops_index.json ]; then
+  python -m pipeline.crop.crop
+fi
 python -m pipeline.crop.crop ${IMAGES:+--images "$IMAGES" --append}
 python -m pipeline.pixel.features
 if [ -z "${NO_API:-}" ]; then

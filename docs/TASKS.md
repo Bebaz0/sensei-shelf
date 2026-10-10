@@ -4,10 +4,10 @@ Read `CLAUDE.md` and `docs/PLAN.md` first. Edit only the files your workstream o
 
 ## A: crop + common
 Owns `pipeline/crop/`, `pipeline/common/`, `scripts/`.
-- [ ] `planogram.py`, `images.py` implemented; recursive discovery skipping `__MACOSX` and `._*`; camera from folder, else nearest thumbnail (H2)
-- [ ] `crop.py`: PNG crops only; warp to 256x256 with validity mask for negative coordinates; context crop padded 25% with outline and border fill when off-image; `--append` merges into `out/crops_index.json` without deleting train entries; write `out/run_frames.json` (H2-3)
-- [ ] QA outputs from `crop.py`: an overlay of all labelled quads per frame, and a per-camera contact sheet of each area over time (H3)
-- [ ] `labels/calibration.txt` (A owns this file): the 30 shared calibration areas, spread over cameras and times of day (H3)
+- [x] `planogram.py`, `images.py` implemented; recursive discovery skipping `__MACOSX` and `._*`; camera from folder, else nearest thumbnail (H2)
+- [x] `crop.py`: PNG crops only; warp to 256x256 with validity mask for negative coordinates; context crop padded 25% with outline and border fill when off-image; `--append` merges into `out/crops_index.json` without deleting train entries; write `out/run_frames.json` (H2-3)
+- [x] QA outputs from `crop.py`: an overlay of all labelled quads per frame, and a per-camera contact sheet of each area over time (H3)
+- [x] `labels/calibration.txt` (A owns this file): the 30 shared calibration areas, spread over cameras and times of day (H3)
 - [ ] `scripts/run_all.sh` (`IMAGES`, `NO_API`, stale-file cleanup, conditional scoring) and `scripts/sync_dashboard.sh` (small JPG demo) are written; keep them working as the stages land
 - [ ] Fresh-clone rehearsal on a copied folder with flattened or renamed files (H12-18)
 
@@ -28,7 +28,7 @@ Owns `pipeline/vlm/`, `data/products_en.json`.
 - [ ] `data/products_en.json`: 94 products, PT -> EN name, loose vs package, short visual hint; reviewed by a person (H2)
 - [ ] Gemini client: structured JSON output, temperature 0, sha256 disk cache in `out/cache/vlm/`, thread pool (16), retry with backoff; pin the model id in `docs/DECISIONS.md` (H3)
 - [ ] `--no-api` flag on `ask.py`: skip the call and write `null` per provider (H3)
-- [ ] Prompt v1: closed-set comparative (context crop + warp crop, reference crop, candidates = products on that camera); test on ~30 labelled areas (H5)
+- [ ] Prompt v1: closed-set comparative (context crop + warp crop, reference crop from a frame of that area labelled compliant, never the earliest frame; candidates = products on that camera); test on ~30 labelled areas (H5)
 - [ ] `ask.py` reads `out/run_frames.json` and supports `--all` (H3)
 - [ ] Full cached run over all frames (H6); Claude client with the same interface (H7)
 - [ ] Iterate prompts from error lists; bump `PROMPT_VERSION` on every change
