@@ -104,6 +104,8 @@ def run(
             if (img.shape[1], img.shape[0]) != FRAME_SIZE:  # planogram coordinates assume FRAME_SIZE
                 print(f"WARNING {camera_id}/{filename} is {img.shape[1]}x{img.shape[0]}, resized to {FRAME_SIZE}")
                 img = cv2.resize(img, FRAME_SIZE, interpolation=cv2.INTER_AREA)
+            if camera_id not in planogram:
+                print(f"WARNING camera {camera_id} is not in the planogram, no areas cropped for {filename}")
             entries = crop_frame(img, camera_id, filename, planogram.get(camera_id, []), out_dir)
         except Exception as error:  # one bad frame must not stop the run
             failed += 1
