@@ -24,6 +24,7 @@ from pipeline.common.config import (
 from pipeline.common.planogram import area_polygon, load_planogram
 from pipeline.crop.qa import frame_time
 
+PROPOSALS = ROOT / "labels" / "proposals" / "claude.json"
 STOCK_KEY = {ord("1"): "empty", ord("2"): "half", ord("3"): "full"}
 WINDOW = "label_tool"
 
@@ -148,6 +149,7 @@ def build_ui(
     header: str,
     status: str,
     flagged_wrong: bool,
+    proposal: str = "",
 ) -> np.ndarray:
     left = _fit(frame, 900, 506)
     panel_w = 360
@@ -174,6 +176,8 @@ def build_ui(
         if existing_label.get("planogram_compliant") is False:
             tag += f" + WRONG PRODUCT {existing_label.get('observed_product_id', '?')}"
         _text(header_strip, tag, (10, 38), 0.45, (120, 220, 120))
+    if proposal:
+        _text(header_strip, proposal, (420, 38), 0.45, (255, 220, 120))
     _text(status_strip, status, (10, 20), 0.44)
     screen = np.vstack([header_strip, main, status_strip])
     if flagged_wrong:
@@ -216,6 +220,14 @@ def product_picker(products: list[dict], screen: np.ndarray) -> str | None:
             query, page = query + chr(k), 0
 
 
+def _proposal_text(p: dict | None) -> str:
+    """One-line view of Claude's proposal (labels/proposals/claude.json) to confirm or correct."""
+    if not p:
+        return ""
+    wrong = "" if p["planogram_compliant"] else " + WRONG PRODUCT"
+    return f"claude proposes: {p['stock_level']}{wrong} ({p['confidence']}/100)"
+
+
 def run(name: str, from_file: Path | None, out_path: Path | None, review: bool = False) -> None:
     planogram = load_planogram(PLANOGRAM)
     index = json.loads(CROPS_INDEX.read_text()) if CROPS_INDEX.exists() else {}
@@ -223,6 +235,7 @@ def run(name: str, from_file: Path | None, out_path: Path | None, review: bool =
     frames = [(cam, f) for cam in sorted(index) for f in sorted(index[cam])] if index else None
     worklist = load_worklist(from_file, RUN_FRAMES, planogram, frames)
     names_en = json.loads(PRODUCTS_EN.read_text()) if PRODUCTS_EN.exists() else {}
+    proposals = json.loads(PROPOSALS.read_text()) if PROPOSALS.exists() else {}
     out_path = out_path or (ROOT / "labels" / f"{name}.json")
     labels = json.loads(out_path.read_text()) if out_path.exists() else {}
     done = sum(1 for (c, f, a) in worklist if already_labelled(labels, c, f, a))
@@ -266,6 +279,7 @@ def run(name: str, from_file: Path | None, out_path: Path | None, review: bool =
             header,
             status,
             flagged_wrong,
+            _proposal_text(proposals.get(cam, {}).get(filename, {}).get(area_id)),
         )
         cv2.imshow(WINDOW, screen)
         k = cv2.waitKey(0) & 0xFF
