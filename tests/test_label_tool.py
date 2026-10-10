@@ -3,7 +3,7 @@ import json
 from pathlib import Path
 
 from pipeline.eval.label_tool import (
-    already_labelled, load_worklist, write_label, _unique_products,
+    all_products, already_labelled, filter_products, load_worklist, write_label, _unique_products,
 )
 
 
@@ -47,3 +47,18 @@ def test_unique_products_deduplicates_by_id():
     ]
     out = _unique_products(areas)
     assert [p["product_id"] for p in out] == ["p1", "p2"]
+
+
+def test_full_mode_uses_given_frames_over_run_frames(tmp_path):
+    planogram = {"6215": [{"area_id": "6215_1", "product_id": "p", "product_name": "x", "image_coordinates": {}}]}
+    wl = load_worklist(None, tmp_path / "missing.json", planogram, frames=[("6215", "z.jpg")])
+    assert wl == [("6215", "z.jpg", "6215_1")]
+
+
+def test_picker_lists_every_product_this_camera_first_and_filters():
+    mk = lambda i, n: {"area_id": f"a{i}", "product_id": str(i), "product_name": n, "image_coordinates": {}}
+    planogram = {"1": [mk(1, "BANANA KG"), mk(2, "MACA GALA KG")], "2": [mk(2, "MACA GALA KG"), mk(3, "LARANJA KG")]}
+    products = all_products(planogram, "2", {"3": {"name_en": "Orange"}})
+    assert [p["product_id"] for p in products] == ["2", "3", "1"]  # camera 2 first, then the rest, no duplicates
+    assert [p["product_id"] for p in filter_products(products, "orange")] == ["3"]
+    assert [p["product_id"] for p in filter_products(products, "kg ban")] == ["1"]

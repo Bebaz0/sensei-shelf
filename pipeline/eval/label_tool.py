@@ -3,7 +3,8 @@
 Interactive labelling tool. Opens a cv2 window per area with the full frame (quad highlighted),
 the context crop, and the earliest-frame crop of the same area for reference. Keys:
   1/2/3  stock empty/half/full (writes the label and advances)
-  X      wrong product -> product picker; press digit to pick, ESC to cancel; then 1/2/3 for stock
+  X      wrong product -> picker over ALL products: type to filter (English or Portuguese name),
+         digit = pick, , and . = page, Backspace = erase, ESC = cancel; then 1/2/3 for stock
   U      unsure, skip without writing
   n      next area (no write)
   p      previous area (no write)
@@ -18,7 +19,7 @@ import cv2
 import numpy as np
 
 from pipeline.common.config import (
-    CALIBRATION, CROPS_INDEX, IMAGES_DIR, PLANOGRAM, ROOT, RUN_FRAMES, STOCK_VALUES,
+    CALIBRATION, CROPS_INDEX, IMAGES_DIR, PLANOGRAM, PRODUCTS_EN, ROOT, RUN_FRAMES, STOCK_VALUES,
 )
 from pipeline.common.planogram import area_polygon, load_planogram
 from pipeline.crop.qa import frame_time
@@ -27,11 +28,14 @@ STOCK_KEY = {ord("1"): "empty", ord("2"): "half", ord("3"): "full"}
 WINDOW = "label_tool"
 
 
-def load_worklist(from_file: Path | None, run_frames_path: Path, planogram: dict) -> list[tuple[str, str, str]]:
+def load_worklist(
+    from_file: Path | None, run_frames_path: Path, planogram: dict, frames: list[tuple[str, str]] | None = None,
+) -> list[tuple[str, str, str]]:
     """Return list of (cam, filename, area_id) to iterate.
 
     from_file set: parse `<cam> <file> <area_id>` lines (comments after # ignored).
-    from_file None: full mode, every area of every frame in run_frames.json.
+    from_file None: full mode, every area of every frame in `frames` (all train frames of the crops
+    index when given), else of every frame in run_frames.json.
     """
     if from_file:
         items = []
@@ -44,7 +48,8 @@ def load_worklist(from_file: Path | None, run_frames_path: Path, planogram: dict
                 continue
             items.append((parts[0], parts[1], parts[2]))
         return items
-    frames = json.loads(run_frames_path.read_text())
+    if frames is None:
+        frames = json.loads(run_frames_path.read_text())
     out = []
     for cam, filename in frames:
         for area in planogram.get(cam, []):
@@ -69,6 +74,22 @@ def _unique_products(areas: list[dict]) -> list[dict]:
             seen.add(a["product_id"])
             out.append({"product_id": a["product_id"], "product_name": a["product_name"]})
     return out
+
+
+def all_products(planogram: dict, cam: str, names_en: dict) -> list[dict]:
+    """Every product of every camera, this camera's first. Each has an English name for display and search."""
+    here = _unique_products(planogram.get(cam, []))
+    seen = {p["product_id"] for p in here}
+    rest = [p for c, areas in sorted(planogram.items()) if c != cam for p in _unique_products(areas)
+            if p["product_id"] not in seen and not seen.add(p["product_id"])]
+    products = here + sorted(rest, key=lambda p: p["product_name"])
+    return [{**p, "name_en": names_en.get(p["product_id"], {}).get("name_en", "")} for p in products]
+
+
+def filter_products(products: list[dict], query: str) -> list[dict]:
+    """Case-insensitive match of every word of the query against the Portuguese and English name."""
+    words = query.lower().split()
+    return [p for p in products if all(w in f"{p['product_name']} {p['name_en']}".lower() for w in words)]
 
 
 def _load_frame(cam: str, filename: str) -> np.ndarray | None:
@@ -160,30 +181,48 @@ def build_ui(
     return screen
 
 
-def product_picker(camera_products: list[dict], screen: np.ndarray) -> str | None:
-    """Overlay a numbered list of products; return the picked product_id, or None if cancelled."""
-    overlay = screen.copy()
-    cv2.rectangle(overlay, (40, 60), (screen.shape[1] - 40, screen.shape[0] - 60), (0, 0, 0), -1)
-    _text(overlay, "wrong product - pick observed (digit = pick, ESC = cancel):", (60, 100), 0.6)
-    for i, p in enumerate(camera_products[:9]):
-        _text(overlay, f"{i + 1}) {p['product_name'][:60]}", (60, 150 + i * 32), 0.55)
-    if len(camera_products) > 9:
-        _text(overlay, f"...({len(camera_products) - 9} more products not shown)", (60, 150 + 9 * 32), 0.5)
-    cv2.imshow(WINDOW, overlay)
+PAGE = 9
+
+
+def product_picker(products: list[dict], screen: np.ndarray) -> str | None:
+    """Overlay a searchable, paged list of all products; return the picked product_id, or None if cancelled."""
+    query, page = "", 0
     while True:
+        shown = filter_products(products, query)
+        pages = max(1, -(-len(shown) // PAGE))
+        page = min(page, pages - 1)
+        rows = shown[page * PAGE:(page + 1) * PAGE]
+        overlay = screen.copy()
+        cv2.rectangle(overlay, (40, 60), (screen.shape[1] - 40, screen.shape[0] - 60), (0, 0, 0), -1)
+        _text(overlay, "wrong product - type to search, digit = pick, , . = page, ESC = cancel", (60, 90), 0.55)
+        _text(overlay, f"search: {query}_   ({len(shown)} products, page {page + 1}/{pages})", (60, 122), 0.6, (120, 220, 255))
+        for i, p in enumerate(rows):
+            en = f"  [{p['name_en']}]" if p["name_en"] else ""
+            _text(overlay, f"{i + 1}) {p['product_name']}{en}"[:95], (60, 160 + i * 32), 0.55)
+        cv2.imshow(WINDOW, overlay)
         k = cv2.waitKey(0) & 0xFF
         if k == 27:
             return None
-        if 49 <= k <= 57:
-            idx = k - 49
-            if idx < len(camera_products):
-                return camera_products[idx]["product_id"]
+        if ord("1") <= k <= ord("9"):
+            if k - ord("1") < len(rows):
+                return rows[k - ord("1")]["product_id"]
+        elif k == ord("."):
+            page = min(page + 1, pages - 1)
+        elif k == ord(","):
+            page = max(page - 1, 0)
+        elif k in (8, 127):
+            query, page = query[:-1], 0
+        elif 32 <= k < 127:
+            query, page = query + chr(k), 0
 
 
 def run(name: str, from_file: Path | None, out_path: Path | None) -> None:
     planogram = load_planogram(PLANOGRAM)
     index = json.loads(CROPS_INDEX.read_text()) if CROPS_INDEX.exists() else {}
-    worklist = load_worklist(from_file, RUN_FRAMES, planogram)
+    # Full mode covers every train frame of the crops index, not whatever the last run left in run_frames.json.
+    frames = [(cam, f) for cam in sorted(index) for f in sorted(index[cam])] if index else None
+    worklist = load_worklist(from_file, RUN_FRAMES, planogram, frames)
+    names_en = json.loads(PRODUCTS_EN.read_text()) if PRODUCTS_EN.exists() else {}
     out_path = out_path or (ROOT / "labels" / f"{name}.json")
     labels = json.loads(out_path.read_text()) if out_path.exists() else {}
     done = sum(1 for (c, f, a) in worklist if already_labelled(labels, c, f, a))
@@ -244,7 +283,7 @@ def run(name: str, from_file: Path | None, out_path: Path | None) -> None:
             if flagged_wrong:
                 flagged_wrong, observed_pid = False, None
             else:
-                picked = product_picker(_unique_products(areas), screen)
+                picked = product_picker(all_products(planogram, cam, names_en), screen)
                 if picked:
                     flagged_wrong, observed_pid = True, picked
             continue
