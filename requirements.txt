@@ -1,3 +1,8 @@
 opencv-python
 numpy
 pillow
+scikit-learn
+google-genai
+anthropic
+python-dotenv
+pytest
