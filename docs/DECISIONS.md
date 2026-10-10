@@ -44,9 +44,7 @@ Format: `YYYY-MM-DD HH:MM | who | decision | why | score delta`
 2026-10-10 | V | Cache key also covers the system prompt and the answer schema, besides provider, model, prompt version, images and text | an edited prompt can never reuse an old answer, even if `PROMPT_VERSION` was not bumped | n/a
 2026-10-10 | V | `run_all.sh` with `NO_API=1` now runs `ask.py --no-api`, so `vlm.json` always exists with null providers | matches the contract; decide has one code path | n/a
 2026-10-10 | V | `data/products_en.json` written by Claude (94 products: English name, unit, visual hint); NOT yet reviewed by a person | task requires a human review | pending
-||||||| 57f688f
 2026-10-10 | B | Wrote minimal `pipeline/eval/label_tool.py` to unblock the 30-area calibration (ownership stays with D; D extends from here). No EN product names until V publishes `data/products_en.json`. Keys 1/2/3/X/U/n/p/q; incremental write to `labels/<name>.json`; crash-safe. CLI: `python -m pipeline.eval.label_tool --name <name> [--from labels/calibration.txt]` | H3 label tool was still a NotImplementedError skeleton | n/a
-||||||| 57f688f
 2026-10-10 | C | Mentor answer: an empty area is compliant (`EMPTY_IS_COMPLIANT = True` stays) | asked the mentors | n/a
 2026-10-10 | C | Mentor answer: stock empty = 0-10% covered, half = 10-50%, full > 50%. `docs/LABELING.md` updated; labels made with the old 30-70% rubric must be rechecked (half vs full); V maps `fill_pct` with 10/50 | asked the mentors | n/a
 2026-10-10 | C | Fitted decide parameters (Platt, v1 weights, bias) live in the committed `pipeline/decide/params.json`, not in `out/` | `out/` is gitignored and the validation run starts from a `submit-safe` checkout | n/a
@@ -55,5 +53,4 @@ Format: `YYYY-MM-DD HH:MM | who | decision | why | score delta`
 2026-10-10 | C | `features.json` gains an optional `probe` field (stock probs from the embedding probe); `results.json` `reason`, `observed_product_id` and `low_confidence` semantics written in CONTRACTS.md | decide and dashboard need them | n/a
 2026-10-10 | C | Stacker experiment = `pipeline/decide/fuse.py` (multinomial LR on source probs, pixel features, previous-frame stock); not used by `decide` unless it beats v1 LOFO | adopt only with a clear LOFO gain | pending
 2026-10-10 | integration | Prompt v2 uses mentor thresholds (empty 0-10%, half 10-50%, full >50%); features ignore warp alpha 0 and use a compliant labelled frame as hist_dist_ref; scorer strict on missing fields; labels merge = majority, tie lowest; ablation drops a source from p_wrong too; LOFO prints log-loss | report from the team lead | n/a
-||||||| 8dd989b
 2026-10-10 | B | Wrote minimal `pipeline/eval/label_tool.py` to unblock the 30-area calibration (ownership stays with D; D extends from here). Keys 1/2/3/X/U/n/p/q; incremental write to `labels/<name>.json`; crash-safe. CLI: `python -m pipeline.eval.label_tool --name <name> [--from labels/calibration.txt]`. Follow-up for D: wire `data/products_en.json` into the picker to show PT+EN names | H3 label tool was still a NotImplementedError skeleton | n/a
