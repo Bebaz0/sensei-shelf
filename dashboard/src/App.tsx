@@ -3,7 +3,7 @@ import { loadResults, type Results } from './lib/results'
 import { type Cell, cellsOf, count, type Filter } from './lib/status'
 import AreaDetail from './sections/AreaDetail'
 import CameraList from './sections/CameraList'
-import CameraView from './sections/CameraView'
+import CameraView, { type View } from './sections/CameraView'
 import Header from './sections/Header'
 import Kpis from './sections/Kpis'
 import TaskPanel, { type Tab } from './sections/TaskPanel'
@@ -19,6 +19,15 @@ const toggle = (flags: Flags, key: string): Flags => {
   return next
 }
 
+// Last photo/schema choice, so a reload keeps it like the theme does.
+function readView(): View {
+  try {
+    return localStorage.getItem('view') === 'schema' ? 'schema' : 'photo'
+  } catch {
+    return 'photo'
+  }
+}
+
 function App() {
   const [data, setData] = useState<Results | null>(null)
   const [error, setError] = useState<string | null>(null)
@@ -26,9 +35,18 @@ function App() {
   const [frame, setFrame] = useState<number | null>(null) // capture index, null = latest
   const [sel, setSel] = useState<string | null>(null) // selected area_id
   const [filter, setFilter] = useState<Filter>('all')
+  const [view, setView] = useState<View>(readView) // photo or schema, kept across cameras and captures until the user toggles it
   const [tab, setTab] = useState<Tab>('tasks')
   const [resolved, setResolved] = useState<Flags>({}) // resolved this shift, local only for now
   const [flags, setFlags] = useState<Flags>({}) // reported as wrong detection, local only for now
+
+  useEffect(() => {
+    try {
+      localStorage.setItem('view', view)
+    } catch {
+      // storage blocked: view just won't persist across reloads
+    }
+  }, [view])
 
   useEffect(() => {
     loadResults().then(setData, (e: Error) => setError(e.message))
@@ -68,7 +86,7 @@ function App() {
         <CameraList cams={cams} active={cam} onPick={pickCam} />
 
         <section aria-label="Selected camera" className="flex min-w-0 flex-col gap-4">
-          <CameraView key={`${cam}-${capture.ts}`} cam={cam} capture={capture} cells={cells} sel={sel} filter={filter} onSelect={setSel} />
+          <CameraView cam={cam} capture={capture} view={view} onView={setView} cells={cells} sel={sel} filter={filter} onSelect={setSel} />
           <Timeline camera={camera} frame={fi} done={resolved} onPick={setFrame} />
         </section>
 
