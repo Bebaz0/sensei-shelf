@@ -8,7 +8,7 @@ set -euo pipefail
 cd "$(dirname "$0")/.."
 
 # Generated per run. Keep out/crops*, out/cache/ and out/frames_by_time/.
-rm -f out/run_frames.json out/features.json out/vlm.json out/results.json out/submission.json
+rm -f out/run_frames.json out/features.json out/vlm.json out/vlm_queue.txt out/results.json out/submission.json
 
 # Validation run on a fresh clone: build the train crops first, --append needs them as the kNN bank.
 if [ -n "${IMAGES:-}" ] && [ ! -s out/crops_index.json ]; then
@@ -16,7 +16,9 @@ if [ -n "${IMAGES:-}" ] && [ ! -s out/crops_index.json ]; then
 fi
 python -m pipeline.crop.crop ${IMAGES:+--images "$IMAGES" --append}
 python -m pipeline.pixel.features
-python -m pipeline.vlm.ask ${NO_API:+--no-api}
+# Confidence gate: decide without the VLM, then ask the VLM only about the low-confidence areas, then decide again.
+python -m pipeline.decide.decide ${IMAGES:+--images "$IMAGES"} --queue out/vlm_queue.txt
+python -m pipeline.vlm.ask ${NO_API:+--no-api} --areas out/vlm_queue.txt
 python -m pipeline.decide.decide ${IMAGES:+--images "$IMAGES"}
 
 if [ -z "${IMAGES:-}" ] && [ -s labels/dev.json ] && [ "$(tr -d ' \n' < labels/dev.json)" != "{}" ]; then

@@ -9,6 +9,7 @@ frame with decide.decide_frames, then score all held-out predictions together. F
 
   python -m pipeline.decide.lofo                 # LOFO report
   python -m pipeline.decide.lofo --ablation      # one row per source set (pitch table)
+  python -m pipeline.decide.lofo --gate          # no-VLM LOFO split into confident vs queued-for-VLM areas
   python -m pipeline.decide.lofo --fit           # fit on every label, write pipeline/decide/params.json
 """
 import argparse
@@ -135,10 +136,10 @@ def restrict(features: dict, vlm: dict, allowed: tuple[str, ...]) -> tuple[dict,
 
 def lofo_predictions(
     labels: dict, features: dict, vlm: dict, planogram: dict, allowed: tuple[str, ...] = SOURCES,
-    probs: dict | None = None,
+    probs: dict | None = None, low: dict | None = None,
 ) -> dict:
     """Submission-format predictions for every labelled frame, each made with parameters fitted without it.
-    probs, if given, is filled with {(cam, filename, area_id): p_stock} for log-loss."""
+    probs, if given, is filled with {(cam, filename, area_id): p_stock} for log-loss; low with the low_confidence flag."""
     features, vlm = restrict(features, vlm, allowed)
     t = build_table(labels, features, vlm, DEFAULT_PARAMS["fill_sigma"])
     frames = sorted(set(t["frame"]))
@@ -151,10 +152,23 @@ def lofo_predictions(
         rows = decide_frames([frame], planogram, features, vlm, params)
         if probs is not None:
             probs.update({(c, f, a): r["p_stock"] for c, fs in rows.items() for f, areas in fs.items() for a, r in areas.items()})
+        if low is not None:
+            low.update({(c, f, a): r["low_confidence"] for c, fs in rows.items() for f, areas in fs.items() for a, r in areas.items()})
         sub = to_submission(rows)
         for cam, fs in sub.items():
             pred.setdefault(cam, {}).update(fs)
     return pred
+
+
+def gate_report(pred: dict, gt: dict, low: dict) -> str:
+    """Points per area of the no-VLM predictions on confident vs queued areas: the gate is good when queued is clearly lower."""
+    lines = []
+    for name, want in (("confident", False), ("queued", True)):
+        sub = {c: {f: {a: g for a, g in areas.items() if low.get((c, f, a)) == want} for f, areas in fs.items()} for c, fs in gt.items()}
+        s = score_pred(pred, sub)
+        per = s["total"] / s["areas"] if s["areas"] else float("nan")
+        lines.append(f"{name:10} {s['areas']:5} areas  {per:+.2f} pts/area  compliance {s['compliance']:5} stock {s['stock']:6}")
+    return "\n".join(lines)
 
 
 def score_pred(pred: dict, gt: dict) -> dict:
@@ -202,6 +216,7 @@ if __name__ == "__main__":
     ap.add_argument("--planogram", type=Path, default=PLANOGRAM)
     ap.add_argument("--ablation", action="store_true", help="one LOFO row per source set")
     ap.add_argument("--fit", action="store_true", help="fit on every label and write params.json")
+    ap.add_argument("--gate", action="store_true", help="no-VLM LOFO split into confident vs queued areas")
     ap.add_argument("--params", type=Path, default=PARAMS_PATH)
     args = ap.parse_args()
 
@@ -215,6 +230,10 @@ if __name__ == "__main__":
         params = fit(t, np.arange(len(t["T"])))
         args.params.write_text(json.dumps(params, indent=1) + "\n")
         print(f"wrote {args.params}: {json.dumps(params)}")
+    elif args.gate:
+        low: dict = {}
+        pred = lofo_predictions(labels, features, vlm, planogram, ("knn", "probe"), low=low)
+        print(gate_report(pred, labels, low))
     else:
         sets = {"v1 (all)": SOURCES}
         if args.ablation:

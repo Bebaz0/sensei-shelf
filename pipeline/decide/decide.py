@@ -32,6 +32,9 @@ DEFAULT_PARAMS = {
     "knn_wrong_weight": 0.5,  # share of the same-area kNN p_wrong in the final p_wrong
     "fill_sigma": 10.0,  # VLM fill_pct uncertainty, in percentage points
     "stock_bias": STOCK_BIAS,
+    # Confidence gate: an area below min_top_p, with p_wrong inside wrong_band or with no source is low_confidence
+    # and goes to the VLM (decide --queue). Thresholds are hand-set until queued areas have VLM answers to tune on.
+    "gate": {"min_top_p": 0.6, "wrong_band": [0.3, 0.7]},
 }
 
 # Mentor thresholds on covered share: empty 0-10%, half 10-50%, full above 50%.
@@ -166,18 +169,20 @@ def decide_area(area: dict, features: dict | None, vlm: dict | None, params: dic
         pw = p_wrong(features, vlm, params)
         compliant = is_compliant(pw) or (level == "empty" and EMPTY_IS_COMPLIANT)
         votes = ", ".join(f"{n}: {max(p, key=p.get)}" for n, p in sources.items()) or "no sources, prior"
+        gate = params["gate"]
+        low = not sources or max(p_stock.values()) < gate["min_top_p"] or gate["wrong_band"][0] < pw < gate["wrong_band"][1]
         observed = _observed(vlm)
         reason = f"{votes}; p_wrong {pw:.2f}"
     except Exception as e:  # noqa: BLE001  a crash here must never drop the area
         p_stock = _normalise(params["fallback_p"])
         level, pw, compliant, observed = stock_level(p_stock, params["stock_bias"]), 0.0, True, None
-        reason = f"fallback ({type(e).__name__}: {e})"
+        reason, low = f"fallback ({type(e).__name__}: {e})", True
     return {
         "pred": {"planogram_compliant": compliant, "stock_level": level, "stock_value": STOCK_VALUES[level]},
         "p_stock": {k: round(v, 4) for k, v in p_stock.items()},
         "p_wrong": round(pw, 4),
         "observed_product_id": observed if not compliant else None,
-        "low_confidence": max(p_stock.values()) < 0.6 or 0.3 < pw < 0.7,
+        "low_confidence": low,
         "reason": reason,
     }
 
@@ -217,6 +222,15 @@ def decide_frames(
     return results
 
 
+def write_queue(results: dict, path: Path) -> int:
+    """Low-confidence areas as `camera_id filename area_id` lines (format read by vlm.ask --areas). Returns the count."""
+    lines = [f"{c} {f} {a}" for c, fs in results.items() for f, areas in fs.items()
+             for a, row in areas.items() if row["low_confidence"]]
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text("".join(f"{line}\n" for line in lines))
+    return len(lines)
+
+
 def to_submission(results: dict) -> dict:
     """Official format: only planogram_compliant, stock_level, stock_value per area."""
     return {
@@ -228,6 +242,7 @@ def to_submission(results: dict) -> dict:
 def run(
     planogram_path: Path, features_path: Path, vlm_path: Path, results_path: Path, submission_path: Path,
     run_frames_path: Path = RUN_FRAMES, images_dir: Path = IMAGES_DIR, crops_index_path: Path = CROPS_INDEX,
+    queue_path: Path | None = None,
 ) -> None:
     planogram = load_planogram(planogram_path)
     frames = run_frames(run_frames_path, images_dir)
@@ -250,6 +265,8 @@ def run(
     n_fallback = sum("fallback" in r["reason"] or "no sources" in r["reason"]
                      for fs in results.values() for areas in fs.values() for r in areas.values())
     print(f"decide: {len(frames)} frames, {written} areas ({n_fallback} on the prior) -> {submission_path}")
+    if queue_path:
+        print(f"decide: {write_queue(results, queue_path)}/{written} low-confidence areas -> {queue_path}")
 
 
 if __name__ == "__main__":
@@ -262,5 +279,7 @@ if __name__ == "__main__":
     ap.add_argument("--run-frames", type=Path, default=RUN_FRAMES)
     ap.add_argument("--images", type=Path, default=IMAGES_DIR, help="frames to decide when run_frames.json is missing")
     ap.add_argument("--index", type=Path, default=CROPS_INDEX)
+    ap.add_argument("--queue", type=Path, help="also write the low-confidence areas here, for vlm.ask --areas")
     args = ap.parse_args()
-    run(args.planogram, args.features, args.vlm, args.results, args.submission, args.run_frames, args.images, args.index)
+    run(args.planogram, args.features, args.vlm, args.results, args.submission, args.run_frames, args.images, args.index,
+        args.queue)

@@ -5,8 +5,9 @@ import json
 from pipeline.common.planogram import load_planogram
 from pipeline.decide.decide import (
     DEFAULT_PARAMS, LEVELS, decide_area, decide_frames, is_compliant, p_wrong, stock_level, to_submission,
-    vlm_stock_probs,
+    vlm_stock_probs, write_queue,
 )
+from pipeline.vlm.ask import read_area_list
 
 PARAMS = json.loads(json.dumps(DEFAULT_PARAMS)) | {"stock_bias": 0.0}
 GAIN = {(t, t): 1 for t in LEVELS} | {
@@ -184,3 +185,16 @@ def test_ablation_removes_a_source_from_p_wrong_too():
     f2, v2 = restrict(feats, vlm, ("gemini",))
     assert "knn" not in f2["c"]["f"]["a"] and f2["c"]["f"]["a"]["fill_ratio"] == 0.2
     assert "claude" not in v2["c"]["f"]["a"] and "gemini" in v2["c"]["f"]["a"]
+
+
+def test_gate_queues_only_unsure_areas(tmp_path):
+    sure = {"knn": {"empty": 0.0, "half": 0.05, "full": 0.95, "p_wrong": 0.02}}
+    split = {"knn": {"empty": 0.3, "half": 0.4, "full": 0.3, "p_wrong": 0.02}}
+    results = {"6215": {"1.jpg": {
+        "6215_1": decide_area({}, sure, None, PARAMS),
+        "6215_2": decide_area({}, split, None, PARAMS),
+        "6215_3": decide_area({}, None, None, PARAMS),  # no source at all
+    }}}
+    path = tmp_path / "queue.txt"
+    assert write_queue(results, path) == 2
+    assert read_area_list(path) == {("6215", "1.jpg", "6215_2"), ("6215", "1.jpg", "6215_3")}
