@@ -38,11 +38,12 @@ Owns `pipeline/vlm/`, `data/products_en.json`.
 ## C: decide + contracts
 Owns `pipeline/decide/`, `CONTRACTS.md`, `docs/`, mentor questions, `submit-safe` tag.
 - [ ] Ask the mentors the open questions; record answers in `docs/DECISIONS.md` (H0)
-- [ ] `decide.py` prior-only baseline writing a valid `submission.json` for all frames with the fallback (H3, v0): areas from `planogram.json`, frames from `out/run_frames.json` or the `--images` folder; tag `submit-safe`
-- [ ] EV-argmax stock rule, 0.5 compliance threshold, `STOCK_BIAS`, `EMPTY_IS_COMPLIANT` in `config.py` (H3)
-- [ ] Compliance: Platt scaling of the VLM `matches_expected` answer (H6)
-- [ ] v1 stock probabilities = hand-tuned weighted average of VLM, embedding probe and kNN, then the EV rule (H6)
-- [ ] Experiment: learned stacker (`fuse.py`, multinomial logistic regression, leave-one-frame-out CV); adopt only with a clear LOFO gain over v1; `STOCK_BIAS` sweep; ablation table for the pitch (H8)
+- [x] `decide.py` prior-only baseline writing a valid `submission.json` for all frames with the fallback (H3, v0): areas from `planogram.json`, frames from `out/run_frames.json` or the `--images` folder; tag `submit-safe`
+- [x] EV-argmax stock rule, 0.5 compliance threshold, `STOCK_BIAS` and `EMPTY_IS_COMPLIANT` (already in `config.py`), fitted parameters in the committed `pipeline/decide/params.json` (H3)
+- [x] Compliance: Platt scaling of the VLM `matches_expected` answer (H6)
+- [x] v1 stock probabilities = hand-tuned weighted average of VLM, embedding probe and kNN, then the EV rule (H6)
+- [x] Experiment: learned stacker (`fuse.py`, multinomial logistic regression, leave-one-frame-out CV); adopt only with a clear LOFO gain over v1; `STOCK_BIAS` sweep; ablation table for the pitch (H8). Code done; run `python -m pipeline.decide.lofo --ablation` and `python -m pipeline.decide.fuse` once labels and `vlm.json` exist
+- [ ] With real labels: `python -m pipeline.decide.lofo --fit` (writes the committed `pipeline/decide/params.json`), log the LOFO row in `docs/DECISIONS.md`
 - [ ] Update fallback from the real label distribution (H5); keep `CONTRACTS.md` and `docs/DECISIONS.md` current
 - [ ] Final `submit-safe` tag at model freeze (H18)
 

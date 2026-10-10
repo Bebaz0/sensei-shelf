@@ -48,7 +48,7 @@ Source brief: `data/Fruits & Vegetables - Shelf Monitoring Solution.pdf`. Scorin
 | labelling tool (owned by D) | `pipeline/eval/label_tool.py` (keyboard-driven; rubric in `docs/LABELING.md`) |
 | dashboard data sync | `scripts/sync_dashboard.sh [N]` writes a small JPG demo run (N frames per camera) into `dashboard/public/data/` |
 | run control | `scripts/run_all.sh` (`IMAGES`, `NO_API`, cleans stale outputs, scores only train runs with labels) |
-| tuning knobs (thresholds, crop size, STOCK_BIAS, EMPTY_IS_COMPLIANT) | `pipeline/common/config.py` |
+| tuning knobs (thresholds, crop size, STOCK_BIAS, EMPTY_IS_COMPLIANT) | `pipeline/common/config.py`; decide-only constants (`FALLBACK_P`) in `pipeline/decide/decide.py`; parameters fitted on labels (Platt, v1 weights) in the committed `pipeline/decide/params.json` |
 | tests | `tests/` (pytest) |
 
 ## Timeline (H0 = coding start)
@@ -67,10 +67,10 @@ Source brief: `data/Fruits & Vegetables - Shelf Monitoring Solution.pdf`. Scorin
 - [ ] Remind the user to launch their demo/pitch skill (saved in Claude memory; skill name still to be confirmed).
 
 ## Mentor questions (H0)
-1. Is an empty area `planogram_compliant` true or false? (biggest point swing; one flag in `config.py`, default true until answered)
+1. Is an empty area `planogram_compliant` true or false? ANSWERED: true.
 2. Validation folder layout (`<cam>/<ts>.jpg` or flat)? When and how are the validation images handed over, and what is the submission deadline?
 3. Are partly visible areas judged only on their visible part?
-4. Where is the line between half and full? One example of each?
+4. Where is the line between half and full? ANSWERED: empty 0-10%, half 10-50%, full above 50%.
 5. Submission feedback and limits?
 6. Do validation frames come from the same day, and from late evening?
 7. Stable mismatch: 6215_7 and 6215_9 expect oranges but hold bananas from 08:33 to closing. Is that annotated `planogram_compliant: false`?
@@ -93,7 +93,7 @@ Deliberately skipped: training a detector, YOLO, SAM, a database, Docker, auth, 
 
 ## Verification
 - Scorer: brief example table (270/19/230/35/24) gives exactly 320; missing = -5; high = -3; low = -2 (`tests/test_score.py`).
-- Decision rule: pairwise EV thresholds; a uniform prior gives `half`; p_wrong 0.49 compliant, 0.51 not.
+- Decision rule: pairwise EV thresholds; a uniform prior gives `empty` (EV -1, -4/3, -5/3) and (0.1, 0.4, 0.5) gives `half`; p_wrong 0.49 compliant, 0.51 not.
 - Crop: a quad with negative corners gives a valid mask with the right visible fraction.
 - Contract check: `submission.json` has every area of every image and only the allowed keys.
 - LOFO score on our labels is the team leaderboard; log every run in `docs/DECISIONS.md`.

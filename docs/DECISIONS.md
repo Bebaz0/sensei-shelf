@@ -10,7 +10,7 @@ Format: `YYYY-MM-DD HH:MM | who | decision | why | score delta`
 2026-10-10 | claude | VLM prompt is closed-set and comparative (target vs reference, candidates = products on that camera) | open-set naming hallucinates on apple varieties and loose vs bagged items | n/a
 2026-10-10 | claude | Stock reference = labelled-full frame; earliest frame only for compliance | first frame is ~05:12 UTC, may be pre-opening | n/a
 2026-10-10 | claude | Skipped: trained detector, YOLO, SAM, database, Docker, auth, backend server | 181 unlabelled frames, 24h budget; revisit only if error analysis shows a gap | n/a
-2026-10-10 | claude | `EMPTY_IS_COMPLIANT` defaults to true until mentors answer | prior majority; biggest single point swing | pending
+2026-10-10 | claude | `EMPTY_IS_COMPLIANT` defaults to true until mentors answer | prior majority; biggest single point swing | answered below
 2026-10-10 | claude | Compliance = Platt scaling of the VLM `matches_expected` answer, no full stacker | only ~6.5% wrong areas, ~130 positives in 2,000 labels, a stacker would overfit | n/a
 2026-10-10 | claude | Stock stacker only for stock level; stock is where the points are (perfect compliance adds ~60 of 578) | prioritisation | n/a
 2026-10-10 | claude | Validation frames are probably late evening (example 6215/1751052241.jpg = 20:24 Lisbon, last train frame 18:35); temporal and kNN features must work without a next frame | avoid a train/validation distribution shift surprise | pending mentor answer
@@ -46,3 +46,11 @@ Format: `YYYY-MM-DD HH:MM | who | decision | why | score delta`
 2026-10-10 | V | `data/products_en.json` written by Claude (94 products: English name, unit, visual hint); NOT yet reviewed by a person | task requires a human review | pending
 ||||||| 57f688f
 2026-10-10 | B | Wrote minimal `pipeline/eval/label_tool.py` to unblock the 30-area calibration (ownership stays with D; D extends from here). No EN product names until V publishes `data/products_en.json`. Keys 1/2/3/X/U/n/p/q; incremental write to `labels/<name>.json`; crash-safe. CLI: `python -m pipeline.eval.label_tool --name <name> [--from labels/calibration.txt]` | H3 label tool was still a NotImplementedError skeleton | n/a
+||||||| 57f688f
+2026-10-10 | C | Mentor answer: an empty area is compliant (`EMPTY_IS_COMPLIANT = True` stays) | asked the mentors | n/a
+2026-10-10 | C | Mentor answer: stock empty = 0-10% covered, half = 10-50%, full > 50%. `docs/LABELING.md` updated; labels made with the old 30-70% rubric must be rechecked (half vs full); V maps `fill_pct` with 10/50 | asked the mentors | n/a
+2026-10-10 | C | Fitted decide parameters (Platt, v1 weights, bias) live in the committed `pipeline/decide/params.json`, not in `out/` | `out/` is gitignored and the validation run starts from a `submit-safe` checkout | n/a
+2026-10-10 | C | PLAN verification fixed: a uniform stock prior gives `empty` under the EV rule, not `half` | EV = -1, -4/3, -5/3 | n/a
+2026-10-10 | C | `pipeline/decide/lofo.py`: per held-out frame, fit fallback prior (label distribution), source weights {0,1,2} and STOCK_BIAS by grid, Platt by one logistic regression (needs >= 5 wrong labels, else defaults), kNN p_wrong weight by grid; prints total, compliance, stock and the last-2-frames-per-camera subset | frame-grouped CV for everything fitted on labels | first real run pending labels
+2026-10-10 | C | `features.json` gains an optional `probe` field (stock probs from the embedding probe); `results.json` `reason`, `observed_product_id` and `low_confidence` semantics written in CONTRACTS.md | decide and dashboard need them | n/a
+2026-10-10 | C | Stacker experiment = `pipeline/decide/fuse.py` (multinomial LR on source probs, pixel features, previous-frame stock); not used by `decide` unless it beats v1 LOFO | adopt only with a clear LOFO gain | pending
