@@ -15,6 +15,12 @@ LEVELS = ("empty", "half", "full")
 _LEVEL_OF_VALUE = {v: k for k, v in STOCK_VALUES.items()}
 # ponytail: HSV histogram + fixed smoothing; the embedding probe (DINOv2/CLIP) is the upgrade if LOFO says so.
 ALPHA = 1.0  # weight of the prior in the vote; one identical neighbour gives (prior + onehot) / 2
+# Neighbour weight also decays with time-of-day distance, exp(-dt / TIME_SCALE_S): evening frames vote mostly with
+# evening frames (stock runs down and lighting changes late in the day). Time of day, not absolute time, so a
+# validation frame from another day still finds neighbours. None = off. LOFO (no VLM): 7 to 16 h all beat off
+# (624 -> 633..643, the gain is compliance), 10 h is the middle of that plateau.
+TIME_SCALE_S: float | None = 10 * 3600
+DAY_S = 86400
 
 
 def _level(lab: dict) -> str | None:
@@ -26,6 +32,12 @@ def _ts(filename: str) -> int | None:
         return int(Path(filename).stem)
     except ValueError:
         return None
+
+
+def _tod_dist(a: int, b: int) -> int:
+    """Seconds between two timestamps' times of day, wrapping at midnight."""
+    d = abs(a - b) % DAY_S
+    return min(d, DAY_S - d)
 
 
 def _usable(labels: dict) -> list[tuple[str, str, str, dict]]:
@@ -98,6 +110,8 @@ def add_neighbours(out: dict, index: dict, labels: dict) -> None:
                         if hn is None:
                             continue
                         w = math.exp(-_chi2_dist(h, hn) / tau(cam, area))
+                        if TIME_SCALE_S and t is not None and _ts(f) is not None:
+                            w *= math.exp(-_tod_dist(t, _ts(f)) / TIME_SCALE_S)
                         stock_votes.append((w, _level(lab)))
                         wrong_votes.append((w, lab.get("planogram_compliant") is False))
                 if stock_votes:  # no labelled neighbour: no knn, so decide sees no source and queues the area for the VLM

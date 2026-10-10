@@ -49,3 +49,14 @@ def test_no_candidates_gives_no_knn_and_temporal_handles_last_frame(tmp_path):
     assert a["temporal"]["prev_stock"] is None and a["temporal"]["next_stock"] is None
     b = out["c1"]["200.jpg"]["c1_1"]["temporal"]
     assert b == {"prev_stock": "full", "next_stock": None, "dt_prev_s": 100, "dt_next_s": None}
+
+
+def test_closer_time_of_day_wins(tmp_path):
+    index, out = _setup(tmp_path, [RED, RED, RED])
+    # same look; 3600 s is 1 h from 0, 50400 s is 10 h away (wraps at midnight, so 86400 + 3600 would also be 1 h)
+    index["c1"] = dict(zip(("0.jpg", "3600.jpg", "50400.jpg"), index["c1"].values()))
+    out = {"c1": {f: {"c1_1": {}} for f in index["c1"]}}
+    labels = {"c1": {"3600.jpg": {"c1_1": _lab("full")}, "50400.jpg": {"c1_1": _lab("half")}}}
+    add_neighbours(out, index, labels)
+    knn = out["c1"]["0.jpg"]["c1_1"]["knn"]
+    assert knn["full"] > knn["half"]
