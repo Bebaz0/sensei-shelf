@@ -7,8 +7,9 @@
  "weights": {
   "gemini": 0.0,
   "claude": 0.0,
-  "knn": 1.0,
-  "probe": 0.0
+  "knn": 2.0,
+  "probe": 0.0,
+  "temporal": 0.25
  },
  "platt": {
   "a": -1.5,
@@ -16,7 +17,7 @@
  },
  "knn_wrong_weight": 0.0,
  "fill_sigma": 10.0,
- "stock_bias": 0.2,
+ "stock_bias": 0.4,
  "gate": {
   "min_top_p": 0.6,
   "wrong_band": [

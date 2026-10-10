@@ -25,7 +25,7 @@ FALLBACK_P = {"empty": 0.1, "half": 0.4, "full": 0.5}
 # Defaults until lofo.py --fit writes params.json. Weights are per stock source; a missing source is skipped.
 DEFAULT_PARAMS = {
     "fallback_p": FALLBACK_P,
-    "weights": {"gemini": 1.0, "claude": 1.0, "knn": 1.0, "probe": 1.0},
+    "weights": {"gemini": 1.0, "claude": 1.0, "knn": 1.0, "probe": 1.0, "temporal": 0.25},
     # p_wrong = sigmoid(a + b * x), x in [-1, 1] = mean over VLMs of (+conf if mismatch else -conf).
     # Conservative: a mismatch needs confidence > 0.6 to be called non-compliant.
     "platt": {"a": -1.5, "b": 2.5},
@@ -36,6 +36,10 @@ DEFAULT_PARAMS = {
     # and goes to the VLM (decide --queue). Thresholds are hand-set until queued areas have VLM answers to tune on.
     "gate": {"min_top_p": 0.6, "wrong_band": [0.3, 0.7]},
 }
+
+# Previous labelled frame's stock as a low-weight vote: it only tips a split decision, a confident source (e.g. a
+# restocked, clearly full shelf) outweighs it. Share of its vote on the previous level.
+TEMPORAL_P = 0.8
 
 # Mentor thresholds on covered share: empty 0-10%, half 10-50%, full above 50%.
 EMPTY_MAX_PCT, HALF_MAX_PCT = 10.0, 50.0
@@ -107,6 +111,9 @@ def stock_sources(features: dict | None, vlm: dict | None, sigma: float) -> dict
         p = (features or {}).get(name)
         if p and any(p.get(k) for k in LEVELS):
             sources[name] = _normalise(p)
+    prev = ((features or {}).get("temporal") or {}).get("prev_stock")
+    if prev in LEVELS:
+        sources["temporal"] = {k: TEMPORAL_P if k == prev else (1 - TEMPORAL_P) / 2 for k in LEVELS}
     return sources
 
 
@@ -170,7 +177,7 @@ def decide_area(area: dict, features: dict | None, vlm: dict | None, params: dic
         compliant = is_compliant(pw) or (level == "empty" and EMPTY_IS_COMPLIANT)
         votes = ", ".join(f"{n}: {max(p, key=p.get)}" for n, p in sources.items()) or "no sources, prior"
         gate = params["gate"]
-        low = not sources or max(p_stock.values()) < gate["min_top_p"] or gate["wrong_band"][0] < pw < gate["wrong_band"][1]
+        low = not set(sources) - {"temporal"} or max(p_stock.values()) < gate["min_top_p"] or gate["wrong_band"][0] < pw < gate["wrong_band"][1]
         observed = _observed(vlm)
         reason = f"{votes}; p_wrong {pw:.2f}"
     except Exception as e:  # noqa: BLE001  a crash here must never drop the area

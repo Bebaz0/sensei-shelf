@@ -36,7 +36,7 @@ Producer: `pipeline/pixel` (B). Consumer: `decide`.
   "temporal": {"prev_stock": "full", "next_stock": null, "dt_prev_s": 3900, "dt_next_s": null}
 }}}}
 ```
-`knn`, `probe` and `temporal` are present only when labels exist and never use the frame itself (`probe` = embedding probe, stock probabilities only; B keeps whichever of `knn` and `probe` wins, `decide` uses any that is present). `next_stock` and `dt_next_s` are `null` when there is no later frame (validation frames may be later than every train frame).
+`knn`, `probe` and `temporal` are present only when labels exist and never use the frame itself; `knn` is also absent when the area has no labelled crop in another frame (no evidence, so `decide` queues it for the VLM). kNN neighbours are weighted by look and by time-of-day distance (`TIME_SCALE_S` in `neighbours.py`). `decide` uses `temporal.prev_stock` as a low-weight stock vote that only breaks split decisions (`probe` = embedding probe, stock probabilities only; B keeps whichever of `knn` and `probe` wins, `decide` uses any that is present). `next_stock` and `dt_next_s` are `null` when there is no later frame (validation frames may be later than every train frame).
 
 ## vlm_queue.txt
 Producer: `pipeline/decide` pass 1 (`--queue`, run before the VLM). Consumer: `pipeline/vlm` (`ask.py --areas`).

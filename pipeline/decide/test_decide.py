@@ -164,8 +164,10 @@ def test_vectorised_matches_scalar_on_random_inputs():
             vlm[cam].setdefault(fn, {})[a] = {"gemini": ans(), "claude": ans()}
             probs = lambda: (lambda w: {k: x / sum(w) for k, x in zip(LEVELS, w)})([rng.random() + 0.01 for _ in LEVELS])
             features[cam].setdefault(fn, {})[a] = {k: v for k, v in {"knn": rng.choice([None, probs() | {"p_wrong": rng.random()}]),
-                                                                    "probe": rng.choice([None, probs()])}.items() if v}
-    params = {**PARAMS, "weights": {"gemini": 1.0, "claude": 0.5, "knn": 2.0, "probe": 1.5}, "knn_wrong_weight": 0.4, "stock_bias": 0.1}
+                                                                    "probe": rng.choice([None, probs()]),
+                                                                    "temporal": {"prev_stock": rng.choice([None, *LEVELS])}}.items() if v}
+    params = {**PARAMS, "weights": {"gemini": 1.0, "claude": 0.5, "knn": 2.0, "probe": 1.5, "temporal": 0.5},
+              "knn_wrong_weight": 0.4, "stock_bias": 0.1}
     t = build_table(labels, features, vlm, params["fill_sigma"])
     idx = np.arange(len(t["T"]))
     w = np.array([params["weights"][s] for s in SOURCES])
@@ -198,3 +200,16 @@ def test_gate_queues_only_unsure_areas(tmp_path):
     path = tmp_path / "queue.txt"
     assert write_queue(results, path) == 2
     assert read_area_list(path) == {("6215", "1.jpg", "6215_2"), ("6215", "1.jpg", "6215_3")}
+
+
+def test_temporal_only_breaks_ties():
+    params = PARAMS | {"weights": PARAMS["weights"] | {"knn": 2.0, "temporal": 0.25}}
+    prev_half = {"temporal": {"prev_stock": "half"}}
+    split_knn = {"knn": {"empty": 0.05, "half": 0.4, "full": 0.55, "p_wrong": 0.0}}
+    assert decide_area({}, split_knn, None, params)["pred"]["stock_level"] == "full"  # without the previous frame
+    split = decide_area({}, prev_half | split_knn, None, params)
+    sure = decide_area({}, prev_half | {"knn": {"empty": 0.0, "half": 0.05, "full": 0.95, "p_wrong": 0.0}}, None, params)
+    assert split["pred"]["stock_level"] == "half"  # split decision follows the previous frame
+    assert sure["pred"]["stock_level"] == "full"  # restocked, clearly full shelf is not overridden
+    alone = decide_area({}, prev_half, None, params)
+    assert alone["low_confidence"]  # the previous frame alone is no evidence: still queued for the VLM

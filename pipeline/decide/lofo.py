@@ -27,8 +27,10 @@ from pipeline.decide.decide import (
     DEFAULT_PARAMS, LEVELS, PARAMS_PATH, decide_frames, knn_wrong, stock_sources, to_submission, vlm_mismatch,
 )
 
-SOURCES = ("gemini", "claude", "knn", "probe")
+SOURCES = ("gemini", "claude", "knn", "probe", "temporal")
 WEIGHT_GRID = (0.0, 1.0, 2.0)
+TEMPORAL_GRID = (0.0, 0.25, 0.5, 1.0)  # tie-breaker: small weights only
+NO_VLM = ("knn", "probe", "temporal")
 BIAS_GRID = (0.0, 0.1, 0.2, 0.4)
 KNN_WRONG_GRID = (0.0, 0.25, 0.5, 0.75, 1.0)
 MIN_WRONG_FOR_PLATT = 5
@@ -100,7 +102,8 @@ def fit(t: dict, idx: np.ndarray, allowed: tuple[str, ...] = SOURCES) -> dict:
 
     present = [j for j, s in enumerate(SOURCES) if s in allowed and t["M"][idx, j].any()]
     best = (-np.inf, None, None)
-    for ws in itertools.product(WEIGHT_GRID, repeat=len(present)):
+    grids = [TEMPORAL_GRID if SOURCES[j] == "temporal" else WEIGHT_GRID for j in present]
+    for ws in itertools.product(*grids):
         w = np.zeros(len(SOURCES))
         w[present] = ws
         for bias in BIAS_GRID:
@@ -130,7 +133,7 @@ def restrict(features: dict, vlm: dict, allowed: tuple[str, ...]) -> tuple[dict,
         return {k: v for k, v in area.items() if k not in drop} if isinstance(area, dict) else area
     nest = lambda d, drop: {c: {f: {a: keep(v, drop) for a, v in areas.items()} for f, areas in fs.items()}
                             for c, fs in d.items()}
-    return nest(features, tuple(s for s in ("knn", "probe") if s not in allowed)), \
+    return nest(features, tuple(s for s in ("knn", "probe", "temporal") if s not in allowed)), \
         nest(vlm, tuple(s for s in ("gemini", "claude") if s not in allowed))
 
 
@@ -232,13 +235,13 @@ if __name__ == "__main__":
         print(f"wrote {args.params}: {json.dumps(params)}")
     elif args.gate:
         low: dict = {}
-        pred = lofo_predictions(labels, features, vlm, planogram, ("knn", "probe"), low=low)
+        pred = lofo_predictions(labels, features, vlm, planogram, NO_VLM, low=low)
         print(gate_report(pred, labels, low))
     else:
         sets = {"v1 (all)": SOURCES}
         if args.ablation:
             sets = {"prior only": (), **{f"{s} only": (s,) for s in SOURCES}, "vlm only": ("gemini", "claude"),
-                    "no vlm": ("knn", "probe"), **sets}
+                    "no vlm": NO_VLM, "no vlm, no temporal": ("knn", "probe"), **sets}
         for name, allowed in sets.items():
             probs: dict = {}
             print(_row(name, lofo_predictions(labels, features, vlm, planogram, allowed, probs), labels, probs))
