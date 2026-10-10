@@ -139,6 +139,9 @@ def run(index_path: Path, out_path: Path, run_frames: list[tuple[str, str]] | No
                 )
                 out.setdefault(cam_id, {}).setdefault(filename, {})[area_id] = feats
 
+    from pipeline.pixel.neighbours import add_neighbours  # here: neighbours imports this module's helpers
+    add_neighbours(out, index, labels)
+
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(out, indent=2))
     total = sum(len(a) for c in out.values() for a in c.values())
