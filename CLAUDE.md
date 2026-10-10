@@ -3,7 +3,7 @@
 Goal: WIN. 5 engineers, each driving a Claude Code session. Read this file, then `docs/PLAN.md`, `CONTRACTS.md`, `docs/LABELING.md` and your own section of `docs/TASKS.md` before doing anything.
 
 ## The challenge in one paragraph
-14 fixed ceiling cameras over fruit and vegetable gondolas (1280x720). `data/planogram.json` maps 152 perspective quads ("areas") to 94 products. For every area of an image we predict `planogram_compliant` (bool) and `stock_level` (empty/half/full). The hidden validation set is 26 images, 289 areas, annotated by Sensei. We have no labels, only 181 train/test frames (12-14 per camera, one day, ~06:00 to 18:40 Lisbon). Validation frames are probably later in the evening. A staff UI breaks ties. Time-named copies of the frames for eyeballing are in `out/frames_by_time/`.
+14 fixed ceiling cameras over fruit and vegetable gondolas (1280x720). `data/planogram.json` maps 152 perspective quads ("areas") to 94 products. For every area of an image we predict `planogram_compliant` (bool) and `stock_level` (empty/half/full). The hidden validation set is 26 images, 289 areas, annotated by Sensei. We have no labels, only 181 train/test frames (12-14 per camera, one day, 06:12 to 20:16 Lisbon; most cameras end between 19:10 and 19:44, 6215 at 18:35 and 6443 at 18:07). Validation frames are probably a little later in the evening (the brief's example is 20:24). The first two frames of the day (about 06:13 and 07:20) are pre-opening: shelves can be empty, hold another product than later in the day, or be behind a night blind (6383, 6386). A staff UI breaks ties. Time-named copies of the frames for eyeballing are in `out/frames_by_time/`.
 
 ## Scoring (per area, max 2)
 - Compliance: correct +1, wrong -2 (symmetric, so answer "not compliant" only if P(wrong) > 0.5).
@@ -11,7 +11,7 @@ Goal: WIN. 5 engineers, each driving a Claude Code session. Read this file, then
 - Area missing from output: -2 and -3. ALWAYS output every area.
 - Stock decision = argmax expected value over calibrated p_e, p_h, p_f:
   EV(empty) = p_e - 2(p_h+p_f); EV(half) = p_h - 3p_e - 2p_f; EV(full) = p_f - 3(p_e+p_h).
-- Compliance is calibrated with Platt scaling on the VLM `matches_expected` answer (few wrong-product labels, no full stacker). Stock is where most points are.
+- Compliance is calibrated with Platt scaling on the VLM `matches_expected` answer (no full stacker). The shelf does not always follow the planogram: e.g. 6215_7 and 6215_9 expect oranges but hold bananas from 08:33 on. Compliance varies by area and is stable over time, so labelled frames of the same area are a strong prior. Stock is where most points are.
 - v1 decision = hand-tuned weighted average of VLM, embedding-probe and kNN probabilities, then the EV rule. A learned stacker is an experiment, adopted only with a clear LOFO gain.
 
 ## Layout (pipeline stages talk only through files in `out/`, see CONTRACTS.md)
@@ -43,7 +43,7 @@ Cross-cutting change in a file you do not own? Add a one-line request to `docs/D
 11. Label with `docs/LABELING.md` only; each person writes `labels/<name>.json`, never `labels/dev.json` directly.
 
 ## Open mentor questions (answers go in `docs/DECISIONS.md`)
-Is an empty area compliant? Validation layout, handover time and deadline? Partly visible areas? Half vs full boundary? Submission feedback and limits? Are validation frames from late evening?
+Is an empty area compliant? Validation layout, handover time and deadline? Partly visible areas? Half vs full boundary? Submission feedback and limits? Are validation frames from late evening? Is a stable mismatch (bananas all day in an "oranges" area such as 6215_7) annotated non-compliant? What is the label of an area behind the night blind (6383, 6386 at 06:12), and can validation frames have the blind down?
 
 ## Safe submission
 Tag `submit-safe` marks the last known-good commit. To produce a submission: check it out, then `IMAGES=<validation dir> scripts/run_all.sh` (add `NO_API=1` if the network is down); the file to hand in is `out/submission.json`, which contains the validation frames only.

@@ -3,14 +3,15 @@
 Source brief: `data/Fruits & Vegetables - Shelf Monitoring Solution.pdf`. Scoring and rules: `CLAUDE.md`. File shapes: `CONTRACTS.md`. Per-workstream checklists: `docs/TASKS.md`. Labelling rubric: `docs/LABELING.md`.
 
 ## Key insights
-- **Validation frames are probably late evening.** The brief's example `6215/1751052241.jpg` is 20:24 Lisbon time; the last train frame of that camera is 18:35. So a validation frame may have earlier neighbours only (nothing later), and evening shelves may look unlike anything in train. `temporal` and kNN code MUST work with a missing next frame, and the stock prior must not assume daytime. (Guess, unverified: cameras 6215 and 6443 have 12 frames instead of 13 because they gave frames to validation. Ask the mentors.)
-- Train frames run from about 06:00 to 18:40 Lisbon (04:50 to 17:40 UTC). Opening time is unknown.
+- **Validation frames are probably a little later than train.** The brief's example `6215/1751052241.jpg` is 20:24 Lisbon time; the last train frame of that camera is 18:35 and the latest train frame overall is 20:16 (6385). So a validation frame may have earlier neighbours only (nothing later). The evening shift is mild: most cameras already have frames up to 19:10-19:44. `temporal` and kNN code MUST work with a missing next frame, and the stock prior must not assume daytime. (Guess, unverified: cameras 6215 and 6443 have 12 frames instead of 13 because they gave frames to validation. Ask the mentors.)
+- Train frames run from 06:12 to 20:16 Lisbon (05:12 to 19:16 UTC). Every camera starts at 06:12-06:14; most end between 19:10 and 19:44, 6385 at 20:16, 6215 at 18:35 and 6443 at 18:07. Opening time is unknown, but the first two frames (about 06:13 and 07:20) are pre-opening: shelves empty, restocking in progress, a night blind over 6383 and 6386 at 06:12.
+- **The planogram and the shelf disagree, stably.** On 6215, areas 7 and 9 expect oranges but hold bananas from 08:33 to the last frame; at 06:14 and 07:23 areas 3 and 5 hold oranges where bananas are expected. Compliance varies by area and stays stable over time, so labelled frames of the same area predict it well (kNN `p_wrong`, temporal prior). Check each camera's contact sheet in `out/qa/sheets/` before trusting any frame as a reference.
 - Compliance scoring is symmetric (+1/-2): answer "not compliant" only when calibrated P(wrong) > 0.5. Stock scoring is asymmetric: use the expected-value argmax rule from `CLAUDE.md`.
-- **Compliance has few positives.** The brief's example has ~6.5% wrong areas, so ~130 wrong-product labels in 2,000. Do not train a full stacker for compliance. Use the VLM `matches_expected` answer plus simple Platt scaling (one logistic fit) and the 0.5 threshold. The stacker is for stock only.
+- **Compliance has few positives.** The brief's example has ~6.5% wrong areas, so ~130 wrong-product labels in 2,000 (our own share is unknown until we label; stable mismatches like 6215_7 may raise it). Do not train a full stacker for compliance. Use the VLM `matches_expected` answer plus simple Platt scaling (one logistic fit) and the 0.5 threshold. The stacker is for stock only.
 - **Where the points are.** A constant "always compliant" answer already gets most compliance points; perfect compliance adds only ~60 points on 289 areas. Stock level is the main lever, so labelling, crops, VLM prompts and the asymmetric decision matter most.
 - Missing area costs -5, so every area of every image is always output, with per-area fallback.
 - Fine-grained look-alikes (apple varieties, loose vs bagged potatoes): ask the VLM a closed-set comparative question (target vs reference crop, candidates = products on that camera). Never an open "what is this?".
-- "Earliest frame = full" is risky (pre-opening). Use a labelled-full frame as the stock reference; use the earliest frame only as the compliance reference.
+- "Earliest frame = full" is risky (pre-opening). Use a labelled-full frame as the stock reference. The earliest frame is not a compliance reference either (pre-opening shelves hold other products): use a frame of that area labelled compliant.
 - Product names are Portuguese. Build `data/products_en.json` once (reviewed by a person). Names ending in KG are loose items (unit = one fruit); names with a weight (500 G, EMB. 3KG) are packages (unit = one package).
 
 ## Pipeline, per area (maps onto the existing `pipeline/` stages)
@@ -72,6 +73,8 @@ Source brief: `data/Fruits & Vegetables - Shelf Monitoring Solution.pdf`. Scorin
 4. Where is the line between half and full? One example of each?
 5. Submission feedback and limits?
 6. Do validation frames come from the same day, and from late evening?
+7. Stable mismatch: 6215_7 and 6215_9 expect oranges but hold bananas from 08:33 to closing. Is that annotated `planogram_compliant: false`?
+8. Night blind over 6383 and 6386 at 06:12: what is the label of a covered area, and can validation frames have the blind down?
 
 ## Risks and mitigations
 | Risk | Mitigation |
@@ -81,6 +84,7 @@ Source brief: `data/Fruits & Vegetables - Shelf Monitoring Solution.pdf`. Scorin
 | API outage or no network at validation | disk cache; `NO_API=1` path (pixel + kNN + temporal) scored and tagged on its own; retries; use whichever of Gemini/Claude is up |
 | Unexpected validation layout or unknown cameras | recursive discovery in `common/images.py`, camera from thumbnail when flat, per-area fallback |
 | VLM hallucinates on look-alikes | closed candidate set, comparative prompt with reference, calibration, 0.5 threshold on calibrated prob |
+| Reference crop shows the wrong product (pre-opening frames, stable mismatches) | reference = a frame of that area labelled compliant, never the earliest frame; no reference when none is labelled |
 | Overfitting to a few hundred labels from one day | frame-grouped CV, few stacker features, accept changes only with clear LOFO gain |
 | Merge conflicts across 5 sessions | directory ownership, one label file per labeller, C owns contracts, small commits + rebase |
 | Live demo breaks | dashboard reads committed static runs in `dashboard/public/data/`; record backup video at H20 |
