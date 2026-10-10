@@ -10,7 +10,7 @@ Format: `YYYY-MM-DD HH:MM | who | decision | why | score delta`
 2026-10-10 | claude | VLM prompt is closed-set and comparative (target vs reference, candidates = products on that camera) | open-set naming hallucinates on apple varieties and loose vs bagged items | n/a
 2026-10-10 | claude | Stock reference = labelled-full frame; earliest frame only for compliance | first frame is ~05:12 UTC, may be pre-opening | n/a
 2026-10-10 | claude | Skipped: trained detector, YOLO, SAM, database, Docker, auth, backend server | 181 unlabelled frames, 24h budget; revisit only if error analysis shows a gap | n/a
-2026-10-10 | claude | `EMPTY_IS_COMPLIANT` defaults to true until mentors answer | prior majority; biggest single point swing | pending
+2026-10-10 | claude | `EMPTY_IS_COMPLIANT` defaults to true until mentors answer | prior majority; biggest single point swing | answered below
 2026-10-10 | claude | Compliance = Platt scaling of the VLM `matches_expected` answer, no full stacker | only ~6.5% wrong areas, ~130 positives in 2,000 labels, a stacker would overfit | n/a
 2026-10-10 | claude | Stock stacker only for stock level; stock is where the points are (perfect compliance adds ~60 of 578) | prioritisation | n/a
 2026-10-10 | claude | Validation frames are probably late evening (example 6215/1751052241.jpg = 20:24 Lisbon, last train frame 18:35); temporal and kNN features must work without a next frame | avoid a train/validation distribution shift surprise | pending mentor answer
@@ -36,3 +36,7 @@ Format: `YYYY-MM-DD HH:MM | who | decision | why | score delta`
 2026-10-10 | A (review by B) | Mentor question: 6215_7 and 6215_9 expect oranges but hold bananas from 08:33 to the last frame. Is a stable mismatch annotated non-compliant? | decides the compliance label of every area rearranged after opening; compliance is per-area and stable, so same-area labels are a strong prior | pending
 2026-10-10 | A (review by B) | Docs corrected: train frames run 06:12 to 20:16 Lisbon (most cameras end 19:10-19:44, 6215 at 18:35, 6443 at 18:07), not 06:00 to 18:40; the evening shift to the 20:24 validation example is mild | earlier figure was wrong | n/a
 2026-10-10 | A | CONTRACTS.md updated for the BGRA warp (alpha = validity mask) and the context crop details; closes the request above | contract was behind the code | n/a
+2026-10-10 | C | Mentor answer: an empty area is compliant (`EMPTY_IS_COMPLIANT = True` stays) | asked the mentors | n/a
+2026-10-10 | C | Mentor answer: stock empty = 0-10% covered, half = 10-50%, full > 50%. `docs/LABELING.md` updated; labels made with the old 30-70% rubric must be rechecked (half vs full); V maps `fill_pct` with 10/50 | asked the mentors | n/a
+2026-10-10 | C | Fitted decide parameters (Platt, v1 weights, bias) live in the committed `pipeline/decide/params.json`, not in `out/` | `out/` is gitignored and the validation run starts from a `submit-safe` checkout | n/a
+2026-10-10 | C | PLAN verification fixed: a uniform stock prior gives `empty` under the EV rule, not `half` | EV = -1, -4/3, -5/3 | n/a

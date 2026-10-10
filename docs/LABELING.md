@@ -5,9 +5,11 @@ Labels teach the stacker and measure our score, so all five labellers must apply
 ## Stock level (per area, judge only the visible part of the quad)
 | Label | Meaning |
 |---|---|
-| `empty` | no product, or only a few stray items; mostly bare shelf or tray |
-| `half` | clearly stocked but with visible gaps: roughly 30% to 70% of the area covered or piled |
-| `full` | covered or piled across nearly the whole area, no meaningful gap |
+| `empty` | 0% to 10% of the area covered: bare shelf or tray, at most a few stray items |
+| `half` | 10% to 50% of the area covered or piled |
+| `full` | more than 50% of the area covered or piled |
+
+Thresholds are the mentors' answer (2026-10-10). Note that `full` starts at just over half: a shelf with visible gaps is still `full` if more than half of it is covered.
 
 Rules of thumb:
 - Judge the area, not the camera image. A big pile in a neighbouring area does not count.
@@ -19,7 +21,7 @@ Rules of thumb:
 ## Compliance
 - `planogram_compliant = true` if the product shown is the expected product in the planogram.
 - If a different product (or a mix with a different product) fills most of the area, mark wrong product (`X`) and pick the observed product from the camera's list.
-- An empty area: follow `EMPTY_IS_COMPLIANT` in `pipeline/common/config.py` (default true until the mentors answer).
+- An empty area is compliant (mentors' answer, 2026-10-10; `EMPTY_IS_COMPLIANT = True` in `pipeline/common/config.py`).
 - Same variety family but different variety (e.g. Gala vs Fuji): if you cannot tell from the crop, mark compliant and press `U`.
 
 ## Process
