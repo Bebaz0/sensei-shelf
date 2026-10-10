@@ -116,9 +116,9 @@ def stock_probs(sources: dict[str, dict], params: dict) -> dict:
     return _normalise({k: sum(weights[n] * sources[n][k] for n in sources) / total for k in LEVELS})
 
 
-def p_wrong(features: dict | None, vlm: dict | None, params: dict) -> float:
-    """Calibrated P(wrong product): Platt scaling of the VLM matches_expected answers, blended with the
-    same-area kNN p_wrong (compliance is stable per area). An empty or occluded area is never wrong."""
+def vlm_mismatch(vlm: dict | None) -> float | None:
+    """Platt input x in [-1, 1]: mean over VLMs of +conf (mismatch) or -conf (match). An empty or occluded
+    area is never a mismatch (empty is compliant). None when no VLM answered."""
     xs = []
     for provider in ("gemini", "claude"):
         answer = (vlm or {}).get(provider)
@@ -127,18 +127,26 @@ def p_wrong(features: dict | None, vlm: dict | None, params: dict) -> float:
         conf = min(max(float(answer.get("confidence", 0.5)), 0.0), 1.0)
         mismatch = not answer["matches_expected"] and answer.get("observed") != "empty"
         xs.append(conf if mismatch else -conf)
-    knn = ((features or {}).get("knn") or {}).get("p_wrong")
+    return sum(xs) / len(xs) if xs else None
 
-    if not xs and knn is None:
-        return 0.0
-    if not xs:
-        return float(knn)
+
+def knn_wrong(features: dict | None) -> float | None:
+    knn = (features or {}).get("knn")
+    return float(knn["p_wrong"]) if isinstance(knn, dict) and knn.get("p_wrong") is not None else None
+
+
+def p_wrong(features: dict | None, vlm: dict | None, params: dict) -> float:
+    """Calibrated P(wrong product): Platt scaling of the VLM matches_expected answers, blended with the
+    same-area kNN p_wrong (compliance is stable per area)."""
+    x, knn = vlm_mismatch(vlm), knn_wrong(features)
+    if x is None:
+        return 0.0 if knn is None else knn
     a, b = params["platt"]["a"], params["platt"]["b"]
-    p_vlm = 1 / (1 + math.exp(-(a + b * sum(xs) / len(xs))))
+    p_vlm = 1 / (1 + math.exp(-(a + b * x)))
     if knn is None:
         return p_vlm
     w = params["knn_wrong_weight"]
-    return (1 - w) * p_vlm + w * float(knn)
+    return (1 - w) * p_vlm + w * knn
 
 
 def _observed(vlm: dict | None) -> str | None:

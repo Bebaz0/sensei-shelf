@@ -83,3 +83,63 @@ def test_every_area_of_every_frame_with_no_inputs():
         for pred in sub[cam][fn].values():
             assert set(pred) == {"planogram_compliant", "stock_level", "stock_value"}
     assert sum(len(a) for fs in sub.values() for a in fs.values()) == 152 + len(planogram["6215"])
+
+
+def _synthetic(n_frames=8, seed=0):
+    """Labels where gemini reads the truth and knn is noise; a few frames hold the wrong product."""
+    import random
+    rng = random.Random(seed)
+    planogram = load_planogram()
+    cam = "6215"
+    labels, features, vlm = {cam: {}}, {cam: {}}, {cam: {}}
+    for f in range(n_frames):
+        fn = f"{1000 + f}.jpg"
+        for area in planogram[cam]:
+            a = area["area_id"]
+            truth = rng.choice(LEVELS)
+            wrong = a == planogram[cam][0]["area_id"] and truth != "empty"
+            fill = {"empty": 3, "half": 30, "full": 80}[truth]
+            labels[cam].setdefault(fn, {})[a] = {"planogram_compliant": not wrong, "stock_value": {"empty": 0.0, "half": 0.5, "full": 1.0}[truth]}
+            vlm[cam].setdefault(fn, {})[a] = {"gemini": {"stock": truth, "fill_pct": fill, "confidence": 0.9,
+                                                         "matches_expected": not wrong, "observed": "x"}, "claude": None}
+            noise = rng.choice(LEVELS)
+            features[cam].setdefault(fn, {})[a] = {"knn": {k: float(k == noise) for k in LEVELS} | {"p_wrong": 0.1}}
+    return planogram, labels, features, vlm
+
+
+def test_vectorised_fit_matches_decide():
+    import numpy as np
+    from pipeline.decide.lofo import SOURCES, build_table, fit, p_wrong_vec, stock_pred
+    planogram, labels, features, vlm = _synthetic()
+    t = build_table(labels, features, vlm, PARAMS["fill_sigma"])
+    idx = np.arange(len(t["T"]))
+    params = fit(t, idx)
+    assert params["weights"]["gemini"] > params["weights"]["knn"]
+    w = np.array([params["weights"][s] for s in SOURCES])
+    fb = np.array([params["fallback_p"][k] for k in LEVELS])
+    levels = stock_pred(t, idx, w, params["stock_bias"], fb)
+    pws = p_wrong_vec(t, idx, params["platt"]["a"], params["platt"]["b"], params["knn_wrong_weight"])
+    rows = decide_frames(sorted({f for f in t["frame"]}), planogram, features, vlm, params)
+    flat = [r for fn in sorted(rows["6215"]) for r in rows["6215"][fn].values()]
+    assert [LEVELS.index(r["pred"]["stock_level"]) for r in flat] == list(levels)
+    assert np.allclose([r["p_wrong"] for r in flat], pws, atol=1e-3)
+
+
+def test_lofo_beats_prior_on_synthetic_labels():
+    import numpy as np
+    from pipeline.decide.lofo import GAIN, LEVEL_OF_VALUE, lofo_predictions
+    planogram, labels, features, vlm = _synthetic()
+
+    def stock_points(pred):
+        return sum(GAIN[LEVELS.index(LEVEL_OF_VALUE[g["stock_value"]]), LEVELS.index(pred["6215"][fn][a]["stock_level"])]
+                   for fn, areas in labels["6215"].items() for a, g in areas.items())
+    assert stock_points(lofo_predictions(labels, features, vlm, planogram)) > stock_points(
+        lofo_predictions(labels, features, vlm, planogram, allowed=()))
+    assert np.isfinite(stock_points(lofo_predictions(labels, features, vlm, planogram, allowed=("knn",))))
+
+
+def test_stacker_runs_on_synthetic_labels():
+    from pipeline.decide.fuse import stacker_lofo
+    planogram, labels, features, vlm = _synthetic()
+    pred = stacker_lofo(labels, features, vlm, planogram)
+    assert all(set(pred["6215"][fn]) == set(areas) for fn, areas in labels["6215"].items())
