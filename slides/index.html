@@ -54,6 +54,12 @@
   h1 { font-size: clamp(44px, 8.2vw, 132px); line-height: 0.98; letter-spacing: -0.045em; font-weight: 600; }
   h2 { font-size: clamp(30px, 4.6vw, 76px); line-height: 1.04; letter-spacing: -0.035em; font-weight: 600; margin-top: clamp(10px, 2vh, 22px); max-width: 18ch; }
   h2.wide { max-width: 24ch; }
+  /* Row 1 is flat. Row 2 steps down twice: "Their cameras", then the lavender phrase, then the underlined last word. */
+  h2.stairs { max-width: none; font-size: min(3.25vw, 9vh); line-height: 1.1; }
+  h2.stairs .row { display: flex; gap: 0.27em; white-space: nowrap; }
+  h2.stairs .row + .row { margin-top: 0.35em; }
+  h2.stairs .row > span { margin-top: calc(var(--n, 0) * 0.55em); }
+  h2.stairs .key { font-weight: 700; text-decoration: underline; text-decoration-thickness: 0.09em; text-underline-offset: 0.16em; }
   .lead { font-size: clamp(16px, 1.75vw, 28px); line-height: 1.4; color: var(--fg2); max-width: 46ch; margin-top: clamp(12px, 2.4vh, 28px); }
   .lead b, h2 b { color: var(--fg); font-weight: 600; }
   em { font-style: normal; color: var(--accent); }
@@ -106,6 +112,7 @@
   .slide.active .step .meter { transform: none; }
   .cta { align-self: flex-start; display: inline-flex; align-items: center; gap: 10px; margin-top: clamp(16px, 3.4vh, 36px); padding: 12px 14px 12px 28px; gap: 18px; border-radius: 99px; border: 2px solid var(--accent); background: rgba(5, 7, 15, 0.7); color: var(--fg); font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; font-size: clamp(13px, 1.15vw, 17px); text-decoration: none; transition: transform 0.4s var(--spring), background-color 0.2s; }
   .cta:hover { background: var(--raised); }
+  .cta.big { margin-top: clamp(24px, 6vh, 64px); padding: clamp(14px, 2.2vh, 24px) clamp(16px, 1.6vw, 26px) clamp(14px, 2.2vh, 24px) clamp(28px, 3.4vw, 56px); gap: clamp(18px, 2.4vw, 40px); border-width: 3px; font-size: clamp(20px, 2.9vw, 46px); }
   .cta:active { transform: scale(0.96); transition-duration: 0.09s; }
   .cta kbd { display: grid; place-items: center; width: 2.6em; height: 2.6em; border-radius: 99px; background: var(--accent); color: #0a0f1d; font-family: var(--mono); font-size: 1em; letter-spacing: 0; }
 
@@ -168,6 +175,7 @@
     .steps { grid-template-columns: 1fr 1fr; }
     .step { min-height: 0; }
     .step p, .help, .slide .hide-sm { display: none; }
+    h2.stairs .row { flex-wrap: wrap; white-space: normal; }
     .then { grid-template-columns: 1fr; }
   }
   /* index.html?static shows every slide in its final state (for screenshots and PDF export) */
@@ -213,13 +221,14 @@ That sale is gone. And unless a member of staff happens to walk past, the basket
   <!-- 3. The problem, at scale -->
   <section class="slide" data-title="At scale">
     <span class="kicker rise"><i></i>The problem</span>
-    <h2 class="wide rise" style="--i:1">Stores don't lack cameras. Their cameras <em>can't tell them what needs attention.</em></h2>
-    <p class="lead rise" style="--i:2">Today, monitoring shelves means walking the aisles, checking products one by one, and hoping nothing gets missed. Repetitive, time-consuming, <b>reactive.</b></p>
-    <div class="stats">
-      <div class="stat rise" style="--i:3"><b class="count" data-to="14">14</b><span>ceiling cameras</span></div>
-      <div class="stat rise" style="--i:4"><b class="count" data-to="152">152</b><span>shelf slots to check</span></div>
-      <div class="stat rise" style="--i:5"><b class="count" data-to="94">94</b><span>products, every day</span></div>
-    </div>
+    <h2 class="stairs">
+      <span class="row"><span class="rise" style="--i:1">Stores don't lack cameras.</span></span>
+      <span class="row">
+        <span class="rise" style="--n:0; --i:3">Their cameras</span>
+        <span class="rise" style="--n:1; --i:5"><em>can't tell them what needs</em></span>
+        <span class="rise" style="--n:2; --i:7"><em class="key">attention.</em></span>
+      </span>
+    </h2>
     <aside>Now multiply that by every product, every gondola, every camera, every day.
 Today, monitoring shelves means walking the aisles, checking products one by one, and hoping nothing gets missed. It's repetitive, time-consuming, and reactive.
 The problem isn't that stores lack cameras. It's that their cameras can't tell them what needs attention.</aside>
@@ -231,7 +240,6 @@ The problem isn't that stores lack cameras. It's that their cameras can't tell t
       <div>
         <span class="kicker rise"><i></i>The solution</span>
         <h2 class="rise" style="--i:1">So we gave them <em>one.</em></h2>
-        <p class="lead rise" style="--i:2">TrustyShelf turns the ceiling cameras a store already has into a shelf-monitoring system. Every image is checked against the planogram:</p>
         <p class="lead rise" style="--i:3"><b>Is the right product in the right place?</b><br /><b>Is the shelf empty, half-stocked, or full?</b></p>
       </div>
       <figure class="shot rise" style="--i:4">
@@ -292,13 +300,7 @@ Let me show you.</aside>
   <section class="slide" data-title="Live demo">
     <span class="kicker rise"><i></i>Live demo</span>
     <h2 class="wide rise" style="--i:1">Let me <em>show you.</em></h2>
-    <div class="steps">
-      <div class="step rise" style="--i:2; --c: var(--ok)"><span class="n">01</span><h3>See the whole store</h3><p>Move between cameras and switch footage views to see each gondola.</p><i class="meter"></i></div>
-      <div class="step rise" style="--i:3; --c: var(--wrong)"><span class="n">02</span><h3>Investigate any shelf</h3><p>Colour-coded planogram areas. Pick a slot to see its product check and stock level.</p><i class="meter"></i></div>
-      <div class="step rise" style="--i:4; --c: var(--empty)"><span class="n">03</span><h3>Act on what matters</h3><p>The prioritised restock list: most urgent issue first, where it is, what to do.</p><i class="meter"></i></div>
-      <div class="step rise" style="--i:5; --c: var(--low)"><span class="n">04</span><h3>See how it changes</h3><p>Timeline and stock graphs show availability through the day.</p><i class="meter"></i></div>
-    </div>
-    <a class="cta rise" style="--i:6" id="demo" href="http://127.0.0.1:5173/" target="_blank" rel="noopener">Open the dashboard <kbd>D</kbd></a>
+    <a class="cta big rise" style="--i:2" id="demo" href="http://127.0.0.1:5173/" target="_blank" rel="noopener">Open the dashboard <kbd>D</kbd></a>
     <aside>First, see the whole store. Navigate between cameras and switch between footage views to understand what's happening on each gondola.
 Then, investigate any shelf. Show the colour-coded planogram areas, select a slot, and reveal its predicted product compliance and stock level.
 Finally, act on what matters. Open the prioritised restock list. Show the most urgent issue first, its location, and the action a staff member should take.
@@ -377,7 +379,7 @@ class PresentationController {
     this.index = 0
     this.startedAt = null
     this.el = Object.fromEntries(['progress', 'counter', 'title', 'timer', 'prev', 'next', 'notes', 'demo'].map((id) => [id, document.getElementById(id)]))
-    this.reduced = matchMedia('(prefers-reduced-motion: reduce)').matches
+    this.reduced = matchMedia('(prefers-reduced-motion: reduce)').matches || document.documentElement.classList.contains('static')
 
     // The slide that fills the screen becomes active, which plays its entry animations.
     const observer = new IntersectionObserver((entries) => {
