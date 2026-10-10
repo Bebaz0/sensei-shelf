@@ -172,7 +172,7 @@ def build_ui(
     if existing_label:
         tag = f"already labelled: {existing_label.get('stock_level', '?')}"
         if existing_label.get("planogram_compliant") is False:
-            tag += " + wrong-product"
+            tag += f" + WRONG PRODUCT {existing_label.get('observed_product_id', '?')}"
         _text(header_strip, tag, (10, 38), 0.45, (120, 220, 120))
     _text(status_strip, status, (10, 20), 0.44)
     screen = np.vstack([header_strip, main, status_strip])
@@ -253,7 +253,8 @@ def run(name: str, from_file: Path | None, out_path: Path | None) -> None:
         existing = labels.get(cam, {}).get(filename, {}).get(area_id)
         status = "1/2/3=stock  X=wrong product  U=unsure  n/p=next/prev  q=quit"
         if flagged_wrong:
-            status = f"WRONG PRODUCT -> {observed_pid}; press 1/2/3 for stock (X=cancel)  " + status
+            name = next((p["product_name"] for p in all_products(planogram, cam, names_en) if p["product_id"] == observed_pid), observed_pid)
+            status = f"WRONG PRODUCT = {name}: press 1/2/3 to SAVE with stock (X=cancel)"
         screen = build_ui(
             _draw_frame_with_quads(frame, areas, area_id),
             _load_ctx(index, cam, filename, area_id),
@@ -268,6 +269,10 @@ def run(name: str, from_file: Path | None, out_path: Path | None) -> None:
 
         if k == ord("q"):
             break
+        if flagged_wrong and k not in STOCK_KEY and k != ord("x"):
+            # The wrong product is only saved together with a stock level: do not drop it silently.
+            print("wrong product picked but not saved yet: press 1/2/3 for the stock level (X cancels)")
+            continue
         if k == ord("n"):
             i += 1
             continue
