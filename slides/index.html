@@ -201,21 +201,9 @@
 
   <!-- 2. The problem -->
   <section class="slide" data-title="The problem" style="--glow: var(--empty)">
-    <div class="cols">
-      <div>
-        <span class="kicker rise"><i></i>The problem</span>
-        <h2 class="rise" style="--i:1">It's 6 PM. A customer wants bananas. <em>The basket is empty.</em></h2>
-        <p class="lead rise" style="--i:2">That sale is gone. And unless a member of staff happens to walk past, <b>the basket stays empty.</b></p>
-      </div>
-      <figure class="shot rise" style="--i:3">
-        <img src="assets/shelf-6215-1835.jpg" alt="Ceiling camera view of a banana stand at 18:35 with two empty baskets" />
-        <svg viewBox="0 0 1280 720" preserveAspectRatio="none" aria-hidden="true">
-          <polygon class="area empty pulse" style="--i:0" points="650,334 812,331 785,428 642,433" />
-          <polygon class="area empty pulse" style="--i:1" points="832,333 972,329 931,419 803,427" />
-        </svg>
-        <figcaption class="stamp">CAMERA 6215 · 18:35</figcaption>
-      </figure>
-    </div>
+    <span class="kicker rise"><i></i>The problem</span>
+    <h2 class="wide rise" style="--i:1; font-size: clamp(36px, 6.4vw, 108px)">It's 6 PM. A customer wants bananas. <em>The basket is empty.</em></h2>
+    <p class="lead rise" style="--i:2">That sale is gone. And unless a member of staff happens to walk past, <b>the basket stays empty.</b></p>
     <aside>Imagine it's 6 PM. A customer wants bananas. The basket is empty.
 That sale is gone. And unless a member of staff happens to walk past, the basket stays empty.</aside>
   </section>
@@ -272,11 +260,6 @@ Is the right product in the right place? Is the shelf empty, half-stocked, or fu
       <div>
         <span class="kicker rise"><i></i>The solution</span>
         <h2 class="rise" style="--i:1">We don't just show you the shelves. We show you <em>what needs to be done.</em></h2>
-        <div class="pills">
-          <span class="pill rise" style="--i:5">No new cameras</span>
-          <span class="pill rise" style="--i:6">No walking every gondola</span>
-          <span class="pill rise" style="--i:7">One prioritised list</span>
-        </div>
       </div>
       <div class="flow">
         <div class="turn rise" style="--i:2">
@@ -346,38 +329,11 @@ And understand how the shelf changes. Use the timeline and stock graphs to explo
     <aside>So how do we know these recommendations are worth acting on?
 We don't rely on a single model making a guess.
 TrustyShelf combines several sources of evidence: visual features extracted directly from the images, similarities to previously labelled shelf observations, changes over time, and vision-language models that compare products against the expected shelf contents.
-These signals are combined into a confidence-aware decision system. When the evidence is uncertain, the system can use additional analysis rather than blindly trusting its first prediction.</aside>
+These signals are combined into a confidence-aware decision system. When the evidence is uncertain, the system can use additional analysis rather than blindly trusting its first prediction.
+And we evaluate the result against labelled examples using the same scoring rules as the challenge, where false alarms and missed stock problems have different costs.</aside>
   </section>
 
-  <!-- 8. Evidence: benchmark -->
-  <section class="slide" data-title="Benchmark">
-    <span class="kicker rise"><i></i>Evidence</span>
-    <h2 class="wide rise" style="--i:1">The most <em>useful</em> predictions, not the most predictions.</h2>
-    <div class="chart">
-      <div class="group rise" style="--i:2">
-        <p>Challenge score, all labelled frames (max 3,894 points)</p>
-        <div class="bar base"><span>Best fixed guess</span><div class="track"><i class="fill" style="--w: 46.8%; --c: var(--line2); --i:0"></i><span class="val" style="--w: 46.8%; --i:0">1,821 · 47%</span></div></div>
-        <div class="bar ours"><span>TrustyShelf</span><div class="track"><i class="fill" style="--w: 80%; --c: var(--accent); --i:1"></i><span class="val" style="--w: 80%; --i:1">3,115 · 80%</span></div></div>
-      </div>
-      <div class="group rise" style="--i:3">
-        <p>Evening only: the last two captures of each camera (max 608 points)</p>
-        <div class="bar base"><span>Best fixed guess</span><div class="track"><i class="fill" style="--w: 35.4%; --c: var(--line2); --i:2"></i><span class="val" style="--w: 35.4%; --i:2">215 · 35%</span></div></div>
-        <div class="bar ours"><span>TrustyShelf</span><div class="track"><i class="fill" style="--w: 66.9%; --c: var(--accent); --i:3"></i><span class="val" style="--w: 66.9%; --i:3">407 · 67%</span></div></div>
-      </div>
-    </div>
-    <div class="stats" style="margin-top: clamp(12px, 2.6vh, 30px)">
-      <div class="stat rise" style="--i:4"><b style="font-size: clamp(26px, 3.6vw, 60px)">98%</b><span>product checks correct</span></div>
-      <div class="stat rise" style="--i:5"><b style="font-size: clamp(26px, 3.6vw, 60px)">91%</b><span>stock levels correct</span></div>
-      <div class="stat rise" style="--i:6"><b style="font-size: clamp(26px, 3.6vw, 60px)">1,947</b><span>labelled shelf areas</span></div>
-    </div>
-    <p class="foot rise" style="--i:7">Leave-one-frame-out on 179 frames from one day, labelled by our team. Scored with the challenge rules. This run uses the image and labelled look-alike signals only; the vision-language model is not included in these numbers.</p>
-    <aside>And we evaluate the result against labelled examples using the same scoring rules as the challenge, where false alarms and missed stock problems have different costs.
-Our goal isn't to produce the most predictions. It's to produce the most useful ones.
-
-Numbers: 80% of the maximum score across the day, 67% on evening frames, against 47% and 35% for always giving the best fixed answer.</aside>
-  </section>
-
-  <!-- 9. Closing -->
+  <!-- 8. Closing -->
   <section class="slide" data-title="Closing">
     <span class="kicker rise"><i></i>Fresh produce has a short shelf life</span>
     <h2 class="wide rise" style="--i:1">Less time searching. <em>More time solving.</em></h2>
@@ -398,7 +354,7 @@ TrustyShelf. Smarter shelves, better decisions.</aside>
 
 <div class="hud">
   <div class="meta">
-    <span id="counter">1 / 9</span>
+    <span id="counter">1 / 8</span>
     <span id="title" class="hide-sm"></span>
     <button class="timer" id="timer" title="Pitch timer (R resets)">0:00 / 3:00</button>
   </div>
