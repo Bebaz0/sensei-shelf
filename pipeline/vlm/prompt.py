@@ -4,7 +4,7 @@ Bump PROMPT_VERSION on every change to SYSTEM, area_prompt or answer_schema: it 
 """
 from pipeline.common.config import STOCK_VALUES
 
-PROMPT_VERSION = "v1"
+PROMPT_VERSION = "v2"
 
 # Values of `observed` besides the candidate product ids.
 NO_PRODUCT = ("other", "empty", "occluded")
@@ -18,9 +18,9 @@ You get two pictures of the same area:
 Judge only what is inside the outline, and only the part the camera can see.
 
 Stock level of the area:
-- empty: no product, or only a few stray items; mostly bare shelf, tray, crate or basket.
-- half: clearly stocked but with visible gaps; roughly 30% to 70% of the area is covered or piled.
-- full: covered or piled across nearly the whole area, no meaningful gap.
+- empty: 0% to 10% of the area is covered or piled; bare shelf, tray, crate or basket, or only a few stray items.
+- half: 10% to 50% of the area is covered or piled.
+- full: more than 50% of the area is covered or piled.
 Loose produce: judge coverage and pile height. Packaged produce (bags, nets, punnets): judge how many packs there are against the space. Price labels, shelf rails, crates, baskets, plastic liners and paper are not product. Give your honest best estimate; do not lean low or high.
 
 Product in the area:

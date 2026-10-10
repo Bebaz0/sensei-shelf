@@ -6,24 +6,28 @@ from pathlib import Path
 import cv2
 import numpy as np
 
-from pipeline.common.config import CROPS_INDEX, FEATURES, OUT
+from pipeline.common.config import CROPS_INDEX, FEATURES, LABELS, OUT
 
 _RUN_FRAMES = OUT / "run_frames.json"
 _HSV_BINS = 32
 
 
-def _load_image(path: str | Path) -> np.ndarray | None:
-    img = cv2.imread(str(path))
+def _load_image(path: str | Path) -> tuple[np.ndarray, np.ndarray] | None:
+    """RGB crop and boolean validity mask (warp alpha > 0; all True for a plain BGR file)."""
+    img = cv2.imread(str(path), cv2.IMREAD_UNCHANGED)
     if img is None:
         return None
-    return cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+    mask = img[:, :, 3] > 0 if img.ndim == 3 and img.shape[2] == 4 else np.ones(img.shape[:2], dtype=bool)
+    bgr = img[:, :, :3] if img.ndim == 3 else cv2.cvtColor(img, cv2.COLOR_GRAY2BGR)
+    return cv2.cvtColor(bgr, cv2.COLOR_BGR2RGB), mask
 
 
-def _hsv_hist(img_rgb: np.ndarray) -> np.ndarray:
+def _hsv_hist(img_rgb: np.ndarray, mask: np.ndarray | None = None) -> np.ndarray:
     hsv = cv2.cvtColor(img_rgb, cv2.COLOR_RGB2HSV).astype(np.float32)
-    h = cv2.calcHist([hsv], [0], None, [_HSV_BINS], [0, 180]).flatten()
-    s = cv2.calcHist([hsv], [1], None, [_HSV_BINS], [0, 256]).flatten()
-    v = cv2.calcHist([hsv], [2], None, [_HSV_BINS], [0, 256]).flatten()
+    m = None if mask is None else mask.astype(np.uint8)
+    h = cv2.calcHist([hsv], [0], m, [_HSV_BINS], [0, 180]).flatten()
+    s = cv2.calcHist([hsv], [1], m, [_HSV_BINS], [0, 256]).flatten()
+    v = cv2.calcHist([hsv], [2], m, [_HSV_BINS], [0, 256]).flatten()
     hist = np.concatenate([h, s, v])
     total = hist.sum()
     return hist / total if total > 0 else hist
@@ -38,12 +42,14 @@ def _chi2_dist(a: np.ndarray, b: np.ndarray) -> float:
 def area_features(
     crop: np.ndarray,
     visible_fraction: float = 1.0,
-    reference: np.ndarray | None = None,
+    reference: tuple[np.ndarray, np.ndarray] | None = None,
+    mask: np.ndarray | None = None,
 ) -> dict:
     """Return feature dict for one 256x256 RGB warp crop.
 
     fill_ratio: fraction of pixels that differ from the border background estimate.
-    hist_dist_ref: chi-squared HSV histogram distance to reference crop; 0 if no reference.
+    hist_dist_ref: chi-squared HSV histogram distance to reference (rgb, mask); 0 if no reference.
+    mask: pixels inside the camera view (warp alpha > 0); off-image pixels are ignored everywhere.
     edge_density: fraction of pixels that are Canny edges.
     visible_fraction: passed through from the crops index.
     """
@@ -56,20 +62,24 @@ def area_features(
     border_mask[-8:, :] = True
     border_mask[:, :8] = True
     border_mask[:, -8:] = True
-    border_pixels = hsv[border_mask]
+    if mask is None:
+        mask = np.ones(hsv.shape[:2], dtype=bool)
+    border_pixels = hsv[border_mask & mask] if (border_mask & mask).any() else hsv[mask]
+    if len(border_pixels) == 0:
+        return {"fill_ratio": 0.0, "hist_dist_ref": 0.0, "edge_density": 0.0, "visible_fraction": round(visible_fraction, 4)}
     bg_s = float(np.median(border_pixels[:, 1]))
     bg_v = float(np.median(border_pixels[:, 2]))
 
     s_diff = np.abs(hsv[:, :, 1].astype(float) - bg_s)
     v_diff = np.abs(hsv[:, :, 2].astype(float) - bg_v)
-    fill_ratio = float(((s_diff > 30) | (v_diff > 40)).mean())
+    fill_ratio = float(((s_diff > 30) | (v_diff > 40))[mask].mean())
 
     hist_dist_ref = 0.0
     if reference is not None:
-        hist_dist_ref = _chi2_dist(_hsv_hist(crop), _hsv_hist(reference))
+        hist_dist_ref = _chi2_dist(_hsv_hist(crop, mask), _hsv_hist(*reference))
 
     edges = cv2.Canny(gray, threshold1=50, threshold2=150)
-    edge_density = float((edges > 0).mean())
+    edge_density = float((edges > 0)[mask].mean())
 
     return {
         "fill_ratio": round(fill_ratio, 4),
@@ -83,8 +93,9 @@ def run(index_path: Path, out_path: Path, run_frames: list[tuple[str, str]] | No
     """Compute area_features for every crop in the index, write features.json.
 
     run_frames: list of (cam_id, filename) to process; None means process all.
-    The earliest frame of each (cam, area) is used as the hist_dist_ref reference
-    (proxy for a stocked/full state until labelled reference crops are available).
+    The reference of an area is its earliest frame labelled compliant in labels/dev.json, other than the
+    frame being scored (never the first frame of the day: pre-opening shelves hold other products).
+    No labels, no reference: hist_dist_ref is 0.
     """
     if not index_path.exists():
         print(f"crops_index not found: {index_path}")
@@ -95,14 +106,14 @@ def run(index_path: Path, out_path: Path, run_frames: list[tuple[str, str]] | No
         {(cam, fn) for cam, fn in run_frames} if run_frames is not None else None
     )
 
-    # Pre-build reference map: (cam, area_id) -> warp path of the earliest frame.
-    reference_path: dict[tuple[str, str], str] = {}
-    for cam_id, frames in index.items():
-        for filename in sorted(frames):
-            for area_id, meta in frames[filename].items():
-                key = (cam_id, area_id)
-                if key not in reference_path:
-                    reference_path[key] = meta.get("warp", "")
+    labels = json.loads(LABELS.read_text()) if LABELS.is_file() else {}
+    # (cam, area) -> filenames labelled compliant, oldest first
+    compliant: dict[tuple[str, str], list[str]] = {}
+    for cam_id, fs in labels.items():
+        for filename in sorted(fs):
+            for area_id, lab in fs[filename].items():
+                if lab.get("planogram_compliant") is True and not lab.get("unsure"):
+                    compliant.setdefault((cam_id, area_id), []).append(filename)
 
     out: dict = {}
     for cam_id, frames in index.items():
@@ -110,17 +121,21 @@ def run(index_path: Path, out_path: Path, run_frames: list[tuple[str, str]] | No
             if frame_set is not None and (cam_id, filename) not in frame_set:
                 continue
             for area_id, meta in areas.items():
-                crop = _load_image(meta.get("warp", ""))
-                if crop is None:
+                loaded = _load_image(meta.get("warp", ""))
+                if loaded is None:
                     continue
+                crop, mask = loaded
 
-                ref_warp = reference_path.get((cam_id, area_id), "")
-                ref = _load_image(ref_warp) if ref_warp and ref_warp != meta.get("warp") else None
+                ref = None
+                ref_fn = next((f for f in compliant.get((cam_id, area_id), []) if f != filename), None)
+                if ref_fn and ref_fn in frames:
+                    ref = _load_image(frames[ref_fn].get(area_id, {}).get("warp", ""))
 
                 feats = area_features(
                     crop,
                     visible_fraction=meta.get("visible_fraction", 1.0),
                     reference=ref,
+                    mask=mask,
                 )
                 out.setdefault(cam_id, {}).setdefault(filename, {})[area_id] = feats
 

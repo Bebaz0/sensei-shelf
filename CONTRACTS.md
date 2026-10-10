@@ -32,10 +32,11 @@ Producer: `pipeline/pixel` (B). Consumer: `decide`.
 {"6215": {"1751052241.jpg": {"6215_2": {
   "fill_ratio": 0.62, "hist_dist_ref": 0.18, "edge_density": 0.31, "visible_fraction": 1.0,
   "knn": {"empty": 0.0, "half": 0.7, "full": 0.3, "p_wrong": 0.05},
+  "probe": {"empty": 0.1, "half": 0.6, "full": 0.3},
   "temporal": {"prev_stock": "full", "next_stock": null, "dt_prev_s": 3900, "dt_next_s": null}
 }}}}
 ```
-`knn` and `temporal` are present only when labels exist and never use the frame itself. `next_stock` and `dt_next_s` are `null` when there is no later frame (validation frames may be later than every train frame).
+`knn`, `probe` and `temporal` are present only when labels exist and never use the frame itself (`probe` = embedding probe, stock probabilities only; B keeps whichever of `knn` and `probe` wins, `decide` uses any that is present). `next_stock` and `dt_next_s` are `null` when there is no later frame (validation frames may be later than every train frame).
 
 ## vlm.json
 Producer: `pipeline/vlm` (V). Consumer: `decide`.
@@ -58,6 +59,8 @@ Producer: `pipeline/decide` (C). Consumer: `dashboard` (D).
   "crop": "out/crops/6215/1751052241_6215_2_ctx.png"
 }}}}
 ```
+`reason` lists each source's vote and `p_wrong` (e.g. `gemini: half, knn: full; p_wrong 0.04`) or says the area fell back to the prior. `observed_product_id` is set only when the area is predicted non-compliant. `low_confidence` = top stock probability below 0.6 or `p_wrong` between 0.3 and 0.7.
+
 `scripts/sync_dashboard.sh [N]` copies a small demo run into `dashboard/public/data/`: N frames per camera (default 3, evenly spaced, always the last), JPG thumbnails of crops (<=320 px) and of the kept full frames (<=960 px, at `data/frames/<cam>/<file>`), with `crop` paths rewritten to `data/crops/...`. The committed demo stays a few MB; never commit full-size PNG crops. Run it after a train run: it reads the full frames from `IMAGES_DIR`.
 
 ## submission.json

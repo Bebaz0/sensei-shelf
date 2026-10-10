@@ -1,11 +1,12 @@
 """Owner B. Merge labels/<name>.json files into labels/dev.json.
 
-Merge rule: files are processed in alphabetical order; last write wins per area.
+Merge rule: per area the majority of labellers wins, a tie takes the lowest stock level (cheapest in the score).
 Use --agreement to report areas where labellers disagree instead of merging.
 """
 import argparse
 import json
 import sys
+from collections import Counter
 from pathlib import Path
 
 LABELS_DIR = Path(__file__).resolve().parents[2] / "labels"
@@ -26,6 +27,16 @@ def _load_label_files(labels_dir: Path) -> dict[str, dict]:
     return result
 
 
+def _resolve(areas: list[dict]) -> dict:
+    """Majority stock level and compliance; ties take the lowest stock and non-compliant."""
+    stock = Counter(a.get("stock_value", _STOCK.get(a.get("stock_level"))) for a in areas)
+    comp = Counter(a.get("planogram_compliant") for a in areas)
+    best_stock = min(v for v, n in stock.items() if n == max(stock.values()))
+    best_comp = min((c for c, n in comp.items() if n == max(comp.values())), key=lambda c: c is not False)
+    pick = next(a for a in areas if a.get("stock_value", _STOCK.get(a.get("stock_level"))) == best_stock)
+    return {**pick, "planogram_compliant": best_comp, "stock_value": best_stock}
+
+
 def merge(labels_dir: Path = LABELS_DIR, out_path: Path = DEV_JSON) -> dict:
     """Merge all labeller files into dev.json; return the merged dict."""
     labellers = _load_label_files(labels_dir)
@@ -33,12 +44,15 @@ def merge(labels_dir: Path = LABELS_DIR, out_path: Path = DEV_JSON) -> dict:
         print("No label files found.", file=sys.stderr)
         merged: dict = {}
     else:
-        merged = {}
-        for _name, data in labellers.items():
+        votes: dict[tuple, list[dict]] = {}
+        for data in labellers.values():
             for cam_id, cam in data.items():
                 for filename, frame in cam.items():
                     for area_id, area in frame.items():
-                        merged.setdefault(cam_id, {}).setdefault(filename, {})[area_id] = area
+                        votes.setdefault((cam_id, filename, area_id), []).append(area)
+        merged = {}
+        for (cam_id, filename, area_id), areas in votes.items():
+            merged.setdefault(cam_id, {}).setdefault(filename, {})[area_id] = _resolve(areas)
 
     out_path.write_text(json.dumps(merged, indent=2))
     total = sum(
