@@ -1,13 +1,7 @@
-"""Spec for pipeline/eval/score.py: the brief's worked example must give 320.
-
-xfail until the scorer is implemented; remove the marker then.
-"""
-import pytest
-
+"""Spec for pipeline/eval/score.py: the brief's worked example must give 320."""
 from pipeline.eval.score import score
 
 
-@pytest.mark.xfail(raises=NotImplementedError, strict=False)
 def test_brief_example_gives_320():
     # 270 id ok, 19 id wrong, 230 stock ok, 35 below, 24 above (289 areas)
     pred, gt = {"cam": {"f.jpg": {}}}, {"cam": {"f.jpg": {}}}
@@ -21,7 +15,6 @@ def test_brief_example_gives_320():
     assert score(pred, gt)["total"] == 270 - 2 * 19 + 230 - 2 * 35 - 3 * 24
 
 
-@pytest.mark.xfail(raises=NotImplementedError, strict=False)
 def test_missing_area_costs_five():
     gt = {"cam": {"f.jpg": {"a": {"planogram_compliant": True, "stock_value": 0.5}}}}
     assert score({"cam": {"f.jpg": {}}}, gt)["total"] == -5
