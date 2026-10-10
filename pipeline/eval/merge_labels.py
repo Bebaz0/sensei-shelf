@@ -21,9 +21,13 @@ def _load_label_files(labels_dir: Path) -> dict[str, dict]:
         if p.name == "dev.json":
             continue
         try:
-            result[p.stem] = json.loads(p.read_text())
+            data = json.loads(p.read_text())
         except json.JSONDecodeError as e:
             print(f"warning: skipping {p.name}: {e}", file=sys.stderr)
+            continue
+        if not isinstance(data, dict) or not all(isinstance(v, dict) for v in data.values()):
+            continue  # not a per-labeller file (e.g. assignments.json)
+        result[p.stem] = data
     return result
 
 
