@@ -37,6 +37,13 @@ THUMB_SIZE = (128, 72)  # (width, height) of the edge thumbnail compared against
 # Below this correlation with the best camera the match is still used, but a warning is printed.
 THUMB_MIN_CORR = 0.5
 
+# VLM stage. Bump PROMPT_VERSION in pipeline/vlm/prompt.py when the prompt changes (it is part of the cache key).
+VLM_CACHE = CACHE_DIR / "vlm"
+GEMINI_MODEL = "gemini-3.1-flash-lite"  # pinned, see docs/DECISIONS.md
+VLM_WORKERS = 16  # parallel API calls
+VLM_RPM = 15  # requests per minute allowed by the API key (free tier: 15); 0 = no limit (paid key)
+VLM_RETRIES = 5  # attempts per call, waiting 4, 8, 16, 32 s in between
+
 # Decision stage.
 EMPTY_IS_COMPLIANT = True  # pending mentor answer, see docs/DECISIONS.md
 STOCK_BIAS = 0.0  # > 0 leans the stock decision lower

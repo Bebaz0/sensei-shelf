@@ -1,0 +1,566 @@
+{
+ "16429": {
+  "name_pt": "ABACATE HASS PRONTO COMER CNT KG",
+  "name_en": "Hass avocado (ready to eat)",
+  "unit": "loose",
+  "hint": "small oval fruit with dark green to purple-black pebbly skin"
+ },
+ "23366": {
+  "name_pt": "ABACAXI SUPER SWEET KG",
+  "name_en": "Pineapple",
+  "unit": "loose",
+  "hint": "golden-brown scaly body with a green spiky crown"
+ },
+ "15816": {
+  "name_pt": "ABÓBORA HOKAIDO R0 KG",
+  "name_en": "Hokkaido pumpkin (red kuri squash)",
+  "unit": "loose",
+  "hint": "small round bright orange squash"
+ },
+ "21254": {
+  "name_pt": "ALFACE FRISADA SACO CNT KG",
+  "name_en": "Curly lettuce in a bag",
+  "unit": "loose",
+  "hint": "frilly light green lettuce heads, each in a clear plastic sleeve"
+ },
+ "31119": {
+  "name_pt": "ALHO SECO CNT 250GR",
+  "name_en": "Dry garlic, 250 g net",
+  "unit": "package",
+  "hint": "white garlic bulbs packed in small nets"
+ },
+ "11916": {
+  "name_pt": "ALHO SECO KG",
+  "name_en": "Dry garlic, loose",
+  "unit": "loose",
+  "hint": "loose white garlic bulbs"
+ },
+ "31228": {
+  "name_pt": "ALPERCE CNT CAL. 45/55 KG",
+  "name_en": "Apricot",
+  "unit": "loose",
+  "hint": "small round orange-yellow stone fruit"
+ },
+ "11908": {
+  "name_pt": "BANANA CAT I CNT KG",
+  "name_en": "Banana (standard)",
+  "unit": "loose",
+  "hint": "long yellow bananas in big hands, often on dark trays or hanging"
+ },
+ "20923": {
+  "name_pt": "BANANA DA MADEIRA CNT KG",
+  "name_en": "Madeira banana",
+  "unit": "loose",
+  "hint": "short small yellow bananas in tight bunches, often with a blue band"
+ },
+ "15591": {
+  "name_pt": "BANANA PAO CNT KG",
+  "name_en": "Plantain (cooking banana)",
+  "unit": "loose",
+  "hint": "large thick bananas, green to yellow with black marks"
+ },
+ "22965": {
+  "name_pt": "BATATA ASSAR CNT EMB. 2 KG",
+  "name_en": "Baking potatoes, 2 kg bag",
+  "unit": "package",
+  "hint": "bags of large pale-skinned potatoes"
+ },
+ "22193": {
+  "name_pt": "BATATA BRANCA CNT EMB. 3KG",
+  "name_en": "White potatoes, 3 kg bag",
+  "unit": "package",
+  "hint": "bags of pale yellow-skinned potatoes"
+ },
+ "12661": {
+  "name_pt": "BATATA DOCE CNT KG",
+  "name_en": "Sweet potato, loose",
+  "unit": "loose",
+  "hint": "elongated tubers with orange-pink to purple-red skin"
+ },
+ "22176": {
+  "name_pt": "BATATA ESPECIAL COZER SC EMB. 3KG",
+  "name_en": "Boiling potatoes, 3 kg bag",
+  "unit": "package",
+  "hint": "bags of pale-skinned potatoes"
+ },
+ "21965": {
+  "name_pt": "BATATA VERMELHA CNT EMB. 3KG",
+  "name_en": "Red potatoes, 3 kg bag",
+  "unit": "package",
+  "hint": "bags of red or pink-skinned potatoes"
+ },
+ "11912": {
+  "name_pt": "BATATA VERMELHA CNT KG",
+  "name_en": "Red potatoes, loose",
+  "unit": "loose",
+  "hint": "loose potatoes with red or pink skin"
+ },
+ "15753": {
+  "name_pt": "BATATA VERMELHA EMB:. 5 KG",
+  "name_en": "Red potatoes, 5 kg bag",
+  "unit": "package",
+  "hint": "large bags of red or pink-skinned potatoes"
+ },
+ "19454": {
+  "name_pt": "BATATA ZER0%D 4KG",
+  "name_en": "Potatoes (zero-waste range), 4 kg bag",
+  "unit": "package",
+  "hint": "large bags of potatoes"
+ },
+ "21208": {
+  "name_pt": "BERINGELA CNT KG",
+  "name_en": "Aubergine (eggplant)",
+  "unit": "loose",
+  "hint": "glossy dark purple elongated fruit with a green cap"
+ },
+ "22083": {
+  "name_pt": "CEBOLA CNT EMB. 1.5 KG",
+  "name_en": "Onions, 1.5 kg net",
+  "unit": "package",
+  "hint": "nets of brown-yellow onions"
+ },
+ "21915": {
+  "name_pt": "CEBOLA DOCE CNT EMB 1 KG",
+  "name_en": "Sweet onions, 1 kg net",
+  "unit": "package",
+  "hint": "nets of pale yellow onions"
+ },
+ "11914": {
+  "name_pt": "CEBOLA NOVA CNT KG",
+  "name_en": "New onion, loose",
+  "unit": "loose",
+  "hint": "loose onions with light brown or yellow skin"
+ },
+ "19127": {
+  "name_pt": "CEBOLA ROXA CNT 1KG",
+  "name_en": "Red onions, 1 kg net",
+  "unit": "package",
+  "hint": "nets of purple-red onions"
+ },
+ "11917": {
+  "name_pt": "CEBOLA ROXA CNT KG",
+  "name_en": "Red onion, loose",
+  "unit": "loose",
+  "hint": "loose onions with purple-red skin"
+ },
+ "18090": {
+  "name_pt": "CEBOLINHA FRANCESA CNT 500G",
+  "name_en": "Small French onions, 500 g net",
+  "unit": "package",
+  "hint": "nets of small onions"
+ },
+ "3579": {
+  "name_pt": "CEREJA 24+ 500 GR",
+  "name_en": "Cherries, 500 g punnet",
+  "unit": "package",
+  "hint": "dark red cherries in clear plastic punnets"
+ },
+ "18329": {
+  "name_pt": "CHUCHU CNT KG",
+  "name_en": "Chayote",
+  "unit": "loose",
+  "hint": "pale green pear-shaped wrinkled squash"
+ },
+ "26600": {
+  "name_pt": "CITR ALGARVE IGP LARANJA 3/4/5 1.5 KG",
+  "name_en": "Algarve oranges, 1.5 kg net",
+  "unit": "package",
+  "hint": "nets of oranges"
+ },
+ "15730": {
+  "name_pt": "CITRINOS ALGARVE IGP LARANJA 6/7/8 3KG",
+  "name_en": "Algarve oranges, 3 kg net",
+  "unit": "package",
+  "hint": "large nets of oranges"
+ },
+ "11906": {
+  "name_pt": "CITRINOS DO ALGARVE IGP LARANJA 70/95 KG",
+  "name_en": "Algarve oranges, loose",
+  "unit": "loose",
+  "hint": "loose round oranges, often in green crates"
+ },
+ "12756": {
+  "name_pt": "CLEMENTINA CAL 60/75 CNT KG",
+  "name_en": "Clementine, loose",
+  "unit": "loose",
+  "hint": "small slightly flattened orange citrus, smaller than an orange"
+ },
+ "21152": {
+  "name_pt": "COUVE BRANCA CNT KG",
+  "name_en": "White cabbage",
+  "unit": "loose",
+  "hint": "tight round heads, pale green to white"
+ },
+ "21178": {
+  "name_pt": "COUVE BROCOLO CNT KG",
+  "name_en": "Broccoli",
+  "unit": "loose",
+  "hint": "dark green heads of florets"
+ },
+ "21114": {
+  "name_pt": "COUVE FLOR CNT KG",
+  "name_en": "Cauliflower",
+  "unit": "loose",
+  "hint": "white heads wrapped in green leaves"
+ },
+ "15651": {
+  "name_pt": "COUVE PORTUGUESA/PENCA CNT KG",
+  "name_en": "Portuguese cabbage (penca)",
+  "unit": "loose",
+  "hint": "large loose dark green leaves with thick white ribs"
+ },
+ "15653": {
+  "name_pt": "COUVE ROXA CNT KG",
+  "name_en": "Red cabbage",
+  "unit": "loose",
+  "hint": "tight round purple heads"
+ },
+ "11893": {
+  "name_pt": "CURGETE VERDE CNT KG",
+  "name_en": "Courgette (zucchini)",
+  "unit": "loose",
+  "hint": "smooth dark green cylinders"
+ },
+ "21413": {
+  "name_pt": "FEIJÃO VERDE CNT KG",
+  "name_en": "Green beans",
+  "unit": "loose",
+  "hint": "a pile of long flat green pods"
+ },
+ "22411": {
+  "name_pt": "GENGIBRE CNT KG",
+  "name_en": "Ginger",
+  "unit": "loose",
+  "hint": "beige knobbly roots"
+ },
+ "30368": {
+  "name_pt": "GOIABA CNT KG",
+  "name_en": "Guava",
+  "unit": "loose",
+  "hint": "small round yellow-green fruit"
+ },
+ "25211": {
+  "name_pt": "GRANADILHA 80 G",
+  "name_en": "Granadilla (sweet passion fruit), 80 g each",
+  "unit": "package",
+  "hint": "round smooth orange fruit with a short stem"
+ },
+ "20508": {
+  "name_pt": "KIWI CNT BIO 400 G",
+  "name_en": "Organic kiwi, 400 g pack",
+  "unit": "package",
+  "hint": "fuzzy brown kiwis in a tray or punnet"
+ },
+ "15781": {
+  "name_pt": "KIWI GOLD ZESPRI 500 G",
+  "name_en": "Zespri gold kiwi, 500 g pack",
+  "unit": "package",
+  "hint": "smooth golden-brown kiwis in a box or punnet"
+ },
+ "1164": {
+  "name_pt": "KIWI ZESPRI 500 GR",
+  "name_en": "Zespri green kiwi, 500 g pack",
+  "unit": "package",
+  "hint": "fuzzy brown kiwis in a box or punnet"
+ },
+ "14646": {
+  "name_pt": "KIWI ZESPRI KG",
+  "name_en": "Zespri green kiwi, loose",
+  "unit": "loose",
+  "hint": "loose fuzzy brown oval fruit"
+ },
+ "11890": {
+  "name_pt": "LIMA CNT KG",
+  "name_en": "Lime",
+  "unit": "loose",
+  "hint": "small round dark green citrus"
+ },
+ "11889": {
+  "name_pt": "LIMÃO CNT 60/75 KG",
+  "name_en": "Lemon",
+  "unit": "loose",
+  "hint": "yellow oval citrus"
+ },
+ "16633": {
+  "name_pt": "MACA FUJI CNT CAL. 73/85 KG IMP",
+  "name_en": "Fuji apple, loose",
+  "unit": "loose",
+  "hint": "apples with pink-red stripes over a yellow background"
+ },
+ "11919": {
+  "name_pt": "MACA GRANNY SMITH CNT CAL.73/85 KG",
+  "name_en": "Granny Smith apple, loose",
+  "unit": "loose",
+  "hint": "uniformly bright green apples"
+ },
+ "19133": {
+  "name_pt": "MACA PINK LADY CNT CAL.73/80 KG",
+  "name_en": "Pink Lady apple, loose",
+  "unit": "loose",
+  "hint": "apples with a pink-red blush over yellow-green"
+ },
+ "32170": {
+  "name_pt": "MACA REINETA CNT CAL 70/80 KG",
+  "name_en": "Reineta (russet) apple, loose",
+  "unit": "loose",
+  "hint": "dull green-brown rough-skinned, slightly flattened apples"
+ },
+ "21122": {
+  "name_pt": "MAMAO INTEIRO CNT KG",
+  "name_en": "Papaya (large), whole",
+  "unit": "loose",
+  "hint": "large elongated fruit, green turning yellow-orange"
+ },
+ "21789": {
+  "name_pt": "MANGA AVIÃO PALMER KG",
+  "name_en": "Palmer mango",
+  "unit": "loose",
+  "hint": "large elongated mangoes, dark red-purple with green"
+ },
+ "11913": {
+  "name_pt": "MANGA CNT KG",
+  "name_en": "Mango",
+  "unit": "loose",
+  "hint": "oval mangoes, green with red and yellow"
+ },
+ "22108": {
+  "name_pt": "MARACUJA ROXO CNT KG",
+  "name_en": "Purple passion fruit",
+  "unit": "loose",
+  "hint": "small round dark purple fruit, often wrinkled"
+ },
+ "20818": {
+  "name_pt": "MAÇA FUJI CARIOCA 65/75 1 KG IMP",
+  "name_en": "Fuji apples, 1 kg bag",
+  "unit": "package",
+  "hint": "bags of pink-red striped apples"
+ },
+ "26786": {
+  "name_pt": "MAÇA GOLDEN NACIONAL 75/85 KG",
+  "name_en": "Golden apple, loose",
+  "unit": "loose",
+  "hint": "yellow to yellow-green apples"
+ },
+ "32749": {
+  "name_pt": "MAÇA GOLDEN NACIONAL CAL. 65/70 1 KG",
+  "name_en": "Golden apples, 1 kg bag",
+  "unit": "package",
+  "hint": "bags of yellow to yellow-green apples"
+ },
+ "30491": {
+  "name_pt": "MAÇA VERMELHA BIO 500 G",
+  "name_en": "Organic red apples, 500 g pack",
+  "unit": "package",
+  "hint": "packs of red apples"
+ },
+ "32748": {
+  "name_pt": "MAÇÂ GALA CNT 60/70 1 KG IMP",
+  "name_en": "Gala apples, 1 kg bag",
+  "unit": "package",
+  "hint": "bags of red-orange striped apples"
+ },
+ "32262": {
+  "name_pt": "MAÇÃ COSMIC CRISP 75/85 KG",
+  "name_en": "Cosmic Crisp apple, loose",
+  "unit": "loose",
+  "hint": "deep dark red apples with small pale speckles"
+ },
+ "13702": {
+  "name_pt": "MAÇÃ GALA CNT CAL 70/80 KG IMP",
+  "name_en": "Gala apple, loose",
+  "unit": "loose",
+  "hint": "apples with red-orange stripes over yellow"
+ },
+ "16137": {
+  "name_pt": "MELANCIA MINI INTEIRA CNT KG",
+  "name_en": "Mini watermelon",
+  "unit": "loose",
+  "hint": "small round watermelons"
+ },
+ "16143": {
+  "name_pt": "MELANCIA PRETA POUCAS SEMENTES INT KG",
+  "name_en": "Dark-skinned watermelon (few seeds)",
+  "unit": "loose",
+  "hint": "large watermelons with uniformly dark green skin"
+ },
+ "15600": {
+  "name_pt": "MELANCIA RISCADA P/ SEMENTES INT CNT KG",
+  "name_en": "Striped watermelon",
+  "unit": "loose",
+  "hint": "large watermelons with light and dark green stripes"
+ },
+ "16336": {
+  "name_pt": "MELAO VERDE INTEIRO CNT KG",
+  "name_en": "Green melon (Piel de Sapo type)",
+  "unit": "loose",
+  "hint": "oval melons with dark green mottled skin"
+ },
+ "30633": {
+  "name_pt": "MELOA CANTALUPE/CHARENTAIS INTEIR CNT KG",
+  "name_en": "Cantaloupe / Charentais melon",
+  "unit": "loose",
+  "hint": "small round melons, pale grey-beige skin with green stripes"
+ },
+ "11891": {
+  "name_pt": "MELOA GALIA INTEIRA CNT KG",
+  "name_en": "Galia melon",
+  "unit": "loose",
+  "hint": "round melons with yellow-tan netted skin"
+ },
+ "18533": {
+  "name_pt": "MINI TOMATE CACHO CNT 500G",
+  "name_en": "Mini vine tomatoes, 500 g pack",
+  "unit": "package",
+  "hint": "packs of small red tomatoes on the vine"
+ },
+ "1156": {
+  "name_pt": "MORANGO EMB. 500 GR",
+  "name_en": "Strawberries, 500 g punnet",
+  "unit": "package",
+  "hint": "red strawberries in clear plastic punnets"
+ },
+ "32532": {
+  "name_pt": "NECTARINA R0 A/AA KG",
+  "name_en": "Nectarine",
+  "unit": "loose",
+  "hint": "smooth shiny red and yellow stone fruit"
+ },
+ "11892": {
+  "name_pt": "PAPAIA DE AVIÃO INTEIRA CNT KG",
+  "name_en": "Papaya (small), whole",
+  "unit": "loose",
+  "hint": "small pear-shaped fruit, yellow-green"
+ },
+ "11895": {
+  "name_pt": "PEPINO CNT KG",
+  "name_en": "Cucumber",
+  "unit": "loose",
+  "hint": "long dark green cylinders, slightly bumpy"
+ },
+ "11909": {
+  "name_pt": "PERA CONFERENCE CAL 60/75 CNT KG",
+  "name_en": "Conference pear",
+  "unit": "loose",
+  "hint": "elongated green pears with brown russet patches"
+ },
+ "11901": {
+  "name_pt": "PERA PACKAMS CNT CAL.65/75 KG",
+  "name_en": "Packham pear",
+  "unit": "loose",
+  "hint": "rounder bumpy green to yellow pears"
+ },
+ "32533": {
+  "name_pt": "PESSEGO PARAGUAYO R0 A/AA/AAA KG",
+  "name_en": "Flat peach (paraguayo)",
+  "unit": "loose",
+  "hint": "flattened disc-shaped peaches, red and yellow"
+ },
+ "32530": {
+  "name_pt": "PESSEGO R0 A/AA KG",
+  "name_en": "Peach",
+  "unit": "loose",
+  "hint": "round fuzzy red and yellow stone fruit"
+ },
+ "11896": {
+  "name_pt": "PIMENTO VERDE CNT KG",
+  "name_en": "Green bell pepper",
+  "unit": "loose",
+  "hint": "blocky glossy green peppers"
+ },
+ "11897": {
+  "name_pt": "PIMENTO VERMELHO CNT KG",
+  "name_en": "Red bell pepper",
+  "unit": "loose",
+  "hint": "blocky glossy red peppers"
+ },
+ "15835": {
+  "name_pt": "PITAYA AMARELA 200G",
+  "name_en": "Yellow dragon fruit (pitaya), 200 g each",
+  "unit": "package",
+  "hint": "yellow knobbly oval fruit"
+ },
+ "15855": {
+  "name_pt": "PITAYA VERMELHA 300G",
+  "name_en": "Red dragon fruit (pitaya), 300 g each",
+  "unit": "package",
+  "hint": "magenta oval fruit with green-tipped scales"
+ },
+ "21120": {
+  "name_pt": "TOMATE CACHO CNT KG",
+  "name_en": "Vine tomatoes, loose",
+  "unit": "loose",
+  "hint": "red tomatoes attached to green vines"
+ },
+ "22304": {
+  "name_pt": "TOMATE CHERRY BIO EMB. 250 GR",
+  "name_en": "Organic cherry tomatoes, 250 g punnet",
+  "unit": "package",
+  "hint": "punnets of small round red tomatoes"
+ },
+ "18254": {
+  "name_pt": "TOMATE CHERRY VERMELHO CNT 250GR",
+  "name_en": "Red cherry tomatoes, 250 g punnet",
+  "unit": "package",
+  "hint": "punnets of small round red tomatoes"
+ },
+ "11898": {
+  "name_pt": "TOMATE CHUCHA CNT KG",
+  "name_en": "Plum tomato, loose",
+  "unit": "loose",
+  "hint": "elongated oval red tomatoes"
+ },
+ "18514": {
+  "name_pt": "TOMATE CORAÇÃO DE BOI CNT KG",
+  "name_en": "Beef-heart (oxheart) tomato",
+  "unit": "loose",
+  "hint": "large ribbed tomatoes, red to pink"
+ },
+ "23042": {
+  "name_pt": "TOMATE MINI CHUCHA SWEET SC 200G",
+  "name_en": "Sweet mini plum tomatoes, 200 g pack",
+  "unit": "package",
+  "hint": "small packs or bags of tiny elongated red tomatoes"
+ },
+ "21223": {
+  "name_pt": "TOMATE MINI CHUCHA VERMELHO CNT 250GR",
+  "name_en": "Red mini plum tomatoes, 250 g punnet",
+  "unit": "package",
+  "hint": "punnets of tiny elongated red tomatoes"
+ },
+ "21134": {
+  "name_pt": "TOMATE REDONDO CNT KG",
+  "name_en": "Round tomato, loose",
+  "unit": "loose",
+  "hint": "loose round red tomatoes"
+ },
+ "1267": {
+  "name_pt": "TOMATE TASTY SC EMB 400G",
+  "name_en": "Tasty tomatoes, 400 g pack",
+  "unit": "package",
+  "hint": "packs of medium red tomatoes"
+ },
+ "19959": {
+  "name_pt": "TOMATE ZER0%D 1KG",
+  "name_en": "Tomatoes (zero-waste range), 1 kg pack",
+  "unit": "package",
+  "hint": "packs or bags of red tomatoes"
+ },
+ "21307": {
+  "name_pt": "UVA BRANCA S/ GRAINHA CNT KG",
+  "name_en": "White seedless grapes, loose",
+  "unit": "loose",
+  "hint": "bunches of green grapes"
+ },
+ "19032": {
+  "name_pt": "UVA BRANCA S/GRAINHA CNT 500 G",
+  "name_en": "White seedless grapes, 500 g punnet",
+  "unit": "package",
+  "hint": "green grapes in clear plastic punnets"
+ },
+ "15597": {
+  "name_pt": "UVA RED GLOBE CNT KG",
+  "name_en": "Red Globe grapes",
+  "unit": "loose",
+  "hint": "bunches of large dark red-purple grapes"
+ }
+}

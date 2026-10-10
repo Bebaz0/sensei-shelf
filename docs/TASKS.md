@@ -26,10 +26,10 @@ Owns `pipeline/pixel/`, `pipeline/eval/score.py`, `pipeline/eval/merge_labels.py
 ## V: vlm
 Owns `pipeline/vlm/`, `data/products_en.json`.
 - [ ] `data/products_en.json`: 94 products, PT -> EN name, loose vs package, short visual hint; reviewed by a person (H2)
-- [ ] Gemini client: structured JSON output, temperature 0, sha256 disk cache in `out/cache/vlm/`, thread pool (16), retry with backoff; pin the model id in `docs/DECISIONS.md` (H3)
-- [ ] `--no-api` flag on `ask.py`: skip the call and write `null` per provider (H3)
+- [x] Gemini client: structured JSON output, temperature 0, sha256 disk cache in `out/cache/vlm/`, thread pool (16), retry with backoff; pin the model id in `docs/DECISIONS.md` (H3)
+- [x] `--no-api` flag on `ask.py`: skip the call and write `null` per provider (H3)
 - [ ] Prompt v1: closed-set comparative (context crop + warp crop, reference crop from a frame of that area labelled compliant, never the earliest frame; candidates = products on that camera); test on ~30 labelled areas (H5)
-- [ ] `ask.py` reads `out/run_frames.json` and supports `--all` (H3)
+- [x] `ask.py` reads `out/run_frames.json` and supports `--all` (H3)
 - [ ] Full cached run over all frames (H6); Claude client with the same interface (H7)
 - [ ] Iterate prompts from error lists; bump `PROMPT_VERSION` on every change
 - [ ] Head-to-head at H6: one call per image with numbered quads vs per-area calls on the proxy labels; ship whichever has the better LOFO (per-area is the default)
