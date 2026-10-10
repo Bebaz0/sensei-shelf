@@ -33,7 +33,7 @@ export default function Header({ updated }: { updated: number }) {
           <circle cx="19" cy="19" r="4" fill="var(--color-bg)" />
         </svg>
         <div>
-          <h1 className="text-lg font-semibold tracking-[-0.01em]">Sensei Shelf</h1>
+          <h1 className="text-lg font-semibold tracking-[-0.01em]">TrustyShelf</h1>
         </div>
       </div>
       <div className="flex flex-wrap items-center gap-2.5">

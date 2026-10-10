@@ -65,7 +65,7 @@ function App() {
       <Kpis cells={allCells} filter={filter} onFilter={setFilter} />
 
       <div className="grid items-start gap-[22px] lg:grid-cols-[250px_minmax(0,1fr)] xl:grid-cols-[262px_minmax(0,1fr)_340px]">
-        <CameraList cams={cams} active={cam} onPick={pickCam} />
+        <CameraList cams={cams} active={cam} filter={filter} onPick={pickCam} />
 
         <section aria-label="Selected camera" className="flex min-w-0 flex-col gap-4">
           <CameraView cam={cam} capture={capture} cells={cells} sel={sel} filter={filter} onSelect={setSel} />

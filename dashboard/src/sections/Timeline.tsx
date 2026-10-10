@@ -20,18 +20,15 @@ export default function Timeline({ camera, frame, done, onPick }: Props) {
           <div className="mono text-[32px] leading-none font-medium tracking-[-0.03em]">{hm(camera.captures[frame].ts)}</div>
           <div className="mt-1.5 text-xs text-muted">{frame === last ? 'Latest capture' : 'Earlier capture'}</div>
         </div>
-        <dl className="grid w-full grid-cols-4 gap-3 sm:w-auto sm:gap-8">
+        {/* Small on purpose: the store totals above are the headline, these only describe this capture */}
+        <dl className="flex flex-wrap gap-2">
           {STATUSES.map((st) => {
             const n = count(current, st)
             return (
-              <div key={st} className="flex flex-col-reverse">
-                <dt className="mt-1.5 flex items-center gap-1.5 text-xs text-fg2">
-                  <span className="size-2 flex-none rounded-full" style={{ background: STATUS[st].color }} />
-                  {STATUS[st].label}
-                </dt>
-                <dd className="text-[32px] leading-none font-semibold tracking-[-0.03em] tabular-nums" style={{ color: n ? STATUS[st].text : 'var(--color-muted)' }}>
-                  {n}
-                </dd>
+              <div key={st} className={`flex h-8 items-center gap-2 rounded-full border border-line px-3 text-[13px] ${n ? '' : 'opacity-45'}`}>
+                <span className="size-2 flex-none rounded-full" style={{ background: STATUS[st].color }} />
+                <dd className="font-semibold tabular-nums">{n}</dd>
+                <dt className="text-fg2">{STATUS[st].label}</dt>
               </div>
             )
           })}

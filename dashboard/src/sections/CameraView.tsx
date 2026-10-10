@@ -10,7 +10,7 @@ type Props = { cam: string; capture: Capture; cells: Cell[]; sel: string | null;
 export default function CameraView({ cam, capture, cells, sel, filter, onSelect }: Props) {
   const [view, setView] = useState<'photo' | 'schema'>('photo')
   const geo = schemaGeometry(cells.map((c) => c.area))
-  const state = (c: Cell) => `${c.st} ${c.area.area_id === sel ? 'sel' : ''} ${matches(filter, c.st) ? '' : 'dim'}`
+  const state = (c: Cell) => `${c.st} ${c.area.area_id === sel ? 'sel' : sel ? 'unsel' : ''} ${matches(filter, c.st) ? '' : 'dim'}`
 
   return (
     <>
