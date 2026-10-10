@@ -1,7 +1,7 @@
-"""Owner V. Gemini provider: one structured-JSON call per area, key in .env as GEMINI_API_KEY.
+"""Owner V. Gemini provider: one structured-JSON call per frame, key in .env as GEMINI_API_KEY.
 
-A provider is a function call(images, system, text, schema) -> (answer dict, usage dict). The Claude
-provider will have the same shape.
+A provider is a function call(parts, system, schema) -> (answer dict, usage dict), where parts is a list of
+text (str) and PNG images (bytes) in message order. The Claude provider will have the same shape.
 """
 import json
 import os
@@ -14,6 +14,10 @@ from pipeline.common.config import GEMINI_MODEL, ROOT
 
 PROVIDER = "gemini"
 MODEL = GEMINI_MODEL
+# Image tokens depend on this tier, not on file size: 263 / 535 / 1,064 tokens per crop for LOW / MEDIUM / HIGH
+# (HIGH is the default). The crops are small, so MEDIUM keeps their detail. Part of the cache key (SETTINGS).
+MEDIA_RESOLUTION = "MEDIA_RESOLUTION_MEDIUM"
+SETTINGS = f"{MODEL} {MEDIA_RESOLUTION}"
 
 
 def make_call():
@@ -24,11 +28,16 @@ def make_call():
         return None
     client = genai.Client(api_key=api_key)
 
-    def call(images: list[bytes], system: str, text: str, schema: dict) -> tuple[dict, dict]:
-        """images are PNG bytes. Raises on API errors and on answers that are not JSON."""
+    def call(parts: list[str | bytes], system: str, schema: dict) -> tuple[dict, dict]:
+        """parts are text and PNG bytes. Raises on API errors and on answers that are not JSON."""
+        contents = [
+            types.Part.from_bytes(data=part, mime_type="image/png", media_resolution=MEDIA_RESOLUTION)
+            if isinstance(part, bytes) else part
+            for part in parts
+        ]
         response = client.models.generate_content(
             model=MODEL,
-            contents=[*(types.Part.from_bytes(data=image, mime_type="image/png") for image in images), text],
+            contents=contents,
             config=types.GenerateContentConfig(
                 system_instruction=system,
                 temperature=0,
