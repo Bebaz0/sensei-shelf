@@ -1,0 +1,27 @@
+{
+ "fallback_p": {
+  "empty": 0.0642,
+  "half": 0.1333,
+  "full": 0.8025
+ },
+ "weights": {
+  "gemini": 0.0,
+  "claude": 0.0,
+  "knn": 1.0,
+  "probe": 0.0
+ },
+ "platt": {
+  "a": -1.5,
+  "b": 2.5
+ },
+ "knn_wrong_weight": 0.0,
+ "fill_sigma": 10.0,
+ "stock_bias": 0.2,
+ "gate": {
+  "min_top_p": 0.6,
+  "wrong_band": [
+   0.3,
+   0.7
+  ]
+ }
+}
