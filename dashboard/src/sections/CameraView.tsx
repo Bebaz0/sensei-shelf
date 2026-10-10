@@ -1,14 +1,15 @@
-import { useState } from 'react'
 import { areaNo, cameraName, hm, pretty } from '../lib/format'
 import { centroid, clamp, schemaGeometry } from '../lib/geometry'
 import type { Capture } from '../lib/results'
 import { type Cell, type Filter, matches, STATUS } from '../lib/status'
+import { Icon } from '../lib/ui'
 
-type Props = { cam: string; capture: Capture; cells: Cell[]; sel: string | null; filter: Filter; onSelect: (areaId: string) => void }
+export type View = 'photo' | 'schema'
+
+type Props = { cam: string; capture: Capture; cells: Cell[]; sel: string | null; filter: Filter; view: View; onView: (view: View) => void; onSelect: (areaId: string) => void }
 
 // Selected camera: title, Photo/Schema toggle, and the stage with one pin per area.
-export default function CameraView({ cam, capture, cells, sel, filter, onSelect }: Props) {
-  const [view, setView] = useState<'photo' | 'schema'>('photo')
+export default function CameraView({ cam, capture, cells, sel, filter, view, onView, onSelect }: Props) {
   const geo = schemaGeometry(cells.map((c) => c.area))
   const state = (c: Cell) => `${c.st} ${c.area.area_id === sel ? 'sel' : sel ? 'unsel' : ''} ${matches(filter, c.st) ? '' : 'dim'}`
 
@@ -23,10 +24,12 @@ export default function CameraView({ cam, capture, cells, sel, filter, onSelect 
         </div>
         <div className="seg" role="group" aria-label="Camera view">
           <span className="seg-ind" style={{ transform: view === 'schema' ? 'translateX(100%)' : 'none' }} />
-          <button aria-pressed={view === 'photo'} onClick={() => setView('photo')}>
+          <button aria-pressed={view === 'photo'} onClick={() => onView('photo')}>
+            <Icon name="photo_camera" />
             Photo
           </button>
-          <button aria-pressed={view === 'schema'} onClick={() => setView('schema')}>
+          <button aria-pressed={view === 'schema'} onClick={() => onView('schema')}>
+            <Icon name="schema" />
             Schema
           </button>
         </div>
