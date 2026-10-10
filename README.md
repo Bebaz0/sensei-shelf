@@ -36,21 +36,4 @@ python -m pipeline.eval.score --pred out/submission.json --gt labels/dev.json
 ./scripts/run_all.sh            # all of the above, in order
 ```
 
-Intermediate files are described in [CONTRACTS.md](CONTRACTS.md). Until your upstream module works, drop a hand-written fake in `mocks/` and point `--index` / `--features` / etc. at it.
-
-## Ownership
-
-| Who | Modules | Produces |
-|-----|---------|----------|
-| A | `pipeline/common`, `pipeline/crop` | `crops_index.json`, `out/crops/` |
-| B | `pipeline/pixel` | `features.json` |
-| C | `pipeline/eval`, `labels/`, `pipeline/decide` | `labels/dev.json`, `results.json`, `submission.json` |
-| D | `dashboard/` | the UI (reads `results.json`) |
-| TBD | `pipeline/vlm` | `vlm.json` |
-
-## Git workflow
-
-- `main` always runs. Never push to it directly.
-- One branch per module: `crop`, `pixel`, `vlm`, `decide`, `eval`, `dashboard`.
-- Small PRs to `main`, merge often (aim for every hour or two). Rebase on `main` before opening.
-- Only touch your own folder. Changes to `common/` or `CONTRACTS.md` get a heads-up in the team chat first.
+Until your upstream module works, drop a hand-written fake in `mocks/` and point `--index` / `--features` / etc. at it.
