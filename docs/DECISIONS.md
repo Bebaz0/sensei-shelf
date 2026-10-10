@@ -44,3 +44,5 @@ Format: `YYYY-MM-DD HH:MM | who | decision | why | score delta`
 2026-10-10 | V | Cache key also covers the system prompt and the answer schema, besides provider, model, prompt version, images and text | an edited prompt can never reuse an old answer, even if `PROMPT_VERSION` was not bumped | n/a
 2026-10-10 | V | `run_all.sh` with `NO_API=1` now runs `ask.py --no-api`, so `vlm.json` always exists with null providers | matches the contract; decide has one code path | n/a
 2026-10-10 | V | `data/products_en.json` written by Claude (94 products: English name, unit, visual hint); NOT yet reviewed by a person | task requires a human review | pending
+||||||| 57f688f
+2026-10-10 | B | Wrote minimal `pipeline/eval/label_tool.py` to unblock the 30-area calibration (ownership stays with D; D extends from here). No EN product names until V publishes `data/products_en.json`. Keys 1/2/3/X/U/n/p/q; incremental write to `labels/<name>.json`; crash-safe. CLI: `python -m pipeline.eval.label_tool --name <name> [--from labels/calibration.txt]` | H3 label tool was still a NotImplementedError skeleton | n/a
