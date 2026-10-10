@@ -100,9 +100,10 @@ def add_neighbours(out: dict, index: dict, labels: dict) -> None:
                         w = math.exp(-_chi2_dist(h, hn) / tau(cam, area))
                         stock_votes.append((w, _level(lab)))
                         wrong_votes.append((w, lab.get("planogram_compliant") is False))
-                knn = _vote(p_stock, stock_votes)
-                knn["p_wrong"] = _vote({True: p_wrong, False: 1 - p_wrong}, wrong_votes)[True]
-                feats["knn"] = {k: round(v, 4) for k, v in knn.items()}
+                if stock_votes:  # no labelled neighbour: no knn, so decide sees no source and queues the area for the VLM
+                    knn = _vote(p_stock, stock_votes)
+                    knn["p_wrong"] = _vote({True: p_wrong, False: 1 - p_wrong}, wrong_votes)[True]
+                    feats["knn"] = {k: round(v, 4) for k, v in knn.items()}
 
                 timed = sorted((_ts(f), lab) for f, lab in others if _ts(f) is not None) if t is not None else []
                 prev = next(((ft, lab) for ft, lab in reversed(timed) if ft < t), None)
