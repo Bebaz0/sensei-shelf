@@ -68,7 +68,7 @@ function App() {
         <CameraList cams={cams} active={cam} onPick={pickCam} />
 
         <section aria-label="Selected camera" className="flex min-w-0 flex-col gap-4">
-          <CameraView cam={cam} capture={capture} cells={cells} sel={sel} filter={filter} onSelect={setSel} />
+          <CameraView key={`${cam}-${capture.ts}`} cam={cam} capture={capture} cells={cells} sel={sel} filter={filter} onSelect={setSel} />
           <Timeline camera={camera} frame={fi} done={resolved} onPick={setFrame} />
         </section>
 
