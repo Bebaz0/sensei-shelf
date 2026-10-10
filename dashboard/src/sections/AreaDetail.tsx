@@ -23,7 +23,6 @@ export default function AreaDetail({ cam, camera, frame, cell, resolved, flagged
   const last = camera.captures.length - 1
   const isLatest = frame === last
   const product = pretty(cell.area.product_name)
-  const seen = cell.v.seen_product ? pretty(cell.v.seen_product) : null
   const lit = cell.done ? 2 : LEVEL_INDEX[cell.v.stock_level]
 
   return (
