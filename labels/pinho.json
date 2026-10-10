@@ -177,8 +177,8 @@
     "1751048611.jpg": {
       "6491_6": {
         "planogram_compliant": true,
-        "stock_level": "full",
-        "stock_value": 1.0
+        "stock_level": "half",
+        "stock_value": 0.5
       }
     }
   },
