@@ -14,1199 +14,882 @@
 6386 1751001156.jpg 6386_4  # 06:12 conf 20 claude: empty  expected: COUVE FLOR CNT KG
 6386 1751001156.jpg 6386_5  # 06:12 conf 20 claude: empty  expected: CURGETE VERDE CNT KG
 6386 1751001156.jpg 6386_6  # 06:12 conf 20 claude: empty  expected: COUVE BRANCA CNT KG
-6781 1751013921.jpg 6781_10  # 09:45 conf 35 claude: empty  expected: BATATA VERMELHA CNT KG
-6215 1751029718.jpg 6215_4  # 14:08 conf 50 claude: empty  expected: BANANA CAT I CNT KG
-6215 1751033683.jpg 6215_6  # 15:14 conf 50 claude: half  expected: BANANA CAT I CNT KG
-6376 1751001169.jpg 6376_8  # 06:12 conf 50 claude: half  expected: CITRINOS ALGARVE IGP LARANJA 6/7/8 3KG
-6376 1751001169.jpg 6376_9  # 06:12 conf 50 claude: full  expected: CITRINOS ALGARVE IGP LARANJA 6/7/8 3KG
-6376 1751005774.jpg 6376_8  # 07:29 conf 50 claude: half  expected: CITRINOS ALGARVE IGP LARANJA 6/7/8 3KG
-6376 1751005774.jpg 6376_9  # 07:29 conf 50 claude: full  expected: CITRINOS ALGARVE IGP LARANJA 6/7/8 3KG
-6376 1751009380.jpg 6376_8  # 08:29 conf 50 claude: half  expected: CITRINOS ALGARVE IGP LARANJA 6/7/8 3KG
-6376 1751009380.jpg 6376_9  # 08:29 conf 50 claude: full  expected: CITRINOS ALGARVE IGP LARANJA 6/7/8 3KG
-6376 1751013482.jpg 6376_8  # 09:38 conf 50 claude: half  expected: CITRINOS ALGARVE IGP LARANJA 6/7/8 3KG
-6376 1751013482.jpg 6376_9  # 09:38 conf 50 claude: full  expected: CITRINOS ALGARVE IGP LARANJA 6/7/8 3KG
-6376 1751017831.jpg 6376_3  # 10:50 conf 50 claude: empty  expected: KIWI GOLD ZESPRI 500 G
-6376 1751017831.jpg 6376_8  # 10:50 conf 50 claude: half  expected: CITRINOS ALGARVE IGP LARANJA 6/7/8 3KG
-6376 1751017831.jpg 6376_9  # 10:50 conf 50 claude: full  expected: CITRINOS ALGARVE IGP LARANJA 6/7/8 3KG
-6376 1751021977.jpg 6376_8  # 11:59 conf 50 claude: half  expected: CITRINOS ALGARVE IGP LARANJA 6/7/8 3KG
-6376 1751021977.jpg 6376_9  # 11:59 conf 50 claude: full  expected: CITRINOS ALGARVE IGP LARANJA 6/7/8 3KG
-6376 1751025657.jpg 6376_8  # 13:00 conf 50 claude: half  expected: CITRINOS ALGARVE IGP LARANJA 6/7/8 3KG
-6376 1751025657.jpg 6376_9  # 13:00 conf 50 claude: full  expected: CITRINOS ALGARVE IGP LARANJA 6/7/8 3KG
-6376 1751029801.jpg 6376_8  # 14:10 conf 50 claude: half  expected: CITRINOS ALGARVE IGP LARANJA 6/7/8 3KG
-6376 1751029801.jpg 6376_9  # 14:10 conf 50 claude: full  expected: CITRINOS ALGARVE IGP LARANJA 6/7/8 3KG
-6376 1751033639.jpg 6376_4  # 15:13 conf 50 claude: half  expected: KIWI ZESPRI 500 GR
-6376 1751033639.jpg 6376_5  # 15:13 conf 50 claude: half  expected: KIWI CNT BIO 400 G
-6376 1751037379.jpg 6376_4  # 16:16 conf 50 claude: half  expected: KIWI ZESPRI 500 GR
-6376 1751037379.jpg 6376_5  # 16:16 conf 50 claude: half  expected: KIWI CNT BIO 400 G
-6376 1751041136.jpg 6376_4  # 17:18 conf 50 claude: half  expected: KIWI ZESPRI 500 GR
-6376 1751041136.jpg 6376_5  # 17:18 conf 50 claude: half  expected: KIWI CNT BIO 400 G
-6376 1751044933.jpg 6376_4  # 18:22 conf 50 claude: half  expected: KIWI ZESPRI 500 GR
-6376 1751044933.jpg 6376_5  # 18:22 conf 50 claude: half  expected: KIWI CNT BIO 400 G
-6376 1751049028.jpg 6376_4  # 19:30 conf 50 claude: half  expected: KIWI ZESPRI 500 GR
-6376 1751049028.jpg 6376_5  # 19:30 conf 50 claude: half  expected: KIWI CNT BIO 400 G
-6376 1751049028.jpg 6376_7  # 19:30 conf 50 claude: half  expected: CITRINOS ALGARVE IGP LARANJA 6/7/8 3KG
-6376 1751049028.jpg 6376_16  # 19:30 conf 50 claude: half  expected: CITR ALGARVE IGP LARANJA 3/4/5 1.5 KG
-6385 1751051814.jpg 6385_1  # 20:16 conf 50 claude: half  expected: MACA FUJI CNT CAL. 73/85 KG IMP
-6385 1751051814.jpg 6385_5  # 20:16 conf 50 claude: half  expected: MACA FUJI CNT CAL. 73/85 KG IMP
-6386 1751048137.jpg 6386_1  # 19:15 conf 50 claude: half  expected: COUVE BROCOLO CNT KG
-6443 1751001244.jpg 6443_3  # 06:14 conf 50 claude: half  expected: TOMATE TASTY SC EMB 400G
-6443 1751001244.jpg 6443_4  # 06:14 conf 50 claude: full  expected: TOMATE CHERRY BIO EMB. 250 GR
-6443 1751001244.jpg 6443_5  # 06:14 conf 50 claude: half  expected: TOMATE ZER0%D 1KG
-6443 1751001244.jpg 6443_9  # 06:14 conf 50 claude: full  expected: TOMATE MINI CHUCHA VERMELHO CNT 250GR
-6443 1751005341.jpg 6443_3  # 07:22 conf 50 claude: half  expected: TOMATE TASTY SC EMB 400G
-6443 1751005341.jpg 6443_4  # 07:22 conf 50 claude: full  expected: TOMATE CHERRY BIO EMB. 250 GR
-6443 1751005341.jpg 6443_5  # 07:22 conf 50 claude: half  expected: TOMATE ZER0%D 1KG
-6443 1751005341.jpg 6443_9  # 07:22 conf 50 claude: full  expected: TOMATE MINI CHUCHA VERMELHO CNT 250GR
-6443 1751009482.jpg 6443_3  # 08:31 conf 50 claude: half  expected: TOMATE TASTY SC EMB 400G
-6443 1751009482.jpg 6443_4  # 08:31 conf 50 claude: full  expected: TOMATE CHERRY BIO EMB. 250 GR
-6443 1751009482.jpg 6443_5  # 08:31 conf 50 claude: half  expected: TOMATE ZER0%D 1KG
-6443 1751009482.jpg 6443_9  # 08:31 conf 50 claude: full  expected: TOMATE MINI CHUCHA VERMELHO CNT 250GR
-6443 1751013117.jpg 6443_3  # 09:31 conf 50 claude: half  expected: TOMATE TASTY SC EMB 400G
-6443 1751013117.jpg 6443_9  # 09:31 conf 50 claude: full  expected: TOMATE MINI CHUCHA VERMELHO CNT 250GR
-6443 1751016838.jpg 6443_3  # 10:33 conf 50 claude: half  expected: TOMATE TASTY SC EMB 400G
-6443 1751016838.jpg 6443_9  # 10:33 conf 50 claude: full  expected: TOMATE MINI CHUCHA VERMELHO CNT 250GR
-6443 1751020727.jpg 6443_3  # 11:38 conf 50 claude: half  expected: TOMATE TASTY SC EMB 400G
-6443 1751020727.jpg 6443_9  # 11:38 conf 50 claude: full  expected: TOMATE MINI CHUCHA VERMELHO CNT 250GR
-6443 1751024371.jpg 6443_3  # 12:39 conf 50 claude: half  expected: TOMATE TASTY SC EMB 400G
-6443 1751024371.jpg 6443_9  # 12:39 conf 50 claude: full  expected: TOMATE MINI CHUCHA VERMELHO CNT 250GR
-6443 1751028789.jpg 6443_3  # 13:53 conf 50 claude: half  expected: TOMATE TASTY SC EMB 400G
-6443 1751028789.jpg 6443_9  # 13:53 conf 50 claude: full  expected: TOMATE MINI CHUCHA VERMELHO CNT 250GR
-6443 1751028789.jpg 6443_12  # 13:53 conf 50 claude: full  expected: MINI TOMATE CACHO CNT 500G
-6443 1751032575.jpg 6443_3  # 14:56 conf 50 claude: half  expected: TOMATE TASTY SC EMB 400G
-6443 1751032575.jpg 6443_9  # 14:56 conf 50 claude: full  expected: TOMATE MINI CHUCHA VERMELHO CNT 250GR
-6443 1751032575.jpg 6443_12  # 14:56 conf 50 claude: full  expected: MINI TOMATE CACHO CNT 500G
-6443 1751036374.jpg 6443_3  # 15:59 conf 50 claude: half  expected: TOMATE TASTY SC EMB 400G
-6443 1751036374.jpg 6443_9  # 15:59 conf 50 claude: full  expected: TOMATE MINI CHUCHA VERMELHO CNT 250GR
-6443 1751040209.jpg 6443_3  # 17:03 conf 50 claude: half  expected: TOMATE TASTY SC EMB 400G
-6443 1751040209.jpg 6443_9  # 17:03 conf 50 claude: full  expected: TOMATE MINI CHUCHA VERMELHO CNT 250GR
-6443 1751044079.jpg 6443_3  # 18:07 conf 50 claude: half  expected: TOMATE TASTY SC EMB 400G
-6443 1751044079.jpg 6443_9  # 18:07 conf 50 claude: full  expected: TOMATE MINI CHUCHA VERMELHO CNT 250GR
-6462 1751040186.jpg 6462_3  # 17:03 conf 50 claude: half  expected: MANGA CNT KG
-6462 1751043841.jpg 6462_3  # 18:04 conf 50 claude: half  expected: MANGA CNT KG
-6462 1751043841.jpg 6462_5  # 18:04 conf 50 claude: empty  expected: UVA BRANCA S/GRAINHA CNT 500 G
-6468 1751005772.jpg 6468_15  # 07:29 conf 50 claude: half  expected: MANGA AVIÃO PALMER KG
-6468 1751044824.jpg 6468_15  # 18:20 conf 50 claude: full  expected: MANGA AVIÃO PALMER KG
-6491 1751025495.jpg 6491_4  # 12:58 conf 50 claude: full  expected: PESSEGO R0 A/AA KG
-6491 1751029202.jpg 6491_4  # 14:00 conf 50 claude: full  expected: PESSEGO R0 A/AA KG
-6491 1751048611.jpg 6491_10  # 19:23 conf 50 claude: half  expected: PESSEGO R0 A/AA KG
-6591 1751009443.jpg 6591_8  # 08:30 conf 50 claude: full  expected: BATATA DOCE CNT KG
-6591 1751013255.jpg 6591_8  # 09:34 conf 50 claude: full  expected: BATATA DOCE CNT KG
-6591 1751017235.jpg 6591_8  # 10:40 conf 50 claude: full  expected: BATATA DOCE CNT KG
-6591 1751020896.jpg 6591_8  # 11:41 conf 50 claude: full  expected: BATATA DOCE CNT KG
-6591 1751025118.jpg 6591_8  # 12:51 conf 50 claude: full  expected: BATATA DOCE CNT KG
-6591 1751028988.jpg 6591_8  # 13:56 conf 50 claude: full  expected: BATATA DOCE CNT KG
-6591 1751032871.jpg 6591_8  # 15:01 conf 50 claude: full  expected: BATATA DOCE CNT KG
-6591 1751036598.jpg 6591_8  # 16:03 conf 50 claude: full  expected: BATATA DOCE CNT KG
-6591 1751040216.jpg 6591_8  # 17:03 conf 50 claude: full  expected: BATATA DOCE CNT KG
-6591 1751044047.jpg 6591_8  # 18:07 conf 50 claude: full  expected: BATATA DOCE CNT KG
-6591 1751048487.jpg 6591_8  # 19:21 conf 50 claude: full  expected: BATATA DOCE CNT KG
-6594 1751001189.jpg 6594_2  # 06:13 conf 50 claude: half WRONG PRODUCT  expected: BATATA VERMELHA EMB:. 5 KG
-6594 1751001189.jpg 6594_6  # 06:13 conf 50 claude: half  expected: CEBOLA NOVA CNT KG
-6594 1751005322.jpg 6594_2  # 07:22 conf 50 claude: half WRONG PRODUCT  expected: BATATA VERMELHA EMB:. 5 KG
-6594 1751005322.jpg 6594_6  # 07:22 conf 50 claude: half  expected: CEBOLA NOVA CNT KG
-6594 1751008928.jpg 6594_2  # 08:22 conf 50 claude: half WRONG PRODUCT  expected: BATATA VERMELHA EMB:. 5 KG
-6594 1751008928.jpg 6594_6  # 08:22 conf 50 claude: half  expected: CEBOLA NOVA CNT KG
-6594 1751013117.jpg 6594_2  # 09:31 conf 50 claude: half WRONG PRODUCT  expected: BATATA VERMELHA EMB:. 5 KG
-6594 1751013117.jpg 6594_6  # 09:31 conf 50 claude: half  expected: CEBOLA NOVA CNT KG
-6215 1751001268.jpg 6215_1  # 06:14 conf 60 claude: empty  expected: BANANA DA MADEIRA CNT KG
+6215 1751001268.jpg 6215_1  # 06:14 conf 50 claude: empty  expected: BANANA DA MADEIRA CNT KG
+6376 1751033639.jpg 6376_4  # 15:13 conf 50 claude: half WRONG PRODUCT  expected: KIWI ZESPRI 500 GR
+6376 1751033639.jpg 6376_5  # 15:13 conf 50 claude: half WRONG PRODUCT  expected: KIWI CNT BIO 400 G
+6376 1751037379.jpg 6376_4  # 16:16 conf 50 claude: half WRONG PRODUCT  expected: KIWI ZESPRI 500 GR
+6376 1751037379.jpg 6376_5  # 16:16 conf 50 claude: half WRONG PRODUCT  expected: KIWI CNT BIO 400 G
+6376 1751041136.jpg 6376_4  # 17:18 conf 50 claude: half WRONG PRODUCT  expected: KIWI ZESPRI 500 GR
+6376 1751041136.jpg 6376_5  # 17:18 conf 50 claude: half WRONG PRODUCT  expected: KIWI CNT BIO 400 G
+6376 1751044933.jpg 6376_4  # 18:22 conf 50 claude: half WRONG PRODUCT  expected: KIWI ZESPRI 500 GR
+6376 1751044933.jpg 6376_5  # 18:22 conf 50 claude: half WRONG PRODUCT  expected: KIWI CNT BIO 400 G
+6376 1751049028.jpg 6376_4  # 19:30 conf 50 claude: half WRONG PRODUCT  expected: KIWI ZESPRI 500 GR
+6376 1751049028.jpg 6376_5  # 19:30 conf 50 claude: half WRONG PRODUCT  expected: KIWI CNT BIO 400 G
+6443 1751013117.jpg 6443_5  # 09:31 conf 50 claude: full  expected: TOMATE ZER0%D 1KG
+6443 1751016838.jpg 6443_5  # 10:33 conf 50 claude: full  expected: TOMATE ZER0%D 1KG
+6443 1751020727.jpg 6443_5  # 11:38 conf 50 claude: full  expected: TOMATE ZER0%D 1KG
+6443 1751024371.jpg 6443_5  # 12:39 conf 50 claude: full  expected: TOMATE ZER0%D 1KG
+6443 1751028789.jpg 6443_5  # 13:53 conf 50 claude: full  expected: TOMATE ZER0%D 1KG
+6443 1751032575.jpg 6443_5  # 14:56 conf 50 claude: full  expected: TOMATE ZER0%D 1KG
+6443 1751036374.jpg 6443_5  # 15:59 conf 50 claude: full  expected: TOMATE ZER0%D 1KG
+6443 1751040209.jpg 6443_5  # 17:03 conf 50 claude: full  expected: TOMATE ZER0%D 1KG
+6215 1751001268.jpg 6215_5  # 06:14 conf 60 claude: full WRONG PRODUCT  expected: BANANA CAT I CNT KG
 6215 1751005412.jpg 6215_1  # 07:23 conf 60 claude: empty  expected: BANANA DA MADEIRA CNT KG
-6215 1751025596.jpg 6215_8  # 12:59 conf 60 claude: half  expected: BANANA CAT I CNT KG
-6215 1751029718.jpg 6215_6  # 14:08 conf 60 claude: full  expected: BANANA CAT I CNT KG
-6215 1751029718.jpg 6215_9  # 14:08 conf 60 claude: half WRONG PRODUCT  expected: CITRINOS DO ALGARVE IGP LARANJA 70/95 KG
+6215 1751005412.jpg 6215_5  # 07:23 conf 60 claude: full WRONG PRODUCT  expected: BANANA CAT I CNT KG
+6215 1751013250.jpg 6215_9  # 09:34 conf 60 claude: half WRONG PRODUCT  expected: CITRINOS DO ALGARVE IGP LARANJA 70/95 KG
+6215 1751017244.jpg 6215_9  # 10:40 conf 60 claude: half WRONG PRODUCT  expected: CITRINOS DO ALGARVE IGP LARANJA 70/95 KG
+6215 1751021396.jpg 6215_2  # 11:49 conf 60 claude: half  expected: BANANA CAT I CNT KG
+6215 1751021396.jpg 6215_4  # 11:49 conf 60 claude: half  expected: BANANA CAT I CNT KG
+6215 1751029718.jpg 6215_4  # 14:08 conf 60 claude: half  expected: BANANA CAT I CNT KG
+6215 1751033683.jpg 6215_2  # 15:14 conf 60 claude: half  expected: BANANA CAT I CNT KG
 6215 1751033683.jpg 6215_4  # 15:14 conf 60 claude: half  expected: BANANA CAT I CNT KG
-6215 1751033683.jpg 6215_9  # 15:14 conf 60 claude: half WRONG PRODUCT  expected: CITRINOS DO ALGARVE IGP LARANJA 70/95 KG
-6215 1751037607.jpg 6215_3  # 16:20 conf 60 claude: full  expected: BANANA CAT I CNT KG
-6215 1751037607.jpg 6215_6  # 16:20 conf 60 claude: empty  expected: BANANA CAT I CNT KG
-6215 1751037607.jpg 6215_9  # 16:20 conf 60 claude: half WRONG PRODUCT  expected: CITRINOS DO ALGARVE IGP LARANJA 70/95 KG
-6215 1751041465.jpg 6215_7  # 17:24 conf 60 claude: half WRONG PRODUCT  expected: CITRINOS DO ALGARVE IGP LARANJA 70/95 KG
-6215 1751041465.jpg 6215_9  # 17:24 conf 60 claude: half WRONG PRODUCT  expected: CITRINOS DO ALGARVE IGP LARANJA 70/95 KG
+6215 1751045755.jpg 6215_3  # 18:35 conf 60 claude: half  expected: BANANA CAT I CNT KG
+6215 1751045755.jpg 6215_5  # 18:35 conf 60 claude: half  expected: BANANA CAT I CNT KG
 6215 1751045755.jpg 6215_7  # 18:35 conf 60 claude: half WRONG PRODUCT  expected: CITRINOS DO ALGARVE IGP LARANJA 70/95 KG
 6215 1751045755.jpg 6215_9  # 18:35 conf 60 claude: half WRONG PRODUCT  expected: CITRINOS DO ALGARVE IGP LARANJA 70/95 KG
-6373 1751001172.jpg 6373_4  # 06:12 conf 60 claude: full  expected: MAÇA GOLDEN NACIONAL 75/85 KG
-6373 1751001172.jpg 6373_5  # 06:12 conf 60 claude: full  expected: MAÇA GOLDEN NACIONAL CAL. 65/70 1 KG
-6373 1751005793.jpg 6373_4  # 07:29 conf 60 claude: full  expected: MAÇA GOLDEN NACIONAL 75/85 KG
-6373 1751005793.jpg 6373_5  # 07:29 conf 60 claude: full  expected: MAÇA GOLDEN NACIONAL CAL. 65/70 1 KG
-6373 1751009946.jpg 6373_10  # 08:39 conf 60 claude: full  expected: PERA PACKAMS CNT CAL.65/75 KG
+6371 1751001169.jpg 6371_7  # 06:12 conf 60 claude: empty  expected: MELOA CANTALUPE/CHARENTAIS INTEIR CNT KG
+6371 1751005865.jpg 6371_7  # 07:31 conf 60 claude: empty  expected: MELOA CANTALUPE/CHARENTAIS INTEIR CNT KG
+6371 1751009975.jpg 6371_7  # 08:39 conf 60 claude: half  expected: MELOA CANTALUPE/CHARENTAIS INTEIR CNT KG
+6371 1751013806.jpg 6371_7  # 09:43 conf 60 claude: half  expected: MELOA CANTALUPE/CHARENTAIS INTEIR CNT KG
+6371 1751017761.jpg 6371_7  # 10:49 conf 60 claude: half  expected: MELOA CANTALUPE/CHARENTAIS INTEIR CNT KG
+6371 1751021365.jpg 6371_7  # 11:49 conf 60 claude: half  expected: MELOA CANTALUPE/CHARENTAIS INTEIR CNT KG
+6371 1751025172.jpg 6371_7  # 12:52 conf 60 claude: half  expected: MELOA CANTALUPE/CHARENTAIS INTEIR CNT KG
+6371 1751028797.jpg 6371_7  # 13:53 conf 60 claude: half  expected: MELOA CANTALUPE/CHARENTAIS INTEIR CNT KG
+6371 1751032728.jpg 6371_7  # 14:58 conf 60 claude: half  expected: MELOA CANTALUPE/CHARENTAIS INTEIR CNT KG
+6371 1751036943.jpg 6371_7  # 16:09 conf 60 claude: half  expected: MELOA CANTALUPE/CHARENTAIS INTEIR CNT KG
+6371 1751040755.jpg 6371_7  # 17:12 conf 60 claude: half  expected: MELOA CANTALUPE/CHARENTAIS INTEIR CNT KG
+6371 1751044440.jpg 6371_7  # 18:14 conf 60 claude: half  expected: MELOA CANTALUPE/CHARENTAIS INTEIR CNT KG
+6373 1751001172.jpg 6373_5  # 06:12 conf 60 claude: half  expected: MAÇA GOLDEN NACIONAL CAL. 65/70 1 KG
+6373 1751005793.jpg 6373_5  # 07:29 conf 60 claude: half  expected: MAÇA GOLDEN NACIONAL CAL. 65/70 1 KG
+6373 1751009946.jpg 6373_5  # 08:39 conf 60 claude: half  expected: MAÇA GOLDEN NACIONAL CAL. 65/70 1 KG
+6373 1751013720.jpg 6373_5  # 09:42 conf 60 claude: half  expected: MAÇA GOLDEN NACIONAL CAL. 65/70 1 KG
+6373 1751013720.jpg 6373_10  # 09:42 conf 60 claude: full  expected: PERA PACKAMS CNT CAL.65/75 KG
+6373 1751017645.jpg 6373_5  # 10:47 conf 60 claude: half  expected: MAÇA GOLDEN NACIONAL CAL. 65/70 1 KG
+6373 1751017645.jpg 6373_10  # 10:47 conf 60 claude: full  expected: PERA PACKAMS CNT CAL.65/75 KG
+6373 1751021302.jpg 6373_5  # 11:48 conf 60 claude: half  expected: MAÇA GOLDEN NACIONAL CAL. 65/70 1 KG
+6373 1751021302.jpg 6373_10  # 11:48 conf 60 claude: full  expected: PERA PACKAMS CNT CAL.65/75 KG
+6373 1751024937.jpg 6373_5  # 12:48 conf 60 claude: half  expected: MAÇA GOLDEN NACIONAL CAL. 65/70 1 KG
+6373 1751024937.jpg 6373_10  # 12:48 conf 60 claude: full  expected: PERA PACKAMS CNT CAL.65/75 KG
+6373 1751028561.jpg 6373_5  # 13:49 conf 60 claude: half  expected: MAÇA GOLDEN NACIONAL CAL. 65/70 1 KG
+6373 1751028561.jpg 6373_7  # 13:49 conf 60 claude: half  expected: MAÇÃ COSMIC CRISP 75/85 KG
+6373 1751032836.jpg 6373_1  # 15:00 conf 60 claude: half  expected: MAÇÃ GALA CNT CAL 70/80 KG IMP
+6373 1751032836.jpg 6373_5  # 15:00 conf 60 claude: half  expected: MAÇA GOLDEN NACIONAL CAL. 65/70 1 KG
+6373 1751037118.jpg 6373_1  # 16:11 conf 60 claude: half  expected: MAÇÃ GALA CNT CAL 70/80 KG IMP
+6373 1751037118.jpg 6373_5  # 16:11 conf 60 claude: half  expected: MAÇA GOLDEN NACIONAL CAL. 65/70 1 KG
+6373 1751040770.jpg 6373_2  # 17:12 conf 60 claude: half  expected: MAÇÂ GALA CNT 60/70 1 KG IMP
+6373 1751040770.jpg 6373_6  # 17:12 conf 60 claude: half  expected: MAÇA GOLDEN NACIONAL 75/85 KG
 6373 1751044463.jpg 6373_2  # 18:14 conf 60 claude: half  expected: MAÇÂ GALA CNT 60/70 1 KG IMP
-6373 1751044463.jpg 6373_9  # 18:14 conf 60 claude: full  expected: MAÇÃ COSMIC CRISP 75/85 KG
-6373 1751048467.jpg 6373_2  # 19:21 conf 60 claude: empty  expected: MAÇÂ GALA CNT 60/70 1 KG IMP
-6376 1751001169.jpg 6376_3  # 06:12 conf 60 claude: half  expected: KIWI GOLD ZESPRI 500 G
-6376 1751001169.jpg 6376_5  # 06:12 conf 60 claude: full  expected: KIWI CNT BIO 400 G
-6376 1751005774.jpg 6376_3  # 07:29 conf 60 claude: half  expected: KIWI GOLD ZESPRI 500 G
-6376 1751005774.jpg 6376_5  # 07:29 conf 60 claude: full  expected: KIWI CNT BIO 400 G
-6376 1751009380.jpg 6376_3  # 08:29 conf 60 claude: half  expected: KIWI GOLD ZESPRI 500 G
-6376 1751009380.jpg 6376_5  # 08:29 conf 60 claude: full  expected: KIWI CNT BIO 400 G
+6373 1751044463.jpg 6373_10  # 18:14 conf 60 claude: half  expected: PERA PACKAMS CNT CAL.65/75 KG
+6376 1751001169.jpg 6376_1  # 06:12 conf 60 claude: half  expected: LIMÃO CNT 60/75 KG
+6376 1751001169.jpg 6376_4  # 06:12 conf 60 claude: full  expected: KIWI ZESPRI 500 GR
+6376 1751001169.jpg 6376_5  # 06:12 conf 60 claude: half  expected: KIWI CNT BIO 400 G
+6376 1751001169.jpg 6376_8  # 06:12 conf 60 claude: empty  expected: CITRINOS ALGARVE IGP LARANJA 6/7/8 3KG
+6376 1751001169.jpg 6376_9  # 06:12 conf 60 claude: full WRONG PRODUCT  expected: CITRINOS ALGARVE IGP LARANJA 6/7/8 3KG
+6376 1751001169.jpg 6376_11  # 06:12 conf 60 claude: half  expected: CITRINOS DO ALGARVE IGP LARANJA 70/95 KG
+6376 1751005774.jpg 6376_1  # 07:29 conf 60 claude: half  expected: LIMÃO CNT 60/75 KG
+6376 1751005774.jpg 6376_4  # 07:29 conf 60 claude: full  expected: KIWI ZESPRI 500 GR
+6376 1751005774.jpg 6376_5  # 07:29 conf 60 claude: half  expected: KIWI CNT BIO 400 G
+6376 1751005774.jpg 6376_8  # 07:29 conf 60 claude: empty  expected: CITRINOS ALGARVE IGP LARANJA 6/7/8 3KG
+6376 1751005774.jpg 6376_9  # 07:29 conf 60 claude: full WRONG PRODUCT  expected: CITRINOS ALGARVE IGP LARANJA 6/7/8 3KG
+6376 1751005774.jpg 6376_11  # 07:29 conf 60 claude: half  expected: CITRINOS DO ALGARVE IGP LARANJA 70/95 KG
+6376 1751009380.jpg 6376_4  # 08:29 conf 60 claude: full  expected: KIWI ZESPRI 500 GR
+6376 1751009380.jpg 6376_5  # 08:29 conf 60 claude: half  expected: KIWI CNT BIO 400 G
+6376 1751009380.jpg 6376_8  # 08:29 conf 60 claude: empty  expected: CITRINOS ALGARVE IGP LARANJA 6/7/8 3KG
+6376 1751009380.jpg 6376_9  # 08:29 conf 60 claude: full WRONG PRODUCT  expected: CITRINOS ALGARVE IGP LARANJA 6/7/8 3KG
 6376 1751013482.jpg 6376_3  # 09:38 conf 60 claude: half  expected: KIWI GOLD ZESPRI 500 G
-6376 1751013482.jpg 6376_5  # 09:38 conf 60 claude: full  expected: KIWI CNT BIO 400 G
+6376 1751013482.jpg 6376_4  # 09:38 conf 60 claude: full  expected: KIWI ZESPRI 500 GR
+6376 1751013482.jpg 6376_5  # 09:38 conf 60 claude: half  expected: KIWI CNT BIO 400 G
+6376 1751013482.jpg 6376_8  # 09:38 conf 60 claude: empty  expected: CITRINOS ALGARVE IGP LARANJA 6/7/8 3KG
+6376 1751013482.jpg 6376_9  # 09:38 conf 60 claude: full WRONG PRODUCT  expected: CITRINOS ALGARVE IGP LARANJA 6/7/8 3KG
+6376 1751017831.jpg 6376_3  # 10:50 conf 60 claude: half  expected: KIWI GOLD ZESPRI 500 G
 6376 1751017831.jpg 6376_4  # 10:50 conf 60 claude: full  expected: KIWI ZESPRI 500 GR
-6376 1751017831.jpg 6376_5  # 10:50 conf 60 claude: full  expected: KIWI CNT BIO 400 G
-6376 1751021977.jpg 6376_3  # 11:59 conf 60 claude: empty  expected: KIWI GOLD ZESPRI 500 G
-6376 1751021977.jpg 6376_4  # 11:59 conf 60 claude: full  expected: KIWI ZESPRI 500 GR
-6376 1751025657.jpg 6376_3  # 13:00 conf 60 claude: empty  expected: KIWI GOLD ZESPRI 500 G
+6376 1751017831.jpg 6376_5  # 10:50 conf 60 claude: half  expected: KIWI CNT BIO 400 G
+6376 1751017831.jpg 6376_8  # 10:50 conf 60 claude: empty  expected: CITRINOS ALGARVE IGP LARANJA 6/7/8 3KG
+6376 1751017831.jpg 6376_9  # 10:50 conf 60 claude: full WRONG PRODUCT  expected: CITRINOS ALGARVE IGP LARANJA 6/7/8 3KG
+6376 1751017831.jpg 6376_11  # 10:50 conf 60 claude: half  expected: CITRINOS DO ALGARVE IGP LARANJA 70/95 KG
+6376 1751017831.jpg 6376_15  # 10:50 conf 60 claude: half  expected: CITRINOS DO ALGARVE IGP LARANJA 70/95 KG
+6376 1751021977.jpg 6376_4  # 11:59 conf 60 claude: half  expected: KIWI ZESPRI 500 GR
+6376 1751021977.jpg 6376_8  # 11:59 conf 60 claude: empty  expected: CITRINOS ALGARVE IGP LARANJA 6/7/8 3KG
+6376 1751021977.jpg 6376_9  # 11:59 conf 60 claude: full WRONG PRODUCT  expected: CITRINOS ALGARVE IGP LARANJA 6/7/8 3KG
+6376 1751021977.jpg 6376_11  # 11:59 conf 60 claude: half  expected: CITRINOS DO ALGARVE IGP LARANJA 70/95 KG
 6376 1751025657.jpg 6376_4  # 13:00 conf 60 claude: half  expected: KIWI ZESPRI 500 GR
-6376 1751029801.jpg 6376_3  # 14:10 conf 60 claude: empty  expected: KIWI GOLD ZESPRI 500 G
+6376 1751025657.jpg 6376_8  # 13:00 conf 60 claude: empty  expected: CITRINOS ALGARVE IGP LARANJA 6/7/8 3KG
+6376 1751025657.jpg 6376_9  # 13:00 conf 60 claude: full WRONG PRODUCT  expected: CITRINOS ALGARVE IGP LARANJA 6/7/8 3KG
+6376 1751025657.jpg 6376_11  # 13:00 conf 60 claude: half  expected: CITRINOS DO ALGARVE IGP LARANJA 70/95 KG
 6376 1751029801.jpg 6376_4  # 14:10 conf 60 claude: half  expected: KIWI ZESPRI 500 GR
-6376 1751029801.jpg 6376_12  # 14:10 conf 60 claude: half  expected: CLEMENTINA CAL 60/75 CNT KG
-6376 1751033639.jpg 6376_3  # 15:13 conf 60 claude: half WRONG PRODUCT  expected: KIWI GOLD ZESPRI 500 G
-6376 1751037379.jpg 6376_3  # 16:16 conf 60 claude: half WRONG PRODUCT  expected: KIWI GOLD ZESPRI 500 G
-6376 1751041136.jpg 6376_3  # 17:18 conf 60 claude: half WRONG PRODUCT  expected: KIWI GOLD ZESPRI 500 G
-6376 1751044933.jpg 6376_3  # 18:22 conf 60 claude: half WRONG PRODUCT  expected: KIWI GOLD ZESPRI 500 G
-6376 1751044933.jpg 6376_16  # 18:22 conf 60 claude: full  expected: CITR ALGARVE IGP LARANJA 3/4/5 1.5 KG
-6376 1751049028.jpg 6376_13  # 19:30 conf 60 claude: full  expected: CITR ALGARVE IGP LARANJA 3/4/5 1.5 KG
-6383 1751005245.jpg 6383_4  # 07:20 conf 60 claude: full  expected: COUVE PORTUGUESA/PENCA CNT KG
-6383 1751005245.jpg 6383_6  # 07:20 conf 60 claude: full  expected: BERINGELA CNT KG
-6383 1751005245.jpg 6383_7  # 07:20 conf 60 claude: full  expected: CHUCHU CNT KG
-6383 1751009368.jpg 6383_2  # 08:29 conf 60 claude: half  expected: ABACATE HASS PRONTO COMER CNT KG
-6383 1751009368.jpg 6383_4  # 08:29 conf 60 claude: full  expected: COUVE PORTUGUESA/PENCA CNT KG
-6383 1751009368.jpg 6383_6  # 08:29 conf 60 claude: full  expected: BERINGELA CNT KG
-6383 1751009368.jpg 6383_7  # 08:29 conf 60 claude: full  expected: CHUCHU CNT KG
-6383 1751013620.jpg 6383_6  # 09:40 conf 60 claude: full  expected: BERINGELA CNT KG
-6383 1751013620.jpg 6383_7  # 09:40 conf 60 claude: full  expected: CHUCHU CNT KG
-6383 1751017781.jpg 6383_7  # 10:49 conf 60 claude: full  expected: CHUCHU CNT KG
-6383 1751021577.jpg 6383_7  # 11:52 conf 60 claude: full  expected: CHUCHU CNT KG
+6376 1751029801.jpg 6376_8  # 14:10 conf 60 claude: empty  expected: CITRINOS ALGARVE IGP LARANJA 6/7/8 3KG
+6376 1751029801.jpg 6376_9  # 14:10 conf 60 claude: full WRONG PRODUCT  expected: CITRINOS ALGARVE IGP LARANJA 6/7/8 3KG
+6376 1751029801.jpg 6376_11  # 14:10 conf 60 claude: half  expected: CITRINOS DO ALGARVE IGP LARANJA 70/95 KG
+6376 1751029801.jpg 6376_15  # 14:10 conf 60 claude: half  expected: CITRINOS DO ALGARVE IGP LARANJA 70/95 KG
+6376 1751033639.jpg 6376_3  # 15:13 conf 60 claude: full WRONG PRODUCT  expected: KIWI GOLD ZESPRI 500 G
+6376 1751033639.jpg 6376_11  # 15:13 conf 60 claude: half  expected: CITRINOS DO ALGARVE IGP LARANJA 70/95 KG
+6376 1751033639.jpg 6376_15  # 15:13 conf 60 claude: half  expected: CITRINOS DO ALGARVE IGP LARANJA 70/95 KG
+6376 1751037379.jpg 6376_3  # 16:16 conf 60 claude: full WRONG PRODUCT  expected: KIWI GOLD ZESPRI 500 G
+6376 1751041136.jpg 6376_1  # 17:18 conf 60 claude: half  expected: LIMÃO CNT 60/75 KG
+6376 1751041136.jpg 6376_3  # 17:18 conf 60 claude: full WRONG PRODUCT  expected: KIWI GOLD ZESPRI 500 G
+6376 1751044933.jpg 6376_1  # 18:22 conf 60 claude: half  expected: LIMÃO CNT 60/75 KG
+6376 1751044933.jpg 6376_3  # 18:22 conf 60 claude: full WRONG PRODUCT  expected: KIWI GOLD ZESPRI 500 G
+6376 1751044933.jpg 6376_13  # 18:22 conf 60 claude: half  expected: CITR ALGARVE IGP LARANJA 3/4/5 1.5 KG
+6376 1751049028.jpg 6376_16  # 19:30 conf 60 claude: half  expected: CITR ALGARVE IGP LARANJA 3/4/5 1.5 KG
+6383 1751005245.jpg 6383_6  # 07:20 conf 60 claude: half  expected: BERINGELA CNT KG
+6383 1751009368.jpg 6383_6  # 08:29 conf 60 claude: half  expected: BERINGELA CNT KG
+6383 1751013620.jpg 6383_6  # 09:40 conf 60 claude: half  expected: BERINGELA CNT KG
+6383 1751017781.jpg 6383_6  # 10:49 conf 60 claude: half  expected: BERINGELA CNT KG
+6383 1751021577.jpg 6383_6  # 11:52 conf 60 claude: empty  expected: BERINGELA CNT KG
 6383 1751025309.jpg 6383_1  # 12:55 conf 60 claude: half  expected: ALFACE FRISADA SACO CNT KG
-6383 1751025309.jpg 6383_4  # 12:55 conf 60 claude: half  expected: COUVE PORTUGUESA/PENCA CNT KG
-6383 1751025309.jpg 6383_7  # 12:55 conf 60 claude: half  expected: CHUCHU CNT KG
-6383 1751029430.jpg 6383_6  # 14:03 conf 60 claude: full  expected: BERINGELA CNT KG
-6383 1751029430.jpg 6383_7  # 14:03 conf 60 claude: half  expected: CHUCHU CNT KG
-6383 1751033092.jpg 6383_4  # 15:04 conf 60 claude: full  expected: COUVE PORTUGUESA/PENCA CNT KG
-6383 1751033092.jpg 6383_6  # 15:04 conf 60 claude: full  expected: BERINGELA CNT KG
-6383 1751033092.jpg 6383_7  # 15:04 conf 60 claude: full  expected: CHUCHU CNT KG
-6383 1751037199.jpg 6383_4  # 16:13 conf 60 claude: full  expected: COUVE PORTUGUESA/PENCA CNT KG
-6383 1751037199.jpg 6383_6  # 16:13 conf 60 claude: full  expected: BERINGELA CNT KG
-6383 1751037199.jpg 6383_7  # 16:13 conf 60 claude: half  expected: CHUCHU CNT KG
-6383 1751040853.jpg 6383_4  # 17:14 conf 60 claude: full  expected: COUVE PORTUGUESA/PENCA CNT KG
-6383 1751040853.jpg 6383_6  # 17:14 conf 60 claude: full  expected: BERINGELA CNT KG
-6383 1751040853.jpg 6383_7  # 17:14 conf 60 claude: half  expected: CHUCHU CNT KG
-6383 1751044960.jpg 6383_4  # 18:22 conf 60 claude: full  expected: COUVE PORTUGUESA/PENCA CNT KG
-6383 1751044960.jpg 6383_9  # 18:22 conf 60 claude: half  expected: PEPINO CNT KG
-6383 1751048924.jpg 6383_4  # 19:28 conf 60 claude: full  expected: COUVE PORTUGUESA/PENCA CNT KG
-6383 1751048924.jpg 6383_9  # 19:28 conf 60 claude: half  expected: PEPINO CNT KG
-6385 1751001178.jpg 6385_3  # 06:12 conf 60 claude: half  expected: MAÇA VERMELHA BIO 500 G
-6385 1751005283.jpg 6385_3  # 07:21 conf 60 claude: half  expected: MAÇA VERMELHA BIO 500 G
-6385 1751008904.jpg 6385_3  # 08:21 conf 60 claude: half  expected: MAÇA VERMELHA BIO 500 G
-6385 1751008904.jpg 6385_4  # 08:21 conf 60 claude: half  expected: MAÇA FUJI CARIOCA 65/75 1 KG IMP
-6385 1751012735.jpg 6385_3  # 09:25 conf 60 claude: half  expected: MAÇA VERMELHA BIO 500 G
-6385 1751012735.jpg 6385_4  # 09:25 conf 60 claude: half  expected: MAÇA FUJI CARIOCA 65/75 1 KG IMP
-6385 1751016383.jpg 6385_3  # 10:26 conf 60 claude: half  expected: MAÇA VERMELHA BIO 500 G
-6385 1751016383.jpg 6385_4  # 10:26 conf 60 claude: half  expected: MAÇA FUJI CARIOCA 65/75 1 KG IMP
-6385 1751020485.jpg 6385_3  # 11:34 conf 60 claude: half  expected: MAÇA VERMELHA BIO 500 G
-6385 1751020485.jpg 6385_4  # 11:34 conf 60 claude: half  expected: MAÇA FUJI CARIOCA 65/75 1 KG IMP
-6385 1751024401.jpg 6385_3  # 12:40 conf 60 claude: half  expected: MAÇA VERMELHA BIO 500 G
-6385 1751028025.jpg 6385_3  # 13:40 conf 60 claude: half  expected: MAÇA VERMELHA BIO 500 G
-6385 1751032365.jpg 6385_3  # 14:52 conf 60 claude: half  expected: MAÇA VERMELHA BIO 500 G
-6385 1751036488.jpg 6385_3  # 16:01 conf 60 claude: half  expected: MAÇA VERMELHA BIO 500 G
-6385 1751040277.jpg 6385_3  # 17:04 conf 60 claude: half  expected: MAÇA VERMELHA BIO 500 G
-6385 1751044017.jpg 6385_3  # 18:06 conf 60 claude: half  expected: MAÇA VERMELHA BIO 500 G
-6385 1751047832.jpg 6385_3  # 19:10 conf 60 claude: half  expected: MAÇA VERMELHA BIO 500 G
-6385 1751047832.jpg 6385_5  # 19:10 conf 60 claude: full  expected: MACA FUJI CNT CAL. 73/85 KG IMP
-6385 1751051814.jpg 6385_3  # 20:16 conf 60 claude: half  expected: MAÇA VERMELHA BIO 500 G
-6386 1751005249.jpg 6386_2  # 07:20 conf 60 claude: half  expected: COUVE BRANCA CNT KG
-6386 1751005249.jpg 6386_4  # 07:20 conf 60 claude: half  expected: COUVE FLOR CNT KG
+6383 1751025309.jpg 6383_6  # 12:55 conf 60 claude: empty  expected: BERINGELA CNT KG
+6383 1751029430.jpg 6383_6  # 14:03 conf 60 claude: empty  expected: BERINGELA CNT KG
+6383 1751033092.jpg 6383_6  # 15:04 conf 60 claude: half  expected: BERINGELA CNT KG
+6383 1751037199.jpg 6383_6  # 16:13 conf 60 claude: half  expected: BERINGELA CNT KG
+6383 1751040853.jpg 6383_6  # 17:14 conf 60 claude: half  expected: BERINGELA CNT KG
+6383 1751044960.jpg 6383_2  # 18:22 conf 60 claude: half  expected: ABACATE HASS PRONTO COMER CNT KG
+6383 1751044960.jpg 6383_6  # 18:22 conf 60 claude: half  expected: BERINGELA CNT KG
+6383 1751048924.jpg 6383_6  # 19:28 conf 60 claude: half  expected: BERINGELA CNT KG
+6385 1751001178.jpg 6385_1  # 06:12 conf 60 claude: half  expected: MACA FUJI CNT CAL. 73/85 KG IMP
+6385 1751005283.jpg 6385_1  # 07:21 conf 60 claude: half  expected: MACA FUJI CNT CAL. 73/85 KG IMP
+6385 1751016383.jpg 6385_2  # 10:26 conf 60 claude: half  expected: MACA FUJI CNT CAL. 73/85 KG IMP
 6386 1751005249.jpg 6386_6  # 07:20 conf 60 claude: half  expected: COUVE BRANCA CNT KG
-6386 1751009346.jpg 6386_2  # 08:29 conf 60 claude: half  expected: COUVE BRANCA CNT KG
-6386 1751009346.jpg 6386_4  # 08:29 conf 60 claude: half  expected: COUVE FLOR CNT KG
 6386 1751009346.jpg 6386_6  # 08:29 conf 60 claude: half  expected: COUVE BRANCA CNT KG
-6386 1751013440.jpg 6386_4  # 09:37 conf 60 claude: full  expected: COUVE FLOR CNT KG
-6386 1751036676.jpg 6386_1  # 16:04 conf 60 claude: full  expected: COUVE BROCOLO CNT KG
-6386 1751040333.jpg 6386_1  # 17:05 conf 60 claude: half  expected: COUVE BROCOLO CNT KG
-6386 1751044440.jpg 6386_1  # 18:14 conf 60 claude: half  expected: COUVE BROCOLO CNT KG
-6386 1751044440.jpg 6386_5  # 18:14 conf 60 claude: half  expected: CURGETE VERDE CNT KG
-6386 1751048137.jpg 6386_3  # 19:15 conf 60 claude: full  expected: COUVE ROXA CNT KG
+6386 1751028928.jpg 6386_5  # 13:55 conf 60 claude: half  expected: CURGETE VERDE CNT KG
+6443 1751001244.jpg 6443_3  # 06:14 conf 60 claude: half  expected: TOMATE TASTY SC EMB 400G
+6443 1751001244.jpg 6443_4  # 06:14 conf 60 claude: full  expected: TOMATE CHERRY BIO EMB. 250 GR
+6443 1751001244.jpg 6443_5  # 06:14 conf 60 claude: half  expected: TOMATE ZER0%D 1KG
 6443 1751001244.jpg 6443_7  # 06:14 conf 60 claude: full  expected: TOMATE CHERRY VERMELHO CNT 250GR
+6443 1751001244.jpg 6443_9  # 06:14 conf 60 claude: half  expected: TOMATE MINI CHUCHA VERMELHO CNT 250GR
+6443 1751001244.jpg 6443_10  # 06:14 conf 60 claude: empty  expected: TOMATE MINI CHUCHA SWEET SC 200G
+6443 1751005341.jpg 6443_3  # 07:22 conf 60 claude: half  expected: TOMATE TASTY SC EMB 400G
+6443 1751005341.jpg 6443_4  # 07:22 conf 60 claude: full  expected: TOMATE CHERRY BIO EMB. 250 GR
+6443 1751005341.jpg 6443_5  # 07:22 conf 60 claude: half  expected: TOMATE ZER0%D 1KG
 6443 1751005341.jpg 6443_7  # 07:22 conf 60 claude: full  expected: TOMATE CHERRY VERMELHO CNT 250GR
-6443 1751009482.jpg 6443_7  # 08:31 conf 60 claude: full  expected: TOMATE CHERRY VERMELHO CNT 250GR
+6443 1751005341.jpg 6443_9  # 07:22 conf 60 claude: half  expected: TOMATE MINI CHUCHA VERMELHO CNT 250GR
+6443 1751005341.jpg 6443_10  # 07:22 conf 60 claude: empty  expected: TOMATE MINI CHUCHA SWEET SC 200G
+6443 1751009482.jpg 6443_3  # 08:31 conf 60 claude: half  expected: TOMATE TASTY SC EMB 400G
+6443 1751009482.jpg 6443_4  # 08:31 conf 60 claude: full  expected: TOMATE CHERRY BIO EMB. 250 GR
+6443 1751009482.jpg 6443_5  # 08:31 conf 60 claude: half  expected: TOMATE ZER0%D 1KG
+6443 1751009482.jpg 6443_9  # 08:31 conf 60 claude: half  expected: TOMATE MINI CHUCHA VERMELHO CNT 250GR
+6443 1751009482.jpg 6443_10  # 08:31 conf 60 claude: empty  expected: TOMATE MINI CHUCHA SWEET SC 200G
+6443 1751013117.jpg 6443_3  # 09:31 conf 60 claude: half  expected: TOMATE TASTY SC EMB 400G
 6443 1751013117.jpg 6443_4  # 09:31 conf 60 claude: full  expected: TOMATE CHERRY BIO EMB. 250 GR
-6443 1751013117.jpg 6443_5  # 09:31 conf 60 claude: full  expected: TOMATE ZER0%D 1KG
-6443 1751013117.jpg 6443_7  # 09:31 conf 60 claude: full  expected: TOMATE CHERRY VERMELHO CNT 250GR
-6443 1751013117.jpg 6443_10  # 09:31 conf 60 claude: full  expected: TOMATE MINI CHUCHA SWEET SC 200G
+6443 1751013117.jpg 6443_9  # 09:31 conf 60 claude: half  expected: TOMATE MINI CHUCHA VERMELHO CNT 250GR
+6443 1751016838.jpg 6443_3  # 10:33 conf 60 claude: half  expected: TOMATE TASTY SC EMB 400G
 6443 1751016838.jpg 6443_4  # 10:33 conf 60 claude: full  expected: TOMATE CHERRY BIO EMB. 250 GR
-6443 1751016838.jpg 6443_5  # 10:33 conf 60 claude: full  expected: TOMATE ZER0%D 1KG
-6443 1751016838.jpg 6443_7  # 10:33 conf 60 claude: full  expected: TOMATE CHERRY VERMELHO CNT 250GR
-6443 1751016838.jpg 6443_10  # 10:33 conf 60 claude: full  expected: TOMATE MINI CHUCHA SWEET SC 200G
+6443 1751016838.jpg 6443_9  # 10:33 conf 60 claude: half  expected: TOMATE MINI CHUCHA VERMELHO CNT 250GR
+6443 1751020727.jpg 6443_3  # 11:38 conf 60 claude: half  expected: TOMATE TASTY SC EMB 400G
 6443 1751020727.jpg 6443_4  # 11:38 conf 60 claude: full  expected: TOMATE CHERRY BIO EMB. 250 GR
-6443 1751020727.jpg 6443_5  # 11:38 conf 60 claude: full  expected: TOMATE ZER0%D 1KG
-6443 1751020727.jpg 6443_7  # 11:38 conf 60 claude: full  expected: TOMATE CHERRY VERMELHO CNT 250GR
-6443 1751020727.jpg 6443_10  # 11:38 conf 60 claude: full  expected: TOMATE MINI CHUCHA SWEET SC 200G
-6443 1751020727.jpg 6443_11  # 11:38 conf 60 claude: full  expected: TOMATE CHUCHA CNT KG
-6443 1751024371.jpg 6443_2  # 12:39 conf 60 claude: full  expected: TOMATE CACHO CNT KG
+6443 1751020727.jpg 6443_9  # 11:38 conf 60 claude: half  expected: TOMATE MINI CHUCHA VERMELHO CNT 250GR
+6443 1751024371.jpg 6443_3  # 12:39 conf 60 claude: half  expected: TOMATE TASTY SC EMB 400G
 6443 1751024371.jpg 6443_4  # 12:39 conf 60 claude: full  expected: TOMATE CHERRY BIO EMB. 250 GR
-6443 1751024371.jpg 6443_5  # 12:39 conf 60 claude: full  expected: TOMATE ZER0%D 1KG
 6443 1751024371.jpg 6443_6  # 12:39 conf 60 claude: half  expected: TOMATE CORAÇÃO DE BOI CNT KG
-6443 1751024371.jpg 6443_7  # 12:39 conf 60 claude: full  expected: TOMATE CHERRY VERMELHO CNT 250GR
-6443 1751024371.jpg 6443_8  # 12:39 conf 60 claude: half  expected: TOMATE CORAÇÃO DE BOI CNT KG
-6443 1751024371.jpg 6443_10  # 12:39 conf 60 claude: full  expected: TOMATE MINI CHUCHA SWEET SC 200G
-6443 1751024371.jpg 6443_12  # 12:39 conf 60 claude: full  expected: MINI TOMATE CACHO CNT 500G
-6443 1751028789.jpg 6443_2  # 13:53 conf 60 claude: half  expected: TOMATE CACHO CNT KG
+6443 1751024371.jpg 6443_9  # 12:39 conf 60 claude: half  expected: TOMATE MINI CHUCHA VERMELHO CNT 250GR
+6443 1751028789.jpg 6443_3  # 13:53 conf 60 claude: half  expected: TOMATE TASTY SC EMB 400G
 6443 1751028789.jpg 6443_4  # 13:53 conf 60 claude: full  expected: TOMATE CHERRY BIO EMB. 250 GR
-6443 1751028789.jpg 6443_5  # 13:53 conf 60 claude: full  expected: TOMATE ZER0%D 1KG
-6443 1751028789.jpg 6443_6  # 13:53 conf 60 claude: half  expected: TOMATE CORAÇÃO DE BOI CNT KG
-6443 1751028789.jpg 6443_7  # 13:53 conf 60 claude: full  expected: TOMATE CHERRY VERMELHO CNT 250GR
-6443 1751028789.jpg 6443_8  # 13:53 conf 60 claude: half  expected: TOMATE CORAÇÃO DE BOI CNT KG
-6443 1751028789.jpg 6443_10  # 13:53 conf 60 claude: full  expected: TOMATE MINI CHUCHA SWEET SC 200G
+6443 1751028789.jpg 6443_9  # 13:53 conf 60 claude: half  expected: TOMATE MINI CHUCHA VERMELHO CNT 250GR
+6443 1751028789.jpg 6443_12  # 13:53 conf 60 claude: half  expected: MINI TOMATE CACHO CNT 500G
+6443 1751032575.jpg 6443_3  # 14:56 conf 60 claude: half  expected: TOMATE TASTY SC EMB 400G
 6443 1751032575.jpg 6443_4  # 14:56 conf 60 claude: full  expected: TOMATE CHERRY BIO EMB. 250 GR
-6443 1751032575.jpg 6443_5  # 14:56 conf 60 claude: full  expected: TOMATE ZER0%D 1KG
-6443 1751032575.jpg 6443_6  # 14:56 conf 60 claude: full  expected: TOMATE CORAÇÃO DE BOI CNT KG
-6443 1751032575.jpg 6443_7  # 14:56 conf 60 claude: full  expected: TOMATE CHERRY VERMELHO CNT 250GR
-6443 1751032575.jpg 6443_8  # 14:56 conf 60 claude: half  expected: TOMATE CORAÇÃO DE BOI CNT KG
-6443 1751032575.jpg 6443_10  # 14:56 conf 60 claude: full  expected: TOMATE MINI CHUCHA SWEET SC 200G
+6443 1751032575.jpg 6443_9  # 14:56 conf 60 claude: half  expected: TOMATE MINI CHUCHA VERMELHO CNT 250GR
+6443 1751032575.jpg 6443_12  # 14:56 conf 60 claude: half  expected: MINI TOMATE CACHO CNT 500G
+6443 1751036374.jpg 6443_3  # 15:59 conf 60 claude: half  expected: TOMATE TASTY SC EMB 400G
 6443 1751036374.jpg 6443_4  # 15:59 conf 60 claude: full  expected: TOMATE CHERRY BIO EMB. 250 GR
-6443 1751036374.jpg 6443_5  # 15:59 conf 60 claude: full  expected: TOMATE ZER0%D 1KG
-6443 1751036374.jpg 6443_6  # 15:59 conf 60 claude: full  expected: TOMATE CORAÇÃO DE BOI CNT KG
-6443 1751036374.jpg 6443_7  # 15:59 conf 60 claude: full  expected: TOMATE CHERRY VERMELHO CNT 250GR
-6443 1751036374.jpg 6443_8  # 15:59 conf 60 claude: half  expected: TOMATE CORAÇÃO DE BOI CNT KG
-6443 1751036374.jpg 6443_10  # 15:59 conf 60 claude: full  expected: TOMATE MINI CHUCHA SWEET SC 200G
+6443 1751036374.jpg 6443_9  # 15:59 conf 60 claude: half  expected: TOMATE MINI CHUCHA VERMELHO CNT 250GR
+6443 1751040209.jpg 6443_3  # 17:03 conf 60 claude: half  expected: TOMATE TASTY SC EMB 400G
 6443 1751040209.jpg 6443_4  # 17:03 conf 60 claude: full  expected: TOMATE CHERRY BIO EMB. 250 GR
-6443 1751040209.jpg 6443_5  # 17:03 conf 60 claude: full  expected: TOMATE ZER0%D 1KG
-6443 1751040209.jpg 6443_7  # 17:03 conf 60 claude: full  expected: TOMATE CHERRY VERMELHO CNT 250GR
-6443 1751040209.jpg 6443_8  # 17:03 conf 60 claude: half  expected: TOMATE CORAÇÃO DE BOI CNT KG
-6443 1751040209.jpg 6443_10  # 17:03 conf 60 claude: full  expected: TOMATE MINI CHUCHA SWEET SC 200G
+6443 1751040209.jpg 6443_9  # 17:03 conf 60 claude: half  expected: TOMATE MINI CHUCHA VERMELHO CNT 250GR
+6443 1751044079.jpg 6443_3  # 18:07 conf 60 claude: half  expected: TOMATE TASTY SC EMB 400G
 6443 1751044079.jpg 6443_4  # 18:07 conf 60 claude: full  expected: TOMATE CHERRY BIO EMB. 250 GR
 6443 1751044079.jpg 6443_5  # 18:07 conf 60 claude: full  expected: TOMATE ZER0%D 1KG
-6443 1751044079.jpg 6443_7  # 18:07 conf 60 claude: full  expected: TOMATE CHERRY VERMELHO CNT 250GR
-6443 1751044079.jpg 6443_8  # 18:07 conf 60 claude: half  expected: TOMATE CORAÇÃO DE BOI CNT KG
-6443 1751044079.jpg 6443_10  # 18:07 conf 60 claude: full  expected: TOMATE MINI CHUCHA SWEET SC 200G
-6462 1751001155.jpg 6462_3  # 06:12 conf 60 claude: full  expected: MANGA CNT KG
-6462 1751005795.jpg 6462_3  # 07:29 conf 60 claude: full  expected: MANGA CNT KG
-6462 1751005795.jpg 6462_4  # 07:29 conf 60 claude: half  expected: UVA BRANCA S/ GRAINHA CNT KG
-6462 1751009411.jpg 6462_3  # 08:30 conf 60 claude: full  expected: MANGA CNT KG
-6462 1751016893.jpg 6462_1  # 10:34 conf 60 claude: half  expected: MORANGO EMB. 500 GR
-6462 1751020617.jpg 6462_1  # 11:36 conf 60 claude: half  expected: MORANGO EMB. 500 GR
-6462 1751020617.jpg 6462_5  # 11:36 conf 60 claude: full  expected: UVA BRANCA S/GRAINHA CNT 500 G
+6443 1751044079.jpg 6443_7  # 18:07 conf 60 claude: half  expected: TOMATE CHERRY VERMELHO CNT 250GR
+6443 1751044079.jpg 6443_9  # 18:07 conf 60 claude: half  expected: TOMATE MINI CHUCHA VERMELHO CNT 250GR
+6462 1751001155.jpg 6462_3  # 06:12 conf 60 claude: half  expected: MANGA CNT KG
+6462 1751005795.jpg 6462_3  # 07:29 conf 60 claude: half  expected: MANGA CNT KG
+6462 1751009411.jpg 6462_3  # 08:30 conf 60 claude: half  expected: MANGA CNT KG
 6462 1751024395.jpg 6462_1  # 12:39 conf 60 claude: half  expected: MORANGO EMB. 500 GR
-6462 1751024395.jpg 6462_5  # 12:39 conf 60 claude: half  expected: UVA BRANCA S/GRAINHA CNT 500 G
 6462 1751028563.jpg 6462_1  # 13:49 conf 60 claude: empty  expected: MORANGO EMB. 500 GR
-6462 1751028563.jpg 6462_5  # 13:49 conf 60 claude: half  expected: UVA BRANCA S/GRAINHA CNT 500 G
-6462 1751032838.jpg 6462_1  # 15:00 conf 60 claude: half  expected: MORANGO EMB. 500 GR
-6462 1751032838.jpg 6462_5  # 15:00 conf 60 claude: full  expected: UVA BRANCA S/GRAINHA CNT 500 G
-6462 1751036485.jpg 6462_1  # 16:01 conf 60 claude: half  expected: MORANGO EMB. 500 GR
-6462 1751036485.jpg 6462_3  # 16:01 conf 60 claude: full  expected: MANGA CNT KG
-6462 1751036485.jpg 6462_5  # 16:01 conf 60 claude: half  expected: UVA BRANCA S/GRAINHA CNT 500 G
-6462 1751040186.jpg 6462_1  # 17:03 conf 60 claude: empty  expected: MORANGO EMB. 500 GR
-6462 1751040186.jpg 6462_5  # 17:03 conf 60 claude: half  expected: UVA BRANCA S/GRAINHA CNT 500 G
+6462 1751040186.jpg 6462_1  # 17:03 conf 60 claude: half  expected: MORANGO EMB. 500 GR
 6462 1751043841.jpg 6462_1  # 18:04 conf 60 claude: empty  expected: MORANGO EMB. 500 GR
-6462 1751043841.jpg 6462_9  # 18:04 conf 60 claude: full  expected: CEREJA 24+ 500 GR
-6462 1751047858.jpg 6462_3  # 19:10 conf 60 claude: half  expected: MANGA CNT KG
-6462 1751047858.jpg 6462_4  # 19:10 conf 60 claude: full  expected: UVA BRANCA S/ GRAINHA CNT KG
-6462 1751047858.jpg 6462_9  # 19:10 conf 60 claude: half  expected: CEREJA 24+ 500 GR
-6468 1751001157.jpg 6468_3  # 06:12 conf 60 claude: full  expected: ABACAXI SUPER SWEET KG
-6468 1751001157.jpg 6468_8  # 06:12 conf 60 claude: half WRONG PRODUCT  expected: GRANADILHA 80 G
-6468 1751001157.jpg 6468_10  # 06:12 conf 60 claude: full  expected: PAPAIA DE AVIÃO INTEIRA CNT KG
-6468 1751001157.jpg 6468_13  # 06:12 conf 60 claude: half WRONG PRODUCT  expected: MANGA AVIÃO PALMER KG
-6468 1751001157.jpg 6468_14  # 06:12 conf 60 claude: half WRONG PRODUCT  expected: MANGA AVIÃO PALMER KG
-6468 1751001157.jpg 6468_15  # 06:12 conf 60 claude: half  expected: MANGA AVIÃO PALMER KG
-6468 1751005772.jpg 6468_3  # 07:29 conf 60 claude: full  expected: ABACAXI SUPER SWEET KG
-6468 1751005772.jpg 6468_8  # 07:29 conf 60 claude: half WRONG PRODUCT  expected: GRANADILHA 80 G
-6468 1751005772.jpg 6468_10  # 07:29 conf 60 claude: full  expected: PAPAIA DE AVIÃO INTEIRA CNT KG
-6468 1751005772.jpg 6468_13  # 07:29 conf 60 claude: half WRONG PRODUCT  expected: MANGA AVIÃO PALMER KG
-6468 1751005772.jpg 6468_14  # 07:29 conf 60 claude: half WRONG PRODUCT  expected: MANGA AVIÃO PALMER KG
-6468 1751009863.jpg 6468_8  # 08:37 conf 60 claude: half WRONG PRODUCT  expected: GRANADILHA 80 G
-6468 1751009863.jpg 6468_10  # 08:37 conf 60 claude: full  expected: PAPAIA DE AVIÃO INTEIRA CNT KG
-6468 1751009863.jpg 6468_14  # 08:37 conf 60 claude: half WRONG PRODUCT  expected: MANGA AVIÃO PALMER KG
-6468 1751009863.jpg 6468_15  # 08:37 conf 60 claude: full  expected: MANGA AVIÃO PALMER KG
-6468 1751013530.jpg 6468_7  # 09:38 conf 60 claude: full  expected: MARACUJA ROXO CNT KG
-6468 1751013530.jpg 6468_10  # 09:38 conf 60 claude: half  expected: PAPAIA DE AVIÃO INTEIRA CNT KG
 6468 1751013530.jpg 6468_14  # 09:38 conf 60 claude: half  expected: MANGA AVIÃO PALMER KG
-6468 1751013530.jpg 6468_15  # 09:38 conf 60 claude: full  expected: MANGA AVIÃO PALMER KG
-6468 1751013530.jpg 6468_16  # 09:38 conf 60 claude: full  expected: MANGA AVIÃO PALMER KG
-6468 1751017764.jpg 6468_7  # 10:49 conf 60 claude: full  expected: MARACUJA ROXO CNT KG
-6468 1751017764.jpg 6468_10  # 10:49 conf 60 claude: half  expected: PAPAIA DE AVIÃO INTEIRA CNT KG
 6468 1751017764.jpg 6468_14  # 10:49 conf 60 claude: half  expected: MANGA AVIÃO PALMER KG
-6468 1751017764.jpg 6468_15  # 10:49 conf 60 claude: full  expected: MANGA AVIÃO PALMER KG
-6468 1751017764.jpg 6468_16  # 10:49 conf 60 claude: full  expected: MANGA AVIÃO PALMER KG
-6468 1751021997.jpg 6468_7  # 11:59 conf 60 claude: full  expected: MARACUJA ROXO CNT KG
-6468 1751021997.jpg 6468_10  # 11:59 conf 60 claude: half  expected: PAPAIA DE AVIÃO INTEIRA CNT KG
 6468 1751021997.jpg 6468_14  # 11:59 conf 60 claude: half  expected: MANGA AVIÃO PALMER KG
-6468 1751021997.jpg 6468_15  # 11:59 conf 60 claude: full  expected: MANGA AVIÃO PALMER KG
-6468 1751021997.jpg 6468_16  # 11:59 conf 60 claude: full  expected: MANGA AVIÃO PALMER KG
-6468 1751026188.jpg 6468_7  # 13:09 conf 60 claude: full  expected: MARACUJA ROXO CNT KG
-6468 1751026188.jpg 6468_10  # 13:09 conf 60 claude: half  expected: PAPAIA DE AVIÃO INTEIRA CNT KG
 6468 1751026188.jpg 6468_14  # 13:09 conf 60 claude: half  expected: MANGA AVIÃO PALMER KG
-6468 1751026188.jpg 6468_15  # 13:09 conf 60 claude: full  expected: MANGA AVIÃO PALMER KG
-6468 1751026188.jpg 6468_16  # 13:09 conf 60 claude: full  expected: MANGA AVIÃO PALMER KG
-6468 1751029957.jpg 6468_7  # 14:12 conf 60 claude: full  expected: MARACUJA ROXO CNT KG
-6468 1751029957.jpg 6468_10  # 14:12 conf 60 claude: half  expected: PAPAIA DE AVIÃO INTEIRA CNT KG
+6468 1751026188.jpg 6468_16  # 13:09 conf 60 claude: half  expected: MANGA AVIÃO PALMER KG
 6468 1751029957.jpg 6468_14  # 14:12 conf 60 claude: half  expected: MANGA AVIÃO PALMER KG
-6468 1751029957.jpg 6468_15  # 14:12 conf 60 claude: full  expected: MANGA AVIÃO PALMER KG
-6468 1751029957.jpg 6468_16  # 14:12 conf 60 claude: full  expected: MANGA AVIÃO PALMER KG
-6468 1751033646.jpg 6468_7  # 15:14 conf 60 claude: full  expected: MARACUJA ROXO CNT KG
-6468 1751033646.jpg 6468_10  # 15:14 conf 60 claude: half  expected: PAPAIA DE AVIÃO INTEIRA CNT KG
+6468 1751029957.jpg 6468_16  # 14:12 conf 60 claude: half  expected: MANGA AVIÃO PALMER KG
 6468 1751033646.jpg 6468_14  # 15:14 conf 60 claude: half  expected: MANGA AVIÃO PALMER KG
-6468 1751033646.jpg 6468_15  # 15:14 conf 60 claude: full  expected: MANGA AVIÃO PALMER KG
-6468 1751033646.jpg 6468_16  # 15:14 conf 60 claude: full  expected: MANGA AVIÃO PALMER KG
-6468 1751037301.jpg 6468_3  # 16:15 conf 60 claude: half  expected: ABACAXI SUPER SWEET KG
-6468 1751037301.jpg 6468_7  # 16:15 conf 60 claude: full  expected: MARACUJA ROXO CNT KG
-6468 1751037301.jpg 6468_10  # 16:15 conf 60 claude: empty  expected: PAPAIA DE AVIÃO INTEIRA CNT KG
+6468 1751033646.jpg 6468_16  # 15:14 conf 60 claude: half  expected: MANGA AVIÃO PALMER KG
+6468 1751037301.jpg 6468_3  # 16:15 conf 60 claude: empty  expected: ABACAXI SUPER SWEET KG
 6468 1751037301.jpg 6468_14  # 16:15 conf 60 claude: half  expected: MANGA AVIÃO PALMER KG
-6468 1751037301.jpg 6468_15  # 16:15 conf 60 claude: full  expected: MANGA AVIÃO PALMER KG
-6468 1751037301.jpg 6468_16  # 16:15 conf 60 claude: full  expected: MANGA AVIÃO PALMER KG
-6468 1751041038.jpg 6468_7  # 17:17 conf 60 claude: full  expected: MARACUJA ROXO CNT KG
-6468 1751041038.jpg 6468_10  # 17:17 conf 60 claude: half  expected: PAPAIA DE AVIÃO INTEIRA CNT KG
+6468 1751041038.jpg 6468_3  # 17:17 conf 60 claude: half  expected: ABACAXI SUPER SWEET KG
 6468 1751041038.jpg 6468_14  # 17:17 conf 60 claude: half  expected: MANGA AVIÃO PALMER KG
-6468 1751041038.jpg 6468_15  # 17:17 conf 60 claude: full  expected: MANGA AVIÃO PALMER KG
-6468 1751041038.jpg 6468_16  # 17:17 conf 60 claude: full  expected: MANGA AVIÃO PALMER KG
-6468 1751044824.jpg 6468_7  # 18:20 conf 60 claude: full  expected: MARACUJA ROXO CNT KG
-6468 1751044824.jpg 6468_9  # 18:20 conf 60 claude: half  expected: MAMAO INTEIRO CNT KG
-6468 1751044824.jpg 6468_10  # 18:20 conf 60 claude: half  expected: PAPAIA DE AVIÃO INTEIRA CNT KG
+6468 1751044824.jpg 6468_3  # 18:20 conf 60 claude: half  expected: ABACAXI SUPER SWEET KG
 6468 1751044824.jpg 6468_14  # 18:20 conf 60 claude: half  expected: MANGA AVIÃO PALMER KG
-6468 1751044824.jpg 6468_16  # 18:20 conf 60 claude: full  expected: MANGA AVIÃO PALMER KG
-6468 1751048837.jpg 6468_7  # 19:27 conf 60 claude: full  expected: MARACUJA ROXO CNT KG
-6468 1751048837.jpg 6468_8  # 19:27 conf 60 claude: full  expected: GRANADILHA 80 G
-6468 1751048837.jpg 6468_10  # 19:27 conf 60 claude: half  expected: PAPAIA DE AVIÃO INTEIRA CNT KG
+6468 1751044824.jpg 6468_15  # 18:20 conf 60 claude: half  expected: MANGA AVIÃO PALMER KG
 6468 1751048837.jpg 6468_14  # 19:27 conf 60 claude: half  expected: MANGA AVIÃO PALMER KG
 6468 1751048837.jpg 6468_15  # 19:27 conf 60 claude: half  expected: MANGA AVIÃO PALMER KG
-6468 1751048837.jpg 6468_16  # 19:27 conf 60 claude: full  expected: MANGA AVIÃO PALMER KG
-6491 1751005570.jpg 6491_6  # 07:26 conf 60 claude: full  expected: PESSEGO R0 A/AA KG
-6491 1751005570.jpg 6491_8  # 07:26 conf 60 claude: full  expected: PESSEGO R0 A/AA KG
-6491 1751005570.jpg 6491_10  # 07:26 conf 60 claude: full  expected: PESSEGO R0 A/AA KG
-6491 1751010016.jpg 6491_4  # 08:40 conf 60 claude: full  expected: PESSEGO R0 A/AA KG
-6491 1751010016.jpg 6491_6  # 08:40 conf 60 claude: full  expected: PESSEGO R0 A/AA KG
-6491 1751010016.jpg 6491_8  # 08:40 conf 60 claude: full  expected: PESSEGO R0 A/AA KG
-6491 1751010016.jpg 6491_10  # 08:40 conf 60 claude: full  expected: PESSEGO R0 A/AA KG
-6491 1751013784.jpg 6491_4  # 09:43 conf 60 claude: full  expected: PESSEGO R0 A/AA KG
-6491 1751013784.jpg 6491_6  # 09:43 conf 60 claude: full  expected: PESSEGO R0 A/AA KG
-6491 1751013784.jpg 6491_8  # 09:43 conf 60 claude: full  expected: PESSEGO R0 A/AA KG
-6491 1751013784.jpg 6491_10  # 09:43 conf 60 claude: full  expected: PESSEGO R0 A/AA KG
-6491 1751018041.jpg 6491_4  # 10:54 conf 60 claude: full  expected: PESSEGO R0 A/AA KG
+6491 1751005570.jpg 6491_9  # 07:26 conf 60 claude: full  expected: PESSEGO PARAGUAYO R0 A/AA/AAA KG
 6491 1751018041.jpg 6491_5  # 10:54 conf 60 claude: half  expected: NECTARINA R0 A/AA KG
-6491 1751018041.jpg 6491_6  # 10:54 conf 60 claude: full  expected: PESSEGO R0 A/AA KG
 6491 1751018041.jpg 6491_7  # 10:54 conf 60 claude: half  expected: NECTARINA R0 A/AA KG
-6491 1751018041.jpg 6491_8  # 10:54 conf 60 claude: full  expected: PESSEGO R0 A/AA KG
-6491 1751018041.jpg 6491_10  # 10:54 conf 60 claude: full  expected: PESSEGO R0 A/AA KG
-6491 1751021816.jpg 6491_4  # 11:56 conf 60 claude: full  expected: PESSEGO R0 A/AA KG
-6491 1751021816.jpg 6491_6  # 11:56 conf 60 claude: full  expected: PESSEGO R0 A/AA KG
-6491 1751021816.jpg 6491_8  # 11:56 conf 60 claude: full  expected: PESSEGO R0 A/AA KG
-6491 1751021816.jpg 6491_10  # 11:56 conf 60 claude: full  expected: PESSEGO R0 A/AA KG
+6491 1751018041.jpg 6491_10  # 10:54 conf 60 claude: half  expected: PESSEGO R0 A/AA KG
+6491 1751021816.jpg 6491_10  # 11:56 conf 60 claude: half  expected: PESSEGO R0 A/AA KG
 6491 1751025495.jpg 6491_5  # 12:58 conf 60 claude: half  expected: NECTARINA R0 A/AA KG
-6491 1751025495.jpg 6491_6  # 12:58 conf 60 claude: full  expected: PESSEGO R0 A/AA KG
 6491 1751025495.jpg 6491_7  # 12:58 conf 60 claude: half  expected: NECTARINA R0 A/AA KG
-6491 1751025495.jpg 6491_8  # 12:58 conf 60 claude: full  expected: PESSEGO R0 A/AA KG
-6491 1751025495.jpg 6491_10  # 12:58 conf 60 claude: full  expected: PESSEGO R0 A/AA KG
+6491 1751025495.jpg 6491_10  # 12:58 conf 60 claude: half  expected: PESSEGO R0 A/AA KG
+6491 1751029202.jpg 6491_4  # 14:00 conf 60 claude: half  expected: PESSEGO R0 A/AA KG
 6491 1751029202.jpg 6491_5  # 14:00 conf 60 claude: half  expected: NECTARINA R0 A/AA KG
-6491 1751029202.jpg 6491_6  # 14:00 conf 60 claude: full  expected: PESSEGO R0 A/AA KG
 6491 1751029202.jpg 6491_7  # 14:00 conf 60 claude: half  expected: NECTARINA R0 A/AA KG
-6491 1751029202.jpg 6491_8  # 14:00 conf 60 claude: full  expected: PESSEGO R0 A/AA KG
-6491 1751029202.jpg 6491_10  # 14:00 conf 60 claude: full  expected: PESSEGO R0 A/AA KG
-6491 1751033170.jpg 6491_4  # 15:06 conf 60 claude: full  expected: PESSEGO R0 A/AA KG
-6491 1751033170.jpg 6491_6  # 15:06 conf 60 claude: full  expected: PESSEGO R0 A/AA KG
-6491 1751033170.jpg 6491_8  # 15:06 conf 60 claude: full  expected: PESSEGO R0 A/AA KG
-6491 1751033170.jpg 6491_10  # 15:06 conf 60 claude: full  expected: PESSEGO R0 A/AA KG
-6491 1751036849.jpg 6491_4  # 16:07 conf 60 claude: full  expected: PESSEGO R0 A/AA KG
-6491 1751036849.jpg 6491_6  # 16:07 conf 60 claude: full  expected: PESSEGO R0 A/AA KG
+6491 1751029202.jpg 6491_10  # 14:00 conf 60 claude: half  expected: PESSEGO R0 A/AA KG
+6491 1751033170.jpg 6491_7  # 15:06 conf 60 claude: half  expected: NECTARINA R0 A/AA KG
+6491 1751036849.jpg 6491_5  # 16:07 conf 60 claude: half  expected: NECTARINA R0 A/AA KG
 6491 1751036849.jpg 6491_7  # 16:07 conf 60 claude: half  expected: NECTARINA R0 A/AA KG
-6491 1751036849.jpg 6491_8  # 16:07 conf 60 claude: full  expected: PESSEGO R0 A/AA KG
-6491 1751036849.jpg 6491_10  # 16:07 conf 60 claude: full  expected: PESSEGO R0 A/AA KG
-6491 1751040739.jpg 6491_4  # 17:12 conf 60 claude: full  expected: PESSEGO R0 A/AA KG
 6491 1751040739.jpg 6491_5  # 17:12 conf 60 claude: half  expected: NECTARINA R0 A/AA KG
-6491 1751040739.jpg 6491_6  # 17:12 conf 60 claude: full  expected: PESSEGO R0 A/AA KG
-6491 1751040739.jpg 6491_8  # 17:12 conf 60 claude: full  expected: PESSEGO R0 A/AA KG
-6491 1751040739.jpg 6491_10  # 17:12 conf 60 claude: full  expected: PESSEGO R0 A/AA KG
-6491 1751044356.jpg 6491_4  # 18:12 conf 60 claude: full  expected: PESSEGO R0 A/AA KG
+6491 1751040739.jpg 6491_7  # 17:12 conf 60 claude: half  expected: NECTARINA R0 A/AA KG
 6491 1751044356.jpg 6491_5  # 18:12 conf 60 claude: half  expected: NECTARINA R0 A/AA KG
-6491 1751044356.jpg 6491_6  # 18:12 conf 60 claude: full  expected: PESSEGO R0 A/AA KG
 6491 1751044356.jpg 6491_7  # 18:12 conf 60 claude: half  expected: NECTARINA R0 A/AA KG
-6491 1751044356.jpg 6491_8  # 18:12 conf 60 claude: full  expected: PESSEGO R0 A/AA KG
-6491 1751044356.jpg 6491_10  # 18:12 conf 60 claude: full  expected: PESSEGO R0 A/AA KG
-6491 1751048611.jpg 6491_4  # 19:23 conf 60 claude: full  expected: PESSEGO R0 A/AA KG
-6491 1751048611.jpg 6491_6  # 19:23 conf 60 claude: full  expected: PESSEGO R0 A/AA KG
-6491 1751048611.jpg 6491_8  # 19:23 conf 60 claude: full  expected: PESSEGO R0 A/AA KG
+6491 1751044356.jpg 6491_10  # 18:12 conf 60 claude: half  expected: PESSEGO R0 A/AA KG
+6491 1751048611.jpg 6491_6  # 19:23 conf 60 claude: half  expected: PESSEGO R0 A/AA KG
+6491 1751048611.jpg 6491_10  # 19:23 conf 60 claude: half  expected: PESSEGO R0 A/AA KG
 6591 1751001189.jpg 6591_3  # 06:13 conf 60 claude: half  expected: BATATA ZER0%D 4KG
-6591 1751001189.jpg 6591_4  # 06:13 conf 60 claude: full  expected: BATATA VERMELHA CNT EMB. 3KG
 6591 1751001189.jpg 6591_5  # 06:13 conf 60 claude: half  expected: BATATA VERMELHA CNT EMB. 3KG
-6591 1751001189.jpg 6591_8  # 06:13 conf 60 claude: half  expected: BATATA DOCE CNT KG
+6591 1751001189.jpg 6591_7  # 06:13 conf 60 claude: half  expected: GENGIBRE CNT KG
 6591 1751005287.jpg 6591_3  # 07:21 conf 60 claude: half  expected: BATATA ZER0%D 4KG
-6591 1751005287.jpg 6591_4  # 07:21 conf 60 claude: full  expected: BATATA VERMELHA CNT EMB. 3KG
 6591 1751005287.jpg 6591_5  # 07:21 conf 60 claude: half  expected: BATATA VERMELHA CNT EMB. 3KG
-6591 1751005287.jpg 6591_8  # 07:21 conf 60 claude: half  expected: BATATA DOCE CNT KG
+6591 1751005287.jpg 6591_7  # 07:21 conf 60 claude: half  expected: GENGIBRE CNT KG
 6591 1751009443.jpg 6591_3  # 08:30 conf 60 claude: half  expected: BATATA ZER0%D 4KG
-6591 1751009443.jpg 6591_4  # 08:30 conf 60 claude: full  expected: BATATA VERMELHA CNT EMB. 3KG
 6591 1751009443.jpg 6591_5  # 08:30 conf 60 claude: half  expected: BATATA VERMELHA CNT EMB. 3KG
+6591 1751009443.jpg 6591_8  # 08:30 conf 60 claude: full  expected: BATATA DOCE CNT KG
 6591 1751013255.jpg 6591_3  # 09:34 conf 60 claude: half  expected: BATATA ZER0%D 4KG
-6591 1751013255.jpg 6591_4  # 09:34 conf 60 claude: full  expected: BATATA VERMELHA CNT EMB. 3KG
-6591 1751013255.jpg 6591_5  # 09:34 conf 60 claude: empty  expected: BATATA VERMELHA CNT EMB. 3KG
-6591 1751040216.jpg 6591_5  # 17:03 conf 60 claude: half  expected: BATATA VERMELHA CNT EMB. 3KG
+6591 1751013255.jpg 6591_5  # 09:34 conf 60 claude: half  expected: BATATA VERMELHA CNT EMB. 3KG
+6591 1751013255.jpg 6591_8  # 09:34 conf 60 claude: full  expected: BATATA DOCE CNT KG
+6591 1751017235.jpg 6591_8  # 10:40 conf 60 claude: full  expected: BATATA DOCE CNT KG
+6591 1751020896.jpg 6591_8  # 11:41 conf 60 claude: full  expected: BATATA DOCE CNT KG
+6591 1751025118.jpg 6591_8  # 12:51 conf 60 claude: full  expected: BATATA DOCE CNT KG
+6591 1751028988.jpg 6591_8  # 13:56 conf 60 claude: full  expected: BATATA DOCE CNT KG
+6591 1751032871.jpg 6591_8  # 15:01 conf 60 claude: full  expected: BATATA DOCE CNT KG
+6591 1751036598.jpg 6591_8  # 16:03 conf 60 claude: full  expected: BATATA DOCE CNT KG
+6591 1751040216.jpg 6591_8  # 17:03 conf 60 claude: full  expected: BATATA DOCE CNT KG
 6591 1751044047.jpg 6591_5  # 18:07 conf 60 claude: half  expected: BATATA VERMELHA CNT EMB. 3KG
 6591 1751044047.jpg 6591_6  # 18:07 conf 60 claude: half  expected: BATATA DOCE CNT KG
-6591 1751048487.jpg 6591_2  # 19:21 conf 60 claude: full  expected: BATATA ASSAR CNT EMB. 2 KG
+6591 1751044047.jpg 6591_8  # 18:07 conf 60 claude: full  expected: BATATA DOCE CNT KG
 6591 1751048487.jpg 6591_5  # 19:21 conf 60 claude: half  expected: BATATA VERMELHA CNT EMB. 3KG
-6591 1751048487.jpg 6591_6  # 19:21 conf 60 claude: empty  expected: BATATA DOCE CNT KG
-6594 1751001189.jpg 6594_3  # 06:13 conf 60 claude: full  expected: BATATA VERMELHA CNT EMB. 3KG
+6591 1751048487.jpg 6591_6  # 19:21 conf 60 claude: half  expected: BATATA DOCE CNT KG
+6591 1751048487.jpg 6591_8  # 19:21 conf 60 claude: full  expected: BATATA DOCE CNT KG
+6594 1751001189.jpg 6594_2  # 06:13 conf 60 claude: half WRONG PRODUCT  expected: BATATA VERMELHA EMB:. 5 KG
 6594 1751001189.jpg 6594_9  # 06:13 conf 60 claude: empty  expected: ALHO SECO CNT 250GR
 6594 1751001189.jpg 6594_12  # 06:13 conf 60 claude: half WRONG PRODUCT  expected: CEBOLINHA FRANCESA CNT 500G
-6594 1751001189.jpg 6594_13  # 06:13 conf 60 claude: full  expected: CEBOLA DOCE CNT EMB 1 KG
-6594 1751005322.jpg 6594_3  # 07:22 conf 60 claude: full  expected: BATATA VERMELHA CNT EMB. 3KG
+6594 1751005322.jpg 6594_2  # 07:22 conf 60 claude: half WRONG PRODUCT  expected: BATATA VERMELHA EMB:. 5 KG
 6594 1751005322.jpg 6594_9  # 07:22 conf 60 claude: empty  expected: ALHO SECO CNT 250GR
 6594 1751005322.jpg 6594_12  # 07:22 conf 60 claude: half WRONG PRODUCT  expected: CEBOLINHA FRANCESA CNT 500G
-6594 1751005322.jpg 6594_13  # 07:22 conf 60 claude: full  expected: CEBOLA DOCE CNT EMB 1 KG
-6594 1751008928.jpg 6594_3  # 08:22 conf 60 claude: full  expected: BATATA VERMELHA CNT EMB. 3KG
+6594 1751008928.jpg 6594_2  # 08:22 conf 60 claude: half WRONG PRODUCT  expected: BATATA VERMELHA EMB:. 5 KG
 6594 1751008928.jpg 6594_9  # 08:22 conf 60 claude: empty  expected: ALHO SECO CNT 250GR
 6594 1751008928.jpg 6594_12  # 08:22 conf 60 claude: half WRONG PRODUCT  expected: CEBOLINHA FRANCESA CNT 500G
-6594 1751008928.jpg 6594_13  # 08:22 conf 60 claude: full  expected: CEBOLA DOCE CNT EMB 1 KG
-6594 1751013117.jpg 6594_1  # 09:31 conf 60 claude: full  expected: ABÓBORA HOKAIDO R0 KG
-6594 1751013117.jpg 6594_3  # 09:31 conf 60 claude: full  expected: BATATA VERMELHA CNT EMB. 3KG
+6594 1751013117.jpg 6594_2  # 09:31 conf 60 claude: half WRONG PRODUCT  expected: BATATA VERMELHA EMB:. 5 KG
+6594 1751013117.jpg 6594_4  # 09:31 conf 60 claude: half  expected: CEBOLA NOVA CNT KG
 6594 1751013117.jpg 6594_12  # 09:31 conf 60 claude: half WRONG PRODUCT  expected: CEBOLINHA FRANCESA CNT 500G
-6594 1751013117.jpg 6594_13  # 09:31 conf 60 claude: full  expected: CEBOLA DOCE CNT EMB 1 KG
-6594 1751017278.jpg 6594_1  # 10:41 conf 60 claude: full  expected: ABÓBORA HOKAIDO R0 KG
-6594 1751017278.jpg 6594_6  # 10:41 conf 60 claude: full  expected: CEBOLA NOVA CNT KG
-6594 1751017278.jpg 6594_12  # 10:41 conf 60 claude: full  expected: CEBOLINHA FRANCESA CNT 500G
-6594 1751017278.jpg 6594_13  # 10:41 conf 60 claude: full  expected: CEBOLA DOCE CNT EMB 1 KG
-6594 1751021279.jpg 6594_1  # 11:47 conf 60 claude: full  expected: ABÓBORA HOKAIDO R0 KG
+6594 1751017278.jpg 6594_6  # 10:41 conf 60 claude: full WRONG PRODUCT  expected: CEBOLA NOVA CNT KG
 6594 1751021279.jpg 6594_4  # 11:47 conf 60 claude: half  expected: CEBOLA NOVA CNT KG
-6594 1751021279.jpg 6594_6  # 11:47 conf 60 claude: full  expected: CEBOLA NOVA CNT KG
-6594 1751021279.jpg 6594_12  # 11:47 conf 60 claude: full  expected: CEBOLINHA FRANCESA CNT 500G
-6594 1751021279.jpg 6594_13  # 11:47 conf 60 claude: full  expected: CEBOLA DOCE CNT EMB 1 KG
-6594 1751025171.jpg 6594_1  # 12:52 conf 60 claude: full  expected: ABÓBORA HOKAIDO R0 KG
+6594 1751021279.jpg 6594_6  # 11:47 conf 60 claude: full WRONG PRODUCT  expected: CEBOLA NOVA CNT KG
 6594 1751025171.jpg 6594_4  # 12:52 conf 60 claude: half  expected: CEBOLA NOVA CNT KG
-6594 1751025171.jpg 6594_6  # 12:52 conf 60 claude: full  expected: CEBOLA NOVA CNT KG
+6594 1751025171.jpg 6594_6  # 12:52 conf 60 claude: full WRONG PRODUCT  expected: CEBOLA NOVA CNT KG
 6594 1751025171.jpg 6594_8  # 12:52 conf 60 claude: half  expected: ALHO SECO KG
-6594 1751025171.jpg 6594_12  # 12:52 conf 60 claude: full  expected: CEBOLINHA FRANCESA CNT 500G
-6594 1751025171.jpg 6594_13  # 12:52 conf 60 claude: full  expected: CEBOLA DOCE CNT EMB 1 KG
-6594 1751029354.jpg 6594_1  # 14:02 conf 60 claude: full  expected: ABÓBORA HOKAIDO R0 KG
 6594 1751029354.jpg 6594_4  # 14:02 conf 60 claude: half  expected: CEBOLA NOVA CNT KG
-6594 1751029354.jpg 6594_6  # 14:02 conf 60 claude: full  expected: CEBOLA NOVA CNT KG
-6594 1751029354.jpg 6594_8  # 14:02 conf 60 claude: half  expected: ALHO SECO KG
-6594 1751029354.jpg 6594_12  # 14:02 conf 60 claude: full  expected: CEBOLINHA FRANCESA CNT 500G
-6594 1751029354.jpg 6594_13  # 14:02 conf 60 claude: full  expected: CEBOLA DOCE CNT EMB 1 KG
-6594 1751033482.jpg 6594_1  # 15:11 conf 60 claude: full  expected: ABÓBORA HOKAIDO R0 KG
-6594 1751033482.jpg 6594_6  # 15:11 conf 60 claude: full  expected: CEBOLA NOVA CNT KG
+6594 1751029354.jpg 6594_6  # 14:02 conf 60 claude: full WRONG PRODUCT  expected: CEBOLA NOVA CNT KG
+6594 1751029354.jpg 6594_8  # 14:02 conf 60 claude: full  expected: ALHO SECO KG
+6594 1751033482.jpg 6594_6  # 15:11 conf 60 claude: full WRONG PRODUCT  expected: CEBOLA NOVA CNT KG
 6594 1751033482.jpg 6594_8  # 15:11 conf 60 claude: half  expected: ALHO SECO KG
-6594 1751033482.jpg 6594_12  # 15:11 conf 60 claude: full  expected: CEBOLINHA FRANCESA CNT 500G
-6594 1751033482.jpg 6594_13  # 15:11 conf 60 claude: full  expected: CEBOLA DOCE CNT EMB 1 KG
-6594 1751037746.jpg 6594_1  # 16:22 conf 60 claude: full  expected: ABÓBORA HOKAIDO R0 KG
-6594 1751037746.jpg 6594_6  # 16:22 conf 60 claude: full  expected: CEBOLA NOVA CNT KG
-6594 1751037746.jpg 6594_12  # 16:22 conf 60 claude: full  expected: CEBOLINHA FRANCESA CNT 500G
-6594 1751037746.jpg 6594_13  # 16:22 conf 60 claude: full  expected: CEBOLA DOCE CNT EMB 1 KG
-6594 1751041681.jpg 6594_1  # 17:28 conf 60 claude: full  expected: ABÓBORA HOKAIDO R0 KG
-6594 1751041681.jpg 6594_6  # 17:28 conf 60 claude: full  expected: CEBOLA NOVA CNT KG
-6594 1751041681.jpg 6594_12  # 17:28 conf 60 claude: full  expected: CEBOLINHA FRANCESA CNT 500G
-6594 1751041681.jpg 6594_13  # 17:28 conf 60 claude: full  expected: CEBOLA DOCE CNT EMB 1 KG
-6594 1751045458.jpg 6594_1  # 18:30 conf 60 claude: full  expected: ABÓBORA HOKAIDO R0 KG
-6594 1751045458.jpg 6594_6  # 18:30 conf 60 claude: full  expected: CEBOLA NOVA CNT KG
-6594 1751045458.jpg 6594_12  # 18:30 conf 60 claude: full  expected: CEBOLINHA FRANCESA CNT 500G
-6594 1751045458.jpg 6594_13  # 18:30 conf 60 claude: full  expected: CEBOLA DOCE CNT EMB 1 KG
-6594 1751049768.jpg 6594_1  # 19:42 conf 60 claude: full  expected: ABÓBORA HOKAIDO R0 KG
+6594 1751037746.jpg 6594_6  # 16:22 conf 60 claude: full WRONG PRODUCT  expected: CEBOLA NOVA CNT KG
+6594 1751037746.jpg 6594_8  # 16:22 conf 60 claude: full  expected: ALHO SECO KG
+6594 1751041681.jpg 6594_6  # 17:28 conf 60 claude: full WRONG PRODUCT  expected: CEBOLA NOVA CNT KG
+6594 1751041681.jpg 6594_8  # 17:28 conf 60 claude: half  expected: ALHO SECO KG
+6594 1751045458.jpg 6594_4  # 18:30 conf 60 claude: half  expected: CEBOLA NOVA CNT KG
+6594 1751045458.jpg 6594_6  # 18:30 conf 60 claude: full WRONG PRODUCT  expected: CEBOLA NOVA CNT KG
+6594 1751045458.jpg 6594_8  # 18:30 conf 60 claude: half  expected: ALHO SECO KG
 6594 1751049768.jpg 6594_4  # 19:42 conf 60 claude: half  expected: CEBOLA NOVA CNT KG
-6594 1751049768.jpg 6594_6  # 19:42 conf 60 claude: full  expected: CEBOLA NOVA CNT KG
-6594 1751049768.jpg 6594_11  # 19:42 conf 60 claude: half  expected: CEBOLA ROXA CNT 1KG
-6594 1751049768.jpg 6594_12  # 19:42 conf 60 claude: full  expected: CEBOLINHA FRANCESA CNT 500G
-6594 1751049768.jpg 6594_13  # 19:42 conf 60 claude: full  expected: CEBOLA DOCE CNT EMB 1 KG
-6781 1751025662.jpg 6781_9  # 13:01 conf 60 claude: full  expected: BATATA BRANCA CNT EMB. 3KG
-6781 1751041407.jpg 6781_9  # 17:23 conf 60 claude: half  expected: BATATA BRANCA CNT EMB. 3KG
-6781 1751045840.jpg 6781_3  # 18:37 conf 60 claude: half  expected: BATATA VERMELHA CNT EMB. 3KG
-6781 1751045840.jpg 6781_9  # 18:37 conf 60 claude: half  expected: BATATA BRANCA CNT EMB. 3KG
-6781 1751049846.jpg 6781_3  # 19:44 conf 60 claude: half  expected: BATATA VERMELHA CNT EMB. 3KG
-6781 1751049846.jpg 6781_9  # 19:44 conf 60 claude: half  expected: BATATA BRANCA CNT EMB. 3KG
-6215 1751009590.jpg 6215_9  # 08:33 conf 70 claude: half WRONG PRODUCT  expected: CITRINOS DO ALGARVE IGP LARANJA 70/95 KG
-6215 1751013250.jpg 6215_9  # 09:34 conf 70 claude: half WRONG PRODUCT  expected: CITRINOS DO ALGARVE IGP LARANJA 70/95 KG
-6215 1751017244.jpg 6215_9  # 10:40 conf 70 claude: half WRONG PRODUCT  expected: CITRINOS DO ALGARVE IGP LARANJA 70/95 KG
+6594 1751049768.jpg 6594_6  # 19:42 conf 60 claude: full WRONG PRODUCT  expected: CEBOLA NOVA CNT KG
+6594 1751049768.jpg 6594_8  # 19:42 conf 60 claude: half  expected: ALHO SECO KG
+6215 1751001268.jpg 6215_7  # 06:14 conf 70 claude: full  expected: CITRINOS DO ALGARVE IGP LARANJA 70/95 KG
+6215 1751001268.jpg 6215_9  # 06:14 conf 70 claude: half  expected: CITRINOS DO ALGARVE IGP LARANJA 70/95 KG
+6215 1751005412.jpg 6215_7  # 07:23 conf 70 claude: full  expected: CITRINOS DO ALGARVE IGP LARANJA 70/95 KG
+6215 1751005412.jpg 6215_9  # 07:23 conf 70 claude: half  expected: CITRINOS DO ALGARVE IGP LARANJA 70/95 KG
+6215 1751009590.jpg 6215_9  # 08:33 conf 70 claude: full WRONG PRODUCT  expected: CITRINOS DO ALGARVE IGP LARANJA 70/95 KG
+6215 1751017244.jpg 6215_4  # 10:40 conf 70 claude: full  expected: BANANA CAT I CNT KG
+6215 1751021396.jpg 6215_8  # 11:49 conf 70 claude: full  expected: BANANA CAT I CNT KG
 6215 1751021396.jpg 6215_9  # 11:49 conf 70 claude: half WRONG PRODUCT  expected: CITRINOS DO ALGARVE IGP LARANJA 70/95 KG
 6215 1751025596.jpg 6215_4  # 12:59 conf 70 claude: half  expected: BANANA CAT I CNT KG
-6215 1751025596.jpg 6215_6  # 12:59 conf 70 claude: full  expected: BANANA CAT I CNT KG
 6215 1751025596.jpg 6215_9  # 12:59 conf 70 claude: half WRONG PRODUCT  expected: CITRINOS DO ALGARVE IGP LARANJA 70/95 KG
-6215 1751029718.jpg 6215_8  # 14:08 conf 70 claude: empty  expected: BANANA CAT I CNT KG
-6215 1751033683.jpg 6215_3  # 15:14 conf 70 claude: full  expected: BANANA CAT I CNT KG
-6215 1751037607.jpg 6215_2  # 16:20 conf 70 claude: full  expected: BANANA CAT I CNT KG
+6215 1751037607.jpg 6215_2  # 16:20 conf 70 claude: half  expected: BANANA CAT I CNT KG
 6215 1751037607.jpg 6215_4  # 16:20 conf 70 claude: half  expected: BANANA CAT I CNT KG
-6215 1751037607.jpg 6215_7  # 16:20 conf 70 claude: full WRONG PRODUCT  expected: CITRINOS DO ALGARVE IGP LARANJA 70/95 KG
-6215 1751037607.jpg 6215_8  # 16:20 conf 70 claude: full  expected: BANANA CAT I CNT KG
-6215 1751041465.jpg 6215_2  # 17:24 conf 70 claude: half  expected: BANANA CAT I CNT KG
-6215 1751041465.jpg 6215_4  # 17:24 conf 70 claude: half  expected: BANANA CAT I CNT KG
-6215 1751041465.jpg 6215_6  # 17:24 conf 70 claude: empty  expected: BANANA CAT I CNT KG
-6215 1751041465.jpg 6215_8  # 17:24 conf 70 claude: half  expected: BANANA CAT I CNT KG
-6215 1751045755.jpg 6215_4  # 18:35 conf 70 claude: half  expected: BANANA CAT I CNT KG
-6215 1751045755.jpg 6215_8  # 18:35 conf 70 claude: empty  expected: BANANA CAT I CNT KG
-6371 1751001169.jpg 6371_7  # 06:12 conf 70 claude: empty  expected: MELOA CANTALUPE/CHARENTAIS INTEIR CNT KG
-6371 1751005865.jpg 6371_7  # 07:31 conf 70 claude: empty  expected: MELOA CANTALUPE/CHARENTAIS INTEIR CNT KG
-6371 1751017761.jpg 6371_3  # 10:49 conf 70 claude: half  expected: MELAO VERDE INTEIRO CNT KG
+6215 1751041465.jpg 6215_7  # 17:24 conf 70 claude: half WRONG PRODUCT  expected: CITRINOS DO ALGARVE IGP LARANJA 70/95 KG
+6371 1751021365.jpg 6371_3  # 11:49 conf 70 claude: half  expected: MELAO VERDE INTEIRO CNT KG
+6371 1751025172.jpg 6371_3  # 12:52 conf 70 claude: half  expected: MELAO VERDE INTEIRO CNT KG
+6371 1751028797.jpg 6371_3  # 13:53 conf 70 claude: half  expected: MELAO VERDE INTEIRO CNT KG
 6371 1751032728.jpg 6371_2  # 14:58 conf 70 claude: half  expected: MELANCIA PRETA POUCAS SEMENTES INT KG
-6371 1751036943.jpg 6371_5  # 16:09 conf 70 claude: half  expected: MELAO VERDE INTEIRO CNT KG
-6371 1751040755.jpg 6371_5  # 17:12 conf 70 claude: half  expected: MELAO VERDE INTEIRO CNT KG
-6371 1751044440.jpg 6371_5  # 18:14 conf 70 claude: half  expected: MELAO VERDE INTEIRO CNT KG
-6371 1751048342.jpg 6371_3  # 19:19 conf 70 claude: half  expected: MELAO VERDE INTEIRO CNT KG
-6371 1751048342.jpg 6371_5  # 19:19 conf 70 claude: half  expected: MELAO VERDE INTEIRO CNT KG
-6371 1751048342.jpg 6371_7  # 19:19 conf 70 claude: half  expected: MELOA CANTALUPE/CHARENTAIS INTEIR CNT KG
-6373 1751009946.jpg 6373_5  # 08:39 conf 70 claude: full  expected: MAÇA GOLDEN NACIONAL CAL. 65/70 1 KG
+6371 1751032728.jpg 6371_3  # 14:58 conf 70 claude: half  expected: MELAO VERDE INTEIRO CNT KG
+6373 1751001172.jpg 6373_1  # 06:12 conf 70 claude: half  expected: MAÇÃ GALA CNT CAL 70/80 KG IMP
+6373 1751001172.jpg 6373_3  # 06:12 conf 70 claude: full  expected: MACA PINK LADY CNT CAL.73/80 KG
+6373 1751001172.jpg 6373_7  # 06:12 conf 70 claude: half  expected: MAÇÃ COSMIC CRISP 75/85 KG
+6373 1751001172.jpg 6373_9  # 06:12 conf 70 claude: half  expected: MAÇÃ COSMIC CRISP 75/85 KG
+6373 1751001172.jpg 6373_11  # 06:12 conf 70 claude: full  expected: PERA PACKAMS CNT CAL.65/75 KG
+6373 1751005793.jpg 6373_1  # 07:29 conf 70 claude: half  expected: MAÇÃ GALA CNT CAL 70/80 KG IMP
+6373 1751005793.jpg 6373_3  # 07:29 conf 70 claude: full  expected: MACA PINK LADY CNT CAL.73/80 KG
+6373 1751005793.jpg 6373_7  # 07:29 conf 70 claude: half  expected: MAÇÃ COSMIC CRISP 75/85 KG
+6373 1751005793.jpg 6373_9  # 07:29 conf 70 claude: half  expected: MAÇÃ COSMIC CRISP 75/85 KG
+6373 1751005793.jpg 6373_11  # 07:29 conf 70 claude: full  expected: PERA PACKAMS CNT CAL.65/75 KG
+6373 1751009946.jpg 6373_10  # 08:39 conf 70 claude: half  expected: PERA PACKAMS CNT CAL.65/75 KG
+6373 1751009946.jpg 6373_11  # 08:39 conf 70 claude: full  expected: PERA PACKAMS CNT CAL.65/75 KG
 6373 1751013720.jpg 6373_2  # 09:42 conf 70 claude: half  expected: MAÇÂ GALA CNT 60/70 1 KG IMP
-6373 1751013720.jpg 6373_5  # 09:42 conf 70 claude: full  expected: MAÇA GOLDEN NACIONAL CAL. 65/70 1 KG
 6373 1751017645.jpg 6373_2  # 10:47 conf 70 claude: half  expected: MAÇÂ GALA CNT 60/70 1 KG IMP
-6373 1751017645.jpg 6373_5  # 10:47 conf 70 claude: full  expected: MAÇA GOLDEN NACIONAL CAL. 65/70 1 KG
 6373 1751021302.jpg 6373_2  # 11:48 conf 70 claude: half  expected: MAÇÂ GALA CNT 60/70 1 KG IMP
-6373 1751021302.jpg 6373_5  # 11:48 conf 70 claude: full  expected: MAÇA GOLDEN NACIONAL CAL. 65/70 1 KG
 6373 1751024937.jpg 6373_2  # 12:48 conf 70 claude: half  expected: MAÇÂ GALA CNT 60/70 1 KG IMP
-6373 1751024937.jpg 6373_5  # 12:48 conf 70 claude: full  expected: MAÇA GOLDEN NACIONAL CAL. 65/70 1 KG
 6373 1751028561.jpg 6373_2  # 13:49 conf 70 claude: half  expected: MAÇÂ GALA CNT 60/70 1 KG IMP
-6373 1751028561.jpg 6373_5  # 13:49 conf 70 claude: full  expected: MAÇA GOLDEN NACIONAL CAL. 65/70 1 KG
+6373 1751028561.jpg 6373_10  # 13:49 conf 70 claude: full  expected: PERA PACKAMS CNT CAL.65/75 KG
 6373 1751032836.jpg 6373_2  # 15:00 conf 70 claude: half  expected: MAÇÂ GALA CNT 60/70 1 KG IMP
-6373 1751032836.jpg 6373_5  # 15:00 conf 70 claude: full  expected: MAÇA GOLDEN NACIONAL CAL. 65/70 1 KG
+6373 1751032836.jpg 6373_4  # 15:00 conf 70 claude: half  expected: MAÇA GOLDEN NACIONAL 75/85 KG
+6373 1751032836.jpg 6373_10  # 15:00 conf 70 claude: full  expected: PERA PACKAMS CNT CAL.65/75 KG
 6373 1751037118.jpg 6373_2  # 16:11 conf 70 claude: half  expected: MAÇÂ GALA CNT 60/70 1 KG IMP
-6373 1751037118.jpg 6373_5  # 16:11 conf 70 claude: full  expected: MAÇA GOLDEN NACIONAL CAL. 65/70 1 KG
-6373 1751040770.jpg 6373_2  # 17:12 conf 70 claude: half  expected: MAÇÂ GALA CNT 60/70 1 KG IMP
-6373 1751048467.jpg 6373_5  # 19:21 conf 70 claude: half  expected: MAÇA GOLDEN NACIONAL CAL. 65/70 1 KG
-6376 1751001169.jpg 6376_4  # 06:12 conf 70 claude: full  expected: KIWI ZESPRI 500 GR
+6373 1751037118.jpg 6373_10  # 16:11 conf 70 claude: full  expected: PERA PACKAMS CNT CAL.65/75 KG
+6373 1751040770.jpg 6373_1  # 17:12 conf 70 claude: half  expected: MAÇÃ GALA CNT CAL 70/80 KG IMP
+6373 1751040770.jpg 6373_9  # 17:12 conf 70 claude: half  expected: MAÇÃ COSMIC CRISP 75/85 KG
+6373 1751040770.jpg 6373_10  # 17:12 conf 70 claude: full  expected: PERA PACKAMS CNT CAL.65/75 KG
+6373 1751044463.jpg 6373_1  # 18:14 conf 70 claude: half  expected: MAÇÃ GALA CNT CAL 70/80 KG IMP
+6373 1751044463.jpg 6373_8  # 18:14 conf 70 claude: full  expected: MAÇÃ COSMIC CRISP 75/85 KG
+6373 1751044463.jpg 6373_9  # 18:14 conf 70 claude: half  expected: MAÇÃ COSMIC CRISP 75/85 KG
+6373 1751044463.jpg 6373_11  # 18:14 conf 70 claude: half  expected: PERA PACKAMS CNT CAL.65/75 KG
+6373 1751044463.jpg 6373_12  # 18:14 conf 70 claude: half  expected: PERA CONFERENCE CAL 60/75 CNT KG
+6373 1751048467.jpg 6373_8  # 19:21 conf 70 claude: full  expected: MAÇÃ COSMIC CRISP 75/85 KG
+6373 1751048467.jpg 6373_10  # 19:21 conf 70 claude: half  expected: PERA PACKAMS CNT CAL.65/75 KG
+6373 1751048467.jpg 6373_11  # 19:21 conf 70 claude: half  expected: PERA PACKAMS CNT CAL.65/75 KG
+6373 1751048467.jpg 6373_12  # 19:21 conf 70 claude: half  expected: PERA CONFERENCE CAL 60/75 CNT KG
+6376 1751001169.jpg 6376_3  # 06:12 conf 70 claude: half  expected: KIWI GOLD ZESPRI 500 G
+6376 1751001169.jpg 6376_6  # 06:12 conf 70 claude: full  expected: LIMA CNT KG
 6376 1751001169.jpg 6376_7  # 06:12 conf 70 claude: full  expected: CITRINOS ALGARVE IGP LARANJA 6/7/8 3KG
-6376 1751001169.jpg 6376_15  # 06:12 conf 70 claude: half  expected: CITRINOS DO ALGARVE IGP LARANJA 70/95 KG
-6376 1751005774.jpg 6376_4  # 07:29 conf 70 claude: full  expected: KIWI ZESPRI 500 GR
+6376 1751005774.jpg 6376_3  # 07:29 conf 70 claude: half  expected: KIWI GOLD ZESPRI 500 G
+6376 1751005774.jpg 6376_6  # 07:29 conf 70 claude: full  expected: LIMA CNT KG
 6376 1751005774.jpg 6376_7  # 07:29 conf 70 claude: full  expected: CITRINOS ALGARVE IGP LARANJA 6/7/8 3KG
-6376 1751005774.jpg 6376_15  # 07:29 conf 70 claude: half  expected: CITRINOS DO ALGARVE IGP LARANJA 70/95 KG
-6376 1751009380.jpg 6376_4  # 08:29 conf 70 claude: full  expected: KIWI ZESPRI 500 GR
+6376 1751009380.jpg 6376_1  # 08:29 conf 70 claude: half  expected: LIMÃO CNT 60/75 KG
+6376 1751009380.jpg 6376_3  # 08:29 conf 70 claude: half  expected: KIWI GOLD ZESPRI 500 G
 6376 1751009380.jpg 6376_7  # 08:29 conf 70 claude: full  expected: CITRINOS ALGARVE IGP LARANJA 6/7/8 3KG
-6376 1751009380.jpg 6376_15  # 08:29 conf 70 claude: full  expected: CITRINOS DO ALGARVE IGP LARANJA 70/95 KG
-6376 1751013482.jpg 6376_2  # 09:38 conf 70 claude: full  expected: MELOA GALIA INTEIRA CNT KG
-6376 1751013482.jpg 6376_4  # 09:38 conf 70 claude: full  expected: KIWI ZESPRI 500 GR
+6376 1751009380.jpg 6376_11  # 08:29 conf 70 claude: full  expected: CITRINOS DO ALGARVE IGP LARANJA 70/95 KG
 6376 1751013482.jpg 6376_7  # 09:38 conf 70 claude: full  expected: CITRINOS ALGARVE IGP LARANJA 6/7/8 3KG
+6376 1751013482.jpg 6376_11  # 09:38 conf 70 claude: full  expected: CITRINOS DO ALGARVE IGP LARANJA 70/95 KG
 6376 1751013482.jpg 6376_15  # 09:38 conf 70 claude: full  expected: CITRINOS DO ALGARVE IGP LARANJA 70/95 KG
-6376 1751017831.jpg 6376_2  # 10:50 conf 70 claude: full  expected: MELOA GALIA INTEIRA CNT KG
 6376 1751017831.jpg 6376_7  # 10:50 conf 70 claude: full  expected: CITRINOS ALGARVE IGP LARANJA 6/7/8 3KG
-6376 1751017831.jpg 6376_15  # 10:50 conf 70 claude: full  expected: CITRINOS DO ALGARVE IGP LARANJA 70/95 KG
-6376 1751021977.jpg 6376_2  # 11:59 conf 70 claude: full  expected: MELOA GALIA INTEIRA CNT KG
-6376 1751021977.jpg 6376_5  # 11:59 conf 70 claude: empty  expected: KIWI CNT BIO 400 G
+6376 1751021977.jpg 6376_3  # 11:59 conf 70 claude: half  expected: KIWI GOLD ZESPRI 500 G
 6376 1751021977.jpg 6376_7  # 11:59 conf 70 claude: full  expected: CITRINOS ALGARVE IGP LARANJA 6/7/8 3KG
-6376 1751025657.jpg 6376_2  # 13:00 conf 70 claude: full  expected: MELOA GALIA INTEIRA CNT KG
-6376 1751025657.jpg 6376_5  # 13:00 conf 70 claude: empty  expected: KIWI CNT BIO 400 G
+6376 1751021977.jpg 6376_15  # 11:59 conf 70 claude: full  expected: CITRINOS DO ALGARVE IGP LARANJA 70/95 KG
+6376 1751025657.jpg 6376_3  # 13:00 conf 70 claude: half  expected: KIWI GOLD ZESPRI 500 G
 6376 1751025657.jpg 6376_7  # 13:00 conf 70 claude: full  expected: CITRINOS ALGARVE IGP LARANJA 6/7/8 3KG
-6376 1751025657.jpg 6376_11  # 13:00 conf 70 claude: full  expected: CITRINOS DO ALGARVE IGP LARANJA 70/95 KG
-6376 1751025657.jpg 6376_12  # 13:00 conf 70 claude: full  expected: CLEMENTINA CAL 60/75 CNT KG
-6376 1751029801.jpg 6376_2  # 14:10 conf 70 claude: full  expected: MELOA GALIA INTEIRA CNT KG
-6376 1751029801.jpg 6376_5  # 14:10 conf 70 claude: empty  expected: KIWI CNT BIO 400 G
+6376 1751025657.jpg 6376_15  # 13:00 conf 70 claude: half  expected: CITRINOS DO ALGARVE IGP LARANJA 70/95 KG
+6376 1751029801.jpg 6376_3  # 14:10 conf 70 claude: half  expected: KIWI GOLD ZESPRI 500 G
 6376 1751029801.jpg 6376_7  # 14:10 conf 70 claude: full  expected: CITRINOS ALGARVE IGP LARANJA 6/7/8 3KG
-6376 1751037379.jpg 6376_2  # 16:16 conf 70 claude: full  expected: MELOA GALIA INTEIRA CNT KG
-6376 1751037379.jpg 6376_16  # 16:16 conf 70 claude: full  expected: CITR ALGARVE IGP LARANJA 3/4/5 1.5 KG
-6376 1751041136.jpg 6376_2  # 17:18 conf 70 claude: full  expected: MELOA GALIA INTEIRA CNT KG
-6376 1751041136.jpg 6376_16  # 17:18 conf 70 claude: full  expected: CITR ALGARVE IGP LARANJA 3/4/5 1.5 KG
-6376 1751044933.jpg 6376_2  # 18:22 conf 70 claude: full  expected: MELOA GALIA INTEIRA CNT KG
-6376 1751044933.jpg 6376_13  # 18:22 conf 70 claude: full  expected: CITR ALGARVE IGP LARANJA 3/4/5 1.5 KG
-6376 1751044933.jpg 6376_15  # 18:22 conf 70 claude: full  expected: CITRINOS DO ALGARVE IGP LARANJA 70/95 KG
-6376 1751049028.jpg 6376_2  # 19:30 conf 70 claude: full  expected: MELOA GALIA INTEIRA CNT KG
-6376 1751049028.jpg 6376_3  # 19:30 conf 70 claude: empty  expected: KIWI GOLD ZESPRI 500 G
-6376 1751049028.jpg 6376_8  # 19:30 conf 70 claude: full  expected: CITRINOS ALGARVE IGP LARANJA 6/7/8 3KG
-6376 1751049028.jpg 6376_9  # 19:30 conf 70 claude: full  expected: CITRINOS ALGARVE IGP LARANJA 6/7/8 3KG
-6376 1751049028.jpg 6376_15  # 19:30 conf 70 claude: full  expected: CITRINOS DO ALGARVE IGP LARANJA 70/95 KG
-6383 1751005245.jpg 6383_2  # 07:20 conf 70 claude: half  expected: ABACATE HASS PRONTO COMER CNT KG
+6376 1751037379.jpg 6376_11  # 16:16 conf 70 claude: full  expected: CITRINOS DO ALGARVE IGP LARANJA 70/95 KG
+6376 1751041136.jpg 6376_11  # 17:18 conf 70 claude: full  expected: CITRINOS DO ALGARVE IGP LARANJA 70/95 KG
+6376 1751041136.jpg 6376_16  # 17:18 conf 70 claude: half  expected: CITR ALGARVE IGP LARANJA 3/4/5 1.5 KG
+6376 1751044933.jpg 6376_11  # 18:22 conf 70 claude: full  expected: CITRINOS DO ALGARVE IGP LARANJA 70/95 KG
+6376 1751044933.jpg 6376_15  # 18:22 conf 70 claude: half  expected: CITRINOS DO ALGARVE IGP LARANJA 70/95 KG
+6376 1751044933.jpg 6376_16  # 18:22 conf 70 claude: half  expected: CITR ALGARVE IGP LARANJA 3/4/5 1.5 KG
+6376 1751049028.jpg 6376_1  # 19:30 conf 70 claude: half  expected: LIMÃO CNT 60/75 KG
+6376 1751049028.jpg 6376_7  # 19:30 conf 70 claude: empty  expected: CITRINOS ALGARVE IGP LARANJA 6/7/8 3KG
+6376 1751049028.jpg 6376_11  # 19:30 conf 70 claude: full  expected: CITRINOS DO ALGARVE IGP LARANJA 70/95 KG
+6376 1751049028.jpg 6376_13  # 19:30 conf 70 claude: half  expected: CITR ALGARVE IGP LARANJA 3/4/5 1.5 KG
+6383 1751005245.jpg 6383_4  # 07:20 conf 70 claude: half  expected: COUVE PORTUGUESA/PENCA CNT KG
 6383 1751005245.jpg 6383_5  # 07:20 conf 70 claude: full  expected: PIMENTO VERMELHO CNT KG
+6383 1751005245.jpg 6383_7  # 07:20 conf 70 claude: full  expected: CHUCHU CNT KG
+6383 1751009368.jpg 6383_4  # 08:29 conf 70 claude: half  expected: COUVE PORTUGUESA/PENCA CNT KG
 6383 1751009368.jpg 6383_5  # 08:29 conf 70 claude: full  expected: PIMENTO VERMELHO CNT KG
-6383 1751013620.jpg 6383_2  # 09:40 conf 70 claude: full  expected: ABACATE HASS PRONTO COMER CNT KG
-6383 1751013620.jpg 6383_4  # 09:40 conf 70 claude: full  expected: COUVE PORTUGUESA/PENCA CNT KG
-6383 1751013620.jpg 6383_5  # 09:40 conf 70 claude: full  expected: PIMENTO VERMELHO CNT KG
-6383 1751017781.jpg 6383_2  # 10:49 conf 70 claude: full  expected: ABACATE HASS PRONTO COMER CNT KG
-6383 1751017781.jpg 6383_4  # 10:49 conf 70 claude: full  expected: COUVE PORTUGUESA/PENCA CNT KG
-6383 1751017781.jpg 6383_5  # 10:49 conf 70 claude: full  expected: PIMENTO VERMELHO CNT KG
-6383 1751017781.jpg 6383_6  # 10:49 conf 70 claude: empty  expected: BERINGELA CNT KG
-6383 1751021577.jpg 6383_2  # 11:52 conf 70 claude: full  expected: ABACATE HASS PRONTO COMER CNT KG
-6383 1751021577.jpg 6383_4  # 11:52 conf 70 claude: full  expected: COUVE PORTUGUESA/PENCA CNT KG
-6383 1751021577.jpg 6383_5  # 11:52 conf 70 claude: full  expected: PIMENTO VERMELHO CNT KG
-6383 1751021577.jpg 6383_6  # 11:52 conf 70 claude: empty  expected: BERINGELA CNT KG
-6383 1751025309.jpg 6383_2  # 12:55 conf 70 claude: full  expected: ABACATE HASS PRONTO COMER CNT KG
-6383 1751025309.jpg 6383_5  # 12:55 conf 70 claude: full  expected: PIMENTO VERMELHO CNT KG
-6383 1751025309.jpg 6383_6  # 12:55 conf 70 claude: empty  expected: BERINGELA CNT KG
-6383 1751029430.jpg 6383_1  # 14:03 conf 70 claude: full  expected: ALFACE FRISADA SACO CNT KG
-6383 1751029430.jpg 6383_5  # 14:03 conf 70 claude: full  expected: PIMENTO VERMELHO CNT KG
-6383 1751033092.jpg 6383_5  # 15:04 conf 70 claude: full  expected: PIMENTO VERMELHO CNT KG
-6383 1751037199.jpg 6383_5  # 16:13 conf 70 claude: full  expected: PIMENTO VERMELHO CNT KG
-6383 1751040853.jpg 6383_5  # 17:14 conf 70 claude: full  expected: PIMENTO VERMELHO CNT KG
-6383 1751044960.jpg 6383_5  # 18:22 conf 70 claude: full  expected: PIMENTO VERMELHO CNT KG
-6383 1751044960.jpg 6383_6  # 18:22 conf 70 claude: full  expected: BERINGELA CNT KG
+6383 1751009368.jpg 6383_7  # 08:29 conf 70 claude: full  expected: CHUCHU CNT KG
+6383 1751013620.jpg 6383_7  # 09:40 conf 70 claude: full  expected: CHUCHU CNT KG
+6383 1751017781.jpg 6383_7  # 10:49 conf 70 claude: full  expected: CHUCHU CNT KG
+6383 1751021577.jpg 6383_7  # 11:52 conf 70 claude: full  expected: CHUCHU CNT KG
+6383 1751025309.jpg 6383_4  # 12:55 conf 70 claude: half  expected: COUVE PORTUGUESA/PENCA CNT KG
+6383 1751025309.jpg 6383_7  # 12:55 conf 70 claude: full  expected: CHUCHU CNT KG
+6383 1751029430.jpg 6383_5  # 14:03 conf 70 claude: half  expected: PIMENTO VERMELHO CNT KG
+6383 1751029430.jpg 6383_7  # 14:03 conf 70 claude: full  expected: CHUCHU CNT KG
+6383 1751033092.jpg 6383_7  # 15:04 conf 70 claude: full  expected: CHUCHU CNT KG
+6383 1751033092.jpg 6383_9  # 15:04 conf 70 claude: full  expected: PEPINO CNT KG
+6383 1751037199.jpg 6383_7  # 16:13 conf 70 claude: full  expected: CHUCHU CNT KG
+6383 1751037199.jpg 6383_9  # 16:13 conf 70 claude: full  expected: PEPINO CNT KG
+6383 1751040853.jpg 6383_1  # 17:14 conf 70 claude: half  expected: ALFACE FRISADA SACO CNT KG
+6383 1751040853.jpg 6383_9  # 17:14 conf 70 claude: full  expected: PEPINO CNT KG
+6383 1751044960.jpg 6383_1  # 18:22 conf 70 claude: empty  expected: ALFACE FRISADA SACO CNT KG
 6383 1751044960.jpg 6383_7  # 18:22 conf 70 claude: half WRONG PRODUCT  expected: CHUCHU CNT KG
-6383 1751048924.jpg 6383_5  # 19:28 conf 70 claude: full  expected: PIMENTO VERMELHO CNT KG
-6383 1751048924.jpg 6383_6  # 19:28 conf 70 claude: full  expected: BERINGELA CNT KG
+6383 1751048924.jpg 6383_2  # 19:28 conf 70 claude: full  expected: ABACATE HASS PRONTO COMER CNT KG
+6383 1751048924.jpg 6383_5  # 19:28 conf 70 claude: half  expected: PIMENTO VERMELHO CNT KG
 6383 1751048924.jpg 6383_7  # 19:28 conf 70 claude: half WRONG PRODUCT  expected: CHUCHU CNT KG
-6385 1751001178.jpg 6385_4  # 06:12 conf 70 claude: half  expected: MAÇA FUJI CARIOCA 65/75 1 KG IMP
-6385 1751001178.jpg 6385_8  # 06:12 conf 70 claude: half  expected: MAÇA FUJI CARIOCA 65/75 1 KG IMP
-6385 1751005283.jpg 6385_4  # 07:21 conf 70 claude: half  expected: MAÇA FUJI CARIOCA 65/75 1 KG IMP
-6385 1751005283.jpg 6385_8  # 07:21 conf 70 claude: half  expected: MAÇA FUJI CARIOCA 65/75 1 KG IMP
+6385 1751001178.jpg 6385_2  # 06:12 conf 70 claude: full  expected: MACA FUJI CNT CAL. 73/85 KG IMP
+6385 1751001178.jpg 6385_3  # 06:12 conf 70 claude: half  expected: MAÇA VERMELHA BIO 500 G
+6385 1751001178.jpg 6385_5  # 06:12 conf 70 claude: full  expected: MACA FUJI CNT CAL. 73/85 KG IMP
+6385 1751005283.jpg 6385_2  # 07:21 conf 70 claude: full  expected: MACA FUJI CNT CAL. 73/85 KG IMP
+6385 1751005283.jpg 6385_3  # 07:21 conf 70 claude: half  expected: MAÇA VERMELHA BIO 500 G
+6385 1751005283.jpg 6385_5  # 07:21 conf 70 claude: full  expected: MACA FUJI CNT CAL. 73/85 KG IMP
+6385 1751008904.jpg 6385_3  # 08:21 conf 70 claude: half  expected: MAÇA VERMELHA BIO 500 G
 6385 1751008904.jpg 6385_8  # 08:21 conf 70 claude: half  expected: MAÇA FUJI CARIOCA 65/75 1 KG IMP
+6385 1751012735.jpg 6385_2  # 09:25 conf 70 claude: full  expected: MACA FUJI CNT CAL. 73/85 KG IMP
+6385 1751012735.jpg 6385_3  # 09:25 conf 70 claude: half  expected: MAÇA VERMELHA BIO 500 G
 6385 1751012735.jpg 6385_8  # 09:25 conf 70 claude: half  expected: MAÇA FUJI CARIOCA 65/75 1 KG IMP
+6385 1751016383.jpg 6385_3  # 10:26 conf 70 claude: half  expected: MAÇA VERMELHA BIO 500 G
 6385 1751016383.jpg 6385_8  # 10:26 conf 70 claude: half  expected: MAÇA FUJI CARIOCA 65/75 1 KG IMP
+6385 1751020485.jpg 6385_2  # 11:34 conf 70 claude: full  expected: MACA FUJI CNT CAL. 73/85 KG IMP
+6385 1751020485.jpg 6385_3  # 11:34 conf 70 claude: half  expected: MAÇA VERMELHA BIO 500 G
 6385 1751020485.jpg 6385_8  # 11:34 conf 70 claude: half  expected: MAÇA FUJI CARIOCA 65/75 1 KG IMP
-6385 1751024401.jpg 6385_4  # 12:40 conf 70 claude: half  expected: MAÇA FUJI CARIOCA 65/75 1 KG IMP
+6385 1751024401.jpg 6385_2  # 12:40 conf 70 claude: full  expected: MACA FUJI CNT CAL. 73/85 KG IMP
+6385 1751024401.jpg 6385_3  # 12:40 conf 70 claude: half  expected: MAÇA VERMELHA BIO 500 G
 6385 1751024401.jpg 6385_8  # 12:40 conf 70 claude: half  expected: MAÇA FUJI CARIOCA 65/75 1 KG IMP
+6385 1751028025.jpg 6385_2  # 13:40 conf 70 claude: full  expected: MACA FUJI CNT CAL. 73/85 KG IMP
+6385 1751028025.jpg 6385_3  # 13:40 conf 70 claude: half  expected: MAÇA VERMELHA BIO 500 G
 6385 1751028025.jpg 6385_4  # 13:40 conf 70 claude: half  expected: MAÇA FUJI CARIOCA 65/75 1 KG IMP
 6385 1751028025.jpg 6385_8  # 13:40 conf 70 claude: half  expected: MAÇA FUJI CARIOCA 65/75 1 KG IMP
+6385 1751032365.jpg 6385_3  # 14:52 conf 70 claude: half  expected: MAÇA VERMELHA BIO 500 G
 6385 1751032365.jpg 6385_4  # 14:52 conf 70 claude: half  expected: MAÇA FUJI CARIOCA 65/75 1 KG IMP
 6385 1751032365.jpg 6385_8  # 14:52 conf 70 claude: half  expected: MAÇA FUJI CARIOCA 65/75 1 KG IMP
+6385 1751036488.jpg 6385_3  # 16:01 conf 70 claude: half  expected: MAÇA VERMELHA BIO 500 G
 6385 1751036488.jpg 6385_4  # 16:01 conf 70 claude: half  expected: MAÇA FUJI CARIOCA 65/75 1 KG IMP
 6385 1751036488.jpg 6385_8  # 16:01 conf 70 claude: half  expected: MAÇA FUJI CARIOCA 65/75 1 KG IMP
+6385 1751040277.jpg 6385_3  # 17:04 conf 70 claude: half  expected: MAÇA VERMELHA BIO 500 G
 6385 1751040277.jpg 6385_4  # 17:04 conf 70 claude: half  expected: MAÇA FUJI CARIOCA 65/75 1 KG IMP
-6385 1751044017.jpg 6385_4  # 18:06 conf 70 claude: half  expected: MAÇA FUJI CARIOCA 65/75 1 KG IMP
-6385 1751044017.jpg 6385_5  # 18:06 conf 70 claude: full  expected: MACA FUJI CNT CAL. 73/85 KG IMP
-6385 1751047832.jpg 6385_2  # 19:10 conf 70 claude: full  expected: MACA FUJI CNT CAL. 73/85 KG IMP
-6385 1751047832.jpg 6385_7  # 19:10 conf 70 claude: full  expected: MACA GRANNY SMITH CNT CAL.73/85 KG
-6385 1751051814.jpg 6385_2  # 20:16 conf 70 claude: full  expected: MACA FUJI CNT CAL. 73/85 KG IMP
-6385 1751051814.jpg 6385_7  # 20:16 conf 70 claude: full  expected: MACA GRANNY SMITH CNT CAL.73/85 KG
-6386 1751005249.jpg 6386_3  # 07:20 conf 70 claude: full  expected: COUVE ROXA CNT KG
-6386 1751005249.jpg 6386_5  # 07:20 conf 70 claude: full  expected: CURGETE VERDE CNT KG
-6386 1751009346.jpg 6386_3  # 08:29 conf 70 claude: full  expected: COUVE ROXA CNT KG
-6386 1751009346.jpg 6386_5  # 08:29 conf 70 claude: full  expected: CURGETE VERDE CNT KG
-6386 1751013440.jpg 6386_2  # 09:37 conf 70 claude: full  expected: COUVE BRANCA CNT KG
-6386 1751013440.jpg 6386_3  # 09:37 conf 70 claude: full  expected: COUVE ROXA CNT KG
-6386 1751013440.jpg 6386_5  # 09:37 conf 70 claude: full  expected: CURGETE VERDE CNT KG
-6386 1751017235.jpg 6386_3  # 10:40 conf 70 claude: full  expected: COUVE ROXA CNT KG
-6386 1751017235.jpg 6386_4  # 10:40 conf 70 claude: full  expected: COUVE FLOR CNT KG
-6386 1751017235.jpg 6386_5  # 10:40 conf 70 claude: full  expected: CURGETE VERDE CNT KG
-6386 1751021024.jpg 6386_3  # 11:43 conf 70 claude: full  expected: COUVE ROXA CNT KG
-6386 1751021024.jpg 6386_4  # 11:43 conf 70 claude: full  expected: COUVE FLOR CNT KG
-6386 1751021024.jpg 6386_5  # 11:43 conf 70 claude: full  expected: CURGETE VERDE CNT KG
-6386 1751024835.jpg 6386_3  # 12:47 conf 70 claude: full  expected: COUVE ROXA CNT KG
-6386 1751024835.jpg 6386_4  # 12:47 conf 70 claude: full  expected: COUVE FLOR CNT KG
+6385 1751040277.jpg 6385_8  # 17:04 conf 70 claude: half  expected: MAÇA FUJI CARIOCA 65/75 1 KG IMP
+6385 1751044017.jpg 6385_3  # 18:06 conf 70 claude: half  expected: MAÇA VERMELHA BIO 500 G
+6385 1751044017.jpg 6385_5  # 18:06 conf 70 claude: half  expected: MACA FUJI CNT CAL. 73/85 KG IMP
+6385 1751044017.jpg 6385_7  # 18:06 conf 70 claude: half  expected: MACA GRANNY SMITH CNT CAL.73/85 KG
+6385 1751047832.jpg 6385_3  # 19:10 conf 70 claude: half  expected: MAÇA VERMELHA BIO 500 G
+6385 1751047832.jpg 6385_5  # 19:10 conf 70 claude: half  expected: MACA FUJI CNT CAL. 73/85 KG IMP
+6385 1751051814.jpg 6385_3  # 20:16 conf 70 claude: half  expected: MAÇA VERMELHA BIO 500 G
 6386 1751024835.jpg 6386_5  # 12:47 conf 70 claude: full  expected: CURGETE VERDE CNT KG
-6386 1751028928.jpg 6386_3  # 13:55 conf 70 claude: full  expected: COUVE ROXA CNT KG
-6386 1751028928.jpg 6386_4  # 13:55 conf 70 claude: full  expected: COUVE FLOR CNT KG
-6386 1751028928.jpg 6386_5  # 13:55 conf 70 claude: full  expected: CURGETE VERDE CNT KG
-6386 1751032558.jpg 6386_3  # 14:55 conf 70 claude: full  expected: COUVE ROXA CNT KG
-6386 1751032558.jpg 6386_4  # 14:55 conf 70 claude: full  expected: COUVE FLOR CNT KG
-6386 1751032558.jpg 6386_5  # 14:55 conf 70 claude: full  expected: CURGETE VERDE CNT KG
-6386 1751036676.jpg 6386_3  # 16:04 conf 70 claude: full  expected: COUVE ROXA CNT KG
-6386 1751036676.jpg 6386_4  # 16:04 conf 70 claude: full  expected: COUVE FLOR CNT KG
-6386 1751036676.jpg 6386_5  # 16:04 conf 70 claude: full  expected: CURGETE VERDE CNT KG
-6386 1751040333.jpg 6386_3  # 17:05 conf 70 claude: full  expected: COUVE ROXA CNT KG
-6386 1751040333.jpg 6386_4  # 17:05 conf 70 claude: full  expected: COUVE FLOR CNT KG
-6386 1751040333.jpg 6386_5  # 17:05 conf 70 claude: full  expected: CURGETE VERDE CNT KG
-6386 1751044440.jpg 6386_3  # 18:14 conf 70 claude: full  expected: COUVE ROXA CNT KG
-6386 1751044440.jpg 6386_4  # 18:14 conf 70 claude: full  expected: COUVE FLOR CNT KG
-6386 1751048137.jpg 6386_4  # 19:15 conf 70 claude: full  expected: COUVE FLOR CNT KG
+6386 1751032558.jpg 6386_5  # 14:55 conf 70 claude: half  expected: CURGETE VERDE CNT KG
+6386 1751036676.jpg 6386_5  # 16:04 conf 70 claude: half  expected: CURGETE VERDE CNT KG
+6386 1751040333.jpg 6386_1  # 17:05 conf 70 claude: half  expected: COUVE BROCOLO CNT KG
+6386 1751040333.jpg 6386_5  # 17:05 conf 70 claude: half  expected: CURGETE VERDE CNT KG
+6386 1751044440.jpg 6386_1  # 18:14 conf 70 claude: half  expected: COUVE BROCOLO CNT KG
+6386 1751044440.jpg 6386_5  # 18:14 conf 70 claude: half  expected: CURGETE VERDE CNT KG
+6386 1751048137.jpg 6386_1  # 19:15 conf 70 claude: half  expected: COUVE BROCOLO CNT KG
 6443 1751001244.jpg 6443_6  # 06:14 conf 70 claude: half  expected: TOMATE CORAÇÃO DE BOI CNT KG
 6443 1751001244.jpg 6443_8  # 06:14 conf 70 claude: half  expected: TOMATE CORAÇÃO DE BOI CNT KG
-6443 1751005341.jpg 6443_2  # 07:22 conf 70 claude: full  expected: TOMATE CACHO CNT KG
 6443 1751005341.jpg 6443_6  # 07:22 conf 70 claude: half  expected: TOMATE CORAÇÃO DE BOI CNT KG
 6443 1751005341.jpg 6443_8  # 07:22 conf 70 claude: half  expected: TOMATE CORAÇÃO DE BOI CNT KG
-6443 1751009482.jpg 6443_6  # 08:31 conf 70 claude: full  expected: TOMATE CORAÇÃO DE BOI CNT KG
-6443 1751009482.jpg 6443_8  # 08:31 conf 70 claude: full  expected: TOMATE CORAÇÃO DE BOI CNT KG
-6443 1751013117.jpg 6443_6  # 09:31 conf 70 claude: full  expected: TOMATE CORAÇÃO DE BOI CNT KG
-6443 1751013117.jpg 6443_8  # 09:31 conf 70 claude: full  expected: TOMATE CORAÇÃO DE BOI CNT KG
-6443 1751016838.jpg 6443_6  # 10:33 conf 70 claude: full  expected: TOMATE CORAÇÃO DE BOI CNT KG
-6443 1751016838.jpg 6443_8  # 10:33 conf 70 claude: full  expected: TOMATE CORAÇÃO DE BOI CNT KG
-6443 1751020727.jpg 6443_2  # 11:38 conf 70 claude: full  expected: TOMATE CACHO CNT KG
-6443 1751020727.jpg 6443_6  # 11:38 conf 70 claude: full  expected: TOMATE CORAÇÃO DE BOI CNT KG
-6443 1751020727.jpg 6443_8  # 11:38 conf 70 claude: full  expected: TOMATE CORAÇÃO DE BOI CNT KG
-6443 1751024371.jpg 6443_11  # 12:39 conf 70 claude: half  expected: TOMATE CHUCHA CNT KG
-6443 1751028789.jpg 6443_11  # 13:53 conf 70 claude: half  expected: TOMATE CHUCHA CNT KG
-6443 1751032575.jpg 6443_2  # 14:56 conf 70 claude: half  expected: TOMATE CACHO CNT KG
-6443 1751032575.jpg 6443_11  # 14:56 conf 70 claude: half  expected: TOMATE CHUCHA CNT KG
-6443 1751036374.jpg 6443_11  # 15:59 conf 70 claude: half  expected: TOMATE CHUCHA CNT KG
-6443 1751040209.jpg 6443_6  # 17:03 conf 70 claude: full  expected: TOMATE CORAÇÃO DE BOI CNT KG
-6443 1751040209.jpg 6443_11  # 17:03 conf 70 claude: half  expected: TOMATE CHUCHA CNT KG
-6443 1751044079.jpg 6443_6  # 18:07 conf 70 claude: full  expected: TOMATE CORAÇÃO DE BOI CNT KG
-6443 1751044079.jpg 6443_11  # 18:07 conf 70 claude: half  expected: TOMATE CHUCHA CNT KG
-6462 1751001155.jpg 6462_2  # 06:12 conf 70 claude: full  expected: MANGA CNT KG
-6462 1751005795.jpg 6462_5  # 07:29 conf 70 claude: full  expected: UVA BRANCA S/GRAINHA CNT 500 G
-6462 1751009411.jpg 6462_5  # 08:30 conf 70 claude: full  expected: UVA BRANCA S/GRAINHA CNT 500 G
-6462 1751013242.jpg 6462_5  # 09:34 conf 70 claude: full  expected: UVA BRANCA S/GRAINHA CNT 500 G
-6462 1751016893.jpg 6462_5  # 10:34 conf 70 claude: full  expected: UVA BRANCA S/GRAINHA CNT 500 G
-6462 1751020617.jpg 6462_9  # 11:36 conf 70 claude: full  expected: CEREJA 24+ 500 GR
-6462 1751024395.jpg 6462_9  # 12:39 conf 70 claude: full  expected: CEREJA 24+ 500 GR
-6462 1751028563.jpg 6462_7  # 13:49 conf 70 claude: full  expected: UVA RED GLOBE CNT KG
-6462 1751028563.jpg 6462_9  # 13:49 conf 70 claude: full  expected: CEREJA 24+ 500 GR
-6462 1751032838.jpg 6462_7  # 15:00 conf 70 claude: full  expected: UVA RED GLOBE CNT KG
-6462 1751032838.jpg 6462_9  # 15:00 conf 70 claude: full  expected: CEREJA 24+ 500 GR
-6462 1751036485.jpg 6462_7  # 16:01 conf 70 claude: full  expected: UVA RED GLOBE CNT KG
-6462 1751036485.jpg 6462_9  # 16:01 conf 70 claude: full  expected: CEREJA 24+ 500 GR
-6462 1751040186.jpg 6462_7  # 17:03 conf 70 claude: full  expected: UVA RED GLOBE CNT KG
-6462 1751040186.jpg 6462_9  # 17:03 conf 70 claude: full  expected: CEREJA 24+ 500 GR
-6462 1751043841.jpg 6462_2  # 18:04 conf 70 claude: full  expected: MANGA CNT KG
-6462 1751043841.jpg 6462_7  # 18:04 conf 70 claude: full  expected: UVA RED GLOBE CNT KG
-6462 1751047858.jpg 6462_2  # 19:10 conf 70 claude: full  expected: MANGA CNT KG
-6462 1751047858.jpg 6462_7  # 19:10 conf 70 claude: full  expected: UVA RED GLOBE CNT KG
-6468 1751001157.jpg 6468_2  # 06:12 conf 70 claude: half  expected: ABACAXI SUPER SWEET KG
-6468 1751001157.jpg 6468_7  # 06:12 conf 70 claude: full WRONG PRODUCT  expected: MARACUJA ROXO CNT KG
-6468 1751001157.jpg 6468_9  # 06:12 conf 70 claude: full  expected: MAMAO INTEIRO CNT KG
-6468 1751001157.jpg 6468_16  # 06:12 conf 70 claude: half  expected: MANGA AVIÃO PALMER KG
-6468 1751005772.jpg 6468_2  # 07:29 conf 70 claude: half  expected: ABACAXI SUPER SWEET KG
-6468 1751005772.jpg 6468_7  # 07:29 conf 70 claude: full WRONG PRODUCT  expected: MARACUJA ROXO CNT KG
-6468 1751005772.jpg 6468_9  # 07:29 conf 70 claude: full  expected: MAMAO INTEIRO CNT KG
-6468 1751005772.jpg 6468_16  # 07:29 conf 70 claude: half  expected: MANGA AVIÃO PALMER KG
-6468 1751009863.jpg 6468_1  # 08:37 conf 70 claude: full  expected: ABACAXI SUPER SWEET KG
-6468 1751009863.jpg 6468_3  # 08:37 conf 70 claude: full  expected: ABACAXI SUPER SWEET KG
-6468 1751009863.jpg 6468_7  # 08:37 conf 70 claude: full WRONG PRODUCT  expected: MARACUJA ROXO CNT KG
-6468 1751009863.jpg 6468_13  # 08:37 conf 70 claude: full WRONG PRODUCT  expected: MANGA AVIÃO PALMER KG
-6468 1751009863.jpg 6468_16  # 08:37 conf 70 claude: half  expected: MANGA AVIÃO PALMER KG
-6468 1751013530.jpg 6468_8  # 09:38 conf 70 claude: full  expected: GRANADILHA 80 G
+6443 1751009482.jpg 6443_7  # 08:31 conf 70 claude: full  expected: TOMATE CHERRY VERMELHO CNT 250GR
+6443 1751013117.jpg 6443_7  # 09:31 conf 70 claude: full  expected: TOMATE CHERRY VERMELHO CNT 250GR
+6443 1751016838.jpg 6443_7  # 10:33 conf 70 claude: full  expected: TOMATE CHERRY VERMELHO CNT 250GR
+6443 1751020727.jpg 6443_7  # 11:38 conf 70 claude: full  expected: TOMATE CHERRY VERMELHO CNT 250GR
+6443 1751020727.jpg 6443_11  # 11:38 conf 70 claude: half  expected: TOMATE CHUCHA CNT KG
+6443 1751024371.jpg 6443_2  # 12:39 conf 70 claude: full  expected: TOMATE CACHO CNT KG
+6443 1751024371.jpg 6443_7  # 12:39 conf 70 claude: full  expected: TOMATE CHERRY VERMELHO CNT 250GR
+6443 1751024371.jpg 6443_8  # 12:39 conf 70 claude: full  expected: TOMATE CORAÇÃO DE BOI CNT KG
+6443 1751024371.jpg 6443_12  # 12:39 conf 70 claude: full  expected: MINI TOMATE CACHO CNT 500G
+6443 1751028789.jpg 6443_2  # 13:53 conf 70 claude: half  expected: TOMATE CACHO CNT KG
+6443 1751028789.jpg 6443_7  # 13:53 conf 70 claude: full  expected: TOMATE CHERRY VERMELHO CNT 250GR
+6443 1751028789.jpg 6443_8  # 13:53 conf 70 claude: half  expected: TOMATE CORAÇÃO DE BOI CNT KG
+6443 1751032575.jpg 6443_7  # 14:56 conf 70 claude: full  expected: TOMATE CHERRY VERMELHO CNT 250GR
+6443 1751036374.jpg 6443_2  # 15:59 conf 70 claude: full  expected: TOMATE CACHO CNT KG
+6443 1751036374.jpg 6443_7  # 15:59 conf 70 claude: full  expected: TOMATE CHERRY VERMELHO CNT 250GR
+6443 1751040209.jpg 6443_2  # 17:03 conf 70 claude: full  expected: TOMATE CACHO CNT KG
+6443 1751040209.jpg 6443_7  # 17:03 conf 70 claude: half  expected: TOMATE CHERRY VERMELHO CNT 250GR
+6443 1751040209.jpg 6443_12  # 17:03 conf 70 claude: full  expected: MINI TOMATE CACHO CNT 500G
+6443 1751044079.jpg 6443_2  # 18:07 conf 70 claude: full  expected: TOMATE CACHO CNT KG
+6443 1751044079.jpg 6443_12  # 18:07 conf 70 claude: full  expected: MINI TOMATE CACHO CNT 500G
+6462 1751016893.jpg 6462_1  # 10:34 conf 70 claude: half  expected: MORANGO EMB. 500 GR
+6462 1751020617.jpg 6462_1  # 11:36 conf 70 claude: half  expected: MORANGO EMB. 500 GR
+6462 1751024395.jpg 6462_5  # 12:39 conf 70 claude: half  expected: UVA BRANCA S/GRAINHA CNT 500 G
+6462 1751028563.jpg 6462_5  # 13:49 conf 70 claude: half  expected: UVA BRANCA S/GRAINHA CNT 500 G
+6462 1751032838.jpg 6462_1  # 15:00 conf 70 claude: half  expected: MORANGO EMB. 500 GR
+6462 1751036485.jpg 6462_1  # 16:01 conf 70 claude: half  expected: MORANGO EMB. 500 GR
+6462 1751036485.jpg 6462_3  # 16:01 conf 70 claude: half  expected: MANGA CNT KG
+6462 1751040186.jpg 6462_3  # 17:03 conf 70 claude: half  expected: MANGA CNT KG
+6462 1751043841.jpg 6462_2  # 18:04 conf 70 claude: half  expected: MANGA CNT KG
+6462 1751043841.jpg 6462_3  # 18:04 conf 70 claude: half  expected: MANGA CNT KG
+6462 1751043841.jpg 6462_5  # 18:04 conf 70 claude: half  expected: UVA BRANCA S/GRAINHA CNT 500 G
+6462 1751043841.jpg 6462_9  # 18:04 conf 70 claude: half  expected: CEREJA 24+ 500 GR
+6462 1751047858.jpg 6462_2  # 19:10 conf 70 claude: half  expected: MANGA CNT KG
+6462 1751047858.jpg 6462_3  # 19:10 conf 70 claude: half  expected: MANGA CNT KG
+6462 1751047858.jpg 6462_7  # 19:10 conf 70 claude: half  expected: UVA RED GLOBE CNT KG
+6462 1751047858.jpg 6462_8  # 19:10 conf 70 claude: full  expected: CEREJA 24+ 500 GR
+6462 1751047858.jpg 6462_9  # 19:10 conf 70 claude: half  expected: CEREJA 24+ 500 GR
+6468 1751001157.jpg 6468_2  # 06:12 conf 70 claude: empty  expected: ABACAXI SUPER SWEET KG
+6468 1751001157.jpg 6468_3  # 06:12 conf 70 claude: half  expected: ABACAXI SUPER SWEET KG
+6468 1751001157.jpg 6468_8  # 06:12 conf 70 claude: half WRONG PRODUCT  expected: GRANADILHA 80 G
+6468 1751001157.jpg 6468_9  # 06:12 conf 70 claude: half  expected: MAMAO INTEIRO CNT KG
+6468 1751001157.jpg 6468_10  # 06:12 conf 70 claude: half  expected: PAPAIA DE AVIÃO INTEIRA CNT KG
+6468 1751001157.jpg 6468_13  # 06:12 conf 70 claude: half WRONG PRODUCT  expected: MANGA AVIÃO PALMER KG
+6468 1751001157.jpg 6468_14  # 06:12 conf 70 claude: half WRONG PRODUCT  expected: MANGA AVIÃO PALMER KG
+6468 1751001157.jpg 6468_15  # 06:12 conf 70 claude: half  expected: MANGA AVIÃO PALMER KG
+6468 1751005772.jpg 6468_2  # 07:29 conf 70 claude: empty  expected: ABACAXI SUPER SWEET KG
+6468 1751005772.jpg 6468_3  # 07:29 conf 70 claude: half  expected: ABACAXI SUPER SWEET KG
+6468 1751005772.jpg 6468_8  # 07:29 conf 70 claude: half WRONG PRODUCT  expected: GRANADILHA 80 G
+6468 1751005772.jpg 6468_9  # 07:29 conf 70 claude: half  expected: MAMAO INTEIRO CNT KG
+6468 1751005772.jpg 6468_10  # 07:29 conf 70 claude: half  expected: PAPAIA DE AVIÃO INTEIRA CNT KG
+6468 1751005772.jpg 6468_13  # 07:29 conf 70 claude: half WRONG PRODUCT  expected: MANGA AVIÃO PALMER KG
+6468 1751005772.jpg 6468_14  # 07:29 conf 70 claude: half WRONG PRODUCT  expected: MANGA AVIÃO PALMER KG
+6468 1751009863.jpg 6468_8  # 08:37 conf 70 claude: half WRONG PRODUCT  expected: GRANADILHA 80 G
+6468 1751009863.jpg 6468_9  # 08:37 conf 70 claude: half  expected: MAMAO INTEIRO CNT KG
+6468 1751009863.jpg 6468_10  # 08:37 conf 70 claude: half  expected: PAPAIA DE AVIÃO INTEIRA CNT KG
+6468 1751013530.jpg 6468_9  # 09:38 conf 70 claude: half  expected: MAMAO INTEIRO CNT KG
+6468 1751013530.jpg 6468_10  # 09:38 conf 70 claude: half  expected: PAPAIA DE AVIÃO INTEIRA CNT KG
 6468 1751013530.jpg 6468_12  # 09:38 conf 70 claude: full  expected: BANANA PAO CNT KG
-6468 1751013530.jpg 6468_13  # 09:38 conf 70 claude: full  expected: MANGA AVIÃO PALMER KG
-6468 1751017764.jpg 6468_8  # 10:49 conf 70 claude: full  expected: GRANADILHA 80 G
+6468 1751017764.jpg 6468_9  # 10:49 conf 70 claude: half  expected: MAMAO INTEIRO CNT KG
+6468 1751017764.jpg 6468_10  # 10:49 conf 70 claude: half  expected: PAPAIA DE AVIÃO INTEIRA CNT KG
 6468 1751017764.jpg 6468_12  # 10:49 conf 70 claude: full  expected: BANANA PAO CNT KG
-6468 1751017764.jpg 6468_13  # 10:49 conf 70 claude: full  expected: MANGA AVIÃO PALMER KG
-6468 1751021997.jpg 6468_8  # 11:59 conf 70 claude: full  expected: GRANADILHA 80 G
+6468 1751021997.jpg 6468_9  # 11:59 conf 70 claude: half  expected: MAMAO INTEIRO CNT KG
+6468 1751021997.jpg 6468_10  # 11:59 conf 70 claude: half  expected: PAPAIA DE AVIÃO INTEIRA CNT KG
 6468 1751021997.jpg 6468_12  # 11:59 conf 70 claude: full  expected: BANANA PAO CNT KG
-6468 1751021997.jpg 6468_13  # 11:59 conf 70 claude: full  expected: MANGA AVIÃO PALMER KG
-6468 1751026188.jpg 6468_8  # 13:09 conf 70 claude: full  expected: GRANADILHA 80 G
+6468 1751026188.jpg 6468_9  # 13:09 conf 70 claude: half  expected: MAMAO INTEIRO CNT KG
+6468 1751026188.jpg 6468_10  # 13:09 conf 70 claude: half  expected: PAPAIA DE AVIÃO INTEIRA CNT KG
 6468 1751026188.jpg 6468_12  # 13:09 conf 70 claude: full  expected: BANANA PAO CNT KG
-6468 1751026188.jpg 6468_13  # 13:09 conf 70 claude: full  expected: MANGA AVIÃO PALMER KG
-6468 1751029957.jpg 6468_8  # 14:12 conf 70 claude: full  expected: GRANADILHA 80 G
+6468 1751029957.jpg 6468_9  # 14:12 conf 70 claude: half  expected: MAMAO INTEIRO CNT KG
+6468 1751029957.jpg 6468_10  # 14:12 conf 70 claude: half  expected: PAPAIA DE AVIÃO INTEIRA CNT KG
 6468 1751029957.jpg 6468_12  # 14:12 conf 70 claude: full  expected: BANANA PAO CNT KG
-6468 1751029957.jpg 6468_13  # 14:12 conf 70 claude: full  expected: MANGA AVIÃO PALMER KG
-6468 1751033646.jpg 6468_8  # 15:14 conf 70 claude: full  expected: GRANADILHA 80 G
+6468 1751033646.jpg 6468_9  # 15:14 conf 70 claude: half  expected: MAMAO INTEIRO CNT KG
+6468 1751033646.jpg 6468_10  # 15:14 conf 70 claude: half  expected: PAPAIA DE AVIÃO INTEIRA CNT KG
 6468 1751033646.jpg 6468_12  # 15:14 conf 70 claude: full  expected: BANANA PAO CNT KG
-6468 1751033646.jpg 6468_13  # 15:14 conf 70 claude: full  expected: MANGA AVIÃO PALMER KG
-6468 1751037301.jpg 6468_8  # 16:15 conf 70 claude: full  expected: GRANADILHA 80 G
+6468 1751037301.jpg 6468_9  # 16:15 conf 70 claude: half  expected: MAMAO INTEIRO CNT KG
+6468 1751037301.jpg 6468_10  # 16:15 conf 70 claude: half  expected: PAPAIA DE AVIÃO INTEIRA CNT KG
 6468 1751037301.jpg 6468_12  # 16:15 conf 70 claude: full  expected: BANANA PAO CNT KG
-6468 1751037301.jpg 6468_13  # 16:15 conf 70 claude: full  expected: MANGA AVIÃO PALMER KG
-6468 1751041038.jpg 6468_8  # 17:17 conf 70 claude: full  expected: GRANADILHA 80 G
+6468 1751037301.jpg 6468_16  # 16:15 conf 70 claude: full  expected: MANGA AVIÃO PALMER KG
+6468 1751041038.jpg 6468_9  # 17:17 conf 70 claude: half  expected: MAMAO INTEIRO CNT KG
+6468 1751041038.jpg 6468_10  # 17:17 conf 70 claude: half  expected: PAPAIA DE AVIÃO INTEIRA CNT KG
 6468 1751041038.jpg 6468_12  # 17:17 conf 70 claude: full  expected: BANANA PAO CNT KG
-6468 1751041038.jpg 6468_13  # 17:17 conf 70 claude: full  expected: MANGA AVIÃO PALMER KG
-6468 1751044824.jpg 6468_8  # 18:20 conf 70 claude: full  expected: GRANADILHA 80 G
+6468 1751041038.jpg 6468_16  # 17:17 conf 70 claude: full  expected: MANGA AVIÃO PALMER KG
+6468 1751044824.jpg 6468_9  # 18:20 conf 70 claude: half  expected: MAMAO INTEIRO CNT KG
+6468 1751044824.jpg 6468_10  # 18:20 conf 70 claude: half  expected: PAPAIA DE AVIÃO INTEIRA CNT KG
 6468 1751044824.jpg 6468_12  # 18:20 conf 70 claude: full  expected: BANANA PAO CNT KG
-6468 1751044824.jpg 6468_13  # 18:20 conf 70 claude: full  expected: MANGA AVIÃO PALMER KG
+6468 1751044824.jpg 6468_16  # 18:20 conf 70 claude: full  expected: MANGA AVIÃO PALMER KG
 6468 1751048837.jpg 6468_1  # 19:27 conf 70 claude: full  expected: ABACAXI SUPER SWEET KG
-6468 1751048837.jpg 6468_4  # 19:27 conf 70 claude: full  expected: PITAYA VERMELHA 300G
-6468 1751048837.jpg 6468_9  # 19:27 conf 70 claude: full  expected: MAMAO INTEIRO CNT KG
+6468 1751048837.jpg 6468_9  # 19:27 conf 70 claude: half  expected: MAMAO INTEIRO CNT KG
+6468 1751048837.jpg 6468_10  # 19:27 conf 70 claude: half  expected: PAPAIA DE AVIÃO INTEIRA CNT KG
 6468 1751048837.jpg 6468_12  # 19:27 conf 70 claude: full  expected: BANANA PAO CNT KG
-6468 1751048837.jpg 6468_13  # 19:27 conf 70 claude: full  expected: MANGA AVIÃO PALMER KG
-6491 1751005570.jpg 6491_3  # 07:26 conf 70 claude: full  expected: PESSEGO PARAGUAYO R0 A/AA/AAA KG
+6468 1751048837.jpg 6468_16  # 19:27 conf 70 claude: full  expected: MANGA AVIÃO PALMER KG
+6491 1751005570.jpg 6491_3  # 07:26 conf 70 claude: half  expected: PESSEGO PARAGUAYO R0 A/AA/AAA KG
 6491 1751021816.jpg 6491_5  # 11:56 conf 70 claude: full  expected: NECTARINA R0 A/AA KG
 6491 1751021816.jpg 6491_7  # 11:56 conf 70 claude: full  expected: NECTARINA R0 A/AA KG
 6491 1751033170.jpg 6491_5  # 15:06 conf 70 claude: full  expected: NECTARINA R0 A/AA KG
-6491 1751033170.jpg 6491_7  # 15:06 conf 70 claude: full  expected: NECTARINA R0 A/AA KG
-6491 1751036849.jpg 6491_5  # 16:07 conf 70 claude: full  expected: NECTARINA R0 A/AA KG
-6491 1751040739.jpg 6491_7  # 17:12 conf 70 claude: full  expected: NECTARINA R0 A/AA KG
+6491 1751033170.jpg 6491_10  # 15:06 conf 70 claude: full  expected: PESSEGO R0 A/AA KG
+6491 1751036849.jpg 6491_10  # 16:07 conf 70 claude: full  expected: PESSEGO R0 A/AA KG
+6491 1751040739.jpg 6491_10  # 17:12 conf 70 claude: full  expected: PESSEGO R0 A/AA KG
+6591 1751001189.jpg 6591_4  # 06:13 conf 70 claude: full  expected: BATATA VERMELHA CNT EMB. 3KG
 6591 1751001189.jpg 6591_6  # 06:13 conf 70 claude: half  expected: BATATA DOCE CNT KG
-6591 1751001189.jpg 6591_7  # 06:13 conf 70 claude: half  expected: GENGIBRE CNT KG
+6591 1751005287.jpg 6591_4  # 07:21 conf 70 claude: full  expected: BATATA VERMELHA CNT EMB. 3KG
 6591 1751005287.jpg 6591_6  # 07:21 conf 70 claude: half  expected: BATATA DOCE CNT KG
-6591 1751005287.jpg 6591_7  # 07:21 conf 70 claude: half  expected: GENGIBRE CNT KG
+6591 1751009443.jpg 6591_4  # 08:30 conf 70 claude: full  expected: BATATA VERMELHA CNT EMB. 3KG
 6591 1751009443.jpg 6591_6  # 08:30 conf 70 claude: half  expected: BATATA DOCE CNT KG
-6591 1751009443.jpg 6591_7  # 08:30 conf 70 claude: full  expected: GENGIBRE CNT KG
+6591 1751013255.jpg 6591_4  # 09:34 conf 70 claude: full  expected: BATATA VERMELHA CNT EMB. 3KG
 6591 1751013255.jpg 6591_6  # 09:34 conf 70 claude: half  expected: BATATA DOCE CNT KG
-6591 1751013255.jpg 6591_7  # 09:34 conf 70 claude: full  expected: GENGIBRE CNT KG
-6591 1751017235.jpg 6591_3  # 10:40 conf 70 claude: full  expected: BATATA ZER0%D 4KG
 6591 1751017235.jpg 6591_6  # 10:40 conf 70 claude: half  expected: BATATA DOCE CNT KG
-6591 1751017235.jpg 6591_7  # 10:40 conf 70 claude: full  expected: GENGIBRE CNT KG
-6591 1751020896.jpg 6591_3  # 11:41 conf 70 claude: full  expected: BATATA ZER0%D 4KG
 6591 1751020896.jpg 6591_6  # 11:41 conf 70 claude: half  expected: BATATA DOCE CNT KG
-6591 1751020896.jpg 6591_7  # 11:41 conf 70 claude: full  expected: GENGIBRE CNT KG
-6591 1751025118.jpg 6591_3  # 12:51 conf 70 claude: full  expected: BATATA ZER0%D 4KG
 6591 1751025118.jpg 6591_6  # 12:51 conf 70 claude: half  expected: BATATA DOCE CNT KG
-6591 1751025118.jpg 6591_7  # 12:51 conf 70 claude: full  expected: GENGIBRE CNT KG
-6591 1751028988.jpg 6591_3  # 13:56 conf 70 claude: full  expected: BATATA ZER0%D 4KG
 6591 1751028988.jpg 6591_6  # 13:56 conf 70 claude: half  expected: BATATA DOCE CNT KG
-6591 1751028988.jpg 6591_7  # 13:56 conf 70 claude: full  expected: GENGIBRE CNT KG
-6591 1751032871.jpg 6591_3  # 15:01 conf 70 claude: full  expected: BATATA ZER0%D 4KG
 6591 1751032871.jpg 6591_6  # 15:01 conf 70 claude: half  expected: BATATA DOCE CNT KG
-6591 1751032871.jpg 6591_7  # 15:01 conf 70 claude: full  expected: GENGIBRE CNT KG
-6591 1751036598.jpg 6591_3  # 16:03 conf 70 claude: full  expected: BATATA ZER0%D 4KG
 6591 1751036598.jpg 6591_6  # 16:03 conf 70 claude: half  expected: BATATA DOCE CNT KG
-6591 1751036598.jpg 6591_7  # 16:03 conf 70 claude: full  expected: GENGIBRE CNT KG
-6591 1751040216.jpg 6591_3  # 17:03 conf 70 claude: full  expected: BATATA ZER0%D 4KG
+6591 1751040216.jpg 6591_5  # 17:03 conf 70 claude: full  expected: BATATA VERMELHA CNT EMB. 3KG
 6591 1751040216.jpg 6591_6  # 17:03 conf 70 claude: half  expected: BATATA DOCE CNT KG
-6591 1751040216.jpg 6591_7  # 17:03 conf 70 claude: full  expected: GENGIBRE CNT KG
-6591 1751044047.jpg 6591_3  # 18:07 conf 70 claude: full  expected: BATATA ZER0%D 4KG
-6591 1751044047.jpg 6591_7  # 18:07 conf 70 claude: full  expected: GENGIBRE CNT KG
 6591 1751044047.jpg 6591_9  # 18:07 conf 70 claude: full  expected: BATATA ESPECIAL COZER SC EMB. 3KG
-6591 1751048487.jpg 6591_1  # 19:21 conf 70 claude: full  expected: BATATA VERMELHA CNT KG
-6591 1751048487.jpg 6591_3  # 19:21 conf 70 claude: full  expected: BATATA ZER0%D 4KG
-6591 1751048487.jpg 6591_7  # 19:21 conf 70 claude: full  expected: GENGIBRE CNT KG
+6591 1751048487.jpg 6591_2  # 19:21 conf 70 claude: full  expected: BATATA ASSAR CNT EMB. 2 KG
 6591 1751048487.jpg 6591_9  # 19:21 conf 70 claude: full  expected: BATATA ESPECIAL COZER SC EMB. 3KG
 6594 1751001189.jpg 6594_1  # 06:13 conf 70 claude: half  expected: ABÓBORA HOKAIDO R0 KG
-6594 1751001189.jpg 6594_11  # 06:13 conf 70 claude: full  expected: CEBOLA ROXA CNT 1KG
+6594 1751001189.jpg 6594_3  # 06:13 conf 70 claude: full WRONG PRODUCT  expected: BATATA VERMELHA CNT EMB. 3KG
+6594 1751001189.jpg 6594_4  # 06:13 conf 70 claude: full  expected: CEBOLA NOVA CNT KG
+6594 1751001189.jpg 6594_6  # 06:13 conf 70 claude: half  expected: CEBOLA NOVA CNT KG
 6594 1751005322.jpg 6594_1  # 07:22 conf 70 claude: half  expected: ABÓBORA HOKAIDO R0 KG
-6594 1751005322.jpg 6594_11  # 07:22 conf 70 claude: full  expected: CEBOLA ROXA CNT 1KG
+6594 1751005322.jpg 6594_3  # 07:22 conf 70 claude: full WRONG PRODUCT  expected: BATATA VERMELHA CNT EMB. 3KG
+6594 1751005322.jpg 6594_4  # 07:22 conf 70 claude: full  expected: CEBOLA NOVA CNT KG
+6594 1751005322.jpg 6594_6  # 07:22 conf 70 claude: half  expected: CEBOLA NOVA CNT KG
 6594 1751008928.jpg 6594_1  # 08:22 conf 70 claude: half  expected: ABÓBORA HOKAIDO R0 KG
-6594 1751008928.jpg 6594_11  # 08:22 conf 70 claude: full  expected: CEBOLA ROXA CNT 1KG
+6594 1751008928.jpg 6594_3  # 08:22 conf 70 claude: full WRONG PRODUCT  expected: BATATA VERMELHA CNT EMB. 3KG
+6594 1751008928.jpg 6594_4  # 08:22 conf 70 claude: full  expected: CEBOLA NOVA CNT KG
+6594 1751008928.jpg 6594_6  # 08:22 conf 70 claude: half  expected: CEBOLA NOVA CNT KG
+6594 1751013117.jpg 6594_3  # 09:31 conf 70 claude: full WRONG PRODUCT  expected: BATATA VERMELHA CNT EMB. 3KG
+6594 1751013117.jpg 6594_6  # 09:31 conf 70 claude: half  expected: CEBOLA NOVA CNT KG
 6594 1751013117.jpg 6594_7  # 09:31 conf 70 claude: full  expected: ALHO SECO CNT 250GR
-6594 1751013117.jpg 6594_9  # 09:31 conf 70 claude: full  expected: ALHO SECO CNT 250GR
-6594 1751013117.jpg 6594_11  # 09:31 conf 70 claude: full  expected: CEBOLA ROXA CNT 1KG
-6594 1751017278.jpg 6594_2  # 10:41 conf 70 claude: full  expected: BATATA VERMELHA EMB:. 5 KG
+6594 1751017278.jpg 6594_4  # 10:41 conf 70 claude: full  expected: CEBOLA NOVA CNT KG
 6594 1751017278.jpg 6594_7  # 10:41 conf 70 claude: full  expected: ALHO SECO CNT 250GR
-6594 1751017278.jpg 6594_9  # 10:41 conf 70 claude: full  expected: ALHO SECO CNT 250GR
-6594 1751017278.jpg 6594_11  # 10:41 conf 70 claude: full  expected: CEBOLA ROXA CNT 1KG
-6594 1751021279.jpg 6594_2  # 11:47 conf 70 claude: full  expected: BATATA VERMELHA EMB:. 5 KG
+6594 1751017278.jpg 6594_12  # 10:41 conf 70 claude: full  expected: CEBOLINHA FRANCESA CNT 500G
+6594 1751017278.jpg 6594_13  # 10:41 conf 70 claude: full WRONG PRODUCT  expected: CEBOLA DOCE CNT EMB 1 KG
 6594 1751021279.jpg 6594_7  # 11:47 conf 70 claude: full  expected: ALHO SECO CNT 250GR
-6594 1751021279.jpg 6594_8  # 11:47 conf 70 claude: full  expected: ALHO SECO KG
-6594 1751021279.jpg 6594_9  # 11:47 conf 70 claude: full  expected: ALHO SECO CNT 250GR
-6594 1751021279.jpg 6594_11  # 11:47 conf 70 claude: full  expected: CEBOLA ROXA CNT 1KG
-6594 1751025171.jpg 6594_2  # 12:52 conf 70 claude: full  expected: BATATA VERMELHA EMB:. 5 KG
+6594 1751021279.jpg 6594_12  # 11:47 conf 70 claude: full  expected: CEBOLINHA FRANCESA CNT 500G
+6594 1751021279.jpg 6594_13  # 11:47 conf 70 claude: full WRONG PRODUCT  expected: CEBOLA DOCE CNT EMB 1 KG
 6594 1751025171.jpg 6594_7  # 12:52 conf 70 claude: full  expected: ALHO SECO CNT 250GR
-6594 1751025171.jpg 6594_9  # 12:52 conf 70 claude: full  expected: ALHO SECO CNT 250GR
-6594 1751025171.jpg 6594_11  # 12:52 conf 70 claude: full  expected: CEBOLA ROXA CNT 1KG
-6594 1751029354.jpg 6594_2  # 14:02 conf 70 claude: full  expected: BATATA VERMELHA EMB:. 5 KG
+6594 1751025171.jpg 6594_12  # 12:52 conf 70 claude: full  expected: CEBOLINHA FRANCESA CNT 500G
+6594 1751025171.jpg 6594_13  # 12:52 conf 70 claude: full WRONG PRODUCT  expected: CEBOLA DOCE CNT EMB 1 KG
 6594 1751029354.jpg 6594_7  # 14:02 conf 70 claude: full  expected: ALHO SECO CNT 250GR
-6594 1751029354.jpg 6594_9  # 14:02 conf 70 claude: full  expected: ALHO SECO CNT 250GR
-6594 1751029354.jpg 6594_11  # 14:02 conf 70 claude: full  expected: CEBOLA ROXA CNT 1KG
-6594 1751033482.jpg 6594_2  # 15:11 conf 70 claude: full  expected: BATATA VERMELHA EMB:. 5 KG
+6594 1751029354.jpg 6594_12  # 14:02 conf 70 claude: full  expected: CEBOLINHA FRANCESA CNT 500G
+6594 1751029354.jpg 6594_13  # 14:02 conf 70 claude: full WRONG PRODUCT  expected: CEBOLA DOCE CNT EMB 1 KG
 6594 1751033482.jpg 6594_4  # 15:11 conf 70 claude: full  expected: CEBOLA NOVA CNT KG
 6594 1751033482.jpg 6594_7  # 15:11 conf 70 claude: full  expected: ALHO SECO CNT 250GR
-6594 1751033482.jpg 6594_9  # 15:11 conf 70 claude: full  expected: ALHO SECO CNT 250GR
-6594 1751033482.jpg 6594_11  # 15:11 conf 70 claude: full  expected: CEBOLA ROXA CNT 1KG
-6594 1751037746.jpg 6594_2  # 16:22 conf 70 claude: full  expected: BATATA VERMELHA EMB:. 5 KG
+6594 1751033482.jpg 6594_12  # 15:11 conf 70 claude: full  expected: CEBOLINHA FRANCESA CNT 500G
+6594 1751033482.jpg 6594_13  # 15:11 conf 70 claude: full WRONG PRODUCT  expected: CEBOLA DOCE CNT EMB 1 KG
 6594 1751037746.jpg 6594_4  # 16:22 conf 70 claude: full  expected: CEBOLA NOVA CNT KG
 6594 1751037746.jpg 6594_7  # 16:22 conf 70 claude: full  expected: ALHO SECO CNT 250GR
-6594 1751037746.jpg 6594_8  # 16:22 conf 70 claude: full  expected: ALHO SECO KG
-6594 1751037746.jpg 6594_9  # 16:22 conf 70 claude: full  expected: ALHO SECO CNT 250GR
-6594 1751037746.jpg 6594_11  # 16:22 conf 70 claude: full  expected: CEBOLA ROXA CNT 1KG
-6594 1751041681.jpg 6594_2  # 17:28 conf 70 claude: full  expected: BATATA VERMELHA EMB:. 5 KG
+6594 1751037746.jpg 6594_12  # 16:22 conf 70 claude: full  expected: CEBOLINHA FRANCESA CNT 500G
+6594 1751037746.jpg 6594_13  # 16:22 conf 70 claude: full WRONG PRODUCT  expected: CEBOLA DOCE CNT EMB 1 KG
 6594 1751041681.jpg 6594_4  # 17:28 conf 70 claude: full  expected: CEBOLA NOVA CNT KG
 6594 1751041681.jpg 6594_7  # 17:28 conf 70 claude: full  expected: ALHO SECO CNT 250GR
-6594 1751041681.jpg 6594_8  # 17:28 conf 70 claude: full  expected: ALHO SECO KG
-6594 1751041681.jpg 6594_9  # 17:28 conf 70 claude: full  expected: ALHO SECO CNT 250GR
-6594 1751041681.jpg 6594_10  # 17:28 conf 70 claude: full  expected: CEBOLA ROXA CNT KG
-6594 1751041681.jpg 6594_11  # 17:28 conf 70 claude: full  expected: CEBOLA ROXA CNT 1KG
-6594 1751045458.jpg 6594_2  # 18:30 conf 70 claude: full  expected: BATATA VERMELHA EMB:. 5 KG
-6594 1751045458.jpg 6594_4  # 18:30 conf 70 claude: full  expected: CEBOLA NOVA CNT KG
+6594 1751041681.jpg 6594_12  # 17:28 conf 70 claude: full  expected: CEBOLINHA FRANCESA CNT 500G
+6594 1751041681.jpg 6594_13  # 17:28 conf 70 claude: full WRONG PRODUCT  expected: CEBOLA DOCE CNT EMB 1 KG
 6594 1751045458.jpg 6594_7  # 18:30 conf 70 claude: full  expected: ALHO SECO CNT 250GR
-6594 1751045458.jpg 6594_8  # 18:30 conf 70 claude: full  expected: ALHO SECO KG
-6594 1751045458.jpg 6594_9  # 18:30 conf 70 claude: full  expected: ALHO SECO CNT 250GR
-6594 1751045458.jpg 6594_10  # 18:30 conf 70 claude: full  expected: CEBOLA ROXA CNT KG
-6594 1751045458.jpg 6594_11  # 18:30 conf 70 claude: full  expected: CEBOLA ROXA CNT 1KG
-6594 1751049768.jpg 6594_2  # 19:42 conf 70 claude: full  expected: BATATA VERMELHA EMB:. 5 KG
+6594 1751045458.jpg 6594_12  # 18:30 conf 70 claude: full  expected: CEBOLINHA FRANCESA CNT 500G
+6594 1751045458.jpg 6594_13  # 18:30 conf 70 claude: full WRONG PRODUCT  expected: CEBOLA DOCE CNT EMB 1 KG
 6594 1751049768.jpg 6594_7  # 19:42 conf 70 claude: full  expected: ALHO SECO CNT 250GR
-6594 1751049768.jpg 6594_8  # 19:42 conf 70 claude: full  expected: ALHO SECO KG
-6594 1751049768.jpg 6594_9  # 19:42 conf 70 claude: full  expected: ALHO SECO CNT 250GR
-6594 1751049768.jpg 6594_10  # 19:42 conf 70 claude: full  expected: CEBOLA ROXA CNT KG
-6781 1751001200.jpg 6781_2  # 06:13 conf 70 claude: full  expected: CEBOLA CNT EMB. 1.5 KG
+6594 1751049768.jpg 6594_10  # 19:42 conf 70 claude: half  expected: CEBOLA ROXA CNT KG
+6594 1751049768.jpg 6594_11  # 19:42 conf 70 claude: half  expected: CEBOLA ROXA CNT 1KG
+6594 1751049768.jpg 6594_12  # 19:42 conf 70 claude: full  expected: CEBOLINHA FRANCESA CNT 500G
+6594 1751049768.jpg 6594_13  # 19:42 conf 70 claude: full WRONG PRODUCT  expected: CEBOLA DOCE CNT EMB 1 KG
+6781 1751001200.jpg 6781_7  # 06:13 conf 70 claude: full  expected: BATATA BRANCA CNT EMB. 3KG
 6781 1751001200.jpg 6781_10  # 06:13 conf 70 claude: full  expected: BATATA VERMELHA CNT KG
-6781 1751005810.jpg 6781_2  # 07:30 conf 70 claude: full  expected: CEBOLA CNT EMB. 1.5 KG
+6781 1751005810.jpg 6781_7  # 07:30 conf 70 claude: full  expected: BATATA BRANCA CNT EMB. 3KG
 6781 1751005810.jpg 6781_10  # 07:30 conf 70 claude: full  expected: BATATA VERMELHA CNT KG
-6781 1751009927.jpg 6781_2  # 08:38 conf 70 claude: full  expected: CEBOLA CNT EMB. 1.5 KG
+6781 1751009927.jpg 6781_7  # 08:38 conf 70 claude: full  expected: BATATA BRANCA CNT EMB. 3KG
 6781 1751009927.jpg 6781_10  # 08:38 conf 70 claude: full  expected: BATATA VERMELHA CNT KG
-6781 1751013921.jpg 6781_2  # 09:45 conf 70 claude: full  expected: CEBOLA CNT EMB. 1.5 KG
-6781 1751017932.jpg 6781_2  # 10:52 conf 70 claude: full  expected: CEBOLA CNT EMB. 1.5 KG
+6781 1751013921.jpg 6781_7  # 09:45 conf 70 claude: full  expected: BATATA BRANCA CNT EMB. 3KG
 6781 1751017932.jpg 6781_4  # 10:52 conf 70 claude: full  expected: BATATA BRANCA CNT EMB. 3KG
-6781 1751021920.jpg 6781_2  # 11:58 conf 70 claude: full  expected: CEBOLA CNT EMB. 1.5 KG
 6781 1751021920.jpg 6781_4  # 11:58 conf 70 claude: full  expected: BATATA BRANCA CNT EMB. 3KG
-6781 1751025662.jpg 6781_2  # 13:01 conf 70 claude: full  expected: CEBOLA CNT EMB. 1.5 KG
 6781 1751025662.jpg 6781_4  # 13:01 conf 70 claude: full  expected: BATATA BRANCA CNT EMB. 3KG
-6781 1751029808.jpg 6781_2  # 14:10 conf 70 claude: full  expected: CEBOLA CNT EMB. 1.5 KG
 6781 1751029808.jpg 6781_4  # 14:10 conf 70 claude: full  expected: BATATA BRANCA CNT EMB. 3KG
-6781 1751029808.jpg 6781_5  # 14:10 conf 70 claude: full  expected: BATATA BRANCA CNT EMB. 3KG
-6781 1751029808.jpg 6781_9  # 14:10 conf 70 claude: full  expected: BATATA BRANCA CNT EMB. 3KG
-6781 1751033637.jpg 6781_2  # 15:13 conf 70 claude: full  expected: CEBOLA CNT EMB. 1.5 KG
 6781 1751033637.jpg 6781_4  # 15:13 conf 70 claude: full  expected: BATATA BRANCA CNT EMB. 3KG
-6781 1751033637.jpg 6781_9  # 15:13 conf 70 claude: full  expected: BATATA BRANCA CNT EMB. 3KG
-6781 1751037494.jpg 6781_2  # 16:18 conf 70 claude: full  expected: CEBOLA CNT EMB. 1.5 KG
 6781 1751037494.jpg 6781_4  # 16:18 conf 70 claude: full  expected: BATATA BRANCA CNT EMB. 3KG
-6781 1751037494.jpg 6781_9  # 16:18 conf 70 claude: full  expected: BATATA BRANCA CNT EMB. 3KG
-6781 1751041407.jpg 6781_2  # 17:23 conf 70 claude: full  expected: CEBOLA CNT EMB. 1.5 KG
 6781 1751041407.jpg 6781_4  # 17:23 conf 70 claude: full  expected: BATATA BRANCA CNT EMB. 3KG
-6781 1751045840.jpg 6781_2  # 18:37 conf 70 claude: full  expected: CEBOLA CNT EMB. 1.5 KG
+6781 1751041407.jpg 6781_9  # 17:23 conf 70 claude: half  expected: BATATA BRANCA CNT EMB. 3KG
 6781 1751045840.jpg 6781_4  # 18:37 conf 70 claude: full  expected: BATATA BRANCA CNT EMB. 3KG
-6781 1751049846.jpg 6781_2  # 19:44 conf 70 claude: full  expected: CEBOLA CNT EMB. 1.5 KG
+6781 1751045840.jpg 6781_9  # 18:37 conf 70 claude: full  expected: BATATA BRANCA CNT EMB. 3KG
+6781 1751049846.jpg 6781_3  # 19:44 conf 70 claude: half  expected: BATATA VERMELHA CNT EMB. 3KG
 6781 1751049846.jpg 6781_4  # 19:44 conf 70 claude: full  expected: BATATA BRANCA CNT EMB. 3KG
-6215 1751001268.jpg 6215_9  # 06:14 conf 80 claude: half  expected: CITRINOS DO ALGARVE IGP LARANJA 70/95 KG
-6215 1751005412.jpg 6215_9  # 07:23 conf 80 claude: half  expected: CITRINOS DO ALGARVE IGP LARANJA 70/95 KG
-6215 1751021396.jpg 6215_4  # 11:49 conf 80 claude: full  expected: BANANA CAT I CNT KG
-6215 1751021396.jpg 6215_8  # 11:49 conf 80 claude: full  expected: BANANA CAT I CNT KG
+6781 1751049846.jpg 6781_9  # 19:44 conf 70 claude: full  expected: BATATA BRANCA CNT EMB. 3KG
+6215 1751001268.jpg 6215_3  # 06:14 conf 80 claude: full WRONG PRODUCT  expected: BANANA CAT I CNT KG
+6215 1751005412.jpg 6215_3  # 07:23 conf 80 claude: full WRONG PRODUCT  expected: BANANA CAT I CNT KG
+6215 1751009590.jpg 6215_3  # 08:33 conf 80 claude: full  expected: BANANA CAT I CNT KG
+6215 1751013250.jpg 6215_3  # 09:34 conf 80 claude: full  expected: BANANA CAT I CNT KG
+6215 1751017244.jpg 6215_3  # 10:40 conf 80 claude: full  expected: BANANA CAT I CNT KG
+6215 1751021396.jpg 6215_3  # 11:49 conf 80 claude: full  expected: BANANA CAT I CNT KG
+6215 1751021396.jpg 6215_6  # 11:49 conf 80 claude: full  expected: BANANA CAT I CNT KG
 6215 1751025596.jpg 6215_2  # 12:59 conf 80 claude: half  expected: BANANA CAT I CNT KG
+6215 1751025596.jpg 6215_3  # 12:59 conf 80 claude: full  expected: BANANA CAT I CNT KG
+6215 1751025596.jpg 6215_6  # 12:59 conf 80 claude: full  expected: BANANA CAT I CNT KG
 6215 1751029718.jpg 6215_2  # 14:08 conf 80 claude: half  expected: BANANA CAT I CNT KG
-6215 1751033683.jpg 6215_2  # 15:14 conf 80 claude: full  expected: BANANA CAT I CNT KG
-6215 1751033683.jpg 6215_7  # 15:14 conf 80 claude: full WRONG PRODUCT  expected: CITRINOS DO ALGARVE IGP LARANJA 70/95 KG
-6215 1751033683.jpg 6215_8  # 15:14 conf 80 claude: full  expected: BANANA CAT I CNT KG
+6215 1751029718.jpg 6215_3  # 14:08 conf 80 claude: half  expected: BANANA CAT I CNT KG
+6215 1751029718.jpg 6215_6  # 14:08 conf 80 claude: full  expected: BANANA CAT I CNT KG
+6215 1751029718.jpg 6215_9  # 14:08 conf 80 claude: half WRONG PRODUCT  expected: CITRINOS DO ALGARVE IGP LARANJA 70/95 KG
+6215 1751033683.jpg 6215_9  # 15:14 conf 80 claude: half WRONG PRODUCT  expected: CITRINOS DO ALGARVE IGP LARANJA 70/95 KG
+6215 1751037607.jpg 6215_9  # 16:20 conf 80 claude: half WRONG PRODUCT  expected: CITRINOS DO ALGARVE IGP LARANJA 70/95 KG
+6215 1751041465.jpg 6215_2  # 17:24 conf 80 claude: half  expected: BANANA CAT I CNT KG
+6215 1751041465.jpg 6215_4  # 17:24 conf 80 claude: half  expected: BANANA CAT I CNT KG
+6215 1751041465.jpg 6215_6  # 17:24 conf 80 claude: half  expected: BANANA CAT I CNT KG
+6215 1751041465.jpg 6215_8  # 17:24 conf 80 claude: half  expected: BANANA CAT I CNT KG
+6215 1751041465.jpg 6215_9  # 17:24 conf 80 claude: half WRONG PRODUCT  expected: CITRINOS DO ALGARVE IGP LARANJA 70/95 KG
+6215 1751041465.jpg 6215_10  # 17:24 conf 80 claude: full  expected: BANANA DA MADEIRA CNT KG
 6215 1751045755.jpg 6215_2  # 18:35 conf 80 claude: half  expected: BANANA CAT I CNT KG
-6215 1751045755.jpg 6215_5  # 18:35 conf 80 claude: full  expected: BANANA CAT I CNT KG
-6215 1751045755.jpg 6215_6  # 18:35 conf 80 claude: empty  expected: BANANA CAT I CNT KG
-6371 1751009975.jpg 6371_7  # 08:39 conf 80 claude: full  expected: MELOA CANTALUPE/CHARENTAIS INTEIR CNT KG
-6371 1751013806.jpg 6371_7  # 09:43 conf 80 claude: full  expected: MELOA CANTALUPE/CHARENTAIS INTEIR CNT KG
-6371 1751017761.jpg 6371_7  # 10:49 conf 80 claude: full  expected: MELOA CANTALUPE/CHARENTAIS INTEIR CNT KG
-6371 1751021365.jpg 6371_3  # 11:49 conf 80 claude: half  expected: MELAO VERDE INTEIRO CNT KG
-6371 1751021365.jpg 6371_7  # 11:49 conf 80 claude: full  expected: MELOA CANTALUPE/CHARENTAIS INTEIR CNT KG
-6371 1751025172.jpg 6371_3  # 12:52 conf 80 claude: half  expected: MELAO VERDE INTEIRO CNT KG
-6371 1751025172.jpg 6371_7  # 12:52 conf 80 claude: full  expected: MELOA CANTALUPE/CHARENTAIS INTEIR CNT KG
-6371 1751028797.jpg 6371_3  # 13:53 conf 80 claude: half  expected: MELAO VERDE INTEIRO CNT KG
-6371 1751028797.jpg 6371_7  # 13:53 conf 80 claude: full  expected: MELOA CANTALUPE/CHARENTAIS INTEIR CNT KG
-6371 1751032728.jpg 6371_3  # 14:58 conf 80 claude: half  expected: MELAO VERDE INTEIRO CNT KG
-6371 1751032728.jpg 6371_7  # 14:58 conf 80 claude: full  expected: MELOA CANTALUPE/CHARENTAIS INTEIR CNT KG
-6371 1751036943.jpg 6371_3  # 16:09 conf 80 claude: full  expected: MELAO VERDE INTEIRO CNT KG
-6371 1751036943.jpg 6371_7  # 16:09 conf 80 claude: full  expected: MELOA CANTALUPE/CHARENTAIS INTEIR CNT KG
-6371 1751040755.jpg 6371_3  # 17:12 conf 80 claude: full  expected: MELAO VERDE INTEIRO CNT KG
-6371 1751040755.jpg 6371_7  # 17:12 conf 80 claude: full  expected: MELOA CANTALUPE/CHARENTAIS INTEIR CNT KG
-6371 1751044440.jpg 6371_3  # 18:14 conf 80 claude: full  expected: MELAO VERDE INTEIRO CNT KG
-6371 1751044440.jpg 6371_7  # 18:14 conf 80 claude: full  expected: MELOA CANTALUPE/CHARENTAIS INTEIR CNT KG
+6215 1751045755.jpg 6215_4  # 18:35 conf 80 claude: half  expected: BANANA CAT I CNT KG
+6371 1751017761.jpg 6371_3  # 10:49 conf 80 claude: half  expected: MELAO VERDE INTEIRO CNT KG
+6371 1751040755.jpg 6371_5  # 17:12 conf 80 claude: half  expected: MELAO VERDE INTEIRO CNT KG
+6371 1751044440.jpg 6371_5  # 18:14 conf 80 claude: half  expected: MELAO VERDE INTEIRO CNT KG
+6371 1751048342.jpg 6371_2  # 19:19 conf 80 claude: full  expected: MELANCIA PRETA POUCAS SEMENTES INT KG
+6371 1751048342.jpg 6371_3  # 19:19 conf 80 claude: half  expected: MELAO VERDE INTEIRO CNT KG
+6371 1751048342.jpg 6371_5  # 19:19 conf 80 claude: half  expected: MELAO VERDE INTEIRO CNT KG
 6373 1751001172.jpg 6373_2  # 06:12 conf 80 claude: half  expected: MAÇÂ GALA CNT 60/70 1 KG IMP
-6373 1751001172.jpg 6373_10  # 06:12 conf 80 claude: half  expected: PERA PACKAMS CNT CAL.65/75 KG
+6373 1751001172.jpg 6373_4  # 06:12 conf 80 claude: half  expected: MAÇA GOLDEN NACIONAL 75/85 KG
+6373 1751001172.jpg 6373_6  # 06:12 conf 80 claude: half  expected: MAÇA GOLDEN NACIONAL 75/85 KG
+6373 1751001172.jpg 6373_8  # 06:12 conf 80 claude: full  expected: MAÇÃ COSMIC CRISP 75/85 KG
 6373 1751005793.jpg 6373_2  # 07:29 conf 80 claude: half  expected: MAÇÂ GALA CNT 60/70 1 KG IMP
-6373 1751005793.jpg 6373_10  # 07:29 conf 80 claude: half  expected: PERA PACKAMS CNT CAL.65/75 KG
+6373 1751005793.jpg 6373_4  # 07:29 conf 80 claude: half  expected: MAÇA GOLDEN NACIONAL 75/85 KG
+6373 1751005793.jpg 6373_6  # 07:29 conf 80 claude: half  expected: MAÇA GOLDEN NACIONAL 75/85 KG
+6373 1751005793.jpg 6373_8  # 07:29 conf 80 claude: full  expected: MAÇÃ COSMIC CRISP 75/85 KG
 6373 1751009946.jpg 6373_2  # 08:39 conf 80 claude: half  expected: MAÇÂ GALA CNT 60/70 1 KG IMP
-6373 1751048467.jpg 6373_9  # 19:21 conf 80 claude: half  expected: MAÇÃ COSMIC CRISP 75/85 KG
-6376 1751001169.jpg 6376_2  # 06:12 conf 80 claude: half  expected: MELOA GALIA INTEIRA CNT KG
-6376 1751005774.jpg 6376_2  # 07:29 conf 80 claude: half  expected: MELOA GALIA INTEIRA CNT KG
-6376 1751009380.jpg 6376_2  # 08:29 conf 80 claude: half  expected: MELOA GALIA INTEIRA CNT KG
+6373 1751044463.jpg 6373_6  # 18:14 conf 80 claude: full  expected: MAÇA GOLDEN NACIONAL 75/85 KG
+6373 1751048467.jpg 6373_1  # 19:21 conf 80 claude: half  expected: MAÇÃ GALA CNT CAL 70/80 KG IMP
+6373 1751048467.jpg 6373_5  # 19:21 conf 80 claude: half  expected: MAÇA GOLDEN NACIONAL CAL. 65/70 1 KG
+6373 1751048467.jpg 6373_6  # 19:21 conf 80 claude: half  expected: MAÇA GOLDEN NACIONAL 75/85 KG
+6376 1751001169.jpg 6376_15  # 06:12 conf 80 claude: half  expected: CITRINOS DO ALGARVE IGP LARANJA 70/95 KG
+6376 1751005774.jpg 6376_15  # 07:29 conf 80 claude: half  expected: CITRINOS DO ALGARVE IGP LARANJA 70/95 KG
+6376 1751009380.jpg 6376_15  # 08:29 conf 80 claude: full  expected: CITRINOS DO ALGARVE IGP LARANJA 70/95 KG
+6376 1751013482.jpg 6376_2  # 09:38 conf 80 claude: full  expected: MELOA GALIA INTEIRA CNT KG
+6376 1751017831.jpg 6376_2  # 10:50 conf 80 claude: full  expected: MELOA GALIA INTEIRA CNT KG
+6376 1751021977.jpg 6376_2  # 11:59 conf 80 claude: full  expected: MELOA GALIA INTEIRA CNT KG
+6376 1751021977.jpg 6376_5  # 11:59 conf 80 claude: empty  expected: KIWI CNT BIO 400 G
 6376 1751021977.jpg 6376_12  # 11:59 conf 80 claude: full  expected: CLEMENTINA CAL 60/75 CNT KG
-6376 1751021977.jpg 6376_15  # 11:59 conf 80 claude: full  expected: CITRINOS DO ALGARVE IGP LARANJA 70/95 KG
-6376 1751025657.jpg 6376_13  # 13:00 conf 80 claude: full  expected: CITR ALGARVE IGP LARANJA 3/4/5 1.5 KG
-6376 1751025657.jpg 6376_15  # 13:00 conf 80 claude: full  expected: CITRINOS DO ALGARVE IGP LARANJA 70/95 KG
-6376 1751029801.jpg 6376_11  # 14:10 conf 80 claude: full  expected: CITRINOS DO ALGARVE IGP LARANJA 70/95 KG
-6376 1751029801.jpg 6376_13  # 14:10 conf 80 claude: full  expected: CITR ALGARVE IGP LARANJA 3/4/5 1.5 KG
-6376 1751029801.jpg 6376_15  # 14:10 conf 80 claude: full  expected: CITRINOS DO ALGARVE IGP LARANJA 70/95 KG
-6376 1751033639.jpg 6376_2  # 15:13 conf 80 claude: half  expected: MELOA GALIA INTEIRA CNT KG
-6376 1751033639.jpg 6376_7  # 15:13 conf 80 claude: full  expected: CITRINOS ALGARVE IGP LARANJA 6/7/8 3KG
-6376 1751033639.jpg 6376_15  # 15:13 conf 80 claude: full  expected: CITRINOS DO ALGARVE IGP LARANJA 70/95 KG
-6376 1751037379.jpg 6376_7  # 16:16 conf 80 claude: full  expected: CITRINOS ALGARVE IGP LARANJA 6/7/8 3KG
-6376 1751041136.jpg 6376_7  # 17:18 conf 80 claude: full  expected: CITRINOS ALGARVE IGP LARANJA 6/7/8 3KG
+6376 1751025657.jpg 6376_2  # 13:00 conf 80 claude: full  expected: MELOA GALIA INTEIRA CNT KG
+6376 1751025657.jpg 6376_5  # 13:00 conf 80 claude: empty  expected: KIWI CNT BIO 400 G
+6376 1751029801.jpg 6376_2  # 14:10 conf 80 claude: full  expected: MELOA GALIA INTEIRA CNT KG
+6376 1751029801.jpg 6376_5  # 14:10 conf 80 claude: empty  expected: KIWI CNT BIO 400 G
+6376 1751033639.jpg 6376_1  # 15:13 conf 80 claude: full  expected: LIMÃO CNT 60/75 KG
+6376 1751037379.jpg 6376_2  # 16:16 conf 80 claude: full  expected: MELOA GALIA INTEIRA CNT KG
+6376 1751037379.jpg 6376_15  # 16:16 conf 80 claude: full  expected: CITRINOS DO ALGARVE IGP LARANJA 70/95 KG
+6376 1751041136.jpg 6376_2  # 17:18 conf 80 claude: full  expected: MELOA GALIA INTEIRA CNT KG
 6376 1751041136.jpg 6376_12  # 17:18 conf 80 claude: full  expected: CLEMENTINA CAL 60/75 CNT KG
-6376 1751041136.jpg 6376_13  # 17:18 conf 80 claude: full  expected: CITR ALGARVE IGP LARANJA 3/4/5 1.5 KG
-6376 1751044933.jpg 6376_7  # 18:22 conf 80 claude: full  expected: CITRINOS ALGARVE IGP LARANJA 6/7/8 3KG
+6376 1751041136.jpg 6376_15  # 17:18 conf 80 claude: full  expected: CITRINOS DO ALGARVE IGP LARANJA 70/95 KG
+6376 1751044933.jpg 6376_2  # 18:22 conf 80 claude: full  expected: MELOA GALIA INTEIRA CNT KG
 6376 1751044933.jpg 6376_12  # 18:22 conf 80 claude: full  expected: CLEMENTINA CAL 60/75 CNT KG
-6383 1751009368.jpg 6383_1  # 08:29 conf 80 claude: full  expected: ALFACE FRISADA SACO CNT KG
-6383 1751013620.jpg 6383_1  # 09:40 conf 80 claude: full  expected: ALFACE FRISADA SACO CNT KG
-6383 1751017781.jpg 6383_1  # 10:49 conf 80 claude: full  expected: ALFACE FRISADA SACO CNT KG
-6383 1751021577.jpg 6383_1  # 11:52 conf 80 claude: full  expected: ALFACE FRISADA SACO CNT KG
-6383 1751029430.jpg 6383_2  # 14:03 conf 80 claude: full  expected: ABACATE HASS PRONTO COMER CNT KG
+6376 1751049028.jpg 6376_2  # 19:30 conf 80 claude: full  expected: MELOA GALIA INTEIRA CNT KG
+6376 1751049028.jpg 6376_8  # 19:30 conf 80 claude: full  expected: CITRINOS ALGARVE IGP LARANJA 6/7/8 3KG
+6376 1751049028.jpg 6376_9  # 19:30 conf 80 claude: full  expected: CITRINOS ALGARVE IGP LARANJA 6/7/8 3KG
+6376 1751049028.jpg 6376_15  # 19:30 conf 80 claude: half  expected: CITRINOS DO ALGARVE IGP LARANJA 70/95 KG
+6383 1751005245.jpg 6383_2  # 07:20 conf 80 claude: half  expected: ABACATE HASS PRONTO COMER CNT KG
+6383 1751009368.jpg 6383_2  # 08:29 conf 80 claude: half  expected: ABACATE HASS PRONTO COMER CNT KG
+6383 1751013620.jpg 6383_2  # 09:40 conf 80 claude: full  expected: ABACATE HASS PRONTO COMER CNT KG
+6383 1751013620.jpg 6383_5  # 09:40 conf 80 claude: full  expected: PIMENTO VERMELHO CNT KG
+6383 1751017781.jpg 6383_2  # 10:49 conf 80 claude: full  expected: ABACATE HASS PRONTO COMER CNT KG
+6383 1751017781.jpg 6383_5  # 10:49 conf 80 claude: full  expected: PIMENTO VERMELHO CNT KG
+6383 1751021577.jpg 6383_2  # 11:52 conf 80 claude: full  expected: ABACATE HASS PRONTO COMER CNT KG
+6383 1751021577.jpg 6383_5  # 11:52 conf 80 claude: full  expected: PIMENTO VERMELHO CNT KG
+6383 1751025309.jpg 6383_2  # 12:55 conf 80 claude: full  expected: ABACATE HASS PRONTO COMER CNT KG
+6383 1751025309.jpg 6383_5  # 12:55 conf 80 claude: full  expected: PIMENTO VERMELHO CNT KG
+6383 1751029430.jpg 6383_1  # 14:03 conf 80 claude: full  expected: ALFACE FRISADA SACO CNT KG
 6383 1751033092.jpg 6383_1  # 15:04 conf 80 claude: full  expected: ALFACE FRISADA SACO CNT KG
-6383 1751033092.jpg 6383_2  # 15:04 conf 80 claude: full  expected: ABACATE HASS PRONTO COMER CNT KG
+6383 1751033092.jpg 6383_4  # 15:04 conf 80 claude: full  expected: COUVE PORTUGUESA/PENCA CNT KG
+6383 1751033092.jpg 6383_5  # 15:04 conf 80 claude: full  expected: PIMENTO VERMELHO CNT KG
 6383 1751037199.jpg 6383_1  # 16:13 conf 80 claude: full  expected: ALFACE FRISADA SACO CNT KG
-6383 1751037199.jpg 6383_2  # 16:13 conf 80 claude: full  expected: ABACATE HASS PRONTO COMER CNT KG
-6383 1751040853.jpg 6383_1  # 17:14 conf 80 claude: full  expected: ALFACE FRISADA SACO CNT KG
-6383 1751040853.jpg 6383_2  # 17:14 conf 80 claude: full  expected: ABACATE HASS PRONTO COMER CNT KG
-6383 1751044960.jpg 6383_2  # 18:22 conf 80 claude: full  expected: ABACATE HASS PRONTO COMER CNT KG
-6383 1751048924.jpg 6383_2  # 19:28 conf 80 claude: full  expected: ABACATE HASS PRONTO COMER CNT KG
-6385 1751001178.jpg 6385_1  # 06:12 conf 80 claude: full  expected: MACA FUJI CNT CAL. 73/85 KG IMP
-6385 1751005283.jpg 6385_1  # 07:21 conf 80 claude: full  expected: MACA FUJI CNT CAL. 73/85 KG IMP
-6385 1751044017.jpg 6385_1  # 18:06 conf 80 claude: full  expected: MACA FUJI CNT CAL. 73/85 KG IMP
-6385 1751044017.jpg 6385_7  # 18:06 conf 80 claude: full  expected: MACA GRANNY SMITH CNT CAL.73/85 KG
-6385 1751047832.jpg 6385_1  # 19:10 conf 80 claude: half  expected: MACA FUJI CNT CAL. 73/85 KG IMP
-6386 1751005249.jpg 6386_1  # 07:20 conf 80 claude: full  expected: COUVE BROCOLO CNT KG
-6386 1751009346.jpg 6386_1  # 08:29 conf 80 claude: full  expected: COUVE BROCOLO CNT KG
-6386 1751013440.jpg 6386_1  # 09:37 conf 80 claude: full  expected: COUVE BROCOLO CNT KG
-6386 1751013440.jpg 6386_6  # 09:37 conf 80 claude: full  expected: COUVE BRANCA CNT KG
-6386 1751017235.jpg 6386_1  # 10:40 conf 80 claude: full  expected: COUVE BROCOLO CNT KG
-6386 1751017235.jpg 6386_2  # 10:40 conf 80 claude: full  expected: COUVE BRANCA CNT KG
-6386 1751017235.jpg 6386_6  # 10:40 conf 80 claude: full  expected: COUVE BRANCA CNT KG
-6386 1751021024.jpg 6386_1  # 11:43 conf 80 claude: full  expected: COUVE BROCOLO CNT KG
-6386 1751021024.jpg 6386_2  # 11:43 conf 80 claude: full  expected: COUVE BRANCA CNT KG
-6386 1751021024.jpg 6386_6  # 11:43 conf 80 claude: full  expected: COUVE BRANCA CNT KG
-6386 1751024835.jpg 6386_1  # 12:47 conf 80 claude: full  expected: COUVE BROCOLO CNT KG
-6386 1751024835.jpg 6386_2  # 12:47 conf 80 claude: full  expected: COUVE BRANCA CNT KG
-6386 1751024835.jpg 6386_6  # 12:47 conf 80 claude: full  expected: COUVE BRANCA CNT KG
-6386 1751028928.jpg 6386_1  # 13:55 conf 80 claude: full  expected: COUVE BROCOLO CNT KG
-6386 1751028928.jpg 6386_6  # 13:55 conf 80 claude: full  expected: COUVE BRANCA CNT KG
-6386 1751032558.jpg 6386_1  # 14:55 conf 80 claude: full  expected: COUVE BROCOLO CNT KG
-6386 1751032558.jpg 6386_6  # 14:55 conf 80 claude: full  expected: COUVE BRANCA CNT KG
-6386 1751036676.jpg 6386_6  # 16:04 conf 80 claude: full  expected: COUVE BRANCA CNT KG
-6386 1751040333.jpg 6386_6  # 17:05 conf 80 claude: full  expected: COUVE BRANCA CNT KG
-6386 1751044440.jpg 6386_6  # 18:14 conf 80 claude: full  expected: COUVE BRANCA CNT KG
-6386 1751048137.jpg 6386_6  # 19:15 conf 80 claude: full  expected: COUVE BRANCA CNT KG
+6383 1751037199.jpg 6383_4  # 16:13 conf 80 claude: full  expected: COUVE PORTUGUESA/PENCA CNT KG
+6383 1751037199.jpg 6383_5  # 16:13 conf 80 claude: full  expected: PIMENTO VERMELHO CNT KG
+6383 1751040853.jpg 6383_4  # 17:14 conf 80 claude: full  expected: COUVE PORTUGUESA/PENCA CNT KG
+6383 1751040853.jpg 6383_5  # 17:14 conf 80 claude: full  expected: PIMENTO VERMELHO CNT KG
+6383 1751040853.jpg 6383_7  # 17:14 conf 80 claude: half  expected: CHUCHU CNT KG
+6383 1751044960.jpg 6383_4  # 18:22 conf 80 claude: full  expected: COUVE PORTUGUESA/PENCA CNT KG
+6383 1751044960.jpg 6383_5  # 18:22 conf 80 claude: full  expected: PIMENTO VERMELHO CNT KG
+6383 1751044960.jpg 6383_9  # 18:22 conf 80 claude: half  expected: PEPINO CNT KG
+6383 1751048924.jpg 6383_4  # 19:28 conf 80 claude: full  expected: COUVE PORTUGUESA/PENCA CNT KG
+6383 1751048924.jpg 6383_9  # 19:28 conf 80 claude: half  expected: PEPINO CNT KG
+6385 1751001178.jpg 6385_4  # 06:12 conf 80 claude: half  expected: MAÇA FUJI CARIOCA 65/75 1 KG IMP
+6385 1751001178.jpg 6385_6  # 06:12 conf 80 claude: full  expected: MACA FUJI CNT CAL. 73/85 KG IMP
+6385 1751001178.jpg 6385_8  # 06:12 conf 80 claude: half  expected: MAÇA FUJI CARIOCA 65/75 1 KG IMP
+6385 1751005283.jpg 6385_4  # 07:21 conf 80 claude: half  expected: MAÇA FUJI CARIOCA 65/75 1 KG IMP
+6385 1751005283.jpg 6385_6  # 07:21 conf 80 claude: full  expected: MACA FUJI CNT CAL. 73/85 KG IMP
+6385 1751005283.jpg 6385_8  # 07:21 conf 80 claude: half  expected: MAÇA FUJI CARIOCA 65/75 1 KG IMP
+6385 1751008904.jpg 6385_1  # 08:21 conf 80 claude: full  expected: MACA FUJI CNT CAL. 73/85 KG IMP
+6385 1751008904.jpg 6385_2  # 08:21 conf 80 claude: full  expected: MACA FUJI CNT CAL. 73/85 KG IMP
+6385 1751008904.jpg 6385_4  # 08:21 conf 80 claude: half  expected: MAÇA FUJI CARIOCA 65/75 1 KG IMP
+6385 1751012735.jpg 6385_4  # 09:25 conf 80 claude: half  expected: MAÇA FUJI CARIOCA 65/75 1 KG IMP
+6385 1751016383.jpg 6385_4  # 10:26 conf 80 claude: half  expected: MAÇA FUJI CARIOCA 65/75 1 KG IMP
+6385 1751020485.jpg 6385_4  # 11:34 conf 80 claude: half  expected: MAÇA FUJI CARIOCA 65/75 1 KG IMP
+6385 1751024401.jpg 6385_1  # 12:40 conf 80 claude: full  expected: MACA FUJI CNT CAL. 73/85 KG IMP
+6385 1751024401.jpg 6385_4  # 12:40 conf 80 claude: half  expected: MAÇA FUJI CARIOCA 65/75 1 KG IMP
+6385 1751028025.jpg 6385_1  # 13:40 conf 80 claude: full  expected: MACA FUJI CNT CAL. 73/85 KG IMP
+6385 1751032365.jpg 6385_2  # 14:52 conf 80 claude: full  expected: MACA FUJI CNT CAL. 73/85 KG IMP
+6385 1751040277.jpg 6385_5  # 17:04 conf 80 claude: full  expected: MACA FUJI CNT CAL. 73/85 KG IMP
+6385 1751047832.jpg 6385_7  # 19:10 conf 80 claude: full  expected: MACA GRANNY SMITH CNT CAL.73/85 KG
+6385 1751051814.jpg 6385_7  # 20:16 conf 80 claude: full  expected: MACA GRANNY SMITH CNT CAL.73/85 KG
+6386 1751005249.jpg 6386_2  # 07:20 conf 80 claude: half  expected: COUVE BRANCA CNT KG
+6386 1751005249.jpg 6386_3  # 07:20 conf 80 claude: full  expected: COUVE ROXA CNT KG
+6386 1751005249.jpg 6386_4  # 07:20 conf 80 claude: half  expected: COUVE FLOR CNT KG
+6386 1751009346.jpg 6386_2  # 08:29 conf 80 claude: half  expected: COUVE BRANCA CNT KG
+6386 1751009346.jpg 6386_3  # 08:29 conf 80 claude: full  expected: COUVE ROXA CNT KG
+6386 1751009346.jpg 6386_4  # 08:29 conf 80 claude: half  expected: COUVE FLOR CNT KG
+6386 1751013440.jpg 6386_3  # 09:37 conf 80 claude: full  expected: COUVE ROXA CNT KG
+6386 1751017235.jpg 6386_3  # 10:40 conf 80 claude: full  expected: COUVE ROXA CNT KG
+6386 1751021024.jpg 6386_3  # 11:43 conf 80 claude: full  expected: COUVE ROXA CNT KG
+6386 1751024835.jpg 6386_3  # 12:47 conf 80 claude: full  expected: COUVE ROXA CNT KG
+6386 1751028928.jpg 6386_3  # 13:55 conf 80 claude: full  expected: COUVE ROXA CNT KG
+6386 1751032558.jpg 6386_3  # 14:55 conf 80 claude: full  expected: COUVE ROXA CNT KG
+6386 1751036676.jpg 6386_3  # 16:04 conf 80 claude: full  expected: COUVE ROXA CNT KG
+6386 1751040333.jpg 6386_3  # 17:05 conf 80 claude: full  expected: COUVE ROXA CNT KG
+6386 1751044440.jpg 6386_3  # 18:14 conf 80 claude: full  expected: COUVE ROXA CNT KG
+6386 1751044440.jpg 6386_4  # 18:14 conf 80 claude: full  expected: COUVE FLOR CNT KG
+6386 1751048137.jpg 6386_3  # 19:15 conf 80 claude: full  expected: COUVE ROXA CNT KG
+6386 1751048137.jpg 6386_4  # 19:15 conf 80 claude: full  expected: COUVE FLOR CNT KG
 6443 1751001244.jpg 6443_2  # 06:14 conf 80 claude: half  expected: TOMATE CACHO CNT KG
-6443 1751001244.jpg 6443_10  # 06:14 conf 80 claude: empty  expected: TOMATE MINI CHUCHA SWEET SC 200G
-6443 1751001244.jpg 6443_12  # 06:14 conf 80 claude: full  expected: MINI TOMATE CACHO CNT 500G
-6443 1751005341.jpg 6443_10  # 07:22 conf 80 claude: empty  expected: TOMATE MINI CHUCHA SWEET SC 200G
-6443 1751005341.jpg 6443_12  # 07:22 conf 80 claude: full  expected: MINI TOMATE CACHO CNT 500G
-6443 1751009482.jpg 6443_2  # 08:31 conf 80 claude: full  expected: TOMATE CACHO CNT KG
-6443 1751009482.jpg 6443_10  # 08:31 conf 80 claude: empty  expected: TOMATE MINI CHUCHA SWEET SC 200G
-6443 1751009482.jpg 6443_12  # 08:31 conf 80 claude: full  expected: MINI TOMATE CACHO CNT 500G
-6443 1751013117.jpg 6443_2  # 09:31 conf 80 claude: full  expected: TOMATE CACHO CNT KG
-6443 1751013117.jpg 6443_12  # 09:31 conf 80 claude: full  expected: MINI TOMATE CACHO CNT 500G
-6443 1751016838.jpg 6443_2  # 10:33 conf 80 claude: full  expected: TOMATE CACHO CNT KG
+6443 1751005341.jpg 6443_2  # 07:22 conf 80 claude: full  expected: TOMATE CACHO CNT KG
+6443 1751009482.jpg 6443_6  # 08:31 conf 80 claude: full  expected: TOMATE CORAÇÃO DE BOI CNT KG
+6443 1751009482.jpg 6443_8  # 08:31 conf 80 claude: full  expected: TOMATE CORAÇÃO DE BOI CNT KG
+6443 1751013117.jpg 6443_6  # 09:31 conf 80 claude: full  expected: TOMATE CORAÇÃO DE BOI CNT KG
+6443 1751013117.jpg 6443_8  # 09:31 conf 80 claude: full  expected: TOMATE CORAÇÃO DE BOI CNT KG
+6443 1751013117.jpg 6443_10  # 09:31 conf 80 claude: full  expected: TOMATE MINI CHUCHA SWEET SC 200G
+6443 1751016838.jpg 6443_6  # 10:33 conf 80 claude: full  expected: TOMATE CORAÇÃO DE BOI CNT KG
+6443 1751016838.jpg 6443_8  # 10:33 conf 80 claude: full  expected: TOMATE CORAÇÃO DE BOI CNT KG
+6443 1751016838.jpg 6443_10  # 10:33 conf 80 claude: full  expected: TOMATE MINI CHUCHA SWEET SC 200G
 6443 1751016838.jpg 6443_11  # 10:33 conf 80 claude: full  expected: TOMATE CHUCHA CNT KG
-6443 1751016838.jpg 6443_12  # 10:33 conf 80 claude: full  expected: MINI TOMATE CACHO CNT 500G
-6443 1751020727.jpg 6443_12  # 11:38 conf 80 claude: full  expected: MINI TOMATE CACHO CNT 500G
-6443 1751036374.jpg 6443_2  # 15:59 conf 80 claude: full  expected: TOMATE CACHO CNT KG
+6443 1751020727.jpg 6443_6  # 11:38 conf 80 claude: full  expected: TOMATE CORAÇÃO DE BOI CNT KG
+6443 1751020727.jpg 6443_8  # 11:38 conf 80 claude: full  expected: TOMATE CORAÇÃO DE BOI CNT KG
+6443 1751020727.jpg 6443_10  # 11:38 conf 80 claude: full  expected: TOMATE MINI CHUCHA SWEET SC 200G
+6443 1751024371.jpg 6443_10  # 12:39 conf 80 claude: full  expected: TOMATE MINI CHUCHA SWEET SC 200G
+6443 1751024371.jpg 6443_11  # 12:39 conf 80 claude: half  expected: TOMATE CHUCHA CNT KG
+6443 1751028789.jpg 6443_6  # 13:53 conf 80 claude: half  expected: TOMATE CORAÇÃO DE BOI CNT KG
+6443 1751028789.jpg 6443_10  # 13:53 conf 80 claude: full  expected: TOMATE MINI CHUCHA SWEET SC 200G
+6443 1751028789.jpg 6443_11  # 13:53 conf 80 claude: half  expected: TOMATE CHUCHA CNT KG
+6443 1751032575.jpg 6443_2  # 14:56 conf 80 claude: full  expected: TOMATE CACHO CNT KG
+6443 1751032575.jpg 6443_6  # 14:56 conf 80 claude: full  expected: TOMATE CORAÇÃO DE BOI CNT KG
+6443 1751032575.jpg 6443_8  # 14:56 conf 80 claude: full  expected: TOMATE CORAÇÃO DE BOI CNT KG
+6443 1751032575.jpg 6443_10  # 14:56 conf 80 claude: full  expected: TOMATE MINI CHUCHA SWEET SC 200G
+6443 1751032575.jpg 6443_11  # 14:56 conf 80 claude: half  expected: TOMATE CHUCHA CNT KG
+6443 1751036374.jpg 6443_6  # 15:59 conf 80 claude: full  expected: TOMATE CORAÇÃO DE BOI CNT KG
+6443 1751036374.jpg 6443_8  # 15:59 conf 80 claude: full  expected: TOMATE CORAÇÃO DE BOI CNT KG
+6443 1751036374.jpg 6443_10  # 15:59 conf 80 claude: full  expected: TOMATE MINI CHUCHA SWEET SC 200G
+6443 1751036374.jpg 6443_11  # 15:59 conf 80 claude: half  expected: TOMATE CHUCHA CNT KG
 6443 1751036374.jpg 6443_12  # 15:59 conf 80 claude: full  expected: MINI TOMATE CACHO CNT 500G
-6443 1751040209.jpg 6443_2  # 17:03 conf 80 claude: full  expected: TOMATE CACHO CNT KG
-6443 1751040209.jpg 6443_12  # 17:03 conf 80 claude: full  expected: MINI TOMATE CACHO CNT 500G
-6443 1751044079.jpg 6443_2  # 18:07 conf 80 claude: full  expected: TOMATE CACHO CNT KG
-6443 1751044079.jpg 6443_12  # 18:07 conf 80 claude: full  expected: MINI TOMATE CACHO CNT 500G
-6462 1751001155.jpg 6462_1  # 06:12 conf 80 claude: empty  expected: MORANGO EMB. 500 GR
-6462 1751005795.jpg 6462_1  # 07:29 conf 80 claude: full  expected: MORANGO EMB. 500 GR
-6462 1751005795.jpg 6462_2  # 07:29 conf 80 claude: full  expected: MANGA CNT KG
-6462 1751005795.jpg 6462_6  # 07:29 conf 80 claude: full  expected: UVA BRANCA S/GRAINHA CNT 500 G
-6462 1751005795.jpg 6462_7  # 07:29 conf 80 claude: full  expected: UVA RED GLOBE CNT KG
-6462 1751005795.jpg 6462_8  # 07:29 conf 80 claude: full  expected: CEREJA 24+ 500 GR
-6462 1751005795.jpg 6462_9  # 07:29 conf 80 claude: full  expected: CEREJA 24+ 500 GR
-6462 1751009411.jpg 6462_1  # 08:30 conf 80 claude: full  expected: MORANGO EMB. 500 GR
-6462 1751009411.jpg 6462_2  # 08:30 conf 80 claude: full  expected: MANGA CNT KG
-6462 1751009411.jpg 6462_4  # 08:30 conf 80 claude: full  expected: UVA BRANCA S/ GRAINHA CNT KG
-6462 1751009411.jpg 6462_6  # 08:30 conf 80 claude: full  expected: UVA BRANCA S/GRAINHA CNT 500 G
-6462 1751009411.jpg 6462_7  # 08:30 conf 80 claude: full  expected: UVA RED GLOBE CNT KG
-6462 1751009411.jpg 6462_8  # 08:30 conf 80 claude: full  expected: CEREJA 24+ 500 GR
-6462 1751009411.jpg 6462_9  # 08:30 conf 80 claude: full  expected: CEREJA 24+ 500 GR
-6462 1751013242.jpg 6462_1  # 09:34 conf 80 claude: full  expected: MORANGO EMB. 500 GR
+6443 1751040209.jpg 6443_6  # 17:03 conf 80 claude: full  expected: TOMATE CORAÇÃO DE BOI CNT KG
+6443 1751040209.jpg 6443_8  # 17:03 conf 80 claude: full  expected: TOMATE CORAÇÃO DE BOI CNT KG
+6443 1751040209.jpg 6443_10  # 17:03 conf 80 claude: full  expected: TOMATE MINI CHUCHA SWEET SC 200G
+6443 1751040209.jpg 6443_11  # 17:03 conf 80 claude: half  expected: TOMATE CHUCHA CNT KG
+6443 1751044079.jpg 6443_6  # 18:07 conf 80 claude: full  expected: TOMATE CORAÇÃO DE BOI CNT KG
+6443 1751044079.jpg 6443_10  # 18:07 conf 80 claude: full  expected: TOMATE MINI CHUCHA SWEET SC 200G
+6443 1751044079.jpg 6443_11  # 18:07 conf 80 claude: half  expected: TOMATE CHUCHA CNT KG
+6462 1751005795.jpg 6462_4  # 07:29 conf 80 claude: half  expected: UVA BRANCA S/ GRAINHA CNT KG
 6462 1751013242.jpg 6462_3  # 09:34 conf 80 claude: full  expected: MANGA CNT KG
-6462 1751013242.jpg 6462_4  # 09:34 conf 80 claude: full  expected: UVA BRANCA S/ GRAINHA CNT KG
-6462 1751013242.jpg 6462_6  # 09:34 conf 80 claude: full  expected: UVA BRANCA S/GRAINHA CNT 500 G
-6462 1751013242.jpg 6462_7  # 09:34 conf 80 claude: full  expected: UVA RED GLOBE CNT KG
-6462 1751013242.jpg 6462_8  # 09:34 conf 80 claude: full  expected: CEREJA 24+ 500 GR
-6462 1751013242.jpg 6462_9  # 09:34 conf 80 claude: full  expected: CEREJA 24+ 500 GR
 6462 1751016893.jpg 6462_3  # 10:34 conf 80 claude: full  expected: MANGA CNT KG
-6462 1751016893.jpg 6462_4  # 10:34 conf 80 claude: full  expected: UVA BRANCA S/ GRAINHA CNT KG
-6462 1751016893.jpg 6462_6  # 10:34 conf 80 claude: full  expected: UVA BRANCA S/GRAINHA CNT 500 G
-6462 1751016893.jpg 6462_7  # 10:34 conf 80 claude: full  expected: UVA RED GLOBE CNT KG
-6462 1751016893.jpg 6462_8  # 10:34 conf 80 claude: full  expected: CEREJA 24+ 500 GR
-6462 1751016893.jpg 6462_9  # 10:34 conf 80 claude: full  expected: CEREJA 24+ 500 GR
 6462 1751020617.jpg 6462_3  # 11:36 conf 80 claude: full  expected: MANGA CNT KG
-6462 1751020617.jpg 6462_4  # 11:36 conf 80 claude: full  expected: UVA BRANCA S/ GRAINHA CNT KG
-6462 1751020617.jpg 6462_6  # 11:36 conf 80 claude: full  expected: UVA BRANCA S/GRAINHA CNT 500 G
-6462 1751020617.jpg 6462_7  # 11:36 conf 80 claude: full  expected: UVA RED GLOBE CNT KG
-6462 1751020617.jpg 6462_8  # 11:36 conf 80 claude: full  expected: CEREJA 24+ 500 GR
 6462 1751024395.jpg 6462_3  # 12:39 conf 80 claude: full  expected: MANGA CNT KG
-6462 1751024395.jpg 6462_4  # 12:39 conf 80 claude: full  expected: UVA BRANCA S/ GRAINHA CNT KG
-6462 1751024395.jpg 6462_6  # 12:39 conf 80 claude: full  expected: UVA BRANCA S/GRAINHA CNT 500 G
-6462 1751024395.jpg 6462_7  # 12:39 conf 80 claude: full  expected: UVA RED GLOBE CNT KG
-6462 1751024395.jpg 6462_8  # 12:39 conf 80 claude: full  expected: CEREJA 24+ 500 GR
 6462 1751028563.jpg 6462_3  # 13:49 conf 80 claude: full  expected: MANGA CNT KG
-6462 1751028563.jpg 6462_4  # 13:49 conf 80 claude: full  expected: UVA BRANCA S/ GRAINHA CNT KG
-6462 1751028563.jpg 6462_6  # 13:49 conf 80 claude: full  expected: UVA BRANCA S/GRAINHA CNT 500 G
-6462 1751028563.jpg 6462_8  # 13:49 conf 80 claude: full  expected: CEREJA 24+ 500 GR
 6462 1751032838.jpg 6462_3  # 15:00 conf 80 claude: full  expected: MANGA CNT KG
-6462 1751032838.jpg 6462_4  # 15:00 conf 80 claude: full  expected: UVA BRANCA S/ GRAINHA CNT KG
-6462 1751032838.jpg 6462_6  # 15:00 conf 80 claude: full  expected: UVA BRANCA S/GRAINHA CNT 500 G
-6462 1751032838.jpg 6462_8  # 15:00 conf 80 claude: full  expected: CEREJA 24+ 500 GR
-6462 1751036485.jpg 6462_4  # 16:01 conf 80 claude: full  expected: UVA BRANCA S/ GRAINHA CNT KG
-6462 1751036485.jpg 6462_6  # 16:01 conf 80 claude: full  expected: UVA BRANCA S/GRAINHA CNT 500 G
-6462 1751036485.jpg 6462_8  # 16:01 conf 80 claude: full  expected: CEREJA 24+ 500 GR
-6462 1751040186.jpg 6462_2  # 17:03 conf 80 claude: full  expected: MANGA CNT KG
-6462 1751040186.jpg 6462_4  # 17:03 conf 80 claude: full  expected: UVA BRANCA S/ GRAINHA CNT KG
-6462 1751040186.jpg 6462_6  # 17:03 conf 80 claude: full  expected: UVA BRANCA S/GRAINHA CNT 500 G
-6462 1751040186.jpg 6462_8  # 17:03 conf 80 claude: full  expected: CEREJA 24+ 500 GR
+6462 1751032838.jpg 6462_5  # 15:00 conf 80 claude: full  expected: UVA BRANCA S/GRAINHA CNT 500 G
+6462 1751036485.jpg 6462_5  # 16:01 conf 80 claude: full  expected: UVA BRANCA S/GRAINHA CNT 500 G
+6462 1751040186.jpg 6462_5  # 17:03 conf 80 claude: full  expected: UVA BRANCA S/GRAINHA CNT 500 G
 6462 1751043841.jpg 6462_4  # 18:04 conf 80 claude: full  expected: UVA BRANCA S/ GRAINHA CNT KG
-6462 1751043841.jpg 6462_6  # 18:04 conf 80 claude: full  expected: UVA BRANCA S/GRAINHA CNT 500 G
-6462 1751043841.jpg 6462_8  # 18:04 conf 80 claude: full  expected: CEREJA 24+ 500 GR
-6462 1751047858.jpg 6462_5  # 19:10 conf 80 claude: empty  expected: UVA BRANCA S/GRAINHA CNT 500 G
-6462 1751047858.jpg 6462_6  # 19:10 conf 80 claude: full  expected: UVA BRANCA S/GRAINHA CNT 500 G
-6462 1751047858.jpg 6462_8  # 19:10 conf 80 claude: full  expected: CEREJA 24+ 500 GR
-6468 1751001157.jpg 6468_1  # 06:12 conf 80 claude: empty  expected: ABACAXI SUPER SWEET KG
-6468 1751001157.jpg 6468_5  # 06:12 conf 80 claude: full  expected: PITAYA AMARELA 200G
-6468 1751001157.jpg 6468_6  # 06:12 conf 80 claude: full  expected: GOIABA CNT KG
-6468 1751001157.jpg 6468_11  # 06:12 conf 80 claude: full WRONG PRODUCT  expected: BANANA PAO CNT KG
-6468 1751001157.jpg 6468_12  # 06:12 conf 80 claude: full WRONG PRODUCT  expected: BANANA PAO CNT KG
-6468 1751005772.jpg 6468_1  # 07:29 conf 80 claude: empty  expected: ABACAXI SUPER SWEET KG
-6468 1751005772.jpg 6468_5  # 07:29 conf 80 claude: full  expected: PITAYA AMARELA 200G
-6468 1751005772.jpg 6468_6  # 07:29 conf 80 claude: full  expected: GOIABA CNT KG
-6468 1751005772.jpg 6468_11  # 07:29 conf 80 claude: full WRONG PRODUCT  expected: BANANA PAO CNT KG
-6468 1751005772.jpg 6468_12  # 07:29 conf 80 claude: full WRONG PRODUCT  expected: BANANA PAO CNT KG
-6468 1751009863.jpg 6468_5  # 08:37 conf 80 claude: full  expected: PITAYA AMARELA 200G
-6468 1751009863.jpg 6468_6  # 08:37 conf 80 claude: full  expected: GOIABA CNT KG
-6468 1751009863.jpg 6468_9  # 08:37 conf 80 claude: full  expected: MAMAO INTEIRO CNT KG
-6468 1751009863.jpg 6468_11  # 08:37 conf 80 claude: full WRONG PRODUCT  expected: BANANA PAO CNT KG
-6468 1751009863.jpg 6468_12  # 08:37 conf 80 claude: full WRONG PRODUCT  expected: BANANA PAO CNT KG
-6468 1751013530.jpg 6468_1  # 09:38 conf 80 claude: full  expected: ABACAXI SUPER SWEET KG
-6468 1751013530.jpg 6468_2  # 09:38 conf 80 claude: full  expected: ABACAXI SUPER SWEET KG
-6468 1751013530.jpg 6468_3  # 09:38 conf 80 claude: full  expected: ABACAXI SUPER SWEET KG
-6468 1751013530.jpg 6468_5  # 09:38 conf 80 claude: full  expected: PITAYA AMARELA 200G
-6468 1751013530.jpg 6468_6  # 09:38 conf 80 claude: full  expected: GOIABA CNT KG
-6468 1751013530.jpg 6468_9  # 09:38 conf 80 claude: full  expected: MAMAO INTEIRO CNT KG
-6468 1751017764.jpg 6468_1  # 10:49 conf 80 claude: full  expected: ABACAXI SUPER SWEET KG
-6468 1751017764.jpg 6468_2  # 10:49 conf 80 claude: full  expected: ABACAXI SUPER SWEET KG
-6468 1751017764.jpg 6468_3  # 10:49 conf 80 claude: full  expected: ABACAXI SUPER SWEET KG
-6468 1751017764.jpg 6468_5  # 10:49 conf 80 claude: full  expected: PITAYA AMARELA 200G
-6468 1751017764.jpg 6468_6  # 10:49 conf 80 claude: full  expected: GOIABA CNT KG
-6468 1751017764.jpg 6468_9  # 10:49 conf 80 claude: full  expected: MAMAO INTEIRO CNT KG
-6468 1751021997.jpg 6468_1  # 11:59 conf 80 claude: full  expected: ABACAXI SUPER SWEET KG
-6468 1751021997.jpg 6468_2  # 11:59 conf 80 claude: full  expected: ABACAXI SUPER SWEET KG
-6468 1751021997.jpg 6468_3  # 11:59 conf 80 claude: full  expected: ABACAXI SUPER SWEET KG
-6468 1751021997.jpg 6468_5  # 11:59 conf 80 claude: full  expected: PITAYA AMARELA 200G
-6468 1751021997.jpg 6468_6  # 11:59 conf 80 claude: full  expected: GOIABA CNT KG
-6468 1751021997.jpg 6468_9  # 11:59 conf 80 claude: full  expected: MAMAO INTEIRO CNT KG
-6468 1751026188.jpg 6468_1  # 13:09 conf 80 claude: full  expected: ABACAXI SUPER SWEET KG
-6468 1751026188.jpg 6468_2  # 13:09 conf 80 claude: full  expected: ABACAXI SUPER SWEET KG
-6468 1751026188.jpg 6468_3  # 13:09 conf 80 claude: full  expected: ABACAXI SUPER SWEET KG
-6468 1751026188.jpg 6468_5  # 13:09 conf 80 claude: full  expected: PITAYA AMARELA 200G
-6468 1751026188.jpg 6468_6  # 13:09 conf 80 claude: full  expected: GOIABA CNT KG
-6468 1751026188.jpg 6468_9  # 13:09 conf 80 claude: full  expected: MAMAO INTEIRO CNT KG
-6468 1751029957.jpg 6468_1  # 14:12 conf 80 claude: full  expected: ABACAXI SUPER SWEET KG
-6468 1751029957.jpg 6468_2  # 14:12 conf 80 claude: full  expected: ABACAXI SUPER SWEET KG
-6468 1751029957.jpg 6468_3  # 14:12 conf 80 claude: full  expected: ABACAXI SUPER SWEET KG
-6468 1751029957.jpg 6468_5  # 14:12 conf 80 claude: full  expected: PITAYA AMARELA 200G
-6468 1751029957.jpg 6468_6  # 14:12 conf 80 claude: full  expected: GOIABA CNT KG
-6468 1751029957.jpg 6468_9  # 14:12 conf 80 claude: full  expected: MAMAO INTEIRO CNT KG
-6468 1751033646.jpg 6468_1  # 15:14 conf 80 claude: full  expected: ABACAXI SUPER SWEET KG
-6468 1751033646.jpg 6468_2  # 15:14 conf 80 claude: full  expected: ABACAXI SUPER SWEET KG
-6468 1751033646.jpg 6468_3  # 15:14 conf 80 claude: full  expected: ABACAXI SUPER SWEET KG
-6468 1751033646.jpg 6468_5  # 15:14 conf 80 claude: full  expected: PITAYA AMARELA 200G
-6468 1751033646.jpg 6468_6  # 15:14 conf 80 claude: full  expected: GOIABA CNT KG
-6468 1751033646.jpg 6468_9  # 15:14 conf 80 claude: full  expected: MAMAO INTEIRO CNT KG
-6468 1751037301.jpg 6468_1  # 16:15 conf 80 claude: full  expected: ABACAXI SUPER SWEET KG
-6468 1751037301.jpg 6468_2  # 16:15 conf 80 claude: full  expected: ABACAXI SUPER SWEET KG
-6468 1751037301.jpg 6468_5  # 16:15 conf 80 claude: full  expected: PITAYA AMARELA 200G
-6468 1751037301.jpg 6468_6  # 16:15 conf 80 claude: full  expected: GOIABA CNT KG
-6468 1751037301.jpg 6468_9  # 16:15 conf 80 claude: full  expected: MAMAO INTEIRO CNT KG
-6468 1751041038.jpg 6468_1  # 17:17 conf 80 claude: full  expected: ABACAXI SUPER SWEET KG
-6468 1751041038.jpg 6468_2  # 17:17 conf 80 claude: full  expected: ABACAXI SUPER SWEET KG
-6468 1751041038.jpg 6468_3  # 17:17 conf 80 claude: full  expected: ABACAXI SUPER SWEET KG
-6468 1751041038.jpg 6468_5  # 17:17 conf 80 claude: full  expected: PITAYA AMARELA 200G
-6468 1751041038.jpg 6468_6  # 17:17 conf 80 claude: full  expected: GOIABA CNT KG
-6468 1751041038.jpg 6468_9  # 17:17 conf 80 claude: full  expected: MAMAO INTEIRO CNT KG
-6468 1751044824.jpg 6468_1  # 18:20 conf 80 claude: full  expected: ABACAXI SUPER SWEET KG
-6468 1751044824.jpg 6468_2  # 18:20 conf 80 claude: full  expected: ABACAXI SUPER SWEET KG
-6468 1751044824.jpg 6468_3  # 18:20 conf 80 claude: full  expected: ABACAXI SUPER SWEET KG
-6468 1751044824.jpg 6468_5  # 18:20 conf 80 claude: full  expected: PITAYA AMARELA 200G
-6468 1751044824.jpg 6468_6  # 18:20 conf 80 claude: full  expected: GOIABA CNT KG
-6468 1751048837.jpg 6468_2  # 19:27 conf 80 claude: full  expected: ABACAXI SUPER SWEET KG
+6462 1751043841.jpg 6462_7  # 18:04 conf 80 claude: full  expected: UVA RED GLOBE CNT KG
+6462 1751047858.jpg 6462_4  # 19:10 conf 80 claude: full  expected: UVA BRANCA S/ GRAINHA CNT KG
+6468 1751001157.jpg 6468_16  # 06:12 conf 80 claude: full  expected: MANGA AVIÃO PALMER KG
+6468 1751005772.jpg 6468_16  # 07:29 conf 80 claude: full  expected: MANGA AVIÃO PALMER KG
+6468 1751009863.jpg 6468_16  # 08:37 conf 80 claude: full  expected: MANGA AVIÃO PALMER KG
+6468 1751013530.jpg 6468_13  # 09:38 conf 80 claude: full  expected: MANGA AVIÃO PALMER KG
+6468 1751017764.jpg 6468_13  # 10:49 conf 80 claude: full  expected: MANGA AVIÃO PALMER KG
+6468 1751021997.jpg 6468_13  # 11:59 conf 80 claude: full  expected: MANGA AVIÃO PALMER KG
+6468 1751026188.jpg 6468_13  # 13:09 conf 80 claude: full  expected: MANGA AVIÃO PALMER KG
+6468 1751029957.jpg 6468_13  # 14:12 conf 80 claude: full  expected: MANGA AVIÃO PALMER KG
+6468 1751033646.jpg 6468_13  # 15:14 conf 80 claude: full  expected: MANGA AVIÃO PALMER KG
+6468 1751037301.jpg 6468_13  # 16:15 conf 80 claude: full  expected: MANGA AVIÃO PALMER KG
+6468 1751041038.jpg 6468_13  # 17:17 conf 80 claude: full  expected: MANGA AVIÃO PALMER KG
+6468 1751044824.jpg 6468_13  # 18:20 conf 80 claude: full  expected: MANGA AVIÃO PALMER KG
 6468 1751048837.jpg 6468_3  # 19:27 conf 80 claude: full  expected: ABACAXI SUPER SWEET KG
-6468 1751048837.jpg 6468_5  # 19:27 conf 80 claude: full  expected: PITAYA AMARELA 200G
-6468 1751048837.jpg 6468_6  # 19:27 conf 80 claude: full  expected: GOIABA CNT KG
-6491 1751005570.jpg 6491_9  # 07:26 conf 80 claude: full  expected: PESSEGO PARAGUAYO R0 A/AA/AAA KG
-6491 1751010016.jpg 6491_3  # 08:40 conf 80 claude: full  expected: PESSEGO PARAGUAYO R0 A/AA/AAA KG
-6491 1751013784.jpg 6491_3  # 09:43 conf 80 claude: full  expected: PESSEGO PARAGUAYO R0 A/AA/AAA KG
-6491 1751013784.jpg 6491_5  # 09:43 conf 80 claude: full  expected: NECTARINA R0 A/AA KG
-6491 1751013784.jpg 6491_7  # 09:43 conf 80 claude: full  expected: NECTARINA R0 A/AA KG
-6491 1751018041.jpg 6491_3  # 10:54 conf 80 claude: full  expected: PESSEGO PARAGUAYO R0 A/AA/AAA KG
-6491 1751021816.jpg 6491_3  # 11:56 conf 80 claude: full  expected: PESSEGO PARAGUAYO R0 A/AA/AAA KG
-6491 1751025495.jpg 6491_3  # 12:58 conf 80 claude: full  expected: PESSEGO PARAGUAYO R0 A/AA/AAA KG
-6491 1751029202.jpg 6491_3  # 14:00 conf 80 claude: full  expected: PESSEGO PARAGUAYO R0 A/AA/AAA KG
-6491 1751033170.jpg 6491_2  # 15:06 conf 80 claude: full  expected: ALPERCE CNT CAL. 45/55 KG
-6491 1751033170.jpg 6491_3  # 15:06 conf 80 claude: full  expected: PESSEGO PARAGUAYO R0 A/AA/AAA KG
-6491 1751036849.jpg 6491_2  # 16:07 conf 80 claude: full  expected: ALPERCE CNT CAL. 45/55 KG
-6491 1751036849.jpg 6491_3  # 16:07 conf 80 claude: full  expected: PESSEGO PARAGUAYO R0 A/AA/AAA KG
-6491 1751040739.jpg 6491_2  # 17:12 conf 80 claude: full  expected: ALPERCE CNT CAL. 45/55 KG
-6491 1751040739.jpg 6491_3  # 17:12 conf 80 claude: full  expected: PESSEGO PARAGUAYO R0 A/AA/AAA KG
-6491 1751044356.jpg 6491_2  # 18:12 conf 80 claude: full  expected: ALPERCE CNT CAL. 45/55 KG
-6491 1751044356.jpg 6491_3  # 18:12 conf 80 claude: full  expected: PESSEGO PARAGUAYO R0 A/AA/AAA KG
-6491 1751048611.jpg 6491_2  # 19:23 conf 80 claude: full  expected: ALPERCE CNT CAL. 45/55 KG
-6491 1751048611.jpg 6491_3  # 19:23 conf 80 claude: full  expected: PESSEGO PARAGUAYO R0 A/AA/AAA KG
+6468 1751048837.jpg 6468_4  # 19:27 conf 80 claude: full  expected: PITAYA VERMELHA 300G
+6468 1751048837.jpg 6468_13  # 19:27 conf 80 claude: full  expected: MANGA AVIÃO PALMER KG
+6491 1751029202.jpg 6491_6  # 14:00 conf 80 claude: full  expected: PESSEGO R0 A/AA KG
+6491 1751033170.jpg 6491_4  # 15:06 conf 80 claude: full  expected: PESSEGO R0 A/AA KG
+6491 1751033170.jpg 6491_6  # 15:06 conf 80 claude: full  expected: PESSEGO R0 A/AA KG
+6491 1751036849.jpg 6491_4  # 16:07 conf 80 claude: full  expected: PESSEGO R0 A/AA KG
+6491 1751036849.jpg 6491_6  # 16:07 conf 80 claude: full  expected: PESSEGO R0 A/AA KG
+6491 1751040739.jpg 6491_4  # 17:12 conf 80 claude: full  expected: PESSEGO R0 A/AA KG
+6491 1751040739.jpg 6491_6  # 17:12 conf 80 claude: full  expected: PESSEGO R0 A/AA KG
+6491 1751044356.jpg 6491_4  # 18:12 conf 80 claude: full  expected: PESSEGO R0 A/AA KG
+6491 1751044356.jpg 6491_6  # 18:12 conf 80 claude: full  expected: PESSEGO R0 A/AA KG
+6491 1751044356.jpg 6491_8  # 18:12 conf 80 claude: full  expected: PESSEGO R0 A/AA KG
+6491 1751048611.jpg 6491_4  # 19:23 conf 80 claude: full  expected: PESSEGO R0 A/AA KG
+6491 1751048611.jpg 6491_8  # 19:23 conf 80 claude: full  expected: PESSEGO R0 A/AA KG
 6591 1751001189.jpg 6591_2  # 06:13 conf 80 claude: full  expected: BATATA ASSAR CNT EMB. 2 KG
+6591 1751001189.jpg 6591_8  # 06:13 conf 80 claude: full  expected: BATATA DOCE CNT KG
 6591 1751005287.jpg 6591_2  # 07:21 conf 80 claude: full  expected: BATATA ASSAR CNT EMB. 2 KG
+6591 1751005287.jpg 6591_8  # 07:21 conf 80 claude: full  expected: BATATA DOCE CNT KG
 6591 1751009443.jpg 6591_2  # 08:30 conf 80 claude: full  expected: BATATA ASSAR CNT EMB. 2 KG
 6591 1751013255.jpg 6591_2  # 09:34 conf 80 claude: full  expected: BATATA ASSAR CNT EMB. 2 KG
 6591 1751017235.jpg 6591_2  # 10:40 conf 80 claude: full  expected: BATATA ASSAR CNT EMB. 2 KG
-6591 1751017235.jpg 6591_5  # 10:40 conf 80 claude: full  expected: BATATA VERMELHA CNT EMB. 3KG
 6591 1751020896.jpg 6591_2  # 11:41 conf 80 claude: full  expected: BATATA ASSAR CNT EMB. 2 KG
-6591 1751020896.jpg 6591_5  # 11:41 conf 80 claude: full  expected: BATATA VERMELHA CNT EMB. 3KG
 6591 1751025118.jpg 6591_2  # 12:51 conf 80 claude: full  expected: BATATA ASSAR CNT EMB. 2 KG
-6591 1751025118.jpg 6591_5  # 12:51 conf 80 claude: full  expected: BATATA VERMELHA CNT EMB. 3KG
 6591 1751028988.jpg 6591_2  # 13:56 conf 80 claude: full  expected: BATATA ASSAR CNT EMB. 2 KG
-6591 1751028988.jpg 6591_5  # 13:56 conf 80 claude: full  expected: BATATA VERMELHA CNT EMB. 3KG
 6591 1751032871.jpg 6591_2  # 15:01 conf 80 claude: full  expected: BATATA ASSAR CNT EMB. 2 KG
-6591 1751032871.jpg 6591_5  # 15:01 conf 80 claude: full  expected: BATATA VERMELHA CNT EMB. 3KG
 6591 1751036598.jpg 6591_2  # 16:03 conf 80 claude: full  expected: BATATA ASSAR CNT EMB. 2 KG
-6591 1751036598.jpg 6591_5  # 16:03 conf 80 claude: full  expected: BATATA VERMELHA CNT EMB. 3KG
 6591 1751040216.jpg 6591_2  # 17:03 conf 80 claude: full  expected: BATATA ASSAR CNT EMB. 2 KG
 6591 1751044047.jpg 6591_2  # 18:07 conf 80 claude: full  expected: BATATA ASSAR CNT EMB. 2 KG
-6594 1751001189.jpg 6594_5  # 06:13 conf 80 claude: full  expected: CEBOLA CNT EMB. 1.5 KG
-6594 1751001189.jpg 6594_8  # 06:13 conf 80 claude: full  expected: ALHO SECO KG
-6594 1751005322.jpg 6594_5  # 07:22 conf 80 claude: full  expected: CEBOLA CNT EMB. 1.5 KG
-6594 1751005322.jpg 6594_8  # 07:22 conf 80 claude: full  expected: ALHO SECO KG
-6594 1751008928.jpg 6594_5  # 08:22 conf 80 claude: full  expected: CEBOLA CNT EMB. 1.5 KG
-6594 1751008928.jpg 6594_8  # 08:22 conf 80 claude: full  expected: ALHO SECO KG
-6594 1751013117.jpg 6594_4  # 09:31 conf 80 claude: full  expected: CEBOLA NOVA CNT KG
-6594 1751013117.jpg 6594_5  # 09:31 conf 80 claude: full  expected: CEBOLA CNT EMB. 1.5 KG
-6594 1751013117.jpg 6594_8  # 09:31 conf 80 claude: full  expected: ALHO SECO KG
-6594 1751017278.jpg 6594_4  # 10:41 conf 80 claude: full  expected: CEBOLA NOVA CNT KG
-6594 1751017278.jpg 6594_5  # 10:41 conf 80 claude: full  expected: CEBOLA CNT EMB. 1.5 KG
-6594 1751017278.jpg 6594_8  # 10:41 conf 80 claude: full  expected: ALHO SECO KG
-6594 1751021279.jpg 6594_5  # 11:47 conf 80 claude: full  expected: CEBOLA CNT EMB. 1.5 KG
-6594 1751025171.jpg 6594_5  # 12:52 conf 80 claude: full  expected: CEBOLA CNT EMB. 1.5 KG
-6594 1751029354.jpg 6594_5  # 14:02 conf 80 claude: full  expected: CEBOLA CNT EMB. 1.5 KG
-6594 1751033482.jpg 6594_5  # 15:11 conf 80 claude: full  expected: CEBOLA CNT EMB. 1.5 KG
-6594 1751037746.jpg 6594_5  # 16:22 conf 80 claude: full  expected: CEBOLA CNT EMB. 1.5 KG
-6594 1751041681.jpg 6594_5  # 17:28 conf 80 claude: full  expected: CEBOLA CNT EMB. 1.5 KG
-6594 1751045458.jpg 6594_5  # 18:30 conf 80 claude: full  expected: CEBOLA CNT EMB. 1.5 KG
-6594 1751049768.jpg 6594_5  # 19:42 conf 80 claude: full  expected: CEBOLA CNT EMB. 1.5 KG
 6781 1751001200.jpg 6781_4  # 06:13 conf 80 claude: full  expected: BATATA BRANCA CNT EMB. 3KG
 6781 1751001200.jpg 6781_5  # 06:13 conf 80 claude: full  expected: BATATA BRANCA CNT EMB. 3KG
-6781 1751001200.jpg 6781_7  # 06:13 conf 80 claude: full  expected: BATATA BRANCA CNT EMB. 3KG
-6781 1751001200.jpg 6781_8  # 06:13 conf 80 claude: full  expected: BATATA BRANCA CNT EMB. 3KG
 6781 1751005810.jpg 6781_4  # 07:30 conf 80 claude: full  expected: BATATA BRANCA CNT EMB. 3KG
 6781 1751005810.jpg 6781_5  # 07:30 conf 80 claude: full  expected: BATATA BRANCA CNT EMB. 3KG
-6781 1751005810.jpg 6781_7  # 07:30 conf 80 claude: full  expected: BATATA BRANCA CNT EMB. 3KG
-6781 1751005810.jpg 6781_8  # 07:30 conf 80 claude: full  expected: BATATA BRANCA CNT EMB. 3KG
 6781 1751009927.jpg 6781_4  # 08:38 conf 80 claude: full  expected: BATATA BRANCA CNT EMB. 3KG
 6781 1751009927.jpg 6781_5  # 08:38 conf 80 claude: full  expected: BATATA BRANCA CNT EMB. 3KG
-6781 1751009927.jpg 6781_7  # 08:38 conf 80 claude: full  expected: BATATA BRANCA CNT EMB. 3KG
-6781 1751009927.jpg 6781_8  # 08:38 conf 80 claude: full  expected: BATATA BRANCA CNT EMB. 3KG
 6781 1751013921.jpg 6781_4  # 09:45 conf 80 claude: full  expected: BATATA BRANCA CNT EMB. 3KG
 6781 1751013921.jpg 6781_5  # 09:45 conf 80 claude: full  expected: BATATA BRANCA CNT EMB. 3KG
-6781 1751013921.jpg 6781_7  # 09:45 conf 80 claude: full  expected: BATATA BRANCA CNT EMB. 3KG
-6781 1751013921.jpg 6781_8  # 09:45 conf 80 claude: full  expected: BATATA BRANCA CNT EMB. 3KG
 6781 1751017932.jpg 6781_5  # 10:52 conf 80 claude: full  expected: BATATA BRANCA CNT EMB. 3KG
-6781 1751017932.jpg 6781_8  # 10:52 conf 80 claude: full  expected: BATATA BRANCA CNT EMB. 3KG
+6781 1751017932.jpg 6781_7  # 10:52 conf 80 claude: full  expected: BATATA BRANCA CNT EMB. 3KG
 6781 1751021920.jpg 6781_5  # 11:58 conf 80 claude: full  expected: BATATA BRANCA CNT EMB. 3KG
-6781 1751021920.jpg 6781_8  # 11:58 conf 80 claude: full  expected: BATATA BRANCA CNT EMB. 3KG
+6781 1751021920.jpg 6781_7  # 11:58 conf 80 claude: full  expected: BATATA BRANCA CNT EMB. 3KG
 6781 1751025662.jpg 6781_5  # 13:01 conf 80 claude: full  expected: BATATA BRANCA CNT EMB. 3KG
-6781 1751025662.jpg 6781_8  # 13:01 conf 80 claude: full  expected: BATATA BRANCA CNT EMB. 3KG
-6781 1751029808.jpg 6781_8  # 14:10 conf 80 claude: full  expected: BATATA BRANCA CNT EMB. 3KG
+6781 1751025662.jpg 6781_7  # 13:01 conf 80 claude: full  expected: BATATA BRANCA CNT EMB. 3KG
+6781 1751029808.jpg 6781_5  # 14:10 conf 80 claude: full  expected: BATATA BRANCA CNT EMB. 3KG
+6781 1751029808.jpg 6781_7  # 14:10 conf 80 claude: full  expected: BATATA BRANCA CNT EMB. 3KG
 6781 1751033637.jpg 6781_5  # 15:13 conf 80 claude: full  expected: BATATA BRANCA CNT EMB. 3KG
-6781 1751033637.jpg 6781_8  # 15:13 conf 80 claude: full  expected: BATATA BRANCA CNT EMB. 3KG
+6781 1751033637.jpg 6781_7  # 15:13 conf 80 claude: full  expected: BATATA BRANCA CNT EMB. 3KG
 6781 1751037494.jpg 6781_5  # 16:18 conf 80 claude: full  expected: BATATA BRANCA CNT EMB. 3KG
-6781 1751037494.jpg 6781_8  # 16:18 conf 80 claude: full  expected: BATATA BRANCA CNT EMB. 3KG
+6781 1751037494.jpg 6781_7  # 16:18 conf 80 claude: full  expected: BATATA BRANCA CNT EMB. 3KG
 6781 1751041407.jpg 6781_5  # 17:23 conf 80 claude: full  expected: BATATA BRANCA CNT EMB. 3KG
-6781 1751041407.jpg 6781_8  # 17:23 conf 80 claude: full  expected: BATATA BRANCA CNT EMB. 3KG
+6781 1751041407.jpg 6781_7  # 17:23 conf 80 claude: full  expected: BATATA BRANCA CNT EMB. 3KG
 6781 1751045840.jpg 6781_5  # 18:37 conf 80 claude: full  expected: BATATA BRANCA CNT EMB. 3KG
-6781 1751045840.jpg 6781_8  # 18:37 conf 80 claude: full  expected: BATATA BRANCA CNT EMB. 3KG
+6781 1751045840.jpg 6781_7  # 18:37 conf 80 claude: full  expected: BATATA BRANCA CNT EMB. 3KG
 6781 1751049846.jpg 6781_5  # 19:44 conf 80 claude: full  expected: BATATA BRANCA CNT EMB. 3KG
-6781 1751049846.jpg 6781_8  # 19:44 conf 80 claude: full  expected: BATATA BRANCA CNT EMB. 3KG
+6781 1751049846.jpg 6781_7  # 19:44 conf 80 claude: full  expected: BATATA BRANCA CNT EMB. 3KG

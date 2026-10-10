@@ -11,6 +11,8 @@ Labels teach the stacker and measure our score, so all five labellers must apply
 
 Thresholds are the mentors' answer (2026-10-10). Note that `full` starts at just over half: a shelf with visible gaps is still `full` if more than half of it is covered.
 
+Mentor rule of thumb (2026-10-10): would a customer still be willing to buy what is left? If not, it is `empty`. Otherwise, would staff take the time to replenish the shelf? If yes, it is `half`; if not, it is `full`. In case of doubt, underestimate rather than overestimate.
+
 Rules of thumb:
 - Judge the area, not the camera image. A big pile in a neighbouring area does not count.
 - Loose produce: look at coverage and pile height. Packaged items (names with a weight): count rows of packs against the area size.
