@@ -4,6 +4,8 @@ JunctionX Lisbon 2026, Sensei challenge "Fresh eyes on fresh produce": for each 
 
 ## Setup
 
+Requires Python >= 3.10 (the pipeline uses `X | None` syntax). If your `python3` is older, use the explicit interpreter: `/opt/homebrew/bin/python3.12 -m venv .venv` on Mac, `python3.12 -m venv .venv` on Linux.
+
 ```bash
 python3 -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
