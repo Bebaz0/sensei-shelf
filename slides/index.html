@@ -9,21 +9,22 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
 <style>
-  /* Same tokens as the dashboard's dark theme, so the deck and the demo look like one product. */
+  /* Look borrowed from the JunctionX Lisbon site: night-sky gradient, faint lavender pixel stars, lavender highlights.
+     Status colours keep the dashboard's meaning (rose empty, amber half, mint in order, orchid wrong product), retuned for navy. */
   :root {
-    --bg: #0a0c0b;
-    --surface: #111513;
-    --raised: #1a211e;
-    --line: #26302b;
-    --line2: #3d4b44;
-    --fg: #ecf1ec;
-    --fg2: #aeb9b2;
-    --muted: #8e9a93;
-    --empty: #ff6b57;
-    --wrong: #b79cff;
-    --low: #ffc24b;
-    --ok: #3fb98a;
-    --accent: #3fb98a;
+    --bg: #05070f;
+    --surface: rgba(13, 15, 34, 0.86);
+    --raised: rgba(189, 189, 255, 0.12);
+    --line: rgba(189, 189, 255, 0.16);
+    --line2: rgba(189, 189, 255, 0.34);
+    --fg: #ffffff;
+    --fg2: #cbd5e1;
+    --muted: #9ca3c4;
+    --empty: #ff6b8e;
+    --wrong: #d08bff;
+    --low: #ffcf70;
+    --ok: #5fe0c0;
+    --accent: #bdbdff;
     --sans: Geist, ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
     --mono: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
     --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
@@ -31,34 +32,31 @@
   }
 
   * { box-sizing: border-box; margin: 0; }
-  html, body { height: 100%; background: var(--bg); color: var(--fg); font-family: var(--sans); -webkit-font-smoothing: antialiased; }
+  html, body { height: 100%; background: linear-gradient(#0a0f1d 0%, #000 100%) fixed; color: var(--fg); font-family: var(--sans); -webkit-font-smoothing: antialiased; }
   body { overflow: hidden; }
   button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
   button:focus-visible { outline: 2px solid var(--fg); outline-offset: 3px; }
   .mono { font-family: var(--mono); font-variant-numeric: tabular-nums; }
 
   /* Deck: one slide per screen, no scrolling inside a slide */
-  .deck { height: 100vh; overflow-y: auto; scroll-snap-type: y mandatory; scrollbar-width: none; }
+  #sky { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
+  .deck { position: relative; z-index: 1; height: 100vh; overflow-y: auto; scroll-snap-type: y mandatory; scrollbar-width: none; }
   .deck::-webkit-scrollbar { display: none; }
   .slide {
     position: relative; height: 100vh; overflow: hidden; scroll-snap-align: start; scroll-snap-stop: always;
     display: flex; flex-direction: column; justify-content: center;
     padding: clamp(28px, 6vh, 72px) clamp(28px, 7vw, 120px) clamp(64px, 10vh, 104px);
   }
-  .slide::before { /* soft glow, tinted per slide */
-    content: ""; position: absolute; inset: -20% -10% auto auto; width: 60vw; height: 60vw; pointer-events: none;
-    background: radial-gradient(closest-side, color-mix(in srgb, var(--glow, var(--accent)) 16%, transparent), transparent);
-  }
   .slide > * { position: relative; }
 
-  .kicker { display: inline-flex; align-items: center; gap: 10px; font-family: var(--mono); font-size: clamp(11px, 1.05vw, 15px); letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
-  .kicker i { width: 10px; height: 10px; border-radius: 99px; background: var(--glow, var(--accent)); }
+  .kicker { display: inline-flex; align-items: center; gap: 12px; font-family: var(--mono); font-size: clamp(11px, 1.05vw, 15px); letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent); }
+  .kicker i { width: 9px; height: 9px; background: var(--accent); }
   h1 { font-size: clamp(44px, 8.2vw, 132px); line-height: 0.98; letter-spacing: -0.045em; font-weight: 600; }
   h2 { font-size: clamp(30px, 4.6vw, 76px); line-height: 1.04; letter-spacing: -0.035em; font-weight: 600; margin-top: clamp(10px, 2vh, 22px); max-width: 18ch; }
   h2.wide { max-width: 24ch; }
   .lead { font-size: clamp(16px, 1.75vw, 28px); line-height: 1.4; color: var(--fg2); max-width: 46ch; margin-top: clamp(12px, 2.4vh, 28px); }
   .lead b, h2 b { color: var(--fg); font-weight: 600; }
-  em { font-style: normal; color: var(--glow, var(--accent)); }
+  em { font-style: normal; color: var(--accent); }
   .cols { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); gap: clamp(24px, 4vw, 72px); align-items: center; }
   .cols.even { grid-template-columns: 1fr 1fr; }
 
@@ -66,11 +64,13 @@
   .rise { opacity: 0; transform: translateY(18px); transition: opacity 0.6s var(--ease-out), transform 0.6s var(--ease-out); transition-delay: calc(var(--i, 0) * 70ms + 80ms); }
   .slide.active .rise { opacity: 1; transform: none; }
 
+  .chip, .task, .step, .source, .decision, .then div, .cost div { backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+
   /* Camera frame with planogram areas drawn on top */
-  .shot { position: relative; border-radius: clamp(12px, 1.6vw, 24px); overflow: hidden; border: 1px solid var(--line); background: #000; aspect-ratio: 16 / 9; box-shadow: 0 30px 80px -30px rgba(0, 0, 0, 0.9); }
+  .shot { position: relative; border-radius: clamp(12px, 1.6vw, 24px); overflow: hidden; border: 1.5px solid var(--line2); background: #000; aspect-ratio: 16 / 9; box-shadow: 0 24px 70px -30px rgba(0, 0, 0, 0.9); }
   .shot img, .shot svg { position: absolute; inset: 0; width: 100%; height: 100%; }
   .shot img { object-fit: cover; }
-  .shot .stamp { position: absolute; left: 14px; top: 12px; padding: 6px 10px; border-radius: 99px; background: rgba(10, 12, 11, 0.72); backdrop-filter: blur(6px); font-family: var(--mono); font-size: clamp(10px, 0.95vw, 14px); color: #dde5df; }
+  .shot .stamp { position: absolute; left: 14px; top: 12px; padding: 6px 10px; border-radius: 99px; background: rgba(5, 7, 15, 0.78); backdrop-filter: blur(6px); font-family: var(--mono); font-size: clamp(10px, 0.95vw, 14px); color: #dde5df; }
   .area { fill-opacity: 0.2; stroke-width: 4; stroke-linejoin: round; opacity: 0; transition: opacity 0.5s var(--ease-out); transition-delay: calc(var(--i, 0) * 90ms + 500ms); }
   .slide.active .area { opacity: 1; }
   .area.empty { fill: var(--empty); stroke: var(--empty); }
@@ -104,9 +104,10 @@
   .step p { font-size: clamp(12px, 1.15vw, 17px); line-height: 1.45; color: var(--fg2); }
   .step .meter { margin-top: auto; height: 4px; border-radius: 99px; background: var(--c); transform-origin: left; transform: scaleX(0.18); transition: transform 0.9s var(--ease-out); transition-delay: calc(var(--i) * 90ms + 500ms); }
   .slide.active .step .meter { transform: none; }
-  .cta { align-self: flex-start; display: inline-flex; align-items: center; gap: 10px; margin-top: clamp(16px, 3.4vh, 36px); padding: 14px 22px; border-radius: 99px; background: var(--fg); color: var(--bg); font-weight: 600; font-size: clamp(14px, 1.3vw, 19px); text-decoration: none; transition: transform 0.4s var(--spring); }
+  .cta { align-self: flex-start; display: inline-flex; align-items: center; gap: 10px; margin-top: clamp(16px, 3.4vh, 36px); padding: 12px 14px 12px 28px; gap: 18px; border-radius: 99px; border: 2px solid var(--accent); background: rgba(5, 7, 15, 0.7); color: var(--fg); font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; font-size: clamp(13px, 1.15vw, 17px); text-decoration: none; transition: transform 0.4s var(--spring), background-color 0.2s; }
+  .cta:hover { background: var(--raised); }
   .cta:active { transform: scale(0.96); transition-duration: 0.09s; }
-  .cta kbd { font-family: var(--mono); font-size: 0.78em; padding: 2px 7px; border-radius: 6px; background: rgba(0, 0, 0, 0.12); }
+  .cta kbd { display: grid; place-items: center; width: 2.6em; height: 2.6em; border-radius: 99px; background: var(--accent); color: #0a0f1d; font-family: var(--mono); font-size: 1em; letter-spacing: 0; }
 
   /* Evidence: sources feeding one decision */
   .sources { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(10px, 1.3vw, 18px); }
@@ -114,7 +115,7 @@
   .source b { display: block; font-size: clamp(14px, 1.5vw, 23px); letter-spacing: -0.01em; }
   .source span { display: block; margin-top: 6px; font-size: clamp(11.5px, 1.05vw, 16px); line-height: 1.4; color: var(--fg2); }
   .source i { display: block; width: 26px; height: 4px; border-radius: 99px; background: var(--c); margin-bottom: 12px; }
-  .decision { margin-top: clamp(10px, 1.3vw, 18px); border-radius: clamp(12px, 1.3vw, 20px); padding: clamp(12px, 2vh, 22px) clamp(14px, 1.5vw, 22px); background: color-mix(in srgb, var(--accent) 12%, var(--surface)); border: 1px solid color-mix(in srgb, var(--accent) 50%, var(--line)); font-size: clamp(13px, 1.3vw, 20px); line-height: 1.4; }
+  .decision { margin-top: clamp(10px, 1.3vw, 18px); border-radius: clamp(12px, 1.3vw, 20px); padding: clamp(12px, 2vh, 22px) clamp(14px, 1.5vw, 22px); background: rgba(24, 24, 58, 0.9); border: 1.5px solid var(--accent); font-size: clamp(13px, 1.3vw, 20px); line-height: 1.4; }
   .decision b { color: var(--accent); }
   .cost { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: clamp(14px, 3vh, 30px); max-width: 40ch; }
   .cost div { border: 1px solid var(--line); border-radius: 14px; padding: 12px 14px; }
@@ -148,16 +149,16 @@
   .hud { position: fixed; inset: auto 0 0 0; z-index: 20; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: clamp(12px, 2.2vh, 22px) clamp(16px, 2.4vw, 36px); pointer-events: none; }
   .hud > * { pointer-events: auto; }
   .meta { display: flex; align-items: center; gap: 14px; font-family: var(--mono); font-size: clamp(11px, 1vw, 14px); color: var(--muted); }
-  .timer { padding: 6px 12px; border-radius: 99px; border: 1px solid var(--line); background: rgba(17, 21, 19, 0.8); color: var(--fg2); transition: color 0.3s, border-color 0.3s; }
+  .timer { padding: 6px 12px; border-radius: 99px; border: 1px solid var(--line); background: rgba(5, 7, 15, 0.7); color: var(--fg2); transition: color 0.3s, border-color 0.3s; }
   .timer.warn { color: var(--low); border-color: var(--low); }
   .timer.over { color: var(--empty); border-color: var(--empty); }
   .nav { display: flex; gap: 10px; }
-  .nav button { width: clamp(44px, 3.8vw, 56px); height: clamp(44px, 3.8vw, 56px); border-radius: 99px; border: 1px solid var(--line2); background: rgba(17, 21, 19, 0.8); backdrop-filter: blur(8px); display: grid; place-items: center; transition: transform 0.4s var(--spring), background-color 0.2s, opacity 0.2s; }
-  .nav button:hover { background: var(--raised); }
+  .nav button { width: clamp(44px, 3.8vw, 56px); height: clamp(44px, 3.8vw, 56px); border-radius: 99px; border: 1px solid var(--line2); background: rgba(5, 7, 15, 0.7); backdrop-filter: blur(8px); display: grid; place-items: center; transition: transform 0.4s var(--spring), background-color 0.2s, opacity 0.2s; }
+  .nav button:hover { background: var(--raised); border-color: var(--accent); }
   .nav button:active { transform: scale(0.9); transition-duration: 0.09s; }
   .nav button:disabled { opacity: 0.3; cursor: default; }
   .nav svg { width: 20px; height: 20px; }
-  .notes { position: fixed; inset: auto clamp(16px, 2.4vw, 36px) clamp(76px, 11vh, 104px) clamp(16px, 2.4vw, 36px); z-index: 19; max-height: 38vh; overflow: auto; padding: 18px 22px; border-radius: 18px; border: 1px solid var(--line2); background: rgba(17, 21, 19, 0.94); backdrop-filter: blur(10px); font-size: clamp(14px, 1.3vw, 19px); line-height: 1.55; color: var(--fg2); white-space: pre-line; transform: translateY(20px); opacity: 0; pointer-events: none; transition: transform 0.3s var(--ease-out), opacity 0.2s; }
+  .notes { position: fixed; inset: auto clamp(16px, 2.4vw, 36px) clamp(76px, 11vh, 104px) clamp(16px, 2.4vw, 36px); z-index: 19; max-height: 38vh; overflow: auto; padding: 18px 22px; border-radius: 18px; border: 1px solid var(--line2); background: rgba(8, 10, 24, 0.94); backdrop-filter: blur(10px); font-size: clamp(14px, 1.3vw, 19px); line-height: 1.55; color: var(--fg2); white-space: pre-line; transform: translateY(20px); opacity: 0; pointer-events: none; transition: transform 0.3s var(--ease-out), opacity 0.2s; }
   .notes.open { transform: none; opacity: 1; pointer-events: auto; }
   .slide > aside { display: none; }
   .help { position: fixed; right: clamp(16px, 2.4vw, 36px); top: 18px; z-index: 20; font-family: var(--mono); font-size: 12px; color: var(--muted); opacity: 0.75; }
@@ -179,6 +180,7 @@
 </head>
 <body>
 
+<canvas id="sky" aria-hidden="true"></canvas>
 <div class="progress" aria-hidden="true"><i id="progress"></i></div>
 <div class="help" aria-hidden="true">← → move · N notes · F fullscreen · D demo · R reset timer</div>
 
@@ -188,9 +190,9 @@
   <section class="slide" data-title="Title">
     <div class="logo rise">
       <svg viewBox="0 0 38 38" aria-hidden="true">
-        <rect width="38" height="38" rx="11" fill="var(--fg)" />
-        <path d="M8 19c3.4-6 7.2-9 11-9s7.6 3 11 9c-3.4 6-7.2 9-11 9s-7.6-3-11-9z" fill="none" stroke="var(--bg)" stroke-width="2.4" />
-        <circle cx="19" cy="19" r="4" fill="var(--bg)" />
+        <rect width="38" height="38" rx="11" fill="var(--accent)" />
+        <path d="M8 19c3.4-6 7.2-9 11-9s7.6 3 11 9c-3.4 6-7.2 9-11 9s-7.6-3-11-9z" fill="none" stroke="#0a0f1d" stroke-width="2.4" />
+        <circle cx="19" cy="19" r="4" fill="#0a0f1d" />
       </svg>
       <span class="kicker"><i></i>Sensei challenge · JunctionX Lisbon 2026</span>
     </div>
@@ -200,7 +202,7 @@
   </section>
 
   <!-- 2. The problem -->
-  <section class="slide" data-title="The problem" style="--glow: var(--empty)">
+  <section class="slide" data-title="The problem">
     <span class="kicker rise"><i></i>The problem</span>
     <h2 class="wide rise" style="--i:1; font-size: clamp(36px, 6.4vw, 108px)">It's 6 PM. A customer wants bananas. <em>The basket is empty.</em></h2>
     <p class="lead rise" style="--i:2">That sale is gone. And unless a member of staff happens to walk past, <b>the basket stays empty.</b></p>
@@ -209,7 +211,7 @@ That sale is gone. And unless a member of staff happens to walk past, the basket
   </section>
 
   <!-- 3. The problem, at scale -->
-  <section class="slide" data-title="At scale" style="--glow: var(--low)">
+  <section class="slide" data-title="At scale">
     <span class="kicker rise"><i></i>The problem</span>
     <h2 class="wide rise" style="--i:1">Stores don't lack cameras. Their cameras <em>can't tell them what needs attention.</em></h2>
     <p class="lead rise" style="--i:2">Today, monitoring shelves means walking the aisles, checking products one by one, and hoping nothing gets missed. Repetitive, time-consuming, <b>reactive.</b></p>
@@ -368,7 +370,8 @@ TrustyShelf. Smarter shelves, better decisions.</aside>
 const PITCH_SECONDS = 180
 
 class PresentationController {
-  constructor() {
+  constructor(sky) {
+    this.sky = sky
     this.deck = document.getElementById('deck')
     this.slides = [...document.querySelectorAll('.slide')]
     this.index = 0
@@ -393,6 +396,8 @@ class PresentationController {
 
     this.go(this.fromHash(), false)
     this.activate(this.index)
+    // Opening the deck on a later slide (index.html#5) should not swing the sky
+    setTimeout(() => { this.ready = true }, 600)
   }
 
   fromHash() {
@@ -409,6 +414,7 @@ class PresentationController {
     if (index < 0) return
     // The timer starts the first time the presenter leaves the title slide.
     if (index > 0 && this.startedAt === null) this.startedAt = Date.now()
+    if (this.ready && index !== this.index) this.sky.turn(index - this.index)
     this.index = index
     this.slides.forEach((slide, i) => slide.classList.toggle('active', i === index))
     this.el.progress.style.transform = `scaleX(${(index + 1) / this.slides.length})`
@@ -467,8 +473,110 @@ class PresentationController {
   }
 }
 
+// Night sky behind the slides, after the JunctionX Lisbon hero: 450 faint square lavender stars in a slowly turning
+// cube, seen by a camera 5 units back, plus a rare shooting star. Plain 2D canvas, no library.
+class Sky {
+  constructor(canvas) {
+    this.canvas = canvas
+    this.ctx = canvas.getContext('2d')
+    this.stars = Float32Array.from({ length: 450 * 3 }, () => (Math.random() - 0.5) * 20)
+    this.shots = Array.from({ length: 2 }, () => this.resetShot({}))
+    this.still = matchMedia('(prefers-reduced-motion: reduce)').matches || document.documentElement.classList.contains('static')
+    this.t = 0
+    this.tilt = 0 // extra rotation around the horizontal axis, added by slide changes
+    this.tiltTarget = 0
+    this.last = performance.now()
+    addEventListener('resize', () => this.resize())
+    this.resize()
+    if (!this.still) requestAnimationFrame((now) => this.frame(now))
+  }
+
+  resize() {
+    const ratio = Math.min(devicePixelRatio || 1, 2)
+    this.w = this.canvas.width = Math.round(innerWidth * ratio)
+    this.h = this.canvas.height = Math.round(innerHeight * ratio)
+    this.focal = this.h / 2 / Math.tan((75 / 2) * Math.PI / 180) // 75 degree vertical field of view
+    this.draw()
+  }
+
+  // Slide moved by `steps` (positive = next): swing the whole sky up, or down when going back.
+  turn(steps) {
+    this.tiltTarget -= steps * 0.5
+  }
+
+  resetShot(shot) {
+    shot.x = -10 - Math.random() * 5
+    shot.y = 5 + Math.random() * 8
+    shot.z = (Math.random() - 0.5) * 5
+    shot.speed = 20 + Math.random() * 15
+    shot.length = 4 + Math.random() * 6
+    shot.delay = 6 + Math.random() * 20
+    shot.duration = 1 + Math.random() * 1.5
+    shot.age = 0
+    return shot
+  }
+
+  // World point to canvas pixels; null when behind the camera.
+  project(x, y, z) {
+    const depth = 5 - z
+    return depth < 0.1 ? null : [this.w / 2 + (x * this.focal) / depth, this.h / 2 - (y * this.focal) / depth, depth]
+  }
+
+  frame(now) {
+    const dt = Math.min(0.1, (now - this.last) / 1000) // a hidden tab resumes without a jump
+    this.last = now
+    this.t += dt
+    this.tilt += (this.tiltTarget - this.tilt) * (1 - Math.exp(-dt * 3.5)) // eases out, and retargets mid-swing
+    this.draw(dt)
+    requestAnimationFrame((n) => this.frame(n))
+  }
+
+  draw(dt = 0) {
+    const { ctx, w, h, stars } = this
+    ctx.clearRect(0, 0, w, h)
+    ctx.fillStyle = '#bdbdff'
+    ctx.globalAlpha = 0.38 // kept faint so the sky stays behind the content
+    const ry = this.t * 0.02, rx = this.t * 0.01 + this.tilt
+    const cy = Math.cos(ry), sy = Math.sin(ry), cx = Math.cos(rx), sx = Math.sin(rx)
+    for (let i = 0; i < stars.length; i += 3) {
+      // rotate around Y, then X
+      const x = stars[i] * cy + stars[i + 2] * sy
+      const z0 = -stars[i] * sy + stars[i + 2] * cy
+      const y = stars[i + 1] * cx - z0 * sx
+      const p = this.project(x, y, stars[i + 1] * sx + z0 * cx)
+      if (!p) continue
+      const size = Math.min(5 * (h / 810), Math.max(1, (0.05 * h) / 2 / p[2]))
+      ctx.fillRect(p[0] - size / 2, p[1] - size / 2, size, size)
+    }
+    ctx.globalAlpha = 1
+    if (this.still) return
+    const dx = 1 / Math.hypot(1, 0.6), dy = -0.6 / Math.hypot(1, 0.6) // down and to the right
+    ctx.lineCap = 'round'
+    for (const shot of this.shots) {
+      shot.age += dt
+      if (shot.age < shot.delay) continue
+      const n = (shot.age - shot.delay) / shot.duration
+      if (n >= 1) { this.resetShot(shot); continue }
+      const d = shot.speed * (shot.age - shot.delay)
+      const head = this.project(shot.x + dx * d, shot.y + dy * d, shot.z)
+      const tail = this.project(shot.x + dx * (d - shot.length), shot.y + dy * (d - shot.length), shot.z)
+      if (!head || !tail) continue
+      const glow = Math.sin(n * Math.PI) * 0.45
+      const trail = ctx.createLinearGradient(head[0], head[1], tail[0], tail[1])
+      trail.addColorStop(0, `rgba(189, 189, 255, ${glow})`)
+      trail.addColorStop(1, 'rgba(189, 189, 255, 0)')
+      ctx.strokeStyle = trail
+      ctx.lineWidth = Math.max(1.5, h / 500)
+      ctx.beginPath(); ctx.moveTo(head[0], head[1]); ctx.lineTo(tail[0], tail[1]); ctx.stroke()
+      ctx.globalAlpha = glow * 0.5
+      ctx.beginPath(); ctx.arc(head[0], head[1], (0.12 * this.focal) / head[2], 0, Math.PI * 2); ctx.fill()
+      ctx.globalAlpha = 1
+    }
+  }
+}
+
 if (new URLSearchParams(location.search).has('static')) document.documentElement.classList.add('static')
-new PresentationController()
+new PresentationController(new Sky(document.getElementById('sky')))
 </script>
 </body>
 </html>
