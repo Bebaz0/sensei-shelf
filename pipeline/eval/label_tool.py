@@ -216,7 +216,7 @@ def product_picker(products: list[dict], screen: np.ndarray) -> str | None:
             query, page = query + chr(k), 0
 
 
-def run(name: str, from_file: Path | None, out_path: Path | None) -> None:
+def run(name: str, from_file: Path | None, out_path: Path | None, review: bool = False) -> None:
     planogram = load_planogram(PLANOGRAM)
     index = json.loads(CROPS_INDEX.read_text()) if CROPS_INDEX.exists() else {}
     # Full mode covers every train frame of the crops index, not whatever the last run left in run_frames.json.
@@ -227,6 +227,9 @@ def run(name: str, from_file: Path | None, out_path: Path | None) -> None:
     labels = json.loads(out_path.read_text()) if out_path.exists() else {}
     done = sum(1 for (c, f, a) in worklist if already_labelled(labels, c, f, a))
     print(f"{len(worklist)} areas on worklist; {done} already labelled")
+    if not review:  # start at what is left; areas labelled in this session stay reachable with p
+        worklist = [w for w in worklist if not already_labelled(labels, *w)]
+        print(f"{len(worklist)} left to label (--review shows the labelled ones too)")
     if not worklist:
         return
 
@@ -317,5 +320,6 @@ if __name__ == "__main__":
     ap.add_argument("--from", dest="from_file", type=Path, default=None,
                     help=f"iterate only areas in this file (e.g. {CALIBRATION.relative_to(ROOT)})")
     ap.add_argument("--out", type=Path, default=None, help="override output path")
+    ap.add_argument("--review", action="store_true", help="also show areas you already labelled")
     args = ap.parse_args()
-    run(args.name, args.from_file, args.out)
+    run(args.name, args.from_file, args.out, args.review)
