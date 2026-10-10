@@ -39,3 +39,30 @@ python -m pipeline.eval.score --pred out/submission.json --gt labels/dev.json
 ```
 
 Until your upstream module works, drop a hand-written fake in `mocks/` and point `--index` / `--features` / etc. at it.
+
+## Inspection API
+
+Read-only HTTP surface over `out/` and `labels/`. No pipeline execution; just lookups.
+
+```bash
+uvicorn api.main:app --reload   # http://localhost:8000
+```
+
+| Endpoint | What it returns |
+|---|---|
+| `GET /api/cameras` | planogram cameras and their products |
+| `GET /api/score` | `score(submission, labels)` as `{total, max, breakdown}` |
+| `GET /api/stats` | run aggregates: stock, compliance, low_confidence, fallback |
+| `GET /api/area/{cam}/{filename}/{area_id}` | one area: planogram + result + features + label |
+| `GET /health` | `{status: "ok"}` |
+
+### Dev with live dashboard
+
+The dashboard reads `/data/*` from the API, so run both in parallel:
+
+```bash
+uvicorn api.main:app --reload       # terminal 1, port 8000
+cd dashboard && npm run dev         # terminal 2, port 5173 (vite proxies /data to 8000)
+```
+
+Any `python -m pipeline.decide.decide` is visible in the browser on refresh. No `scripts/sync_dashboard.sh` needed. `/data/frames/{cam}/{file}?max=960` and `/data/crops/{cam}/{stem}.jpg?max=320` thumbnail on the fly (cached in `out/api_cache/`).
