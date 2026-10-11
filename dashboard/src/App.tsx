@@ -76,7 +76,6 @@ function App() {
     .map(([id, camera]) => ({ id, cells: cellsOf(camera, camera.captures.at(-1)!, resolved), thumb: camera.captures.at(-1)!.image }))
     .sort((a, b) => score(b.cells) - score(a.cells))
   const allCells = cams.flatMap((c) => c.cells.map((cell) => ({ ...cell, cam: c.id })))
-  const updated = Math.max(...Object.values(data).map((camera) => camera.captures.at(-1)!.ts))
 
   // Open camera and capture, if any
   const camera = camId ? data[camId] : null
@@ -95,7 +94,7 @@ function App() {
 
   return (
     <div className="mx-auto flex max-w-[1480px] flex-col gap-[22px] px-4 pt-6 pb-10 sm:px-7">
-      <Header updated={updated} />
+      <Header />
       <Kpis cells={allCells} filter={filter} onFilter={setFilter} />
 
       <div className="grid items-start gap-[22px] lg:grid-cols-[250px_minmax(0,1fr)] xl:grid-cols-[262px_minmax(0,1fr)_340px]">

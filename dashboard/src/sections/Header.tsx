@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import { hm } from '../lib/format'
 import { Icon } from '../lib/ui'
 
 type Theme = 'light' | 'dark'
@@ -12,7 +11,7 @@ function readTheme(): Theme {
   }
 }
 
-export default function Header({ updated }: { updated: number }) {
+export default function Header() {
   const [theme, setTheme] = useState<Theme>(readTheme)
 
   useEffect(() => {
@@ -37,7 +36,6 @@ export default function Header({ updated }: { updated: number }) {
         </div>
       </div>
       <div className="flex flex-wrap items-center gap-2.5">
-        <span className="mono inline-flex h-[34px] items-center rounded-full border border-line bg-surface px-3.5 text-[12.5px]">Updated {hm(updated)}</span>
         <div className="seg" role="group" aria-label="Theme">
           <span className="seg-ind" style={{ transform: theme === 'dark' ? 'translateX(100%)' : 'none' }} />
           <button aria-pressed={theme === 'light'} onClick={() => setTheme('light')}>
