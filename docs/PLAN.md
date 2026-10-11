@@ -1,4 +1,4 @@
-# Plan: Fresh Eyes (Sensei challenge)
+# Plan: TrustyShelf (Sensei challenge)
 
 Source brief: `data/Fruits & Vegetables - Shelf Monitoring Solution.pdf`. Scoring and rules: `CLAUDE.md`. File shapes: `CONTRACTS.md`. Per-workstream checklists: `docs/TASKS.md`. Labelling rubric: `docs/LABELING.md`.
 

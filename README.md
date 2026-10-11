@@ -1,68 +1,170 @@
-# sensei-shelf
+# TrustyShelf
 
-JunctionX Lisbon 2026, Sensei challenge "Fresh eyes on fresh produce": for each ceiling camera image, say per planogram area whether the product is compliant and its stock level (empty / half / full).
+JunctionX Lisbon 2026, Sensei challenge "Fresh eyes on fresh produce".
 
-## Setup
+Ceiling cameras already watch the fruit and vegetable gondolas. For every image, TrustyShelf checks each planogram area and answers two questions: **is the right product there**, and **is it empty, half or full**. Staff get a prioritised list of what to restock or fix instead of walking the aisles to find out.
 
-Requires Python >= 3.10 (the pipeline uses `X | None` syntax). If your `python3` is older, use the explicit interpreter: `/opt/homebrew/bin/python3.12 -m venv .venv` on Mac, `python3.12 -m venv .venv` on Linux.
+- [Quick start](#quick-start)
+- [Run it on a new dataset](#run-it-on-a-new-dataset)
+- [See the results](#see-the-results)
+- [How it works](#how-it-works)
+- [Numbers and honest limits](#numbers-and-honest-limits)
+- [Team](#team)
+
+## Quick start
+
+Requires Python 3.10 or newer and, for the dashboard, Node 20 or newer.
 
 ```bash
 python3 -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
-cp .env.example .env            # add GEMINI_API_KEY
-
-cd dashboard && npm install && npm run dev
+cp .env.example .env            # then put your key after GEMINI_API_KEY=
 ```
 
-Data is not in git. Unzip the organisers' dataset so you have:
+The data is not in git. Unzip the organisers' dataset so that you have:
 
 ```
 data/
 ├── planogram.json                          # 14 cameras, 152 areas
 └── Frutas e Legumes (train & test)/
-    └── <camera_id>/<unix_ts>.jpg           # train + test mixed, no split folders
+    └── <camera_id>/<unix_ts>.jpg
 ```
 
-All paths live in `pipeline/common/config.py`.
+Then run everything on that data and print the score against our labels:
 
-## Running
+```bash
+scripts/run_all.sh
+```
 
-Every module runs on its own from the repo root (`--help` for flags):
+No Gemini key, or no network? `NO_API=1 scripts/run_all.sh` runs the same pipeline without the vision-language model. It is less accurate on the hard areas but always produces a complete answer.
+
+## Run it on a new dataset
+
+This is the path for the hidden validation images. It takes one command.
+
+1. Put the new images in any folder. Either layout works:
+   - one sub-folder per camera, `<camera_id>/<anything>.jpg`, or
+   - one flat folder of images. The camera is then recognised from the picture itself, so renamed files are fine.
+2. Run:
+
+   ```bash
+   source .venv/bin/activate
+   IMAGES="/path/to/new/images" scripts/run_all.sh
+   ```
+
+3. Collect the answer: **`out/submission.json`**. It contains only the new images, with every planogram area of each one:
+
+   ```json
+   {
+     "6215": {
+       "1751052241.jpg": {
+         "6215_1": { "planogram_compliant": true, "stock_level": "full", "stock_value": 1.0 }
+       }
+     }
+   }
+   ```
+
+Good to know:
+
+- **Keep the original training images in `data/`.** The new images are compared with them, area by area. On a fresh clone the script builds what it needs from them first.
+- **Time.** Allow a few minutes in total. The Gemini step makes one call per image that has uncertain areas, at most 15 calls a minute on a free key, so 26 images need about two minutes of API time.
+- **A different planogram.** Replace `data/planogram.json` with a file in the same format before running. Areas of cameras we have never seen fall back to the vision-language model and a safe default.
+- **Nothing is ever skipped.** Every area of every image is written, even when an image is unreadable or the API fails.
+- **File names.** Unix-timestamp names (as in the provided data) let the pipeline use the time of day. Other names still work.
+
+## See the results
+
+**Dashboard** (two terminals, from the repo root):
+
+```bash
+uvicorn api.main:app --reload            # terminal 1, http://localhost:8000
+cd dashboard && npm install && npm run dev   # terminal 2, http://localhost:5173
+```
+
+It always shows the latest run: store overview, per-camera view with colour-coded areas, the restock task list, and each shelf through the day. Re-run the pipeline and refresh the page.
+
+**Score against labels** (only for images we have labels for):
+
+```bash
+python -m pipeline.eval.score --pred out/submission.json --gt labels/dev.json
+```
+
+**Pitch slides:** open `slides/index.html` in a browser. Arrow keys move, `N` shows speaker notes, `F` is fullscreen.
+
+## How it works
+
+```
+images ──> crop ──> pixel features ──> decide ──> uncertain areas ──> Gemini ──> decide ──> submission.json
+            │        look-alikes         │                                          │
+            │        stock model         └── expected-score rule                    └── results.json (dashboard)
+            └── one flattened crop per planogram area
+```
+
+1. **Crop.** Each planogram quad is warped to a flat 256x256 crop, plus a wider context crop.
+2. **Look at the pixels.** Fill, colour and texture features. Because the cameras never move, each crop is also compared with labelled crops of the *same area* at other times of day, and a small gradient-boosting model reads stock level from lighting-normalised features.
+3. **Decide once.** The sources are averaged into probabilities for empty, half and full.
+4. **Ask only when unsure.** Areas where the probabilities are not decisive are sent to Gemini (3.1 Flash-Lite), which sees the crop and its surroundings and chooses from that camera's product list.
+5. **Decide again**, by expected score. The challenge punishes overstating stock (-3) more than understating it (-2), so the system answers "full" only when it is confident enough to be worth the risk. "Wrong product" is answered only when it is more likely than not.
+
+Every API answer is cached on disk, so re-running costs nothing.
+
+### Run one stage at a time
+
+Each stage reads the previous stage's file from `out/` and can be run alone (`--help` lists the flags):
 
 ```bash
 python -m pipeline.crop.crop
 python -m pipeline.pixel.features
-python -m pipeline.vlm.ask
+python -m pipeline.decide.decide --queue out/vlm_queue.txt
+python -m pipeline.vlm.ask --areas out/vlm_queue.txt
 python -m pipeline.decide.decide
-python -m pipeline.eval.score --pred out/submission.json --gt labels/dev.json
-./scripts/run_all.sh            # all of the above, in order
 ```
 
-Until your upstream module works, drop a hand-written fake in `mocks/` and point `--index` / `--features` / etc. at it.
+### Repository map
 
-## Inspection API
+| Path | What it is |
+|---|---|
+| `pipeline/crop/` | planogram quads to crops, camera recognition for renamed files |
+| `pipeline/pixel/` | pixel features, same-area look-alikes, stock model |
+| `pipeline/vlm/` | Gemini client, prompt, disk cache |
+| `pipeline/decide/` | fusion, expected-score rule, forward-in-time evaluation |
+| `pipeline/eval/` | scorer, labelling tool, label merge |
+| `api/`, `dashboard/` | read-only API over the results and the staff dashboard |
+| `labels/` | our hand-made labels (the challenge provides none) |
+| `docs/` | plan, labelling guide and a log of every decision with its measured effect |
+| `scripts/run_all.sh` | the whole pipeline in one command |
 
-Read-only HTTP surface over `out/` and `labels/`. No pipeline execution; just lookups.
-
-```bash
-uvicorn api.main:app --reload   # http://localhost:8000
-```
+### Inspection API
 
 | Endpoint | What it returns |
 |---|---|
 | `GET /api/cameras` | planogram cameras and their products |
-| `GET /api/score` | `score(submission, labels)` as `{total, max, breakdown}` |
-| `GET /api/stats` | run aggregates: stock, compliance, low_confidence, fallback |
-| `GET /api/area/{cam}/{filename}/{area_id}` | one area: planogram + result + features + label |
+| `GET /api/score` | score of the last run against the labels |
+| `GET /api/stats` | run totals: stock, compliance, low-confidence areas |
+| `GET /api/area/{cam}/{filename}/{area_id}` | everything known about one area |
 | `GET /health` | `{status: "ok"}` |
 
-### Dev with live dashboard
+## Numbers and honest limits
 
-The dashboard reads `/data/*` from the API, so run both in parallel:
+- **The data:** 14 cameras, 152 areas, 94 products, 181 images from one day (06:12 to 20:16).
+- **Labels:** the challenge provides none, so we labelled 1,936 areas ourselves with a written guide (`docs/LABELING.md`).
+- **Score on the labelled day:** 3,475 of 3,818 points (91%) with `scripts/run_all.sh`.
+- **A fairer estimate:** predicting each image from *earlier* images only, as on unseen evening images, we measured about 85%. We expect the hidden set to land nearer this figure.
+- **Where the points go:** most remaining errors are a half-empty area called full, and evening images, when shelves run down, are the hardest.
+- **Label noise is real:** two of our labellers disagreed on about 12% of stock levels, mostly half against full. No model can score above what the labels agree on.
+- **The shelf does not always follow the planogram.** Some areas hold a product that is not in the planogram's list at all (for example bagged lemons in a kiwi area). We can flag those as wrong, but not name them.
+- **We never looked at the hidden images.** The pipeline is fully automatic from images to `submission.json`.
 
-```bash
-uvicorn api.main:app --reload       # terminal 1, port 8000
-cd dashboard && npm run dev         # terminal 2, port 5173 (vite proxies /data to 8000)
-```
+Every experiment, including the ones that failed, is logged with its measured effect in `docs/DECISIONS.md`.
 
-Any `python -m pipeline.decide.decide` is visible in the browser on refresh. No `scripts/sync_dashboard.sh` needed. `/data/frames/{cam}/{file}?max=960` and `/data/crops/{cam}/{stem}.jpg?max=320` thumbnail on the fly (cached in `out/api_cache/`).
+## Team
+
+| Name |
+|---|
+| _Afonso Lima_ |
+| _André Santos_ |
+| _Diogo Santos_ |
+| _Pedro Tomás Teixeira_ |
+| _Rafael Pinho e Silva_ |
+
+Built in 24 hours at JunctionX Lisbon 2026.

@@ -1,4 +1,4 @@
-# sensei-shelf: Fresh Eyes (Sensei challenge, JunctionX Lisbon 2026)
+# TrustyShelf (Sensei challenge, JunctionX Lisbon 2026)
 
 Goal: WIN. 5 engineers, each driving a Claude Code session. Read this file, then `docs/PLAN.md`, `CONTRACTS.md`, `docs/LABELING.md` and your own section of `docs/TASKS.md` before doing anything.
 
