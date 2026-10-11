@@ -142,6 +142,14 @@
   .bar.base { color: var(--fg2); }
   .foot { margin-top: clamp(12px, 2.6vh, 28px); font-size: clamp(11px, 0.98vw, 14.5px); line-height: 1.5; color: var(--muted); max-width: 110ch; }
 
+  /* Final results: three headline numbers */
+  .stats { display: grid; grid-template-columns: 1.25fr 1fr 1fr; gap: clamp(10px, 1.4vw, 22px); margin-top: clamp(16px, 3.4vh, 40px); max-width: 1200px; }
+  .stat { border: 1px solid var(--line); background: var(--surface); border-radius: clamp(14px, 1.5vw, 24px); padding: clamp(16px, 3vh, 34px) clamp(16px, 1.8vw, 30px); }
+  .stat.main { border: 1.5px solid var(--accent); }
+  .stat small { font-family: var(--mono); letter-spacing: 0.1em; text-transform: uppercase; font-size: clamp(11px, 1vw, 14px); color: var(--muted); }
+  .stat b { display: block; margin-top: 8px; font-family: var(--mono); font-size: clamp(34px, 5vw, 84px); line-height: 1; letter-spacing: -0.02em; color: var(--c); }
+  .stat span { display: block; margin-top: 10px; font-size: clamp(12px, 1.15vw, 17px); color: var(--fg2); }
+
   /* What went wrong: one card per area */
   .cases { display: grid; grid-template-columns: repeat(4, 1fr); gap: clamp(10px, 1.4vw, 22px); margin-top: clamp(14px, 3vh, 34px); }
   .case { border: 1px solid var(--line); background: var(--surface); border-radius: clamp(14px, 1.5vw, 24px); overflow: hidden; }
@@ -359,7 +367,27 @@ Today, we identify what needs attention. Tomorrow, the same insights could help 
 TrustyShelf. Smarter shelves, better decisions.</aside>
   </section>
 
-  <!-- 9. What went wrong -->
+  <!-- 9. Final results -->
+  <section class="slide" data-title="Final results">
+    <span class="kicker rise"><i></i>Final results</span>
+    <h2 class="wide rise" style="--i:1">Right product, almost always. <em>Stock level is where we lost.</em></h2>
+    <div class="stats">
+      <div class="stat main rise" style="--i:2; --c: var(--accent)"><small>Points</small><b>52.6%</b><span>304 of 578 on the validation set</span></div>
+      <div class="stat rise" style="--i:3; --c: var(--ok)"><small>Compliance error</small><b>3.5%</b><span>10 of 289 areas wrong</span></div>
+      <div class="stat rise" style="--i:4; --c: var(--empty)"><small>Stock error</small><b>22.1%</b><span>64 of 289 areas wrong</span></div>
+    </div>
+    <div class="pills">
+      <span class="pill rise" style="--i:5">Scored on Sensei's annotations: 28 images, 289 areas</span>
+      <span class="pill rise" style="--i:6">Same score with the vision-language model on or off</span>
+      <span class="pill rise" style="--i:7">A stock mistake costs 3 or 4 points, so those 64 areas take most of the score</span>
+    </div>
+    <aside>Our final result on the validation set, scored against Sensei's own annotations: 304 of 578 points, 52.6%.
+Compliance is solid: we got the product question wrong in only 10 of 289 areas, 3.5%.
+Stock level is where we lost: 64 of 289 areas, 22.1%. Because a wrong stock answer costs the point plus a penalty of 2 or 3, those errors take most of the score.
+We ran it three ways: vision-language model off, on without the API, and on with the API. All three gave exactly the same score.</aside>
+  </section>
+
+  <!-- 10. What went wrong -->
   <section class="slide" data-title="What went wrong">
     <span class="kicker rise"><i></i>What went wrong</span>
     <h2 class="wide rise" style="--i:1">The shelf held products the planogram <em>has never heard of.</em></h2>
@@ -396,7 +424,7 @@ We also had no ground truth, so we labelled 1,909 areas ourselves, and two label
 
 <div class="hud">
   <div class="meta">
-    <span id="counter">1 / 9</span>
+    <span id="counter">1 / 10</span>
     <span id="title" class="hide-sm"></span>
     <button class="timer" id="timer" title="Pitch timer (Shift+R or double-click resets)">0:00 / 3:00</button>
   </div>
