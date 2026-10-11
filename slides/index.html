@@ -143,9 +143,9 @@
   .foot { margin-top: clamp(12px, 2.6vh, 28px); font-size: clamp(11px, 0.98vw, 14.5px); line-height: 1.5; color: var(--muted); max-width: 110ch; }
 
   /* Final results: three headline numbers */
-  .stats { display: grid; grid-template-columns: 1.25fr 1fr 1fr; gap: clamp(10px, 1.4vw, 22px); margin-top: clamp(16px, 3.4vh, 40px); max-width: 1200px; }
+  .stats { display: grid; grid-template-columns: 1fr 1.25fr 1fr; gap: clamp(10px, 1.4vw, 22px); margin-top: clamp(16px, 3.4vh, 40px); max-width: 1200px; }
   .stat { border: 1px solid var(--line); background: var(--surface); border-radius: clamp(14px, 1.5vw, 24px); padding: clamp(16px, 3vh, 34px) clamp(16px, 1.8vw, 30px); }
-  .stat.main { border: 1.5px solid var(--accent); }
+  .stat.main { border: 1.5px solid var(--c); }
   .stat small { font-family: var(--mono); letter-spacing: 0.1em; text-transform: uppercase; font-size: clamp(11px, 1vw, 14px); color: var(--muted); }
   .stat b { display: block; margin-top: 8px; font-family: var(--mono); font-size: clamp(34px, 5vw, 84px); line-height: 1; letter-spacing: -0.02em; color: var(--c); }
   .stat span { display: block; margin-top: 10px; font-size: clamp(12px, 1.15vw, 17px); color: var(--fg2); }
@@ -372,8 +372,8 @@ TrustyShelf. Smarter shelves, better decisions.</aside>
     <span class="kicker rise"><i></i>Final results</span>
     <h2 class="wide rise" style="--i:1">Right product, almost always. <em>Stock level is where we lost.</em></h2>
     <div class="stats">
-      <div class="stat main rise" style="--i:2; --c: var(--accent)"><small>Points</small><b>52.6%</b><span>304 of 578 on the validation set</span></div>
-      <div class="stat rise" style="--i:3; --c: var(--ok)"><small>Compliance error</small><b>3.5%</b><span>10 of 289 areas wrong</span></div>
+      <div class="stat rise" style="--i:2; --c: var(--accent)"><small>Points</small><b>52.6%</b><span>304 of 578 on the validation set</span></div>
+      <div class="stat main rise" style="--i:3; --c: var(--ok)"><small>Compliance</small><b>96.5%</b><span>279 of 289 areas right</span></div>
       <div class="stat rise" style="--i:4; --c: var(--empty)"><small>Stock error</small><b>22.1%</b><span>64 of 289 areas wrong</span></div>
     </div>
     <div class="pills">
