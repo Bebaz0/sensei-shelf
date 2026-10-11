@@ -251,7 +251,7 @@
         "planogram_compliant": false,
         "stock_level": "full",
         "stock_value": 1.0,
-        "observed_product_id": "11906"
+        "observed_product_id": "11908"
       },
       "6215_8": {
         "planogram_compliant": true,
@@ -2661,22 +2661,19 @@
         "stock_value": 0.5
       },
       "6376_3": {
-        "planogram_compliant": false,
+        "planogram_compliant": true,
         "stock_level": "full",
-        "stock_value": 1.0,
-        "observed_product_id": "15781"
+        "stock_value": 1.0
       },
       "6376_4": {
-        "planogram_compliant": false,
+        "planogram_compliant": true,
         "stock_level": "full",
-        "stock_value": 1.0,
-        "observed_product_id": "1164"
+        "stock_value": 1.0
       },
       "6376_5": {
-        "planogram_compliant": false,
+        "planogram_compliant": true,
         "stock_level": "full",
-        "stock_value": 1.0,
-        "observed_product_id": "20508"
+        "stock_value": 1.0
       },
       "6376_6": {
         "planogram_compliant": true,
@@ -3566,10 +3563,9 @@
         "stock_value": 1.0
       },
       "6383_7": {
-        "planogram_compliant": false,
+        "planogram_compliant": true,
         "stock_level": "empty",
-        "stock_value": 0.0,
-        "observed_product_id": "18329"
+        "stock_value": 0.0
       },
       "6383_8": {
         "planogram_compliant": true,
