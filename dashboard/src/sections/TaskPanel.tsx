@@ -1,5 +1,5 @@
 import { areaNo, cameraName, plural, pretty } from '../lib/format'
-import { type CamCell, type Filter, LEVEL_INDEX, matches, STATUS, type Status } from '../lib/status'
+import { type CamCell, type Filter, LEVEL_INDEX, matches, STATUS, STATUSES, type Status } from '../lib/status'
 import { Icon } from '../lib/ui'
 
 export type Tab = 'tasks' | 'products'
@@ -26,12 +26,14 @@ export default function TaskPanel({ cells, filter, tab, resolvedCount, onTab, on
     .filter((g) => g.items.length)
 
   // Average stock per product across every area it sits in; a wrong product counts as empty.
-  const byProduct = new Map<string, { name: string; n: number; sum: number; alerts: number }>()
+  // `worst` is the most urgent of those areas, where clicking the product goes.
+  const byProduct = new Map<string, { name: string; n: number; sum: number; alerts: number; worst: CamCell }>()
   for (const c of cells) {
-    const p = byProduct.get(c.area.product_name) ?? { name: c.area.product_name, n: 0, sum: 0, alerts: 0 }
+    const p = byProduct.get(c.area.product_name) ?? { name: c.area.product_name, n: 0, sum: 0, alerts: 0, worst: c }
     p.n += 1
     p.sum += c.done ? 1 : c.st === 'wrong' ? 0 : LEVEL_INDEX[c.v.stock_level] / 2
     if (c.st !== 'ok') p.alerts += 1
+    if (STATUSES.indexOf(c.st) < STATUSES.indexOf(p.worst.st)) p.worst = c
     byProduct.set(p.name, p)
   }
   const products = [...byProduct.values()]
@@ -94,20 +96,30 @@ export default function TaskPanel({ cells, filter, tab, resolvedCount, onTab, on
             const pct = `${Math.round(p.avg * 100)}%`
             const color = p.avg < 0.34 ? STATUS.empty.color : p.avg < 0.75 ? STATUS.low.color : STATUS.ok.color
             return (
-              <div key={p.name} className="px-3 py-3">
-                <div className="flex items-baseline justify-between gap-3 text-sm">
-                  <span className="min-w-0 truncate font-medium" title={pretty(p.name)}>
-                    {pretty(p.name)}
+              <button
+                key={p.name}
+                className="task flex w-full items-center gap-3 rounded-xl py-3 pr-2 pl-3 text-left"
+                aria-label={`${pretty(p.name)}, ${pct} stock, open ${cameraName(p.worst.cam)} area ${areaNo(p.worst.area)}`}
+                onClick={() => onPick(p.worst.cam, p.worst.area.area_id)}
+              >
+                <span className="min-w-0 flex-1">
+                  <span className="flex items-baseline justify-between gap-3 text-sm">
+                    <span className="min-w-0 truncate font-medium" title={pretty(p.name)}>
+                      {pretty(p.name)}
+                    </span>
+                    <span className="mono flex-none text-fg2">{pct}</span>
                   </span>
-                  <span className="mono flex-none text-fg2">{pct}</span>
-                </div>
-                <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-track">
-                  <div className="h-full rounded-full transition-[width] duration-500" style={{ width: pct, background: color }} />
-                </div>
-                <div className="mt-1.5 text-xs text-muted">
-                  {p.alerts} of {plural(p.n, 'area', 'areas')} need attention
-                </div>
-              </div>
+                  <span className="mt-2 block h-1.5 overflow-hidden rounded-full bg-track">
+                    <span className="block h-full rounded-full transition-[width] duration-500" style={{ width: pct, background: color }} />
+                  </span>
+                  <span className="mt-1.5 block text-xs text-muted">
+                    {p.alerts} of {plural(p.n, 'area', 'areas')} need attention
+                  </span>
+                </span>
+                <span className="flex-none text-muted">
+                  <Icon name="chevron_right" size={20} />
+                </span>
+              </button>
             )
           })}
         </div>

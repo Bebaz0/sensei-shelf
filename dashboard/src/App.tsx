@@ -6,6 +6,7 @@ import CameraList from './sections/CameraList'
 import CameraView, { type View } from './sections/CameraView'
 import Header from './sections/Header'
 import Kpis from './sections/Kpis'
+import Overview from './sections/Overview'
 import TaskPanel, { type Tab } from './sections/TaskPanel'
 import Timeline from './sections/Timeline'
 
@@ -31,10 +32,11 @@ function readView(): View {
 function App() {
   const [data, setData] = useState<Results | null>(null)
   const [error, setError] = useState<string | null>(null)
-  const [camId, setCamId] = useState<string | null>(null) // null = most urgent camera
+  const [camId, setCamId] = useState<string | null>(null) // null = store overview
   const [frame, setFrame] = useState<number | null>(null) // capture index, null = latest
   const [sel, setSel] = useState<string | null>(null) // selected area_id
   const [filter, setFilter] = useState<Filter>('all')
+  const [camFilter, setCamFilter] = useState<Filter>('all') // timeline chips, open camera only
   const [view, setView] = useState<View>(readView) // photo or schema, kept across cameras and captures until the user toggles it
   const [tab, setTab] = useState<Tab>('tasks')
   const [resolved, setResolved] = useState<Flags>({}) // resolved this shift, local only for now
@@ -47,6 +49,20 @@ function App() {
       // storage blocked: view just won't persist across reloads
     }
   }, [view])
+
+  // A click on empty space peels one layer: area, camera filter, store filter, then the open camera.
+  // Re-subscribed every render so it sees the current state.
+  useEffect(() => {
+    const onClick = (e: MouseEvent) => {
+      if ((e.target as Element).closest('button, polygon, .panel')) return
+      if (sel) setSel(null)
+      else if (camFilter !== 'all') setCamFilter('all')
+      else if (filter !== 'all') setFilter('all')
+      else setCamId(null)
+    }
+    document.addEventListener('click', onClick)
+    return () => document.removeEventListener('click', onClick)
+  })
 
   useEffect(() => {
     loadResults().then(setData, (e: Error) => setError(e.message))
@@ -62,19 +78,19 @@ function App() {
   const allCells = cams.flatMap((c) => c.cells.map((cell) => ({ ...cell, cam: c.id })))
   const updated = Math.max(...Object.values(data).map((camera) => camera.captures.at(-1)!.ts))
 
-  // Selected camera and capture
-  const cam = camId ?? cams[0].id
-  const camera = data[cam]
-  const last = camera.captures.length - 1
+  // Open camera and capture, if any
+  const camera = camId ? data[camId] : null
+  const last = camera ? camera.captures.length - 1 : 0
   const fi = frame ?? last
-  const capture = camera.captures[fi]
-  const cells = cellsOf(camera, capture, fi === last ? resolved : {})
+  const capture = camera?.captures[fi]
+  const cells = camera && capture ? cellsOf(camera, capture, fi === last ? resolved : {}) : []
   const selected = cells.find((c) => c.area.area_id === sel)
 
   const pickCam = (id: string, areaId: string | null = null) => {
     setCamId(id)
     setFrame(null)
     setSel(areaId)
+    if (id !== camId) setCamFilter('all')
   }
 
   return (
@@ -83,18 +99,33 @@ function App() {
       <Kpis cells={allCells} filter={filter} onFilter={setFilter} />
 
       <div className="grid items-start gap-[22px] lg:grid-cols-[250px_minmax(0,1fr)] xl:grid-cols-[262px_minmax(0,1fr)_340px]">
-        <CameraList cams={cams} active={cam} filter={filter} onPick={pickCam} />
+        <CameraList cams={cams} active={camId} filter={filter} onPick={pickCam} />
 
-        <section aria-label="Selected camera" className="flex min-w-0 flex-col gap-4">
-          <CameraView cam={cam} capture={capture} view={view} onView={setView} cells={cells} sel={sel} filter={filter} onSelect={setSel} />
-          <Timeline camera={camera} frame={fi} done={resolved} onPick={setFrame} />
+        <section aria-label={camId ? 'Selected camera' : 'All cameras'} className="flex min-w-0 flex-col gap-4">
+          {camId && camera && capture ? (
+            <>
+              <CameraView
+                cam={camId}
+                capture={capture}
+                view={view}
+                onView={setView}
+                cells={cells}
+                sel={sel}
+                filter={camFilter !== 'all' ? camFilter : filter}
+                onSelect={setSel}
+              />
+              <Timeline camera={camera} frame={fi} done={resolved} filter={camFilter} onPick={setFrame} onFilter={setCamFilter} />
+            </>
+          ) : (
+            <Overview cams={cams} filter={filter} onPick={pickCam} />
+          )}
         </section>
 
         <aside aria-label="Details and tasks" className="min-w-0">
-          {selected ? (
+          {camId && camera && selected ? (
             <AreaDetail
               key={selected.area.area_id}
-              cam={cam}
+              cam={camId}
               camera={camera}
               frame={fi}
               cell={selected}
@@ -105,7 +136,7 @@ function App() {
               onToggleFlag={() => setFlags(toggle(flags, selected.area.area_id))}
             />
           ) : (
-            <TaskPanel cells={allCells} filter={filter} tab={tab} resolvedCount={Object.keys(resolved).length} onTab={setTab} onPick={pickCam} />
+            <TaskPanel cells={camId ? allCells.filter((c) => c.cam === camId) : allCells} filter={filter} tab={tab} resolvedCount={Object.keys(resolved).length} onTab={setTab} onPick={pickCam} />
           )}
         </aside>
       </div>
