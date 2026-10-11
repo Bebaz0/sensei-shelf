@@ -236,3 +236,15 @@ def test_product_change_drops_temporal_and_votes_full():
     changed = decide_area(area, feats, vlm, DEFAULT_PARAMS)
     same = decide_area(area, {**feats, "temporal": {"prev_stock": "empty", "prev_product": None}}, vlm, DEFAULT_PARAMS)
     assert changed["p_stock"]["full"] > same["p_stock"]["full"]
+
+
+def test_pre_opening_empty_override(monkeypatch):
+    import pipeline.decide.decide as decide_mod
+    monkeypatch.setattr(decide_mod, "PRE_OPEN_ENABLED", True)
+    area = load_planogram()["6215"][0]
+    full_knn = {"knn": {"empty": 0.3, "half": 0.1, "full": 0.6, "p_wrong": 0.0}}
+    early, day = "1751001244.jpg", "1751040000.jpg"  # 06:14 and 17:00 Lisbon
+    assert decide_area(area, full_knn, None, PARAMS, filename=early)["pred"]["stock_level"] == "empty"
+    assert decide_area(area, full_knn, None, PARAMS, filename=day)["pred"]["stock_level"] == "full"
+    no_hint = {"knn": {"empty": 0.1, "half": 0.1, "full": 0.8, "p_wrong": 0.0}}
+    assert decide_area(area, no_hint, None, PARAMS, filename=early)["pred"]["stock_level"] == "full"

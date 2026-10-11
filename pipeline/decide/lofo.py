@@ -25,7 +25,8 @@ from sklearn.linear_model import LogisticRegression
 from pipeline.common.config import EMPTY_IS_COMPLIANT, FEATURES, LABELS, PLANOGRAM, STOCK_VALUES, VLM
 from pipeline.common.planogram import load_planogram
 from pipeline.decide.decide import (
-    DEFAULT_PARAMS, LEVELS, PARAMS_PATH, decide_frames, knn_wrong, stock_sources, to_submission, vlm_mismatch,
+    DEFAULT_PARAMS, LEVELS, PARAMS_PATH, _pre_opening_empty, decide_frames, knn_wrong, stock_sources, to_submission,
+    vlm_mismatch,
 )
 
 SOURCES = ("gemini", "claude", "knn", "probe", "gb", "temporal")
@@ -43,7 +44,8 @@ LEVEL_OF_VALUE = {v: k for k, v in STOCK_VALUES.items()}
 
 
 def build_table(labels: dict, features: dict, vlm: dict, sigma: float) -> dict:
-    """Arrays over every labelled area (frame, area id): source probs S (n, src, 3) with mask M, truths, Platt input X, kNN p_wrong K."""
+    """Arrays over every labelled area (frame, area id): source probs S (n, src, 3) with mask M, truths, Platt input X, kNN p_wrong K,
+    pre-opening empty override P."""
     rows = []
     for cam, frames in labels.items():
         for fn, areas in frames.items():
@@ -57,7 +59,7 @@ def build_table(labels: dict, features: dict, vlm: dict, sigma: float) -> dict:
                 except Exception:  # noqa: BLE001  same per-area fallback as decide
                     sources = {}
                 rows.append((cam, fn, area_id, sources, vlm_mismatch(v), knn_wrong(f), LEVELS.index(LEVEL_OF_VALUE[float(gt["stock_value"])]),
-                             bool(gt.get("planogram_compliant", True))))
+                             bool(gt.get("planogram_compliant", True)), _pre_opening_empty(fn, f)))
     n = len(rows)
     S, M = np.zeros((n, len(SOURCES), 3)), np.zeros((n, len(SOURCES)))
     for i, (_, _, _, sources, *_rest) in enumerate(rows):
@@ -71,12 +73,14 @@ def build_table(labels: dict, features: dict, vlm: dict, sigma: float) -> dict:
         "K": np.array([np.nan if r[5] is None else float(r[5]) for r in rows]),
         "T": np.array([r[6] for r in rows], dtype=int),
         "C": np.array([r[7] for r in rows], dtype=bool),
+        "P": np.array([r[8] for r in rows], dtype=bool),
     }
 
 
 def stock_pred(t: dict, idx: np.ndarray, w: np.ndarray, bias: float, fallback: np.ndarray, below: float = 1.01,
                odds: tuple[float, float] = (0.0, 0.0)) -> np.ndarray:
-    """Vectorised decide.stock_probs + decide.stock_level. below: temporal joins only where the visual top p is under it."""
+    """Vectorised decide.stock_probs + decide.stock_level + the pre-opening empty override. below: temporal joins only
+    where the visual top p is under it."""
     M = t["M"][idx].copy()
     jt = SOURCES.index("temporal")
     wv = w.copy()
@@ -90,7 +94,7 @@ def stock_pred(t: dict, idx: np.ndarray, w: np.ndarray, bias: float, fallback: n
     p = p * np.exp([0.0, *odds])
     p = p / p.sum(axis=1, keepdims=True)
     ev = p @ GAIN - bias * np.arange(3)  # EV[pred] = sum_t p_t GAIN[t, pred]
-    return ev.argmax(axis=1)  # first max = lower level on ties, as in decide
+    return np.where(t["P"][idx], 0, ev.argmax(axis=1))  # first max = lower level on ties, as in decide
 
 
 def p_wrong_vec(t: dict, idx: np.ndarray, a: float, b: float, wk: float) -> np.ndarray:

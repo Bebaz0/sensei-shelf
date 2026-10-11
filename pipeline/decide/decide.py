@@ -53,12 +53,14 @@ EMPTY_MAX_PCT, HALF_MAX_PCT = 10.0, 50.0
 
 # Pre-opening: the first ~2 frames of the day (06:12, 07:20 Lisbon per CLAUDE.md) can have shelves still empty.
 # ts_of_day under this cutoff + kNN hints empty -> force empty. 23400s UTC = 07:30 Lisbon (WEST summer).
+# Off: forward-in-time 2977 -> 2968 with it on, LOFO unchanged (docs/DECISIONS.md).
+PRE_OPEN_ENABLED = False
 PRE_OPEN_UTC_S = 23400
 PRE_OPEN_KNN_EMPTY = 0.25
 
 
 def _pre_opening_empty(filename: str | None, features: dict | None) -> bool:
-    if not filename:
+    if not PRE_OPEN_ENABLED or not filename:
         return False
     try:
         ts = int(Path(filename).stem)
