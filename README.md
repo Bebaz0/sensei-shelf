@@ -152,9 +152,11 @@ WORKERS=1 ./scripts/run_all.sh  # serial, if the parallel stages ever misbehave 
 ## Numbers and honest limits
 
 - **The data:** 14 cameras, 152 areas, 94 products, 181 images from one day (06:12 to 20:16).
-- **Labels:** the challenge provides none, so we labelled 1,936 areas ourselves with a written guide (`docs/LABELING.md`).
-- **Score on the labelled day:** 3,475 of 3,818 points (91%) with `scripts/run_all.sh`.
-- **A fairer estimate:** predicting each image from *earlier* images only, as on unseen evening images, we measured about 85%. We expect the hidden set to land nearer this figure.
+- **Labels:** the challenge provides none, so we labelled 1,947 areas ourselves with a written guide (`docs/LABELING.md`).
+- **Score on the labelled day:** 3,425 of 3,894 points (88.0%) with `scripts/run_all.sh` (VLM off).
+- **A fairer estimate:** predicting each image from *earlier* images only, as on unseen evening images: 3,099 of 3,894 (79.6%), and 488 of 608 (80.3%) on the last two images of each camera. We expect the hidden set (578 points) to land near this, about 460.
+- **Wrong products:** predicting forward in time, 71 of 100 labelled wrong-product areas are flagged, and every one of them names the product our labels give (taken from the same area's earlier labelled images, no VLM).
+- **The VLM is optional:** asking Gemini about the uncertain areas added +0.3% (inside noise) for about 11 minutes of API calls, so it is off by default. A full run takes about a minute.
 - **Where the points go:** most remaining errors are a half-empty area called full, and evening images, when shelves run down, are the hardest.
 - **Label noise is real:** two of our labellers disagreed on about 12% of stock levels, mostly half against full. No model can score above what the labels agree on.
 - **The shelf does not always follow the planogram.** Some areas hold a product that is not in the planogram's list at all (for example bagged lemons in a kiwi area). We can flag those as wrong, but not name them.
