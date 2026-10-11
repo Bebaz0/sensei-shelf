@@ -5,7 +5,7 @@
   "full": 0.8129
  },
  "weights": {
-  "gemini": 0.0,
+  "gemini": 0.7,
   "claude": 0.0,
   "knn": 1.0,
   "probe": 0.0,
