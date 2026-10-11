@@ -122,10 +122,7 @@ def stock_sources(features: dict | None, vlm: dict | None, sigma: float) -> dict
         if p and any(p.get(k) for k in LEVELS):
             sources[name] = _normalise(p)
     prev = ((features or {}).get("temporal") or {}).get("prev_stock")
-    trans = ((features or {}).get("temporal") or {}).get("trans")
-    if prev in LEVELS and isinstance(trans, dict):  # learned P(now | previous, gap), see neighbours.add_transitions
-        sources["temporal"] = _normalise(trans)
-    elif prev in LEVELS:
+    if prev in LEVELS:
         sources["temporal"] = {k: TEMPORAL_P if k == prev else (1 - TEMPORAL_P) / 2 for k in LEVELS}
     return sources
 

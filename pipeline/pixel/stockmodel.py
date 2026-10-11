@@ -19,8 +19,7 @@ MIN_TRAIN = 150  # no gb below this many training rows
 FOLDS = 10
 PRIOR = (0.06, 0.13, 0.81)  # kNN stand-in when an area has no labelled neighbour
 # Switches measured one by one on the forward-in-time score (docs/DECISIONS.md); a switch stays on only if it gained.
-OPTS = {"refs": False, "soft": False, "model": "multi"}  # model: multi | ordinal | both
-FAR = (0.05, 0.10, 0.15)  # Lab-grid cell distance (in 1/255 units) beyond which a cell no longer looks like the full bank
+OPTS = {"soft": False, "model": "multi"}  # model: multi | ordinal. Forward score 3008 (off) vs 3023 soft, 3028 ordinal, 3012 both
 
 
 def _crop_vec(path: str) -> tuple[np.ndarray, np.ndarray] | None:
@@ -56,18 +55,8 @@ class _Ordinal:
         return p / p.sum(axis=1, keepdims=True)
 
 
-class _Both:
-    def fit(self, X, y, sample_weight=None):
-        self.a = _make().fit(X, y, sample_weight=sample_weight)
-        self.b = _Ordinal().fit(X, y, sample_weight=sample_weight)
-        return self
-
-    def predict_proba(self, X):
-        return (self.a.predict_proba(X) + self.b.predict_proba(X)) / 2
-
-
 def _new_model():
-    return {"multi": _make, "ordinal": _Ordinal, "both": _Both}[OPTS["model"]]()
+    return {"multi": _make, "ordinal": _Ordinal}[OPTS["model"]]()
 
 
 def add_gb(out: dict, index: dict, labels: dict, causal: bool = False) -> None:
@@ -88,7 +77,6 @@ def add_gb(out: dict, index: dict, labels: dict, causal: bool = False) -> None:
         illum.setdefault((c, f), []).append(grid.mean((0, 1)))
     illum = {k: np.mean(v, 0) for k, v in illum.items()}
     base = {k: np.concatenate([(g - illum[k[:2]]).ravel(), b]) for k, (g, b) in vecs.items()}
-    cells = {k: (g - illum[k[:2]]).reshape(64, 3) for k, (g, _b) in vecs.items()}
     stacks: dict[tuple, list] = {}
     for k, v in base.items():
         stacks.setdefault((k[0], k[2]), []).append(v)
@@ -100,27 +88,6 @@ def add_gb(out: dict, index: dict, labels: dict, causal: bool = False) -> None:
         lab_frames.setdefault(c, {}).setdefault(f, {})[a] = {}
     add_neighbours(lab_frames, index, labels, causal=True)
 
-    lab_by_area: dict[tuple, list] = {}
-    for c, f, a, lv in rows:
-        if _ts(f) is not None and (c, f, a) in cells:
-            lab_by_area.setdefault((c, a), []).append((_ts(f), lv, (c, f, a)))
-
-    def ref_feats(k: tuple) -> np.ndarray:
-        """How far the crop is from the area's own labelled `full` and `empty` crops of EARLIER frames: share of the 64
-        Lab cells no full crop resembles (3 tolerances, top and bottom half), worst-cell distance, distance to empty."""
-        t = _ts(k[1])
-        earlier = [(lv, kk) for ts, lv, kk in lab_by_area.get((k[0], k[2]), []) if t is not None and ts < t]
-        full = np.stack([cells[kk] for lv, kk in earlier if lv == "full"]) if any(lv == "full" for lv, _ in earlier) else None
-        empty = [cells[kk] for lv, kk in earlier if lv == "empty"]
-        if full is None:
-            fr = np.zeros(8)
-        else:
-            d = np.linalg.norm(full - cells[k][None], axis=2).min(axis=0)  # (64,) distance to the nearest full crop per cell
-            fr = np.array([*(float((d > th).mean()) for th in FAR), float((d[:32] > 0.10).mean()), float((d[32:] > 0.10).mean()),
-                           float(d.mean()), float(np.sort(d)[-16:].mean()), 1.0])
-        de = float(np.linalg.norm(np.stack(empty) - cells[k][None], axis=2).mean(axis=1).min()) if empty else 0.5
-        return np.concatenate([fr, [de, float(bool(empty))]])
-
     def feat(k: tuple, f: dict) -> np.ndarray | None:
         if k not in base:
             return None
@@ -129,8 +96,7 @@ def add_gb(out: dict, index: dict, labels: dict, causal: bool = False) -> None:
         dt = (t["dt_prev_s"] or 0) / 3600 if t.get("prev_stock") else 12
         knn = np.log(np.array([tmp[lv] for lv in LEVELS] if tmp else PRIOR) + 1e-3)
         tod = (_ts(k[1]) or 0) % 86400 / 86400
-        extra = ref_feats(k) if OPTS["refs"] else []
-        return np.concatenate([base[k] - med[(k[0], k[2])], prev, [dt, tod], knn, extra])
+        return np.concatenate([base[k] - med[(k[0], k[2])], prev, [dt, tod], knn])
 
     train = [(k, x, LEVELS.index(lv)) for c, f, a, lv in rows
              if (x := feat(k := (c, f, a), lab_frames[c][f][a])) is not None and _ts(f) is not None]
