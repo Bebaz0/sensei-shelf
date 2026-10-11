@@ -137,3 +137,47 @@ def add_neighbours(out: dict, index: dict, labels: dict, causal: bool = False) -
                     "dt_prev_s": t - prev[0] if prev else None,
                     "dt_next_s": nxt[0] - t if nxt else None,
                 }
+
+
+GAP_EDGES_S = (5400, 14400)  # gap buckets between the previous labelled frame and the target: <1.5 h, 1.5-4 h, more
+TRANS_ALPHA = 0.5
+
+
+def add_transitions(out: dict, labels: dict, causal: bool = False) -> None:
+    """Add `temporal.trans` to every area of `out` that has a previous labelled frame: P(stock now | previous stock, gap),
+    counted over consecutive labelled frames of the same area anywhere in the labels, never using a pair that involves
+    the target frame (rule 6); `causal` also drops pairs that end at or after the target. Replaces a fixed persistence guess."""
+    by_area: dict[tuple[str, str], list[tuple[int, str]]] = {}
+    for c, f, a, lab in _usable(labels):
+        if _ts(f) is not None:
+            by_area.setdefault((c, a), []).append((_ts(f), _level(lab)))
+    pairs = []  # (earlier ts, later ts, previous level, level, bucket)
+    for (c, a), seq in by_area.items():
+        seq.sort()
+        for (t0, l0), (t1, l1) in zip(seq, seq[1:]):
+            pairs.append((c, a, t0, t1, l0, l1, sum(t1 - t0 >= e for e in GAP_EDGES_S)))
+
+    tables: dict[tuple[str, str], dict] = {}
+
+    def table(cam: str, filename: str) -> dict:
+        """{(bucket, previous level): {level: p}} from pairs not touching this frame."""
+        if (cam, filename) not in tables:
+            t = _ts(filename)
+            counts: dict[tuple[int, str], dict[str, float]] = {}
+            for c, a, t0, t1, l0, l1, b in pairs:
+                if t is not None and (t in (t0, t1) and c == cam or (causal and t1 >= t)):
+                    continue
+                counts.setdefault((b, l0), {k: 0.0 for k in LEVELS})[l1] += 1
+            tables[(cam, filename)] = {
+                key: {k: (v + TRANS_ALPHA) / (sum(c.values()) + 3 * TRANS_ALPHA) for k, v in c.items()} for key, c in counts.items()}
+        return tables[(cam, filename)]
+
+    for cam, frames in out.items():
+        for filename, areas in frames.items():
+            for feats in areas.values():
+                tmp = feats.get("temporal") or {}
+                if tmp.get("prev_stock") in LEVELS and tmp.get("dt_prev_s") is not None:
+                    bucket = sum(tmp["dt_prev_s"] >= e for e in GAP_EDGES_S)
+                    row = table(cam, filename).get((bucket, tmp["prev_stock"]))
+                    if row:
+                        tmp["trans"] = {k: round(v, 4) for k, v in row.items()}

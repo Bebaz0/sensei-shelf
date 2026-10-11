@@ -34,6 +34,7 @@ TEMPORAL_BELOW_GRID = (0.6, 0.7, 0.8, 0.9, 1.01)  # 1.01 = temporal always joins
 TEMPORAL_GRID = (0.0, 0.25, 0.5, 1.0)  # tie-breaker: small weights only
 NO_VLM = ("knn", "probe", "gb", "temporal")
 BIAS_GRID = (0.0, 0.1, 0.2, 0.4)
+ODDS_GRID = {"half": (-0.5, -0.25, 0.0, 0.25), "full": (-0.75, -0.5, -0.25, 0.0, 0.25)}
 KNN_WRONG_GRID = (0.0, 0.25, 0.5, 0.75, 1.0)
 MIN_WRONG_FOR_PLATT = 5
 # GAIN[truth, pred]: +1 correct, -2 predicted lower, -3 predicted higher (official rules).
@@ -73,7 +74,8 @@ def build_table(labels: dict, features: dict, vlm: dict, sigma: float) -> dict:
     }
 
 
-def stock_pred(t: dict, idx: np.ndarray, w: np.ndarray, bias: float, fallback: np.ndarray, below: float = 1.01) -> np.ndarray:
+def stock_pred(t: dict, idx: np.ndarray, w: np.ndarray, bias: float, fallback: np.ndarray, below: float = 1.01,
+               odds: tuple[float, float] = (0.0, 0.0)) -> np.ndarray:
     """Vectorised decide.stock_probs + decide.stock_level. below: temporal joins only where the visual top p is under it."""
     M = t["M"][idx].copy()
     jt = SOURCES.index("temporal")
@@ -85,6 +87,8 @@ def stock_pred(t: dict, idx: np.ndarray, w: np.ndarray, bias: float, fallback: n
     den = M @ w
     num = np.einsum("nsk,s,ns->nk", t["S"][idx], w, M)
     p = np.where(den[:, None] > 0, num / np.maximum(den, 1e-12)[:, None], fallback)
+    p = p * np.exp([0.0, *odds])
+    p = p / p.sum(axis=1, keepdims=True)
     ev = p @ GAIN - bias * np.arange(3)  # EV[pred] = sum_t p_t GAIN[t, pred]
     return ev.argmax(axis=1)  # first max = lower level on ties, as in decide
 
@@ -122,9 +126,12 @@ def fit(t: dict, idx: np.ndarray, allowed: tuple[str, ...] = SOURCES) -> dict:
                 best = (g, w, bias, below)
     _, w, bias, below = best
     params["temporal_below"] = float(below)
+    odds = max(itertools.product(ODDS_GRID["half"], ODDS_GRID["full"]),
+               key=lambda o: GAIN[t["T"][idx], stock_pred(t, idx, w, bias, fallback, below, o)].sum())
     params["weights"] = {s: float(w[j]) for j, s in enumerate(SOURCES)}
     params["stock_bias"] = float(bias)
-    level = stock_pred(t, idx, w, bias, fallback, below)
+    params["odds"] = {"half": odds[0], "full": odds[1]}
+    level = stock_pred(t, idx, w, bias, fallback, below, odds)
 
     has_x = idx[~np.isnan(t["X"][idx])]
     wrong = ~t["C"][has_x]
@@ -210,6 +217,36 @@ def rebuilt_features(features: dict, labels: dict, causal: bool) -> dict:
     return out
 
 
+def paired_bootstrap(pred_a: dict, pred_b: dict, gt: dict, n: int = 2000, seed: int = 0) -> tuple[float, float, float]:
+    """Mean per-area score difference B - A with a 95% interval, resampling whole frames (images), since the areas of one
+    image are not independent. Returns (mean, low, high); an interval that excludes 0 is a real difference."""
+    from pipeline.eval.score import score
+    per_frame = []
+    ra, rb = score(pred_a, gt)["breakdown"], score(pred_b, gt)["breakdown"]
+    for cam, frames in ra.items():
+        for fn, areas in frames.items():
+            d = [rb[cam][fn][a]["planogram"] + rb[cam][fn][a]["stock"] - areas[a]["planogram"] - areas[a]["stock"] for a in areas]
+            per_frame.append((sum(d), len(d)))
+    rng = np.random.default_rng(seed)
+    tot, cnt = np.array(per_frame, dtype=float).T
+    means = []
+    for _ in range(n):
+        pick = rng.integers(0, len(tot), len(tot))
+        means.append(tot[pick].sum() / cnt[pick].sum())
+    return float(tot.sum() / cnt.sum()), float(np.percentile(means, 2.5)), float(np.percentile(means, 97.5))
+
+
+def review_list(probs: dict, gt: dict, path: Path, limit_p: float = 0.1) -> int:
+    """Write the labels the forward model finds very unlikely (p of the labelled level below limit_p) for a human to
+    re-check, most likely borderline half/full calls. Returns how many."""
+    rows = sorted(((probs[(c, f, a)][LEVEL_OF_VALUE[float(g["stock_value"])]], c, f, a, LEVEL_OF_VALUE[float(g["stock_value"])])
+                   for c, fs in gt.items() for f, areas in fs.items() for a, g in areas.items() if (c, f, a) in probs), key=lambda r: r[0])
+    flagged = [r for r in rows if r[0] < limit_p]
+    path.write_text("# labels the forward-in-time model finds unlikely (p of the labelled level); re-check, do not auto-fix\n"
+                    + "\n".join(f"{c} {f} {a}  # labelled {lv}, p {p:.2f}" for p, c, f, a, lv in flagged) + "\n")
+    return len(flagged)
+
+
 def late_subset(gt: dict, n: int = 2) -> dict:
     """The last n labelled frames of each camera (proxy for the evening validation frames)."""
     return {cam: {fn: fs[fn] for fn in sorted(fs)[-n:]} for cam, fs in gt.items()}
@@ -264,7 +301,14 @@ if __name__ == "__main__":
                 probs: dict = {}
                 print(_row(src, lofo_predictions(labels, feats, vlm, planogram, allowed, probs), labels, probs))
             low: dict = {}
-            print(gate_report(lofo_predictions(labels, feats, vlm, planogram, NO_VLM, low=low), labels, low))
+            probs: dict = {}
+            fused = lofo_predictions(labels, feats, vlm, planogram, NO_VLM, probs=probs, low=low)
+            print(gate_report(fused, labels, low))
+            if causal:
+                kt = lofo_predictions(labels, feats, vlm, planogram, ("knn", "temporal"))
+                m, lo, hi = paired_bootstrap(kt, fused, labels)
+                print(f"kNN+gb+temporal minus kNN+temporal: {m:+.3f} pts/area, 95% frame-bootstrap [{lo:+.3f}, {hi:+.3f}]")
+                print(f"{review_list(probs, labels, Path('out/label_review.txt'))} labels flagged for review -> out/label_review.txt")
     elif args.fit:
         t = build_table(labels, features, vlm, DEFAULT_PARAMS["fill_sigma"])
         params = fit(t, np.arange(len(t["T"])))

@@ -34,6 +34,8 @@ DEFAULT_PARAMS = {
     "stock_bias": STOCK_BIAS,
     # Visual sources decide; the previous frame's stock only joins when their top probability is below this.
     "temporal_below": 0.8,
+    # Log-odds shifts of p_half and p_full against p_empty after fusion (calibration at the EV boundaries; fitted by lofo).
+    "odds": {"half": 0.0, "full": 0.0},
     # Confidence gate: an area below min_top_p, with p_wrong inside wrong_band or with no source is low_confidence
     # and goes to the VLM (decide --queue). Thresholds are hand-set until queued areas have VLM answers to tune on.
     "gate": {"min_top_p": 0.6, "wrong_band": [0.3, 0.7]},
@@ -95,7 +97,10 @@ def vlm_stock_probs(answer: dict, sigma: float) -> dict | None:
         p_e = _phi((EMPTY_MAX_PCT - fill) / sigma)
         p_f = 1 - _phi((HALF_MAX_PCT - fill) / sigma)
         parts.append({"empty": p_e, "half": max(1 - p_e - p_f, 0.0), "full": p_f})
-    if answer.get("stock") in LEVELS:
+    votes = answer.get("votes")
+    if isinstance(votes, dict):  # several votes (prompt v3, order swapped): their shares, shrunk toward uniform
+        parts.append({k: 0.8 * votes.get(k, 0.0) + 0.2 / 3 for k in LEVELS})
+    elif answer.get("stock") in LEVELS:
         conf = min(max(float(answer.get("confidence", 0.5)), 0.0), 1.0)
         parts.append({k: conf * (k == answer["stock"]) + (1 - conf) / 3 for k in LEVELS})
     if not parts:
@@ -117,7 +122,10 @@ def stock_sources(features: dict | None, vlm: dict | None, sigma: float) -> dict
         if p and any(p.get(k) for k in LEVELS):
             sources[name] = _normalise(p)
     prev = ((features or {}).get("temporal") or {}).get("prev_stock")
-    if prev in LEVELS:
+    trans = ((features or {}).get("temporal") or {}).get("trans")
+    if prev in LEVELS and isinstance(trans, dict):  # learned P(now | previous, gap), see neighbours.add_transitions
+        sources["temporal"] = _normalise(trans)
+    elif prev in LEVELS:
         sources["temporal"] = {k: TEMPORAL_P if k == prev else (1 - TEMPORAL_P) / 2 for k in LEVELS}
     return sources
 
@@ -136,7 +144,11 @@ def stock_probs(sources: dict[str, dict], params: dict) -> dict:
     visual = _fuse({n: p for n, p in sources.items() if n != "temporal"}, weights)
     if visual is not None and "temporal" in sources and max(visual.values()) >= params["temporal_below"]:
         sources = {n: p for n, p in sources.items() if n != "temporal"}
-    return _fuse(sources, weights) or _normalise(params["fallback_p"])
+    p = _fuse(sources, weights) or _normalise(params["fallback_p"])
+    shift = params.get("odds") or {}
+    if shift.get("half") or shift.get("full"):
+        p = _normalise({"empty": p["empty"], "half": p["half"] * math.exp(shift.get("half", 0.0)), "full": p["full"] * math.exp(shift.get("full", 0.0))})
+    return p
 
 
 def vlm_mismatch(vlm: dict | None) -> float | None:

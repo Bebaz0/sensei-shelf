@@ -5,6 +5,7 @@ Bump PROMPT_VERSION on every change to SYSTEM, area_prompt or answer_schema: it 
 from pipeline.common.config import STOCK_VALUES
 
 PROMPT_VERSION = "v2"
+PROMPT_VERSION_REF = "v3"  # exemplars + evidence fields + "lower when unsure"
 
 # Values of `observed` besides the candidate product ids.
 NO_PRODUCT = ("other", "empty", "occluded")
@@ -31,6 +32,16 @@ Product in the area:
 Write reason first: one short sentence on what you see inside the outline. confidence is your probability, from 0 to 1, that both stock and matches_expected are right."""
 
 
+SYSTEM_REF = SYSTEM.replace(
+    "Give your honest best estimate; do not lean low or high.",
+    "When you are unsure between two levels, answer the LOWER one: a wrongly high answer costs more than a wrongly low one.",
+) + """
+
+Evidence first: before the verdict give floor_visible_pct, the share of the area (0 to 100) where bare crate, tray or shelf floor shows between or instead of product, and view: clear, dark (too dark or washed out to judge) or blocked (a person, trolley or night blind hides it).
+
+Reference pictures: after the two views you may get flattened views of this same area from earlier today, each labelled by a human with its stock level. Compare the area now with them; the same crate can hold a different amount, and the labels are the store's own scale for full, half and empty."""
+
+
 def describe(product_id: str, name_pt: str, products: dict) -> str:
     """One line for a product: id, English name, unit and visual hint (Portuguese name only when it is unknown)."""
     info = products.get(product_id)
@@ -39,8 +50,11 @@ def describe(product_id: str, name_pt: str, products: dict) -> str:
     return f"{product_id}: {info['name_en']} [{info['unit']}] - {info['hint']}"
 
 
-def area_prompt(expected_id: str, candidates: dict[str, str], products: dict) -> str:
-    """User text for one area. candidates is {product_id: name_pt} for every product on that camera."""
+def area_prompt(expected_id: str, candidates: dict[str, str], products: dict, exemplar_levels: tuple = ()) -> str:
+    """User text for one area. candidates is {product_id: name_pt} for every product on that camera.
+    exemplar_levels: stock levels of the labelled reference pictures that follow the two views (3rd picture on)."""
+    ref = [f"Pictures 3 to {2 + len(exemplar_levels)} are earlier flattened views of this same area, labelled by a human: "
+           + ", ".join(f"picture {3 + i} = {lv}" for i, lv in enumerate(exemplar_levels)) + "."] if exemplar_levels else []
     lines = [
         "Expected product in this area (from the planogram):",
         describe(expected_id, candidates[expected_id], products),
@@ -49,14 +63,18 @@ def area_prompt(expected_id: str, candidates: dict[str, str], products: dict) ->
         *(describe(pid, name, products) for pid, name in sorted(candidates.items())),
         "",
         "Picture 1 is the context view, picture 2 is the flattened view. Answer for the area inside the magenta outline.",
+        *ref,
     ]
     return "\n".join(lines)
 
 
-def answer_schema(candidate_ids: list[str]) -> dict:
-    """JSON schema of the answer (the shape of one provider entry in vlm.json, see CONTRACTS.md)."""
+def answer_schema(candidate_ids: list[str], evidence: bool = False) -> dict:
+    """JSON schema of the answer (the shape of one provider entry in vlm.json, see CONTRACTS.md).
+    evidence: also ask floor_visible_pct and view, before the verdict (prompt v3)."""
     properties = {
         "reason": {"type": "string"},
+        **({"floor_visible_pct": {"type": "integer", "minimum": 0, "maximum": 100},
+            "view": {"type": "string", "enum": ["clear", "dark", "blocked"]}} if evidence else {}),
         "observed": {"type": "string", "enum": sorted(candidate_ids) + list(NO_PRODUCT)},
         "matches_expected": {"type": "boolean"},
         "fill_pct": {"type": "integer", "minimum": 0, "maximum": 100},
@@ -74,7 +92,9 @@ def clean_answer(answer: dict, candidate_ids: list[str]) -> dict:
         raise ValueError(f"bad observed: {answer.get('observed')!r}")
     if not isinstance(answer.get("matches_expected"), bool):
         raise ValueError(f"bad matches_expected: {answer.get('matches_expected')!r}")
+    extra = {k: answer[k] for k in ("floor_visible_pct", "view") if k in answer}
     return {
+        **extra,
         "stock": answer["stock"],
         "fill_pct": min(100, max(0, int(answer["fill_pct"]))),
         "matches_expected": answer["matches_expected"],
