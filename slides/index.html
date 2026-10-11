@@ -142,6 +142,16 @@
   .bar.base { color: var(--fg2); }
   .foot { margin-top: clamp(12px, 2.6vh, 28px); font-size: clamp(11px, 0.98vw, 14.5px); line-height: 1.5; color: var(--muted); max-width: 110ch; }
 
+  /* What went wrong: one card per area */
+  .cases { display: grid; grid-template-columns: repeat(4, 1fr); gap: clamp(10px, 1.4vw, 22px); margin-top: clamp(14px, 3vh, 34px); }
+  .case { border: 1px solid var(--line); background: var(--surface); border-radius: clamp(14px, 1.5vw, 24px); overflow: hidden; }
+  .case img { display: block; width: 100%; height: clamp(110px, 24vh, 240px); object-fit: contain; background: #05070f; }
+  .case figcaption { display: grid; gap: 2px; padding: clamp(10px, 1.6vh, 18px) clamp(12px, 1.3vw, 20px); }
+  .case small { font-family: var(--mono); font-size: clamp(10px, 0.9vw, 13px); letter-spacing: 0.1em; color: var(--accent); margin-bottom: 4px; }
+  .case span { font-size: clamp(10.5px, 0.9vw, 13.5px); color: var(--muted); margin-top: 4px; }
+  .case b { font-size: clamp(13px, 1.3vw, 20px); font-weight: 600; line-height: 1.2; }
+  .case .seen { color: var(--wrong); }
+
   /* Closing */
   .then { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(12px, 1.6vw, 26px); margin-top: clamp(18px, 4vh, 44px); max-width: 1100px; }
   .then div { border: 1px solid var(--line); background: var(--surface); border-radius: clamp(14px, 1.5vw, 24px); padding: clamp(14px, 2.6vh, 30px) clamp(16px, 1.8vw, 30px); }
@@ -177,9 +187,12 @@
     .step p, .help, .slide .hide-sm { display: none; }
     h2.stairs .row { flex-wrap: wrap; white-space: normal; }
     .then { grid-template-columns: 1fr; }
+    .cases { grid-template-columns: 1fr 1fr; }
   }
   /* index.html?static shows every slide in its final state (for screenshots and PDF export) */
   .static *, .static *::before, .static *::after { animation: none !important; transition: none !important; }
+  /* After a reload the current slide is shown as it was, without replaying its entry */
+  .restored .slide *, .restored .slide *::before, .restored .slide *::after { transition: none !important; }
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { animation: none !important; transition-duration: 0.01ms !important; transition-delay: 0ms !important; }
     .deck { scroll-behavior: auto; }
@@ -190,7 +203,7 @@
 
 <canvas id="sky" aria-hidden="true"></canvas>
 <div class="progress" aria-hidden="true"><i id="progress"></i></div>
-<div class="help" aria-hidden="true">← → move · N notes · F fullscreen · D demo · R reset timer</div>
+<div class="help" aria-hidden="true">← → move · N notes · F fullscreen · D demo · Shift+R reset timer</div>
 
 <main class="deck" id="deck">
 
@@ -239,7 +252,7 @@ The problem isn't that stores lack cameras. It's that their cameras can't tell t
     <div class="cols">
       <div>
         <span class="kicker rise"><i></i>The solution</span>
-        <h2 class="rise" style="--i:1">So we gave them <em>one.</em></h2>
+        <h2 class="rise" style="--i:1">So we found the <em>solution.</em></h2>
         <p class="lead rise" style="--i:3"><b>Is the right product in the right place?</b><br /><b>Is the shelf empty, half-stocked, or full?</b></p>
       </div>
       <figure class="shot rise" style="--i:4">
@@ -346,15 +359,46 @@ Today, we identify what needs attention. Tomorrow, the same insights could help 
 TrustyShelf. Smarter shelves, better decisions.</aside>
   </section>
 
+  <!-- 9. What went wrong -->
+  <section class="slide" data-title="What went wrong">
+    <span class="kicker rise"><i></i>What went wrong</span>
+    <h2 class="wide rise" style="--i:1">The shelf held products the planogram <em>has never heard of.</em></h2>
+    <div class="cases">
+      <figure class="case rise" style="--i:2">
+        <img src="assets/case-6376_3.jpg" alt="Camera crop of area 6376_3" />
+        <figcaption><small>AREA 6376_3</small><span>Planogram</span><b>Zespri gold kiwi, 500 g</b><span>On the shelf</span><b class="seen">Bagged lemons</b></figcaption>
+      </figure>
+      <figure class="case rise" style="--i:3">
+        <img src="assets/case-6443_3.jpg" alt="Camera crop of area 6443_3" />
+        <figcaption><small>AREA 6443_3</small><span>Planogram</span><b>Tasty tomatoes, 400 g</b><span>On the shelf</span><b class="seen">Red onions, 500 g</b></figcaption>
+      </figure>
+      <figure class="case rise" style="--i:4">
+        <img src="assets/case-6468_1.jpg" alt="Camera crop of area 6468_1" />
+        <figcaption><small>AREA 6468_1</small><span>Planogram</span><b>Abacaxi Super Sweet</b><span>On the shelf</span><b class="seen">Just a Regular Abacaxi</b></figcaption>
+      </figure>
+      <figure class="case rise" style="--i:5">
+        <img src="assets/case-6591_3.jpg" alt="Camera crop of area 6591_3" />
+        <figcaption><small>AREA 6591_3</small><span>Planogram</span><b>Potatoes, 4 kg bag</b><span>On the shelf</span><b class="seen">Mixed potatoes</b></figcaption>
+      </figure>
+    </div>
+    <div class="pills">
+      <span class="pill rise" style="--i:6">No ground truth: we labelled 1,909 areas by hand</span>
+      <span class="pill rise" style="--i:7">Two labellers disagreed on 12% of stock levels</span>
+      <span class="pill rise" style="--i:8">Evening shelves are harder than midday</span>
+    </div>
+    <aside>What went wrong. The planogram lists 94 products, but the shelf does not always follow it. In these four areas our teammate found a product that is not in the list at all, so the system can say "wrong product" but can never name it.
+We also had no ground truth, so we labelled 1,909 areas ourselves, and two labellers disagreed on about 12% of stock levels. And the evening, when shelves run down, is where we lose the most points.</aside>
+  </section>
+
 </main>
 
 <div class="notes" id="notes" aria-live="polite"></div>
 
 <div class="hud">
   <div class="meta">
-    <span id="counter">1 / 8</span>
+    <span id="counter">1 / 9</span>
     <span id="title" class="hide-sm"></span>
-    <button class="timer" id="timer" title="Pitch timer (R resets)">0:00 / 3:00</button>
+    <button class="timer" id="timer" title="Pitch timer (Shift+R or double-click resets)">0:00 / 3:00</button>
   </div>
   <div class="nav">
     <button id="prev" aria-label="Previous slide"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7" /></svg></button>
@@ -372,11 +416,21 @@ class PresentationController {
     this.slides = [...document.querySelectorAll('.slide')]
     this.index = 0
     this.startedAt = null
+    // A reload must not look like a restart: the browser can reload the page on its own (a discarded background tab
+    // after visiting the dashboard, an editor's live preview), so the timer and the "already shown" state are kept
+    // for this tab and restored.
+    const saved = this.load()
+    if (saved) {
+      this.startedAt = saved.startedAt
+      document.documentElement.classList.add('restored') // first slide appears in its final state, no replay
+    }
+    this.resizing = false
     this.el = Object.fromEntries(['progress', 'counter', 'title', 'timer', 'prev', 'next', 'notes', 'demo'].map((id) => [id, document.getElementById(id)]))
     this.reduced = matchMedia('(prefers-reduced-motion: reduce)').matches || document.documentElement.classList.contains('static')
 
     // The slide that fills the screen becomes active, which plays its entry animations.
     const observer = new IntersectionObserver((entries) => {
+      if (this.resizing) return // a resize or fullscreen change briefly shows a neighbour slide
       for (const entry of entries) {
         if (entry.isIntersecting) this.activate(this.slides.indexOf(entry.target))
       }
@@ -385,20 +439,47 @@ class PresentationController {
 
     this.el.prev.addEventListener('click', () => this.go(this.index - 1))
     this.el.next.addEventListener('click', () => this.go(this.index + 1))
-    this.el.timer.addEventListener('click', () => this.resetTimer())
+    this.el.timer.addEventListener('dblclick', () => this.resetTimer())
+    // While the window changes size, stay on the current slide and re-snap to it afterwards.
+    let settle
+    addEventListener('resize', () => {
+      this.resizing = true
+      clearTimeout(settle)
+      settle = setTimeout(() => {
+        this.slides[this.index].scrollIntoView({ behavior: 'auto', block: 'start' })
+        requestAnimationFrame(() => { this.resizing = false })
+      }, 250)
+    })
     document.addEventListener('keydown', (e) => this.onKey(e))
     addEventListener('hashchange', () => this.go(this.fromHash(), false))
     setInterval(() => this.tick(), 250)
 
     this.go(this.fromHash(), false)
-    this.activate(this.index)
+    this.activate(saved ? this.fromHash() : this.index)
+    if (saved) setTimeout(() => document.documentElement.classList.remove('restored'), 400)
     // Opening the deck on a later slide (index.html#5) should not swing the sky
     setTimeout(() => { this.ready = true }, 600)
   }
 
+  load() {
+    try {
+      return JSON.parse(sessionStorage.getItem('deck'))
+    } catch {
+      return null // storage blocked: the deck still works, a reload just starts over
+    }
+  }
+
+  save() {
+    try {
+      sessionStorage.setItem('deck', JSON.stringify({ startedAt: this.startedAt }))
+    } catch {
+      // see load()
+    }
+  }
+
   fromHash() {
     const n = parseInt(location.hash.slice(1), 10)
-    return Number.isFinite(n) ? n - 1 : 0
+    return Number.isFinite(n) ? Math.max(0, Math.min(this.slides.length - 1, n - 1)) : 0
   }
 
   go(index, smooth = true) {
@@ -412,6 +493,7 @@ class PresentationController {
     if (index > 0 && this.startedAt === null) this.startedAt = Date.now()
     if (this.ready && index !== this.index) this.sky.turn(index - this.index)
     this.index = index
+    this.save()
     this.slides.forEach((slide, i) => slide.classList.toggle('active', i === index))
     this.el.progress.style.transform = `scaleX(${(index + 1) / this.slides.length})`
     this.el.counter.textContent = `${index + 1} / ${this.slides.length}`
@@ -448,6 +530,7 @@ class PresentationController {
 
   resetTimer() {
     this.startedAt = this.index > 0 ? Date.now() : null
+    this.save()
     this.tick()
   }
 
@@ -461,7 +544,7 @@ class PresentationController {
     else if (key === 'home') this.go(0)
     else if (key === 'end') this.go(this.slides.length - 1)
     else if (key === 'n') this.el.notes.classList.toggle('open')
-    else if (key === 'r') this.resetTimer()
+    else if (key === 'r' && e.shiftKey) this.resetTimer() // Shift, so a stray key press cannot restart the timer
     else if (key === 'd') window.open(this.el.demo.href, '_blank', 'noopener')
     else if (key === 'f') document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen?.()
     else return
