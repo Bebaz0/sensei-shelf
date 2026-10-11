@@ -16,7 +16,7 @@ from pipeline.pixel.features import _load_image
 from pipeline.pixel.neighbours import LEVELS, _level, _ts, add_neighbours
 
 MIN_TRAIN = 150  # no gb below this many training rows
-FOLDS = 10
+FOLDS = 5
 PRIOR = (0.06, 0.13, 0.81)  # kNN stand-in when an area has no labelled neighbour
 # Switches measured one by one on the forward-in-time score (docs/DECISIONS.md); a switch stays on only if it gained.
 OPTS = {"soft": False, "model": "multi"}  # model: multi | ordinal. Forward score 3008 (off) vs 3023 soft, 3028 ordinal, 3012 both
