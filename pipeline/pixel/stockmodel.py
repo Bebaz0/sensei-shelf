@@ -20,7 +20,7 @@ MIN_TRAIN = 150  # no gb below this many training rows
 FOLDS = 5
 PRIOR = (0.06, 0.13, 0.81)  # kNN stand-in when an area has no labelled neighbour
 # Switches measured one by one on the forward-in-time score (docs/DECISIONS.md); a switch stays on only if it gained.
-OPTS = {"soft": False, "model": "multi"}  # model: multi | ordinal. Forward score 3008 (off) vs 3023 soft, 3028 ordinal, 3012 both
+OPTS = {"soft": False, "model": "multi", "floor": False}  # model: multi | ordinal. Forward score 3008 (off) vs 3023 soft, 3028 ordinal, 3012 both
 
 
 def _crop_vec(path: str) -> tuple[np.ndarray, np.ndarray] | None:
@@ -79,6 +79,12 @@ def add_gb(out: dict, index: dict, labels: dict, causal: bool = False) -> None:
     for k, v in base.items():
         stacks.setdefault((k[0], k[2]), []).append(v)
     med = {k: np.median(np.stack(v), 0) for k, v in stacks.items()}
+    # floor: label-free empty reference of each area, its crop with the least edge density over all frames (pre-opening
+    # and sold-out frames show the bare crate); distance to it tells exposed floor from product
+    floor: dict[tuple, np.ndarray] = {}
+    for k, v in base.items():
+        if (k[0], k[2]) not in floor or vecs[k][1][:8].sum() < floor[(k[0], k[2])][0]:
+            floor[(k[0], k[2])] = (vecs[k][1][:8].sum(), v)
 
     # kNN/temporal of the labelled rows themselves, built from earlier labels only (as a target frame sees them)
     lab_frames: dict = {}
@@ -94,7 +100,11 @@ def add_gb(out: dict, index: dict, labels: dict, causal: bool = False) -> None:
         dt = (t["dt_prev_s"] or 0) / 3600 if t.get("prev_stock") else 12
         knn = np.log(np.array([tmp[lv] for lv in LEVELS] if tmp else PRIOR) + 1e-3)
         tod = (_ts(k[1]) or 0) % 86400 / 86400
-        return np.concatenate([base[k] - med[(k[0], k[2])], prev, [dt, tod], knn])
+        x = [base[k] - med[(k[0], k[2])], prev, [dt, tod], knn]
+        if OPTS["floor"]:
+            fl = floor[(k[0], k[2])][1]
+            x += [[np.linalg.norm(base[k] - fl)], base[k][-16:-8] - fl[-16:-8]]  # distance and edge bands vs the floor
+        return np.concatenate(x)
 
     train = [(k, x, LEVELS.index(lv)) for c, f, a, lv in rows
              if (x := feat(k := (c, f, a), lab_frames[c][f][a])) is not None and _ts(f) is not None]
