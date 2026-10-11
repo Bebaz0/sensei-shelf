@@ -118,7 +118,7 @@ def test_vectorised_fit_matches_decide():
     assert params["weights"]["gemini"] > params["weights"]["knn"]
     w = np.array([params["weights"][s] for s in SOURCES])
     fb = np.array([params["fallback_p"][k] for k in LEVELS])
-    levels = stock_pred(t, idx, w, params["stock_bias"], fb)
+    levels = stock_pred(t, idx, w, params["stock_bias"], fb, params["temporal_below"])
     pws = p_wrong_vec(t, idx, params["platt"]["a"], params["platt"]["b"], params["knn_wrong_weight"])
     rows = decide_frames(sorted({f for f in t["frame"]}), planogram, features, vlm, params)
     flat = [r for fn in sorted(rows["6215"]) for r in rows["6215"][fn].values()]
@@ -146,10 +146,12 @@ def test_stacker_runs_on_synthetic_labels():
     assert all(set(pred["6215"][fn]) == set(areas) for fn, areas in labels["6215"].items())
 
 
-def test_vectorised_matches_scalar_on_random_inputs():
+def test_vectorised_matches_scalar_on_random_inputs(monkeypatch):
     import random
     import numpy as np
+    import pipeline.decide.decide as decide_mod
     from pipeline.decide.lofo import SOURCES, build_table, p_wrong_vec, stock_pred
+    monkeypatch.setattr(decide_mod, "product_changed", lambda *a: False)  # restock rule is not in the vectorised path
     rng = random.Random(1)
     planogram = load_planogram()
     cam = "6215"
@@ -164,15 +166,15 @@ def test_vectorised_matches_scalar_on_random_inputs():
             vlm[cam].setdefault(fn, {})[a] = {"gemini": ans(), "claude": ans()}
             probs = lambda: (lambda w: {k: x / sum(w) for k, x in zip(LEVELS, w)})([rng.random() + 0.01 for _ in LEVELS])
             features[cam].setdefault(fn, {})[a] = {k: v for k, v in {"knn": rng.choice([None, probs() | {"p_wrong": rng.random()}]),
-                                                                    "probe": rng.choice([None, probs()]),
+                                                                    "probe": rng.choice([None, probs()]), "gb": rng.choice([None, probs()]),
                                                                     "temporal": {"prev_stock": rng.choice([None, *LEVELS])}}.items() if v}
-    params = {**PARAMS, "weights": {"gemini": 1.0, "claude": 0.5, "knn": 2.0, "probe": 1.5, "temporal": 0.5},
+    params = {**PARAMS, "weights": {"gemini": 1.0, "claude": 0.5, "knn": 2.0, "probe": 1.5, "gb": 1.0, "temporal": 0.5},
               "knn_wrong_weight": 0.4, "stock_bias": 0.1}
     t = build_table(labels, features, vlm, params["fill_sigma"])
     idx = np.arange(len(t["T"]))
     w = np.array([params["weights"][s] for s in SOURCES])
     fb = np.array([params["fallback_p"][k] for k in LEVELS])
-    levels = stock_pred(t, idx, w, params["stock_bias"], fb)
+    levels = stock_pred(t, idx, w, params["stock_bias"], fb, params["temporal_below"])
     pws = p_wrong_vec(t, idx, params["platt"]["a"], params["platt"]["b"], params["knn_wrong_weight"])
     rows = decide_frames(sorted(set(t["frame"])), planogram, features, vlm, params)
     flat = [r for fn in sorted(rows[cam]) for r in rows[cam][fn].values()]
@@ -213,3 +215,24 @@ def test_temporal_only_breaks_ties():
     assert sure["pred"]["stock_level"] == "full"  # restocked, clearly full shelf is not overridden
     alone = decide_area({}, prev_half, None, params)
     assert alone["low_confidence"]  # the previous frame alone is no evidence: still queued for the VLM
+
+
+def test_temporal_joins_only_when_visual_is_unsure():
+    from pipeline.decide.decide import DEFAULT_PARAMS, stock_probs
+    params = {**DEFAULT_PARAMS, "weights": {"knn": 1.0, "temporal": 1.0}}
+    prev_empty = {"empty": 0.8, "half": 0.1, "full": 0.1}
+    sure = {"knn": {"empty": 0.05, "half": 0.05, "full": 0.9}, "temporal": prev_empty}
+    unsure = {"knn": {"empty": 0.2, "half": 0.3, "full": 0.5}, "temporal": prev_empty}
+    assert stock_probs(sure, params)["full"] == 0.9
+    assert stock_probs(unsure, params)["empty"] > 0.4
+
+
+def test_product_change_drops_temporal_and_votes_full():
+    from pipeline.decide.decide import DEFAULT_PARAMS, decide_area
+    area = {"area_id": "x_1", "product_id": "111"}
+    feats = {"knn": {"empty": 0.4, "half": 0.3, "full": 0.3, "p_wrong": 0.1},
+             "temporal": {"prev_stock": "empty", "prev_product": "222"}}
+    vlm = {"gemini": {"matches_expected": True, "observed": "111", "confidence": 0.9}}
+    changed = decide_area(area, feats, vlm, DEFAULT_PARAMS)
+    same = decide_area(area, {**feats, "temporal": {"prev_stock": "empty", "prev_product": None}}, vlm, DEFAULT_PARAMS)
+    assert changed["p_stock"]["full"] > same["p_stock"]["full"]

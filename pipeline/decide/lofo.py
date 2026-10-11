@@ -10,6 +10,7 @@ frame with decide.decide_frames, then score all held-out predictions together. F
   python -m pipeline.decide.lofo                 # LOFO report
   python -m pipeline.decide.lofo --ablation      # one row per source set (pitch table)
   python -m pipeline.decide.lofo --gate          # no-VLM LOFO split into confident vs queued-for-VLM areas
+  python -m pipeline.decide.lofo --forward       # forward-in-time: kNN and temporal use only earlier frames
   python -m pipeline.decide.lofo --fit           # fit on every label, write pipeline/decide/params.json
 """
 import argparse
@@ -27,10 +28,11 @@ from pipeline.decide.decide import (
     DEFAULT_PARAMS, LEVELS, PARAMS_PATH, decide_frames, knn_wrong, stock_sources, to_submission, vlm_mismatch,
 )
 
-SOURCES = ("gemini", "claude", "knn", "probe", "temporal")
+SOURCES = ("gemini", "claude", "knn", "probe", "gb", "temporal")
 WEIGHT_GRID = (0.0, 1.0, 2.0)
+TEMPORAL_BELOW_GRID = (0.6, 0.7, 0.8, 0.9, 1.01)  # 1.01 = temporal always joins (old behaviour)
 TEMPORAL_GRID = (0.0, 0.25, 0.5, 1.0)  # tie-breaker: small weights only
-NO_VLM = ("knn", "probe", "temporal")
+NO_VLM = ("knn", "probe", "gb", "temporal")
 BIAS_GRID = (0.0, 0.1, 0.2, 0.4)
 KNN_WRONG_GRID = (0.0, 0.25, 0.5, 0.75, 1.0)
 MIN_WRONG_FOR_PLATT = 5
@@ -71,10 +73,17 @@ def build_table(labels: dict, features: dict, vlm: dict, sigma: float) -> dict:
     }
 
 
-def stock_pred(t: dict, idx: np.ndarray, w: np.ndarray, bias: float, fallback: np.ndarray) -> np.ndarray:
-    """Vectorised decide.stock_probs + decide.stock_level."""
-    den = t["M"][idx] @ w
-    num = np.einsum("nsk,s,ns->nk", t["S"][idx], w, t["M"][idx])
+def stock_pred(t: dict, idx: np.ndarray, w: np.ndarray, bias: float, fallback: np.ndarray, below: float = 1.01) -> np.ndarray:
+    """Vectorised decide.stock_probs + decide.stock_level. below: temporal joins only where the visual top p is under it."""
+    M = t["M"][idx].copy()
+    jt = SOURCES.index("temporal")
+    wv = w.copy()
+    wv[jt] = 0
+    dv = M @ wv
+    pv = np.einsum("nsk,s,ns->nk", t["S"][idx], wv, M) / np.maximum(dv, 1e-12)[:, None]
+    M[:, jt] *= ~((dv > 0) & (pv.max(axis=1) >= below))
+    den = M @ w
+    num = np.einsum("nsk,s,ns->nk", t["S"][idx], w, M)
     p = np.where(den[:, None] > 0, num / np.maximum(den, 1e-12)[:, None], fallback)
     ev = p @ GAIN - bias * np.arange(3)  # EV[pred] = sum_t p_t GAIN[t, pred]
     return ev.argmax(axis=1)  # first max = lower level on ties, as in decide
@@ -101,20 +110,21 @@ def fit(t: dict, idx: np.ndarray, allowed: tuple[str, ...] = SOURCES) -> dict:
     params["fallback_p"] = {lv: round(float(p), 4) for lv, p in zip(LEVELS, fallback)}
 
     present = [j for j, s in enumerate(SOURCES) if s in allowed and t["M"][idx, j].any()]
-    best = (-np.inf, None, None)
+    best = (-np.inf, None, None, None)
     grids = [TEMPORAL_GRID if SOURCES[j] == "temporal" else WEIGHT_GRID for j in present]
     for ws in itertools.product(*grids):
         w = np.zeros(len(SOURCES))
         w[present] = ws
-        for bias in BIAS_GRID:
-            level = stock_pred(t, idx, w, bias, fallback)
+        for bias, below in itertools.product(BIAS_GRID, TEMPORAL_BELOW_GRID):
+            level = stock_pred(t, idx, w, bias, fallback, below)
             g = GAIN[t["T"][idx], level].sum()
             if g > best[0]:
-                best = (g, w, bias)
-    _, w, bias = best
+                best = (g, w, bias, below)
+    _, w, bias, below = best
+    params["temporal_below"] = float(below)
     params["weights"] = {s: float(w[j]) for j, s in enumerate(SOURCES)}
     params["stock_bias"] = float(bias)
-    level = stock_pred(t, idx, w, bias, fallback)
+    level = stock_pred(t, idx, w, bias, fallback, below)
 
     has_x = idx[~np.isnan(t["X"][idx])]
     wrong = ~t["C"][has_x]
@@ -133,7 +143,7 @@ def restrict(features: dict, vlm: dict, allowed: tuple[str, ...]) -> tuple[dict,
         return {k: v for k, v in area.items() if k not in drop} if isinstance(area, dict) else area
     nest = lambda d, drop: {c: {f: {a: keep(v, drop) for a, v in areas.items()} for f, areas in fs.items()}
                             for c, fs in d.items()}
-    return nest(features, tuple(s for s in ("knn", "probe", "temporal") if s not in allowed)), \
+    return nest(features, tuple(s for s in ("knn", "probe", "gb", "temporal") if s not in allowed)), \
         nest(vlm, tuple(s for s in ("gemini", "claude") if s not in allowed))
 
 
@@ -183,6 +193,23 @@ def score_pred(pred: dict, gt: dict) -> dict:
             "compliance": sum(a["planogram"] for a in pts), "stock": sum(a["stock"] for a in pts)}
 
 
+def rebuilt_features(features: dict, labels: dict, causal: bool) -> dict:
+    """features with knn and temporal rebuilt from the given labels; causal = earlier frames only (the deployment case:
+    validation is later in the evening). Rebuilding both ways keeps a stale features.json out of the comparison."""
+    from pipeline.common.config import CROPS_INDEX
+    from pipeline.pixel.neighbours import add_neighbours
+    from pipeline.pixel.stockmodel import add_gb
+    out = json.loads(json.dumps(features))
+    for areas in (a for fs in out.values() for f in fs.values() for a in f.values()):
+        areas.pop("knn", None)
+        areas.pop("temporal", None)
+        areas.pop("gb", None)
+    index = _load(CROPS_INDEX)
+    add_neighbours(out, index, labels, causal=causal)
+    add_gb(out, index, labels, causal=causal)
+    return out
+
+
 def late_subset(gt: dict, n: int = 2) -> dict:
     """The last n labelled frames of each camera (proxy for the evening validation frames)."""
     return {cam: {fn: fs[fn] for fn in sorted(fs)[-n:]} for cam, fs in gt.items()}
@@ -219,6 +246,7 @@ if __name__ == "__main__":
     ap.add_argument("--planogram", type=Path, default=PLANOGRAM)
     ap.add_argument("--ablation", action="store_true", help="one LOFO row per source set")
     ap.add_argument("--fit", action="store_true", help="fit on every label and write params.json")
+    ap.add_argument("--forward", action="store_true", help="LOFO with kNN and temporal from earlier frames only")
     ap.add_argument("--gate", action="store_true", help="no-VLM LOFO split into confident vs queued areas")
     ap.add_argument("--params", type=Path, default=PARAMS_PATH)
     args = ap.parse_args()
@@ -228,7 +256,16 @@ if __name__ == "__main__":
     n_areas = sum(len(a) for fs in labels.values() for a in fs.values())
     print(f"{n_areas} labelled areas in {sum(len(fs) for fs in labels.values())} frames")
 
-    if args.fit:
+    if args.forward:
+        for name, causal in (("LOFO (both sides)", False), ("forward in time", True)):
+            feats = rebuilt_features(features, labels, causal)
+            print(f"== {name}")
+            for src, allowed in (("prior only", ()), ("kNN only", ("knn",)), ("temporal only", ("temporal",)), ("kNN + temporal", ("knn", "temporal")), ("gb only", ("gb",)), ("kNN + gb + temporal", NO_VLM)):
+                probs: dict = {}
+                print(_row(src, lofo_predictions(labels, feats, vlm, planogram, allowed, probs), labels, probs))
+            low: dict = {}
+            print(gate_report(lofo_predictions(labels, feats, vlm, planogram, NO_VLM, low=low), labels, low))
+    elif args.fit:
         t = build_table(labels, features, vlm, DEFAULT_PARAMS["fill_sigma"])
         params = fit(t, np.arange(len(t["T"])))
         args.params.write_text(json.dumps(params, indent=1) + "\n")

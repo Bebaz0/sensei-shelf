@@ -25,13 +25,15 @@ FALLBACK_P = {"empty": 0.1, "half": 0.4, "full": 0.5}
 # Defaults until lofo.py --fit writes params.json. Weights are per stock source; a missing source is skipped.
 DEFAULT_PARAMS = {
     "fallback_p": FALLBACK_P,
-    "weights": {"gemini": 1.0, "claude": 1.0, "knn": 1.0, "probe": 1.0, "temporal": 0.25},
+    "weights": {"gemini": 1.0, "claude": 1.0, "knn": 1.0, "probe": 1.0, "gb": 1.0, "temporal": 0.25},
     # p_wrong = sigmoid(a + b * x), x in [-1, 1] = mean over VLMs of (+conf if mismatch else -conf).
     # Conservative: a mismatch needs confidence > 0.6 to be called non-compliant.
     "platt": {"a": -1.5, "b": 2.5},
     "knn_wrong_weight": 0.5,  # share of the same-area kNN p_wrong in the final p_wrong
     "fill_sigma": 10.0,  # VLM fill_pct uncertainty, in percentage points
     "stock_bias": STOCK_BIAS,
+    # Visual sources decide; the previous frame's stock only joins when their top probability is below this.
+    "temporal_below": 0.8,
     # Confidence gate: an area below min_top_p, with p_wrong inside wrong_band or with no source is low_confidence
     # and goes to the VLM (decide --queue). Thresholds are hand-set until queued areas have VLM answers to tune on.
     "gate": {"min_top_p": 0.6, "wrong_band": [0.3, 0.7]},
@@ -40,6 +42,9 @@ DEFAULT_PARAMS = {
 # Previous labelled frame's stock as a low-weight vote: it only tips a split decision, a confident source (e.g. a
 # restocked, clearly full shelf) outweighs it. Share of its vote on the previous level.
 TEMPORAL_P = 0.8
+
+# A product change since the previous frame means the box was restocked: temporal is dropped and a full vote joins.
+RESTOCK_P = {"empty": 0.05, "half": 0.1, "full": 0.85}
 
 # Mentor thresholds on covered share: empty 0-10%, half 10-50%, full above 50%.
 EMPTY_MAX_PCT, HALF_MAX_PCT = 10.0, 50.0
@@ -107,7 +112,7 @@ def stock_sources(features: dict | None, vlm: dict | None, sigma: float) -> dict
             p = vlm_stock_probs(answer, sigma)
             if p:
                 sources[provider] = p
-    for name in ("knn", "probe"):
+    for name in ("knn", "probe", "gb"):
         p = (features or {}).get(name)
         if p and any(p.get(k) for k in LEVELS):
             sources[name] = _normalise(p)
@@ -117,13 +122,21 @@ def stock_sources(features: dict | None, vlm: dict | None, sigma: float) -> dict
     return sources
 
 
-def stock_probs(sources: dict[str, dict], params: dict) -> dict:
-    """v1: weighted average of the sources that answered, else the fallback prior."""
-    weights = {name: params["weights"].get(name, 0.0) for name in sources}
-    total = sum(weights.values())
+def _fuse(sources: dict[str, dict], weights: dict) -> dict | None:
+    total = sum(weights[n] for n in sources)
     if total <= 0:
-        return _normalise(params["fallback_p"])
+        return None
     return _normalise({k: sum(weights[n] * sources[n][k] for n in sources) / total for k in LEVELS})
+
+
+def stock_probs(sources: dict[str, dict], params: dict) -> dict:
+    """v1: weighted average of the visual sources; the temporal vote joins only when they are unsure
+    (top p below params["temporal_below"]) or when there is no visual source. No source: the fallback prior."""
+    weights = {name: params["weights"].get(name, 0.0) for name in sources}
+    visual = _fuse({n: p for n, p in sources.items() if n != "temporal"}, weights)
+    if visual is not None and "temporal" in sources and max(visual.values()) >= params["temporal_below"]:
+        sources = {n: p for n, p in sources.items() if n != "temporal"}
+    return _fuse(sources, weights) or _normalise(params["fallback_p"])
 
 
 def vlm_mismatch(vlm: dict | None) -> float | None:
@@ -167,10 +180,28 @@ def _observed(vlm: dict | None) -> str | None:
     return None
 
 
+def product_changed(area: dict, features: dict | None, vlm: dict | None) -> bool:
+    """True when the product seen now differs from the previous labelled frame's. Now = a VLM's observed id on a
+    mismatch, else the planogram product, and only when a VLM answered; the previous frame's = its observed id if it was non-compliant, else planogram."""
+    prev = (features or {}).get("temporal") or {}
+    if prev.get("prev_stock") is None:
+        return False
+    before = prev.get("prev_product") or area.get("product_id")
+    answers = [a for a in ((vlm or {}).get(p) for p in ("gemini", "claude")) if a and "matches_expected" in a]
+    if not answers:  # the current product is unknown without a VLM reading: a stable mismatch must not look like a change
+        return False
+    now = _observed(vlm) if any(a["matches_expected"] is False for a in answers) else area.get("product_id")
+    return bool(before and now and str(before) != str(now))
+
+
 def decide_area(area: dict, features: dict | None, vlm: dict | None, params: dict) -> dict:
     """One results.json row. Never raises: broken inputs fall back to the prior and compliant."""
     try:
         sources = stock_sources(features, vlm, params["fill_sigma"])
+        if product_changed(area, features, vlm):
+            sources.pop("temporal", None)
+            sources["restock"] = RESTOCK_P
+            params = {**params, "weights": {**params["weights"], "restock": 1.0}}
         p_stock = stock_probs(sources, params)
         level = stock_level(p_stock, params["stock_bias"])
         pw = p_wrong(features, vlm, params)

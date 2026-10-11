@@ -34,6 +34,12 @@ def _ts(filename: str) -> int | None:
         return None
 
 
+def _before(f: str, filename: str) -> bool:
+    """True if frame f was taken before filename (timestamps in the file names)."""
+    a, b = _ts(f), _ts(filename)
+    return a is not None and b is not None and a < b
+
+
 def _tod_dist(a: int, b: int) -> int:
     """Seconds between two timestamps' times of day, wrapping at midnight."""
     d = abs(a - b) % DAY_S
@@ -52,10 +58,11 @@ def _vote(prior: dict, votes: list[tuple[float, str]]) -> dict:
     return {k: (ALPHA * prior[k] + sum(w for w, v in votes if v == k)) / total for k in prior}
 
 
-def add_neighbours(out: dict, index: dict, labels: dict) -> None:
+def add_neighbours(out: dict, index: dict, labels: dict, causal: bool = False) -> None:
     """Add `knn` and `temporal` (CONTRACTS.md features.json) to every area of `out`, in place.
 
     `index` is the whole crops index (train crops are the bank during a validation run). No labels: nothing added.
+    causal: only labels from EARLIER frames of the same camera are used (forward-in-time evaluation).
     """
     rows = _usable(labels)
     if not rows:
@@ -79,7 +86,7 @@ def add_neighbours(out: dict, index: dict, labels: dict) -> None:
     def prior(cam: str, filename: str) -> tuple[dict, float]:
         """Stock distribution and wrong-product rate of all labels outside this frame (add-one smoothed)."""
         if (cam, filename) not in priors:
-            rest = [lab for c, f, _, lab in rows if (c, f) != (cam, filename)]
+            rest = [lab for c, f, _, lab in rows if (c, f) != (cam, filename) and (not causal or _before(f, filename))]
             n = len(rest) + len(LEVELS)
             stock = {k: (1 + sum(_level(lab) == k for lab in rest)) / n for k in LEVELS}
             wrong = (1 + sum(lab.get("planogram_compliant") is False for lab in rest)) / (len(rest) + 2)
@@ -101,7 +108,7 @@ def add_neighbours(out: dict, index: dict, labels: dict) -> None:
             p_stock, p_wrong = prior(cam, filename)
             t = _ts(filename)
             for area, feats in areas.items():
-                others = [(f, lab) for f, lab in by_area.get((cam, area), []) if f != filename]
+                others = [(f, lab) for f, lab in by_area.get((cam, area), []) if f != filename and (not causal or _before(f, filename))]
                 h = hist(cam, filename, area)
                 stock_votes, wrong_votes = [], []
                 if h is not None:
@@ -125,6 +132,8 @@ def add_neighbours(out: dict, index: dict, labels: dict) -> None:
                 feats["temporal"] = {
                     "prev_stock": _level(prev[1]) if prev else None,
                     "next_stock": _level(nxt[1]) if nxt else None,
+                    # product in the previous labelled frame: its observed id when it was not the planogram one
+                    "prev_product": prev[1].get("observed_product_id") if prev and prev[1].get("planogram_compliant") is False else None,
                     "dt_prev_s": t - prev[0] if prev else None,
                     "dt_next_s": nxt[0] - t if nxt else None,
                 }

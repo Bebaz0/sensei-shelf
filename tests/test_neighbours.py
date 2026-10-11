@@ -48,7 +48,7 @@ def test_no_candidates_gives_no_knn_and_temporal_handles_last_frame(tmp_path):
     assert "knn" not in a
     assert a["temporal"]["prev_stock"] is None and a["temporal"]["next_stock"] is None
     b = out["c1"]["200.jpg"]["c1_1"]["temporal"]
-    assert b == {"prev_stock": "full", "next_stock": None, "dt_prev_s": 100, "dt_next_s": None}
+    assert b == {"prev_stock": "full", "next_stock": None, "dt_prev_s": 100, "dt_next_s": None, "prev_product": None}
 
 
 def test_closer_time_of_day_wins(tmp_path):
