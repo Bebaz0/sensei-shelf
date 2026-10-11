@@ -36,7 +36,7 @@ TEMPORAL_BELOW_GRID = (0.6, 0.7, 0.8, 0.9, 1.01)  # 1.01 = temporal always joins
 TEMPORAL_GRID = (0.0, 0.25, 0.5, 1.0)  # tie-breaker: small weights only
 NO_VLM = ("knn", "probe", "gb", "temporal")
 BIAS_GRID = (0.0, 0.1, 0.2, 0.4)
-LATE_BIAS_GRID = (0.0,)  # extra bias on evening frames; (0.0, 0.1, 0.2, 0.4, 0.8) once its A/B gains
+LATE_BIAS_GRID = (0.0, 0.1, 0.2, 0.4, 0.8)  # extra bias on evening frames, fitted after the rest
 ODDS_GRID = {"half": (-0.5, -0.25, 0.0, 0.25), "full": (-0.75, -0.5, -0.25, 0.0, 0.25)}
 KNN_WRONG_GRID = (0.0, 0.25, 0.5, 0.75, 1.0)
 MIN_WRONG_FOR_PLATT = 5
