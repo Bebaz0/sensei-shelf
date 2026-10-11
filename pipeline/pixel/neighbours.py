@@ -23,10 +23,10 @@ ALPHA = 1.0  # weight of the prior in the vote; one identical neighbour gives (p
 TIME_SCALE_S: float | None = 10 * 3600
 # Look-distance scale of the wrong-product vote relative to the stock vote's (1 = same kernel). Smaller = only near-identical
 # crops vote on compliance, so 2 wrong pre-opening frames are not outvoted by 10 compliant but different-looking ones.
-# Compliance-only sweep on 1909 labels: (tau 1, alpha 1) LOFO 1819 forward 1762; (0.5, 0.1) 1858 / 1801. Full-pipeline
-# confirmation pending, so the old behaviour (1, ALPHA) stays the default.
-WRONG_TAU = 1.0
-WRONG_ALPHA = ALPHA  # prior weight in the wrong-product vote
+# A small prior lets 2 same-looking wrong frames outvote the global ~5% wrong-product rate. Full pipeline, no VLM, 1909
+# labels: (tau 1, alpha 1) LOFO 3384 forward 2998; (0.5, 0.1) 3423 / 3037, frame bootstrap > 0 both (docs/DECISIONS.md).
+WRONG_TAU = 0.5
+WRONG_ALPHA = 0.1  # prior weight in the wrong-product vote
 DAY_S = 86400
 
 
