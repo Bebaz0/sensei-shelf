@@ -25,14 +25,28 @@ FALLBACK_P = {"empty": 0.1, "half": 0.4, "full": 0.5}
 # Defaults until lofo.py --fit writes params.json. Weights are per stock source; a missing source is skipped.
 DEFAULT_PARAMS = {
     "fallback_p": FALLBACK_P,
-    "weights": {"gemini": 1.0, "claude": 1.0, "knn": 1.0, "probe": 1.0},
+    "weights": {"gemini": 1.0, "claude": 1.0, "knn": 1.0, "probe": 1.0, "gb": 1.0, "temporal": 0.25},
     # p_wrong = sigmoid(a + b * x), x in [-1, 1] = mean over VLMs of (+conf if mismatch else -conf).
     # Conservative: a mismatch needs confidence > 0.6 to be called non-compliant.
     "platt": {"a": -1.5, "b": 2.5},
     "knn_wrong_weight": 0.5,  # share of the same-area kNN p_wrong in the final p_wrong
     "fill_sigma": 10.0,  # VLM fill_pct uncertainty, in percentage points
     "stock_bias": STOCK_BIAS,
+    # Visual sources decide; the previous frame's stock only joins when their top probability is below this.
+    "temporal_below": 0.8,
+    # Log-odds shifts of p_half and p_full against p_empty after fusion (calibration at the EV boundaries; fitted by lofo).
+    "odds": {"half": 0.0, "full": 0.0},
+    # Confidence gate: an area below min_top_p, with p_wrong inside wrong_band or with no source is low_confidence
+    # and goes to the VLM (decide --queue). Thresholds are hand-set until queued areas have VLM answers to tune on.
+    "gate": {"min_top_p": 0.6, "wrong_band": [0.3, 0.7]},
 }
+
+# Previous labelled frame's stock as a low-weight vote: it only tips a split decision, a confident source (e.g. a
+# restocked, clearly full shelf) outweighs it. Share of its vote on the previous level.
+TEMPORAL_P = 0.8
+
+# A product change since the previous frame means the box was restocked: temporal is dropped and a full vote joins.
+RESTOCK_P = {"empty": 0.05, "half": 0.1, "full": 0.85}
 
 # Mentor thresholds on covered share: empty 0-10%, half 10-50%, full above 50%.
 EMPTY_MAX_PCT, HALF_MAX_PCT = 10.0, 50.0
@@ -100,20 +114,35 @@ def stock_sources(features: dict | None, vlm: dict | None, sigma: float) -> dict
             p = vlm_stock_probs(answer, sigma)
             if p:
                 sources[provider] = p
-    for name in ("knn", "probe"):
+    for name in ("knn", "probe", "gb"):
         p = (features or {}).get(name)
         if p and any(p.get(k) for k in LEVELS):
             sources[name] = _normalise(p)
+    prev = ((features or {}).get("temporal") or {}).get("prev_stock")
+    if prev in LEVELS:
+        sources["temporal"] = {k: TEMPORAL_P if k == prev else (1 - TEMPORAL_P) / 2 for k in LEVELS}
     return sources
 
 
-def stock_probs(sources: dict[str, dict], params: dict) -> dict:
-    """v1: weighted average of the sources that answered, else the fallback prior."""
-    weights = {name: params["weights"].get(name, 0.0) for name in sources}
-    total = sum(weights.values())
+def _fuse(sources: dict[str, dict], weights: dict) -> dict | None:
+    total = sum(weights[n] for n in sources)
     if total <= 0:
-        return _normalise(params["fallback_p"])
+        return None
     return _normalise({k: sum(weights[n] * sources[n][k] for n in sources) / total for k in LEVELS})
+
+
+def stock_probs(sources: dict[str, dict], params: dict) -> dict:
+    """v1: weighted average of the visual sources; the temporal vote joins only when they are unsure
+    (top p below params["temporal_below"]) or when there is no visual source. No source: the fallback prior."""
+    weights = {name: params["weights"].get(name, 0.0) for name in sources}
+    visual = _fuse({n: p for n, p in sources.items() if n != "temporal"}, weights)
+    if visual is not None and "temporal" in sources and max(visual.values()) >= params["temporal_below"]:
+        sources = {n: p for n, p in sources.items() if n != "temporal"}
+    p = _fuse(sources, weights) or _normalise(params["fallback_p"])
+    shift = params.get("odds") or {}
+    if shift.get("half") or shift.get("full"):
+        p = _normalise({"empty": p["empty"], "half": p["half"] * math.exp(shift.get("half", 0.0)), "full": p["full"] * math.exp(shift.get("full", 0.0))})
+    return p
 
 
 def vlm_mismatch(vlm: dict | None) -> float | None:
@@ -157,27 +186,47 @@ def _observed(vlm: dict | None) -> str | None:
     return None
 
 
+def product_changed(area: dict, features: dict | None, vlm: dict | None) -> bool:
+    """True when the product seen now differs from the previous labelled frame's. Now = a VLM's observed id on a
+    mismatch, else the planogram product, and only when a VLM answered; the previous frame's = its observed id if it was non-compliant, else planogram."""
+    prev = (features or {}).get("temporal") or {}
+    if prev.get("prev_stock") is None:
+        return False
+    before = prev.get("prev_product") or area.get("product_id")
+    answers = [a for a in ((vlm or {}).get(p) for p in ("gemini", "claude")) if a and "matches_expected" in a]
+    if not answers:  # the current product is unknown without a VLM reading: a stable mismatch must not look like a change
+        return False
+    now = _observed(vlm) if any(a["matches_expected"] is False for a in answers) else area.get("product_id")
+    return bool(before and now and str(before) != str(now))
+
+
 def decide_area(area: dict, features: dict | None, vlm: dict | None, params: dict) -> dict:
     """One results.json row. Never raises: broken inputs fall back to the prior and compliant."""
     try:
         sources = stock_sources(features, vlm, params["fill_sigma"])
+        if product_changed(area, features, vlm):
+            sources.pop("temporal", None)
+            sources["restock"] = RESTOCK_P
+            params = {**params, "weights": {**params["weights"], "restock": 1.0}}
         p_stock = stock_probs(sources, params)
         level = stock_level(p_stock, params["stock_bias"])
         pw = p_wrong(features, vlm, params)
         compliant = is_compliant(pw) or (level == "empty" and EMPTY_IS_COMPLIANT)
         votes = ", ".join(f"{n}: {max(p, key=p.get)}" for n, p in sources.items()) or "no sources, prior"
+        gate = params["gate"]
+        low = not set(sources) - {"temporal"} or max(p_stock.values()) < gate["min_top_p"] or gate["wrong_band"][0] < pw < gate["wrong_band"][1]
         observed = _observed(vlm)
         reason = f"{votes}; p_wrong {pw:.2f}"
     except Exception as e:  # noqa: BLE001  a crash here must never drop the area
         p_stock = _normalise(params["fallback_p"])
         level, pw, compliant, observed = stock_level(p_stock, params["stock_bias"]), 0.0, True, None
-        reason = f"fallback ({type(e).__name__}: {e})"
+        reason, low = f"fallback ({type(e).__name__}: {e})", True
     return {
         "pred": {"planogram_compliant": compliant, "stock_level": level, "stock_value": STOCK_VALUES[level]},
         "p_stock": {k: round(v, 4) for k, v in p_stock.items()},
         "p_wrong": round(pw, 4),
         "observed_product_id": observed if not compliant else None,
-        "low_confidence": max(p_stock.values()) < 0.6 or 0.3 < pw < 0.7,
+        "low_confidence": low,
         "reason": reason,
     }
 
@@ -217,6 +266,15 @@ def decide_frames(
     return results
 
 
+def write_queue(results: dict, path: Path) -> int:
+    """Low-confidence areas as `camera_id filename area_id` lines (format read by vlm.ask --areas). Returns the count."""
+    lines = [f"{c} {f} {a}" for c, fs in results.items() for f, areas in fs.items()
+             for a, row in areas.items() if row["low_confidence"]]
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text("".join(f"{line}\n" for line in lines))
+    return len(lines)
+
+
 def to_submission(results: dict) -> dict:
     """Official format: only planogram_compliant, stock_level, stock_value per area."""
     return {
@@ -228,6 +286,7 @@ def to_submission(results: dict) -> dict:
 def run(
     planogram_path: Path, features_path: Path, vlm_path: Path, results_path: Path, submission_path: Path,
     run_frames_path: Path = RUN_FRAMES, images_dir: Path = IMAGES_DIR, crops_index_path: Path = CROPS_INDEX,
+    queue_path: Path | None = None,
 ) -> None:
     planogram = load_planogram(planogram_path)
     frames = run_frames(run_frames_path, images_dir)
@@ -250,6 +309,8 @@ def run(
     n_fallback = sum("fallback" in r["reason"] or "no sources" in r["reason"]
                      for fs in results.values() for areas in fs.values() for r in areas.values())
     print(f"decide: {len(frames)} frames, {written} areas ({n_fallback} on the prior) -> {submission_path}")
+    if queue_path:
+        print(f"decide: {write_queue(results, queue_path)}/{written} low-confidence areas -> {queue_path}")
 
 
 if __name__ == "__main__":
@@ -262,5 +323,7 @@ if __name__ == "__main__":
     ap.add_argument("--run-frames", type=Path, default=RUN_FRAMES)
     ap.add_argument("--images", type=Path, default=IMAGES_DIR, help="frames to decide when run_frames.json is missing")
     ap.add_argument("--index", type=Path, default=CROPS_INDEX)
+    ap.add_argument("--queue", type=Path, help="also write the low-confidence areas here, for vlm.ask --areas")
     args = ap.parse_args()
-    run(args.planogram, args.features, args.vlm, args.results, args.submission, args.run_frames, args.images, args.index)
+    run(args.planogram, args.features, args.vlm, args.results, args.submission, args.run_frames, args.images, args.index,
+        args.queue)

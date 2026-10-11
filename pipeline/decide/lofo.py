@@ -9,6 +9,8 @@ frame with decide.decide_frames, then score all held-out predictions together. F
 
   python -m pipeline.decide.lofo                 # LOFO report
   python -m pipeline.decide.lofo --ablation      # one row per source set (pitch table)
+  python -m pipeline.decide.lofo --gate          # no-VLM LOFO split into confident vs queued-for-VLM areas
+  python -m pipeline.decide.lofo --forward       # forward-in-time: kNN and temporal use only earlier frames
   python -m pipeline.decide.lofo --fit           # fit on every label, write pipeline/decide/params.json
 """
 import argparse
@@ -26,9 +28,13 @@ from pipeline.decide.decide import (
     DEFAULT_PARAMS, LEVELS, PARAMS_PATH, decide_frames, knn_wrong, stock_sources, to_submission, vlm_mismatch,
 )
 
-SOURCES = ("gemini", "claude", "knn", "probe")
+SOURCES = ("gemini", "claude", "knn", "probe", "gb", "temporal")
 WEIGHT_GRID = (0.0, 1.0, 2.0)
+TEMPORAL_BELOW_GRID = (0.6, 0.7, 0.8, 0.9, 1.01)  # 1.01 = temporal always joins (old behaviour)
+TEMPORAL_GRID = (0.0, 0.25, 0.5, 1.0)  # tie-breaker: small weights only
+NO_VLM = ("knn", "probe", "gb", "temporal")
 BIAS_GRID = (0.0, 0.1, 0.2, 0.4)
+ODDS_GRID = {"half": (-0.5, -0.25, 0.0, 0.25), "full": (-0.75, -0.5, -0.25, 0.0, 0.25)}
 KNN_WRONG_GRID = (0.0, 0.25, 0.5, 0.75, 1.0)
 MIN_WRONG_FOR_PLATT = 5
 # GAIN[truth, pred]: +1 correct, -2 predicted lower, -3 predicted higher (official rules).
@@ -68,11 +74,21 @@ def build_table(labels: dict, features: dict, vlm: dict, sigma: float) -> dict:
     }
 
 
-def stock_pred(t: dict, idx: np.ndarray, w: np.ndarray, bias: float, fallback: np.ndarray) -> np.ndarray:
-    """Vectorised decide.stock_probs + decide.stock_level."""
-    den = t["M"][idx] @ w
-    num = np.einsum("nsk,s,ns->nk", t["S"][idx], w, t["M"][idx])
+def stock_pred(t: dict, idx: np.ndarray, w: np.ndarray, bias: float, fallback: np.ndarray, below: float = 1.01,
+               odds: tuple[float, float] = (0.0, 0.0)) -> np.ndarray:
+    """Vectorised decide.stock_probs + decide.stock_level. below: temporal joins only where the visual top p is under it."""
+    M = t["M"][idx].copy()
+    jt = SOURCES.index("temporal")
+    wv = w.copy()
+    wv[jt] = 0
+    dv = M @ wv
+    pv = np.einsum("nsk,s,ns->nk", t["S"][idx], wv, M) / np.maximum(dv, 1e-12)[:, None]
+    M[:, jt] *= ~((dv > 0) & (pv.max(axis=1) >= below))
+    den = M @ w
+    num = np.einsum("nsk,s,ns->nk", t["S"][idx], w, M)
     p = np.where(den[:, None] > 0, num / np.maximum(den, 1e-12)[:, None], fallback)
+    p = p * np.exp([0.0, *odds])
+    p = p / p.sum(axis=1, keepdims=True)
     ev = p @ GAIN - bias * np.arange(3)  # EV[pred] = sum_t p_t GAIN[t, pred]
     return ev.argmax(axis=1)  # first max = lower level on ties, as in decide
 
@@ -98,19 +114,24 @@ def fit(t: dict, idx: np.ndarray, allowed: tuple[str, ...] = SOURCES) -> dict:
     params["fallback_p"] = {lv: round(float(p), 4) for lv, p in zip(LEVELS, fallback)}
 
     present = [j for j, s in enumerate(SOURCES) if s in allowed and t["M"][idx, j].any()]
-    best = (-np.inf, None, None)
-    for ws in itertools.product(WEIGHT_GRID, repeat=len(present)):
+    best = (-np.inf, None, None, None)
+    grids = [TEMPORAL_GRID if SOURCES[j] == "temporal" else WEIGHT_GRID for j in present]
+    for ws in itertools.product(*grids):
         w = np.zeros(len(SOURCES))
         w[present] = ws
-        for bias in BIAS_GRID:
-            level = stock_pred(t, idx, w, bias, fallback)
+        for bias, below in itertools.product(BIAS_GRID, TEMPORAL_BELOW_GRID):
+            level = stock_pred(t, idx, w, bias, fallback, below)
             g = GAIN[t["T"][idx], level].sum()
             if g > best[0]:
-                best = (g, w, bias)
-    _, w, bias = best
+                best = (g, w, bias, below)
+    _, w, bias, below = best
+    params["temporal_below"] = float(below)
+    odds = max(itertools.product(ODDS_GRID["half"], ODDS_GRID["full"]),
+               key=lambda o: GAIN[t["T"][idx], stock_pred(t, idx, w, bias, fallback, below, o)].sum())
     params["weights"] = {s: float(w[j]) for j, s in enumerate(SOURCES)}
     params["stock_bias"] = float(bias)
-    level = stock_pred(t, idx, w, bias, fallback)
+    params["odds"] = {"half": odds[0], "full": odds[1]}
+    level = stock_pred(t, idx, w, bias, fallback, below, odds)
 
     has_x = idx[~np.isnan(t["X"][idx])]
     wrong = ~t["C"][has_x]
@@ -129,16 +150,16 @@ def restrict(features: dict, vlm: dict, allowed: tuple[str, ...]) -> tuple[dict,
         return {k: v for k, v in area.items() if k not in drop} if isinstance(area, dict) else area
     nest = lambda d, drop: {c: {f: {a: keep(v, drop) for a, v in areas.items()} for f, areas in fs.items()}
                             for c, fs in d.items()}
-    return nest(features, tuple(s for s in ("knn", "probe") if s not in allowed)), \
+    return nest(features, tuple(s for s in ("knn", "probe", "gb", "temporal") if s not in allowed)), \
         nest(vlm, tuple(s for s in ("gemini", "claude") if s not in allowed))
 
 
 def lofo_predictions(
     labels: dict, features: dict, vlm: dict, planogram: dict, allowed: tuple[str, ...] = SOURCES,
-    probs: dict | None = None,
+    probs: dict | None = None, low: dict | None = None,
 ) -> dict:
     """Submission-format predictions for every labelled frame, each made with parameters fitted without it.
-    probs, if given, is filled with {(cam, filename, area_id): p_stock} for log-loss."""
+    probs, if given, is filled with {(cam, filename, area_id): p_stock} for log-loss; low with the low_confidence flag."""
     features, vlm = restrict(features, vlm, allowed)
     t = build_table(labels, features, vlm, DEFAULT_PARAMS["fill_sigma"])
     frames = sorted(set(t["frame"]))
@@ -151,10 +172,23 @@ def lofo_predictions(
         rows = decide_frames([frame], planogram, features, vlm, params)
         if probs is not None:
             probs.update({(c, f, a): r["p_stock"] for c, fs in rows.items() for f, areas in fs.items() for a, r in areas.items()})
+        if low is not None:
+            low.update({(c, f, a): r["low_confidence"] for c, fs in rows.items() for f, areas in fs.items() for a, r in areas.items()})
         sub = to_submission(rows)
         for cam, fs in sub.items():
             pred.setdefault(cam, {}).update(fs)
     return pred
+
+
+def gate_report(pred: dict, gt: dict, low: dict) -> str:
+    """Points per area of the no-VLM predictions on confident vs queued areas: the gate is good when queued is clearly lower."""
+    lines = []
+    for name, want in (("confident", False), ("queued", True)):
+        sub = {c: {f: {a: g for a, g in areas.items() if low.get((c, f, a)) == want} for f, areas in fs.items()} for c, fs in gt.items()}
+        s = score_pred(pred, sub)
+        per = s["total"] / s["areas"] if s["areas"] else float("nan")
+        lines.append(f"{name:10} {s['areas']:5} areas  {per:+.2f} pts/area  compliance {s['compliance']:5} stock {s['stock']:6}")
+    return "\n".join(lines)
 
 
 def score_pred(pred: dict, gt: dict) -> dict:
@@ -164,6 +198,53 @@ def score_pred(pred: dict, gt: dict) -> dict:
     pts = [a for fs in res["breakdown"].values() for areas in fs.values() for a in areas.values()]
     return {"total": res["total"], "max": res["max"], "areas": len(pts),
             "compliance": sum(a["planogram"] for a in pts), "stock": sum(a["stock"] for a in pts)}
+
+
+def rebuilt_features(features: dict, labels: dict, causal: bool) -> dict:
+    """features with knn and temporal rebuilt from the given labels; causal = earlier frames only (the deployment case:
+    validation is later in the evening). Rebuilding both ways keeps a stale features.json out of the comparison."""
+    from pipeline.common.config import CROPS_INDEX
+    from pipeline.pixel.neighbours import add_neighbours
+    from pipeline.pixel.stockmodel import add_gb
+    out = json.loads(json.dumps(features))
+    for areas in (a for fs in out.values() for f in fs.values() for a in f.values()):
+        areas.pop("knn", None)
+        areas.pop("temporal", None)
+        areas.pop("gb", None)
+    index = _load(CROPS_INDEX)
+    add_neighbours(out, index, labels, causal=causal)
+    add_gb(out, index, labels, causal=causal)
+    return out
+
+
+def paired_bootstrap(pred_a: dict, pred_b: dict, gt: dict, n: int = 2000, seed: int = 0) -> tuple[float, float, float]:
+    """Mean per-area score difference B - A with a 95% interval, resampling whole frames (images), since the areas of one
+    image are not independent. Returns (mean, low, high); an interval that excludes 0 is a real difference."""
+    from pipeline.eval.score import score
+    per_frame = []
+    ra, rb = score(pred_a, gt)["breakdown"], score(pred_b, gt)["breakdown"]
+    for cam, frames in ra.items():
+        for fn, areas in frames.items():
+            d = [rb[cam][fn][a]["planogram"] + rb[cam][fn][a]["stock"] - areas[a]["planogram"] - areas[a]["stock"] for a in areas]
+            per_frame.append((sum(d), len(d)))
+    rng = np.random.default_rng(seed)
+    tot, cnt = np.array(per_frame, dtype=float).T
+    means = []
+    for _ in range(n):
+        pick = rng.integers(0, len(tot), len(tot))
+        means.append(tot[pick].sum() / cnt[pick].sum())
+    return float(tot.sum() / cnt.sum()), float(np.percentile(means, 2.5)), float(np.percentile(means, 97.5))
+
+
+def review_list(probs: dict, gt: dict, path: Path, limit_p: float = 0.1) -> int:
+    """Write the labels the forward model finds very unlikely (p of the labelled level below limit_p) for a human to
+    re-check, most likely borderline half/full calls. Returns how many."""
+    rows = sorted(((probs[(c, f, a)][LEVEL_OF_VALUE[float(g["stock_value"])]], c, f, a, LEVEL_OF_VALUE[float(g["stock_value"])])
+                   for c, fs in gt.items() for f, areas in fs.items() for a, g in areas.items() if (c, f, a) in probs), key=lambda r: r[0])
+    flagged = [r for r in rows if r[0] < limit_p]
+    path.write_text("# labels the forward-in-time model finds unlikely (p of the labelled level); re-check, do not auto-fix\n"
+                    + "\n".join(f"{c} {f} {a}  # labelled {lv}, p {p:.2f}" for p, c, f, a, lv in flagged) + "\n")
+    return len(flagged)
 
 
 def late_subset(gt: dict, n: int = 2) -> dict:
@@ -202,6 +283,8 @@ if __name__ == "__main__":
     ap.add_argument("--planogram", type=Path, default=PLANOGRAM)
     ap.add_argument("--ablation", action="store_true", help="one LOFO row per source set")
     ap.add_argument("--fit", action="store_true", help="fit on every label and write params.json")
+    ap.add_argument("--forward", action="store_true", help="LOFO with kNN and temporal from earlier frames only")
+    ap.add_argument("--gate", action="store_true", help="no-VLM LOFO split into confident vs queued areas")
     ap.add_argument("--params", type=Path, default=PARAMS_PATH)
     args = ap.parse_args()
 
@@ -210,16 +293,36 @@ if __name__ == "__main__":
     n_areas = sum(len(a) for fs in labels.values() for a in fs.values())
     print(f"{n_areas} labelled areas in {sum(len(fs) for fs in labels.values())} frames")
 
-    if args.fit:
+    if args.forward:
+        for name, causal in (("LOFO (both sides)", False), ("forward in time", True)):
+            feats = rebuilt_features(features, labels, causal)
+            print(f"== {name}")
+            for src, allowed in (("prior only", ()), ("kNN only", ("knn",)), ("temporal only", ("temporal",)), ("kNN + temporal", ("knn", "temporal")), ("gb only", ("gb",)), ("kNN + gb + temporal", NO_VLM)):
+                probs: dict = {}
+                print(_row(src, lofo_predictions(labels, feats, vlm, planogram, allowed, probs), labels, probs))
+            low: dict = {}
+            probs: dict = {}
+            fused = lofo_predictions(labels, feats, vlm, planogram, NO_VLM, probs=probs, low=low)
+            print(gate_report(fused, labels, low))
+            if causal:
+                kt = lofo_predictions(labels, feats, vlm, planogram, ("knn", "temporal"))
+                m, lo, hi = paired_bootstrap(kt, fused, labels)
+                print(f"kNN+gb+temporal minus kNN+temporal: {m:+.3f} pts/area, 95% frame-bootstrap [{lo:+.3f}, {hi:+.3f}]")
+                print(f"{review_list(probs, labels, Path('out/label_review.txt'))} labels flagged for review -> out/label_review.txt")
+    elif args.fit:
         t = build_table(labels, features, vlm, DEFAULT_PARAMS["fill_sigma"])
         params = fit(t, np.arange(len(t["T"])))
         args.params.write_text(json.dumps(params, indent=1) + "\n")
         print(f"wrote {args.params}: {json.dumps(params)}")
+    elif args.gate:
+        low: dict = {}
+        pred = lofo_predictions(labels, features, vlm, planogram, NO_VLM, low=low)
+        print(gate_report(pred, labels, low))
     else:
         sets = {"v1 (all)": SOURCES}
         if args.ablation:
             sets = {"prior only": (), **{f"{s} only": (s,) for s in SOURCES}, "vlm only": ("gemini", "claude"),
-                    "no vlm": ("knn", "probe"), **sets}
+                    "no vlm": NO_VLM, "no vlm, no temporal": ("knn", "probe"), **sets}
         for name, allowed in sets.items():
             probs: dict = {}
             print(_row(name, lofo_predictions(labels, features, vlm, planogram, allowed, probs), labels, probs))

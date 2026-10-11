@@ -141,6 +141,8 @@ def run(index_path: Path, out_path: Path, run_frames: list[tuple[str, str]] | No
 
     from pipeline.pixel.neighbours import add_neighbours  # here: neighbours imports this module's helpers
     add_neighbours(out, index, labels)
+    from pipeline.pixel.stockmodel import add_gb
+    add_gb(out, index, labels)
 
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(out, indent=2))
