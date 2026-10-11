@@ -26,7 +26,7 @@ from pipeline.common.config import EMPTY_IS_COMPLIANT, FEATURES, LABELS, PLANOGR
 from pipeline.common.parallel import pmap
 from pipeline.common.planogram import load_planogram
 from pipeline.decide.decide import (
-    DEFAULT_PARAMS, LEVELS, PARAMS_PATH, _pre_opening_empty, decide_frames, knn_wrong, stock_sources, to_submission,
+    DEFAULT_PARAMS, LEVELS, PARAMS_PATH, _pre_opening_empty, decide_frames, is_late, knn_wrong, stock_sources, to_submission,
     vlm_mismatch,
 )
 
@@ -36,6 +36,7 @@ TEMPORAL_BELOW_GRID = (0.6, 0.7, 0.8, 0.9, 1.01)  # 1.01 = temporal always joins
 TEMPORAL_GRID = (0.0, 0.25, 0.5, 1.0)  # tie-breaker: small weights only
 NO_VLM = ("knn", "probe", "gb", "temporal")
 BIAS_GRID = (0.0, 0.1, 0.2, 0.4)
+LATE_BIAS_GRID = (0.0,)  # extra bias on evening frames; (0.0, 0.1, 0.2, 0.4, 0.8) once its A/B gains
 ODDS_GRID = {"half": (-0.5, -0.25, 0.0, 0.25), "full": (-0.75, -0.5, -0.25, 0.0, 0.25)}
 KNN_WRONG_GRID = (0.0, 0.25, 0.5, 0.75, 1.0)
 MIN_WRONG_FOR_PLATT = 5
@@ -60,7 +61,7 @@ def build_table(labels: dict, features: dict, vlm: dict, sigma: float) -> dict:
                 except Exception:  # noqa: BLE001  same per-area fallback as decide
                     sources = {}
                 rows.append((cam, fn, area_id, sources, vlm_mismatch(v), knn_wrong(f), LEVELS.index(LEVEL_OF_VALUE[float(gt["stock_value"])]),
-                             bool(gt.get("planogram_compliant", True)), _pre_opening_empty(fn, f)))
+                             bool(gt.get("planogram_compliant", True)), _pre_opening_empty(fn, f), is_late(fn)))
     n = len(rows)
     S, M = np.zeros((n, len(SOURCES), 3)), np.zeros((n, len(SOURCES)))
     for i, (_, _, _, sources, *_rest) in enumerate(rows):
@@ -75,11 +76,12 @@ def build_table(labels: dict, features: dict, vlm: dict, sigma: float) -> dict:
         "T": np.array([r[6] for r in rows], dtype=int),
         "C": np.array([r[7] for r in rows], dtype=bool),
         "P": np.array([r[8] for r in rows], dtype=bool),
+        "L": np.array([r[9] for r in rows], dtype=bool),
     }
 
 
 def stock_pred(t: dict, idx: np.ndarray, w: np.ndarray, bias: float, fallback: np.ndarray, below: float = 1.01,
-               odds: tuple[float, float] = (0.0, 0.0)) -> np.ndarray:
+               odds: tuple[float, float] = (0.0, 0.0), late_bias: float = 0.0) -> np.ndarray:
     """Vectorised decide.stock_probs + decide.stock_level + the pre-opening empty override. below: temporal joins only
     where the visual top p is under it."""
     M = t["M"][idx].copy()
@@ -94,7 +96,7 @@ def stock_pred(t: dict, idx: np.ndarray, w: np.ndarray, bias: float, fallback: n
     p = np.where(den[:, None] > 0, num / np.maximum(den, 1e-12)[:, None], fallback)
     p = p * np.exp([0.0, *odds])
     p = p / p.sum(axis=1, keepdims=True)
-    ev = p @ GAIN - bias * np.arange(3)  # EV[pred] = sum_t p_t GAIN[t, pred]
+    ev = p @ GAIN - (bias + late_bias * t["L"][idx])[:, None] * np.arange(3)  # EV[pred] = sum_t p_t GAIN[t, pred]
     return np.where(t["P"][idx], 0, ev.argmax(axis=1))  # first max = lower level on ties, as in decide
 
 
@@ -136,7 +138,9 @@ def fit(t: dict, idx: np.ndarray, allowed: tuple[str, ...] = SOURCES) -> dict:
     params["weights"] = {s: float(w[j]) for j, s in enumerate(SOURCES)}
     params["stock_bias"] = float(bias)
     params["odds"] = {"half": odds[0], "full": odds[1]}
-    level = stock_pred(t, idx, w, bias, fallback, below, odds)
+    late = max(LATE_BIAS_GRID, key=lambda lb: GAIN[t["T"][idx], stock_pred(t, idx, w, bias, fallback, below, odds, lb)].sum())
+    params["stock_bias_late"] = float(late)
+    level = stock_pred(t, idx, w, bias, fallback, below, odds, late)
 
     has_x = idx[~np.isnan(t["X"][idx])]
     wrong = ~t["C"][has_x]

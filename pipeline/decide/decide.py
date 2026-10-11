@@ -32,6 +32,7 @@ DEFAULT_PARAMS = {
     "knn_wrong_weight": 0.5,  # share of the same-area kNN p_wrong in the final p_wrong
     "fill_sigma": 10.0,  # VLM fill_pct uncertainty, in percentage points
     "stock_bias": STOCK_BIAS,
+    "stock_bias_late": 0.0,  # extra lean-lower bias on evening frames (is_late), fitted by lofo
     # Visual sources decide; the previous frame's stock only joins when their top probability is below this.
     "temporal_below": 0.8,
     # Log-odds shifts of p_half and p_full against p_empty after fusion (calibration at the EV boundaries; fitted by lofo).
@@ -60,6 +61,22 @@ EMPTY_MAX_PCT, HALF_MAX_PCT = 10.0, 50.0
 PRE_OPEN_ENABLED = False
 PRE_OPEN_UTC_S = 23400
 PRE_OPEN_KNN_EMPTY = 0.25
+
+
+# Evening frames: forward-in-time errors per area triple after 19:00 Lisbon (stock runs down, the prior says full) and
+# the validation frames are probably late. 18:00 UTC = 19:00 Lisbon (WEST).
+LATE_FROM_UTC_S = 64800
+
+
+def is_late(filename: str | None) -> bool:
+    try:
+        return int(Path(filename).stem) % 86400 >= LATE_FROM_UTC_S
+    except (TypeError, ValueError):
+        return False
+
+
+def _bias(params: dict, filename: str | None) -> float:
+    return params["stock_bias"] + (params.get("stock_bias_late", 0.0) if is_late(filename) else 0.0)
 
 
 def _pre_opening_empty(filename: str | None, features: dict | None) -> bool:
@@ -243,7 +260,7 @@ def decide_area(area: dict, features: dict | None, vlm: dict | None, params: dic
             sources["restock"] = RESTOCK_P
             params = {**params, "weights": {**params["weights"], "restock": 1.0}}
         p_stock = stock_probs(sources, params)
-        level = stock_level(p_stock, params["stock_bias"])
+        level = stock_level(p_stock, _bias(params, filename))
         if _pre_opening_empty(filename, features):
             level = "empty"
             p_stock = {"empty": 1.0, "half": 0.0, "full": 0.0}
@@ -256,7 +273,7 @@ def decide_area(area: dict, features: dict | None, vlm: dict | None, params: dic
         reason = f"{votes}; p_wrong {pw:.2f}"
     except Exception as e:  # noqa: BLE001  a crash here must never drop the area
         p_stock = _normalise(params["fallback_p"])
-        level, pw, compliant, observed = stock_level(p_stock, params["stock_bias"]), 0.0, True, None
+        level, pw, compliant, observed = stock_level(p_stock, _bias(params, filename)), 0.0, True, None
         reason, low = f"fallback ({type(e).__name__}: {e})", True
     return {
         "pred": {"planogram_compliant": compliant, "stock_level": level, "stock_value": STOCK_VALUES[level]},
