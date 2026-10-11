@@ -161,7 +161,7 @@ def restrict(features: dict, vlm: dict, allowed: tuple[str, ...]) -> tuple[dict,
 
 def lofo_predictions(
     labels: dict, features: dict, vlm: dict, planogram: dict, allowed: tuple[str, ...] = SOURCES,
-    probs: dict | None = None, low: dict | None = None,
+    probs: dict | None = None, low: dict | None = None, observed: dict | None = None,
 ) -> dict:
     """Submission-format predictions for every labelled frame, each made with parameters fitted without it.
     probs, if given, is filled with {(cam, filename, area_id): p_stock} for log-loss; low with the low_confidence flag."""
@@ -180,6 +180,8 @@ def lofo_predictions(
             probs.update({(c, f, a): r["p_stock"] for c, fs in rows.items() for f, areas in fs.items() for a, r in areas.items()})
         if low is not None:
             low.update({(c, f, a): r["low_confidence"] for c, fs in rows.items() for f, areas in fs.items() for a, r in areas.items()})
+        if observed is not None:
+            observed.update({(c, f, a): r["observed_product_id"] for c, fs in rows.items() for f, areas in fs.items() for a, r in areas.items()})
         sub = to_submission(rows)
         for cam, fs in sub.items():
             pred.setdefault(cam, {}).update(fs)
@@ -195,6 +197,18 @@ def gate_report(pred: dict, gt: dict, low: dict) -> str:
         per = s["total"] / s["areas"] if s["areas"] else float("nan")
         lines.append(f"{name:10} {s['areas']:5} areas  {per:+.2f} pts/area  compliance {s['compliance']:5} stock {s['stock']:6}")
     return "\n".join(lines)
+
+
+def product_report(pred: dict, gt: dict, observed: dict) -> str:
+    """Wrong-product areas: how many are flagged non-compliant, how many of those name a product, how many name the
+    labelled one; and false alarms. Shows whether observed_product_id can be trusted by the staff."""
+    wrong = [(c, f, a, g) for c, fs in gt.items() for f, areas in fs.items() for a, g in areas.items() if g.get("planogram_compliant") is False]
+    caught = [(c, f, a, g) for c, f, a, g in wrong if pred.get(c, {}).get(f, {}).get(a, {}).get("planogram_compliant") is False]
+    named = [(k, g) for *k, g in caught if observed.get(tuple(k))]
+    right = sum(str(observed[tuple(k)]) == str(g.get("observed_product_id")) for k, g in named)
+    false = sum(1 for c, fs in gt.items() for f, areas in fs.items() for a, g in areas.items()
+                if g.get("planogram_compliant", True) and pred.get(c, {}).get(f, {}).get(a, {}).get("planogram_compliant") is False)
+    return f"wrong product: {len(caught)}/{len(wrong)} caught, {len(named)} named, {right} named right; {false} false alarms"
 
 
 def score_pred(pred: dict, gt: dict) -> dict:
@@ -308,8 +322,10 @@ if __name__ == "__main__":
                 print(_row(src, lofo_predictions(labels, feats, vlm, planogram, allowed, probs), labels, probs))
             low: dict = {}
             probs: dict = {}
-            fused = lofo_predictions(labels, feats, vlm, planogram, NO_VLM, probs=probs, low=low)
+            observed: dict = {}
+            fused = lofo_predictions(labels, feats, vlm, planogram, NO_VLM, probs=probs, low=low, observed=observed)
             print(gate_report(fused, labels, low))
+            print(product_report(fused, labels, observed))
             if causal:
                 kt = lofo_predictions(labels, feats, vlm, planogram, ("knn", "temporal"))
                 m, lo, hi = paired_bootstrap(kt, fused, labels)

@@ -48,6 +48,9 @@ TEMPORAL_P = 0.8
 # A product change since the previous frame means the box was restocked: temporal is dropped and a full vote joins.
 RESTOCK_P = {"empty": 0.05, "half": 0.1, "full": 0.85}
 
+# Share of the kNN wrong-product vote one product needs before results.json names it as observed_product_id.
+PRODUCT_MIN_SHARE = 0.6
+
 # Mentor thresholds on covered share: empty 0-10%, half 10-50%, full above 50%.
 EMPTY_MAX_PCT, HALF_MAX_PCT = 10.0, 50.0
 
@@ -206,6 +209,17 @@ def _observed(vlm: dict | None) -> str | None:
     return None
 
 
+def observed_product(features: dict | None, vlm: dict | None) -> str | None:
+    """Product to name on a non-compliant area: the same-area kNN vote over the products labelled in its wrong-product
+    frames when one holds PRODUCT_MIN_SHARE of it, else the VLM's observed id, else None (wrong, product unknown)."""
+    votes = ((features or {}).get("knn") or {}).get("observed") or {}
+    if votes:
+        pid, share = max(votes.items(), key=lambda kv: kv[1])
+        if share >= PRODUCT_MIN_SHARE:
+            return pid
+    return _observed(vlm)
+
+
 def product_changed(area: dict, features: dict | None, vlm: dict | None) -> bool:
     """True when the product seen now differs from the previous labelled frame's. Now = a VLM's observed id on a
     mismatch, else the planogram product, and only when a VLM answered; the previous frame's = its observed id if it was non-compliant, else planogram."""
@@ -238,7 +252,7 @@ def decide_area(area: dict, features: dict | None, vlm: dict | None, params: dic
         votes = ", ".join(f"{n}: {max(p, key=p.get)}" for n, p in sources.items()) or "no sources, prior"
         gate = params["gate"]
         low = not set(sources) - {"temporal"} or max(p_stock.values()) < gate["min_top_p"] or gate["wrong_band"][0] < pw < gate["wrong_band"][1]
-        observed = _observed(vlm)
+        observed = observed_product(features, vlm)
         reason = f"{votes}; p_wrong {pw:.2f}"
     except Exception as e:  # noqa: BLE001  a crash here must never drop the area
         p_stock = _normalise(params["fallback_p"])

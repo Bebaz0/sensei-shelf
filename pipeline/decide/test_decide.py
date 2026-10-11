@@ -248,3 +248,15 @@ def test_pre_opening_empty_override(monkeypatch):
     assert decide_area(area, full_knn, None, PARAMS, filename=day)["pred"]["stock_level"] == "full"
     no_hint = {"knn": {"empty": 0.1, "half": 0.1, "full": 0.8, "p_wrong": 0.0}}
     assert decide_area(area, no_hint, None, PARAMS, filename=early)["pred"]["stock_level"] == "full"
+
+
+def test_observed_product_from_knn_vote_then_vlm():
+    from pipeline.decide.decide import observed_product
+    vlm = {"gemini": {"observed": "11906", "matches_expected": False, "confidence": 0.9}}
+    assert observed_product({"knn": {"observed": {"11908": 0.8, "11906": 0.2}}}, vlm) == "11908"
+    assert observed_product({"knn": {"observed": {"11908": 0.5, "11906": 0.5}}}, vlm) == "11906"  # split vote: VLM
+    assert observed_product({"knn": {"observed": {"11908": 0.5, "11906": 0.5}}}, None) is None
+    area = load_planogram()["6215"][0]
+    feats = {"knn": {"empty": 0.0, "half": 0.0, "full": 1.0, "p_wrong": 0.9, "observed": {"11908": 1.0}}}
+    row = decide_area(area, feats, None, PARAMS)
+    assert row["pred"]["planogram_compliant"] is False and row["observed_product_id"] == "11908"

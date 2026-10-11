@@ -31,12 +31,12 @@ Producer: `pipeline/pixel` (B). Consumer: `decide`.
 ```json
 {"6215": {"1751052241.jpg": {"6215_2": {
   "fill_ratio": 0.62, "hist_dist_ref": 0.18, "edge_density": 0.31, "visible_fraction": 1.0,
-  "knn": {"empty": 0.0, "half": 0.7, "full": 0.3, "p_wrong": 0.05},
+  "knn": {"empty": 0.0, "half": 0.7, "full": 0.3, "p_wrong": 0.05, "observed": {"11908": 0.9, "11906": 0.1}},
   "probe": {"empty": 0.1, "half": 0.6, "full": 0.3},
   "temporal": {"prev_stock": "full", "next_stock": null, "dt_prev_s": 3900, "dt_next_s": null}
 }}}}
 ```
-`knn`, `probe` and `temporal` are present only when labels exist and never use the frame itself; `knn` is also absent when the area has no labelled crop in another frame (no evidence, so `decide` queues it for the VLM). kNN neighbours are weighted by look and by time-of-day distance (`TIME_SCALE_S` in `neighbours.py`). `decide` uses `temporal.prev_stock` as a low-weight stock vote that only breaks split decisions (`probe` = embedding probe, stock probabilities only; B keeps whichever of `knn` and `probe` wins, `decide` uses any that is present). `next_stock` and `dt_next_s` are `null` when there is no later frame (validation frames may be later than every train frame).
+`knn`, `probe` and `temporal` are present only when labels exist and never use the frame itself; `knn` is also absent when the area has no labelled crop in another frame (no evidence, so `decide` queues it for the VLM). `knn.observed` (only when some neighbour is labelled wrong product) is the share of the wrong-product neighbours' vote weight per labelled `observed_product_id`. kNN neighbours are weighted by look and by time-of-day distance (`TIME_SCALE_S` in `neighbours.py`). `decide` uses `temporal.prev_stock` as a low-weight stock vote that only breaks split decisions (`probe` = embedding probe, stock probabilities only; B keeps whichever of `knn` and `probe` wins, `decide` uses any that is present). `next_stock` and `dt_next_s` are `null` when there is no later frame (validation frames may be later than every train frame).
 
 ## vlm_queue.txt
 Producer: `pipeline/decide` pass 1 (`--queue`, run before the VLM). Consumer: `pipeline/vlm` (`ask.py --areas`).
@@ -66,7 +66,7 @@ Producer: `pipeline/decide` (C). Consumer: `dashboard` (D).
   "crop": "out/crops/6215/1751052241_6215_2_ctx.png"
 }}}}
 ```
-`reason` lists each source's vote and `p_wrong` (e.g. `gemini: half, knn: full; p_wrong 0.04`) or says the area fell back to the prior. `observed_product_id` is set only when the area is predicted non-compliant. `low_confidence` = no source answered, top stock probability below 0.6 or `p_wrong` between 0.3 and 0.7 (`params["gate"]`); these areas go to `vlm_queue.txt`.
+`reason` lists each source's vote and `p_wrong` (e.g. `gemini: half, knn: full; p_wrong 0.04`) or says the area fell back to the prior. `observed_product_id` is set only when the area is predicted non-compliant: the `knn.observed` product holding at least `PRODUCT_MIN_SHARE` (decide.py) of the vote, else the VLM's `observed` id, else null (wrong product, unknown which). `low_confidence` = no source answered, top stock probability below 0.6 or `p_wrong` between 0.3 and 0.7 (`params["gate"]`); these areas go to `vlm_queue.txt`.
 
 `scripts/sync_dashboard.sh [N]` copies a small demo run into `dashboard/public/data/`: N frames per camera (default 3, evenly spaced, always the last), JPG thumbnails of crops (<=320 px) and of the kept full frames (<=960 px, at `data/frames/<cam>/<file>`), with `crop` paths rewritten to `data/crops/...`. The committed demo stays a few MB; never commit full-size PNG crops. Run it after a train run: it reads the full frames from `IMAGES_DIR`.
 

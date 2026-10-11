@@ -35,7 +35,10 @@ python -m pipeline.pixel.features
 python -m pipeline.vlm.ask
 python -m pipeline.decide.decide
 python -m pipeline.eval.score --pred out/submission.json --gt labels/dev.json
-./scripts/run_all.sh            # all of the above, in order
+./scripts/run_all.sh            # all of the above, in order (VLM off)
+IMAGES=<validation dir> ./scripts/run_all.sh   # submission: out/submission.json, validation frames only
+USE_VLM=1 ./scripts/run_all.sh  # also ask Gemini about the low-confidence areas (needs GEMINI_API_KEY)
+WORKERS=1 ./scripts/run_all.sh  # serial, if the parallel stages ever misbehave (same output)
 ```
 
 Until your upstream module works, drop a hand-written fake in `mocks/` and point `--index` / `--features` / etc. at it.
