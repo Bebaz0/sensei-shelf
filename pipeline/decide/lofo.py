@@ -26,8 +26,8 @@ from pipeline.common.config import EMPTY_IS_COMPLIANT, FEATURES, LABELS, PLANOGR
 from pipeline.common.parallel import pmap
 from pipeline.common.planogram import load_planogram
 from pipeline.decide.decide import (
-    DEFAULT_PARAMS, LEVELS, PARAMS_PATH, _pre_opening_empty, decide_frames, is_late, knn_wrong, stock_sources, to_submission,
-    vlm_mismatch,
+    DEFAULT_PARAMS, LEVELS, PARAMS_PATH, _pre_opening_empty, decide_frames, is_late, knn_wrong, load_params, stock_sources,
+    to_submission, vlm_mismatch,
 )
 
 SOURCES = ("gemini", "claude", "knn", "probe", "gb", "temporal")
@@ -336,8 +336,13 @@ if __name__ == "__main__":
                 print(f"kNN+gb+temporal minus kNN+temporal: {m:+.3f} pts/area, 95% frame-bootstrap [{lo:+.3f}, {hi:+.3f}]")
                 print(f"{review_list(probs, labels, Path('out/label_review.txt'))} labels flagged for review -> out/label_review.txt")
     elif args.fit:
-        t = build_table(labels, features, vlm, DEFAULT_PARAMS["fill_sigma"])
-        params = fit(t, np.arange(len(t["T"])))
+        # Fit on forward-in-time features (what an evening validation frame sees), for the local sources only: the VLM
+        # keys (gemini weight, platt, knn_wrong_weight, gate) stay as committed, there are no VLM answers to fit them on.
+        t = build_table(labels, rebuilt_features(features, labels, causal=True), vlm, DEFAULT_PARAMS["fill_sigma"])
+        fitted = fit(t, np.arange(len(t["T"])), NO_VLM)
+        params = load_params(args.params)
+        params.update({k: fitted[k] for k in ("fallback_p", "stock_bias", "stock_bias_late", "temporal_below", "odds")})
+        params["weights"].update({s: fitted["weights"][s] for s in NO_VLM})
         args.params.write_text(json.dumps(params, indent=1) + "\n")
         print(f"wrote {args.params}: {json.dumps(params)}")
     elif args.gate:
