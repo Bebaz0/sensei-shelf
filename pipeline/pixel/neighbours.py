@@ -9,6 +9,7 @@ from pathlib import Path
 import numpy as np
 
 from pipeline.common.config import STOCK_VALUES
+from pipeline.common.parallel import tmap
 from pipeline.pixel.features import _chi2_dist, _hsv_hist, _load_image
 
 LEVELS = ("empty", "half", "full")
@@ -20,6 +21,12 @@ ALPHA = 1.0  # weight of the prior in the vote; one identical neighbour gives (p
 # validation frame from another day still finds neighbours. None = off. LOFO (no VLM): 7 to 16 h all beat off
 # (624 -> 633..643, the gain is compliance), 10 h is the middle of that plateau.
 TIME_SCALE_S: float | None = 10 * 3600
+# Look-distance scale of the wrong-product vote relative to the stock vote's (1 = same kernel). Smaller = only near-identical
+# crops vote on compliance, so 2 wrong pre-opening frames are not outvoted by 10 compliant but different-looking ones.
+# A small prior lets 2 same-looking wrong frames outvote the global ~5% wrong-product rate. Full pipeline, no VLM, 1909
+# labels: (tau 1, alpha 1) LOFO 3384 forward 2998; (0.5, 0.1) 3423 / 3037, frame bootstrap > 0 both (docs/DECISIONS.md).
+WRONG_TAU = 0.5
+WRONG_ALPHA = 0.1  # prior weight in the wrong-product vote
 DAY_S = 86400
 
 
@@ -52,10 +59,10 @@ def _usable(labels: dict) -> list[tuple[str, str, str, dict]]:
             if _level(lab) and not lab.get("unsure")]
 
 
-def _vote(prior: dict, votes: list[tuple[float, str]]) -> dict:
-    """Smoothed weighted vote: (ALPHA * prior + sum w * onehot) / (ALPHA + sum w)."""
-    total = ALPHA + sum(w for w, _ in votes)
-    return {k: (ALPHA * prior[k] + sum(w for w, v in votes if v == k)) / total for k in prior}
+def _vote(prior: dict, votes: list[tuple[float, str]], alpha: float = ALPHA) -> dict:
+    """Smoothed weighted vote: (alpha * prior + sum w * onehot) / (alpha + sum w)."""
+    total = alpha + sum(w for w, _ in votes)
+    return {k: (alpha * prior[k] + sum(w for w, v in votes if v == k)) / total for k in prior}
 
 
 def add_neighbours(out: dict, index: dict, labels: dict, causal: bool = False) -> None:
@@ -76,6 +83,10 @@ def add_neighbours(out: dict, index: dict, labels: dict, causal: bool = False) -
             loaded = _load_image(path) if path else None
             hists[path] = _hsv_hist(*loaded) if loaded else None
         return hists[path]
+
+    paths = [d.get("warp", "") for frames in index.values() for areas in frames.values() for d in areas.values()]
+    paths = [p for p in dict.fromkeys(paths) if p]
+    hists.update(zip(paths, tmap(lambda p: (lambda loaded: _hsv_hist(*loaded) if loaded else None)(_load_image(p)), paths)))
 
     by_area: dict[tuple[str, str], list[tuple[str, dict]]] = {}
     for c, f, a, lab in rows:
@@ -110,21 +121,26 @@ def add_neighbours(out: dict, index: dict, labels: dict, causal: bool = False) -
             for area, feats in areas.items():
                 others = [(f, lab) for f, lab in by_area.get((cam, area), []) if f != filename and (not causal or _before(f, filename))]
                 h = hist(cam, filename, area)
-                stock_votes, wrong_votes = [], []
+                stock_votes, wrong_votes, product_votes = [], [], {}
                 if h is not None:
                     for f, lab in others:
                         hn = hist(cam, f, area)
                         if hn is None:
                             continue
-                        w = math.exp(-_chi2_dist(h, hn) / tau(cam, area))
-                        if TIME_SCALE_S and t is not None and _ts(f) is not None:
-                            w *= math.exp(-_tod_dist(t, _ts(f)) / TIME_SCALE_S)
+                        d = _chi2_dist(h, hn) / tau(cam, area)
+                        tw = math.exp(-_tod_dist(t, _ts(f)) / TIME_SCALE_S) if TIME_SCALE_S and t is not None and _ts(f) is not None else 1.0
+                        w = math.exp(-d) * tw
                         stock_votes.append((w, _level(lab)))
-                        wrong_votes.append((w, lab.get("planogram_compliant") is False))
+                        wrong_votes.append((math.exp(-d / WRONG_TAU) * tw, lab.get("planogram_compliant") is False))
+                        if lab.get("planogram_compliant") is False and lab.get("observed_product_id"):
+                            product_votes[str(lab["observed_product_id"])] = product_votes.get(str(lab["observed_product_id"]), 0.0) + w
                 if stock_votes:  # no labelled neighbour: no knn, so decide sees no source and queues the area for the VLM
                     knn = _vote(p_stock, stock_votes)
-                    knn["p_wrong"] = _vote({True: p_wrong, False: 1 - p_wrong}, wrong_votes)[True]
+                    knn["p_wrong"] = _vote({True: p_wrong, False: 1 - p_wrong}, wrong_votes, WRONG_ALPHA)[True]
                     feats["knn"] = {k: round(v, 4) for k, v in knn.items()}
+                    if product_votes:  # what the wrong-product neighbours held, as shares of their vote weight
+                        total = sum(product_votes.values())
+                        feats["knn"]["observed"] = {pid: round(w / total, 4) for pid, w in sorted(product_votes.items(), key=lambda kv: -kv[1])}
 
                 timed = sorted((_ts(f), lab) for f, lab in others if _ts(f) is not None) if t is not None else []
                 prev = next(((ft, lab) for ft, lab in reversed(timed) if ft < t), None)

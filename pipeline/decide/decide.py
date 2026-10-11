@@ -32,6 +32,7 @@ DEFAULT_PARAMS = {
     "knn_wrong_weight": 0.5,  # share of the same-area kNN p_wrong in the final p_wrong
     "fill_sigma": 10.0,  # VLM fill_pct uncertainty, in percentage points
     "stock_bias": STOCK_BIAS,
+    "stock_bias_late": 0.0,  # extra lean-lower bias on evening frames (is_late), fitted by lofo
     # Visual sources decide; the previous frame's stock only joins when their top probability is below this.
     "temporal_below": 0.8,
     # Log-odds shifts of p_half and p_full against p_empty after fusion (calibration at the EV boundaries; fitted by lofo).
@@ -48,17 +49,38 @@ TEMPORAL_P = 0.8
 # A product change since the previous frame means the box was restocked: temporal is dropped and a full vote joins.
 RESTOCK_P = {"empty": 0.05, "half": 0.1, "full": 0.85}
 
+# Share of the kNN wrong-product vote one product needs before results.json names it as observed_product_id.
+PRODUCT_MIN_SHARE = 0.6
+
 # Mentor thresholds on covered share: empty 0-10%, half 10-50%, full above 50%.
 EMPTY_MAX_PCT, HALF_MAX_PCT = 10.0, 50.0
 
 # Pre-opening: the first ~2 frames of the day (06:12, 07:20 Lisbon per CLAUDE.md) can have shelves still empty.
 # ts_of_day under this cutoff + kNN hints empty -> force empty. 23400s UTC = 07:30 Lisbon (WEST summer).
+# Off: forward-in-time 2977 -> 2968 with it on, LOFO unchanged (docs/DECISIONS.md).
+PRE_OPEN_ENABLED = False
 PRE_OPEN_UTC_S = 23400
 PRE_OPEN_KNN_EMPTY = 0.25
 
 
+# Evening frames: forward-in-time errors per area triple after 19:00 Lisbon (stock runs down, the prior says full) and
+# the validation frames are probably late. 18:00 UTC = 19:00 Lisbon (WEST).
+LATE_FROM_UTC_S = 64800
+
+
+def is_late(filename: str | None) -> bool:
+    try:
+        return int(Path(filename).stem) % 86400 >= LATE_FROM_UTC_S
+    except (TypeError, ValueError):
+        return False
+
+
+def _bias(params: dict, filename: str | None) -> float:
+    return params["stock_bias"] + (params.get("stock_bias_late", 0.0) if is_late(filename) else 0.0)
+
+
 def _pre_opening_empty(filename: str | None, features: dict | None) -> bool:
-    if not filename:
+    if not PRE_OPEN_ENABLED or not filename:
         return False
     try:
         ts = int(Path(filename).stem)
@@ -204,6 +226,17 @@ def _observed(vlm: dict | None) -> str | None:
     return None
 
 
+def observed_product(features: dict | None, vlm: dict | None) -> str | None:
+    """Product to name on a non-compliant area: the same-area kNN vote over the products labelled in its wrong-product
+    frames when one holds PRODUCT_MIN_SHARE of it, else the VLM's observed id, else None (wrong, product unknown)."""
+    votes = ((features or {}).get("knn") or {}).get("observed") or {}
+    if votes:
+        pid, share = max(votes.items(), key=lambda kv: kv[1])
+        if share >= PRODUCT_MIN_SHARE:
+            return pid
+    return _observed(vlm)
+
+
 def product_changed(area: dict, features: dict | None, vlm: dict | None) -> bool:
     """True when the product seen now differs from the previous labelled frame's. Now = a VLM's observed id on a
     mismatch, else the planogram product, and only when a VLM answered; the previous frame's = its observed id if it was non-compliant, else planogram."""
@@ -227,7 +260,7 @@ def decide_area(area: dict, features: dict | None, vlm: dict | None, params: dic
             sources["restock"] = RESTOCK_P
             params = {**params, "weights": {**params["weights"], "restock": 1.0}}
         p_stock = stock_probs(sources, params)
-        level = stock_level(p_stock, params["stock_bias"])
+        level = stock_level(p_stock, _bias(params, filename))
         if _pre_opening_empty(filename, features):
             level = "empty"
             p_stock = {"empty": 1.0, "half": 0.0, "full": 0.0}
@@ -236,11 +269,11 @@ def decide_area(area: dict, features: dict | None, vlm: dict | None, params: dic
         votes = ", ".join(f"{n}: {max(p, key=p.get)}" for n, p in sources.items()) or "no sources, prior"
         gate = params["gate"]
         low = not set(sources) - {"temporal"} or max(p_stock.values()) < gate["min_top_p"] or gate["wrong_band"][0] < pw < gate["wrong_band"][1]
-        observed = _observed(vlm)
+        observed = observed_product(features, vlm)
         reason = f"{votes}; p_wrong {pw:.2f}"
     except Exception as e:  # noqa: BLE001  a crash here must never drop the area
         p_stock = _normalise(params["fallback_p"])
-        level, pw, compliant, observed = stock_level(p_stock, params["stock_bias"]), 0.0, True, None
+        level, pw, compliant, observed = stock_level(p_stock, _bias(params, filename)), 0.0, True, None
         reason, low = f"fallback ({type(e).__name__}: {e})", True
     return {
         "pred": {"planogram_compliant": compliant, "stock_level": level, "stock_value": STOCK_VALUES[level]},

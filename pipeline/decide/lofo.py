@@ -23,9 +23,11 @@ import numpy as np
 from sklearn.linear_model import LogisticRegression
 
 from pipeline.common.config import EMPTY_IS_COMPLIANT, FEATURES, LABELS, PLANOGRAM, STOCK_VALUES, VLM
+from pipeline.common.parallel import pmap
 from pipeline.common.planogram import load_planogram
 from pipeline.decide.decide import (
-    DEFAULT_PARAMS, LEVELS, PARAMS_PATH, decide_frames, knn_wrong, stock_sources, to_submission, vlm_mismatch,
+    DEFAULT_PARAMS, LEVELS, PARAMS_PATH, _pre_opening_empty, decide_frames, is_late, knn_wrong, stock_sources, to_submission,
+    vlm_mismatch,
 )
 
 SOURCES = ("gemini", "claude", "knn", "probe", "gb", "temporal")
@@ -34,6 +36,7 @@ TEMPORAL_BELOW_GRID = (0.6, 0.7, 0.8, 0.9, 1.01)  # 1.01 = temporal always joins
 TEMPORAL_GRID = (0.0, 0.25, 0.5, 1.0)  # tie-breaker: small weights only
 NO_VLM = ("knn", "probe", "gb", "temporal")
 BIAS_GRID = (0.0, 0.1, 0.2, 0.4)
+LATE_BIAS_GRID = (0.0, 0.1, 0.2, 0.4, 0.8)  # extra bias on evening frames, fitted after the rest
 ODDS_GRID = {"half": (-0.5, -0.25, 0.0, 0.25), "full": (-0.75, -0.5, -0.25, 0.0, 0.25)}
 KNN_WRONG_GRID = (0.0, 0.25, 0.5, 0.75, 1.0)
 MIN_WRONG_FOR_PLATT = 5
@@ -43,7 +46,8 @@ LEVEL_OF_VALUE = {v: k for k, v in STOCK_VALUES.items()}
 
 
 def build_table(labels: dict, features: dict, vlm: dict, sigma: float) -> dict:
-    """Arrays over every labelled area (frame, area id): source probs S (n, src, 3) with mask M, truths, Platt input X, kNN p_wrong K."""
+    """Arrays over every labelled area (frame, area id): source probs S (n, src, 3) with mask M, truths, Platt input X, kNN p_wrong K,
+    pre-opening empty override P."""
     rows = []
     for cam, frames in labels.items():
         for fn, areas in frames.items():
@@ -57,7 +61,7 @@ def build_table(labels: dict, features: dict, vlm: dict, sigma: float) -> dict:
                 except Exception:  # noqa: BLE001  same per-area fallback as decide
                     sources = {}
                 rows.append((cam, fn, area_id, sources, vlm_mismatch(v), knn_wrong(f), LEVELS.index(LEVEL_OF_VALUE[float(gt["stock_value"])]),
-                             bool(gt.get("planogram_compliant", True))))
+                             bool(gt.get("planogram_compliant", True)), _pre_opening_empty(fn, f), is_late(fn)))
     n = len(rows)
     S, M = np.zeros((n, len(SOURCES), 3)), np.zeros((n, len(SOURCES)))
     for i, (_, _, _, sources, *_rest) in enumerate(rows):
@@ -71,12 +75,15 @@ def build_table(labels: dict, features: dict, vlm: dict, sigma: float) -> dict:
         "K": np.array([np.nan if r[5] is None else float(r[5]) for r in rows]),
         "T": np.array([r[6] for r in rows], dtype=int),
         "C": np.array([r[7] for r in rows], dtype=bool),
+        "P": np.array([r[8] for r in rows], dtype=bool),
+        "L": np.array([r[9] for r in rows], dtype=bool),
     }
 
 
 def stock_pred(t: dict, idx: np.ndarray, w: np.ndarray, bias: float, fallback: np.ndarray, below: float = 1.01,
-               odds: tuple[float, float] = (0.0, 0.0)) -> np.ndarray:
-    """Vectorised decide.stock_probs + decide.stock_level. below: temporal joins only where the visual top p is under it."""
+               odds: tuple[float, float] = (0.0, 0.0), late_bias: float = 0.0) -> np.ndarray:
+    """Vectorised decide.stock_probs + decide.stock_level + the pre-opening empty override. below: temporal joins only
+    where the visual top p is under it."""
     M = t["M"][idx].copy()
     jt = SOURCES.index("temporal")
     wv = w.copy()
@@ -89,8 +96,8 @@ def stock_pred(t: dict, idx: np.ndarray, w: np.ndarray, bias: float, fallback: n
     p = np.where(den[:, None] > 0, num / np.maximum(den, 1e-12)[:, None], fallback)
     p = p * np.exp([0.0, *odds])
     p = p / p.sum(axis=1, keepdims=True)
-    ev = p @ GAIN - bias * np.arange(3)  # EV[pred] = sum_t p_t GAIN[t, pred]
-    return ev.argmax(axis=1)  # first max = lower level on ties, as in decide
+    ev = p @ GAIN - (bias + late_bias * t["L"][idx])[:, None] * np.arange(3)  # EV[pred] = sum_t p_t GAIN[t, pred]
+    return np.where(t["P"][idx], 0, ev.argmax(axis=1))  # first max = lower level on ties, as in decide
 
 
 def p_wrong_vec(t: dict, idx: np.ndarray, a: float, b: float, wk: float) -> np.ndarray:
@@ -131,7 +138,9 @@ def fit(t: dict, idx: np.ndarray, allowed: tuple[str, ...] = SOURCES) -> dict:
     params["weights"] = {s: float(w[j]) for j, s in enumerate(SOURCES)}
     params["stock_bias"] = float(bias)
     params["odds"] = {"half": odds[0], "full": odds[1]}
-    level = stock_pred(t, idx, w, bias, fallback, below, odds)
+    late = max(LATE_BIAS_GRID, key=lambda lb: GAIN[t["T"][idx], stock_pred(t, idx, w, bias, fallback, below, odds, lb)].sum())
+    params["stock_bias_late"] = float(late)
+    level = stock_pred(t, idx, w, bias, fallback, below, odds, late)
 
     has_x = idx[~np.isnan(t["X"][idx])]
     wrong = ~t["C"][has_x]
@@ -156,7 +165,7 @@ def restrict(features: dict, vlm: dict, allowed: tuple[str, ...]) -> tuple[dict,
 
 def lofo_predictions(
     labels: dict, features: dict, vlm: dict, planogram: dict, allowed: tuple[str, ...] = SOURCES,
-    probs: dict | None = None, low: dict | None = None,
+    probs: dict | None = None, low: dict | None = None, observed: dict | None = None,
 ) -> dict:
     """Submission-format predictions for every labelled frame, each made with parameters fitted without it.
     probs, if given, is filled with {(cam, filename, area_id): p_stock} for log-loss; low with the low_confidence flag."""
@@ -166,14 +175,17 @@ def lofo_predictions(
     if len(frames) < 2:
         raise SystemExit(f"LOFO needs at least 2 labelled frames, got {len(frames)}")
     frame_of = np.array([frames.index(f) for f in t["frame"]])
+    def held_out(i: int) -> dict:
+        return decide_frames([frames[i]], planogram, features, vlm, fit(t, np.flatnonzero(frame_of != i), allowed))
+
     pred: dict = {}
-    for i, frame in enumerate(frames):
-        params = fit(t, np.flatnonzero(frame_of != i), allowed)
-        rows = decide_frames([frame], planogram, features, vlm, params)
+    for rows in pmap(held_out, range(len(frames))):  # one process per held-out frame, results in frame order
         if probs is not None:
             probs.update({(c, f, a): r["p_stock"] for c, fs in rows.items() for f, areas in fs.items() for a, r in areas.items()})
         if low is not None:
             low.update({(c, f, a): r["low_confidence"] for c, fs in rows.items() for f, areas in fs.items() for a, r in areas.items()})
+        if observed is not None:
+            observed.update({(c, f, a): r["observed_product_id"] for c, fs in rows.items() for f, areas in fs.items() for a, r in areas.items()})
         sub = to_submission(rows)
         for cam, fs in sub.items():
             pred.setdefault(cam, {}).update(fs)
@@ -189,6 +201,18 @@ def gate_report(pred: dict, gt: dict, low: dict) -> str:
         per = s["total"] / s["areas"] if s["areas"] else float("nan")
         lines.append(f"{name:10} {s['areas']:5} areas  {per:+.2f} pts/area  compliance {s['compliance']:5} stock {s['stock']:6}")
     return "\n".join(lines)
+
+
+def product_report(pred: dict, gt: dict, observed: dict) -> str:
+    """Wrong-product areas: how many are flagged non-compliant, how many of those name a product, how many name the
+    labelled one; and false alarms. Shows whether observed_product_id can be trusted by the staff."""
+    wrong = [(c, f, a, g) for c, fs in gt.items() for f, areas in fs.items() for a, g in areas.items() if g.get("planogram_compliant") is False]
+    caught = [(c, f, a, g) for c, f, a, g in wrong if pred.get(c, {}).get(f, {}).get(a, {}).get("planogram_compliant") is False]
+    named = [(k, g) for *k, g in caught if observed.get(tuple(k))]
+    right = sum(str(observed[tuple(k)]) == str(g.get("observed_product_id")) for k, g in named)
+    false = sum(1 for c, fs in gt.items() for f, areas in fs.items() for a, g in areas.items()
+                if g.get("planogram_compliant", True) and pred.get(c, {}).get(f, {}).get(a, {}).get("planogram_compliant") is False)
+    return f"wrong product: {len(caught)}/{len(wrong)} caught, {len(named)} named, {right} named right; {false} false alarms"
 
 
 def score_pred(pred: dict, gt: dict) -> dict:
@@ -302,8 +326,10 @@ if __name__ == "__main__":
                 print(_row(src, lofo_predictions(labels, feats, vlm, planogram, allowed, probs), labels, probs))
             low: dict = {}
             probs: dict = {}
-            fused = lofo_predictions(labels, feats, vlm, planogram, NO_VLM, probs=probs, low=low)
+            observed: dict = {}
+            fused = lofo_predictions(labels, feats, vlm, planogram, NO_VLM, probs=probs, low=low, observed=observed)
             print(gate_report(fused, labels, low))
+            print(product_report(fused, labels, observed))
             if causal:
                 kt = lofo_predictions(labels, feats, vlm, planogram, ("knn", "temporal"))
                 m, lo, hi = paired_bootstrap(kt, fused, labels)

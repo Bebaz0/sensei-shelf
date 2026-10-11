@@ -103,7 +103,7 @@ images ──> crop ──> pixel features ──> decide ──> uncertain area
 1. **Crop.** Each planogram quad is warped to a flat 256x256 crop, plus a wider context crop.
 2. **Look at the pixels.** Fill, colour and texture features. Because the cameras never move, each crop is also compared with labelled crops of the *same area* at other times of day, and a small gradient-boosting model reads stock level from lighting-normalised features.
 3. **Decide once.** The sources are averaged into probabilities for empty, half and full.
-4. **Ask only when unsure.** Areas where the probabilities are not decisive are sent to Gemini (3.1 Flash-Lite), which sees the crop and its surroundings and chooses from that camera's product list.
+4. **Ask only when unsure** (off by default, `USE_VLM=1`: it gained +0.3% for ~11 min of API calls). Areas where the probabilities are not decisive are sent to Gemini (3.1 Flash-Lite), which sees the crop and its surroundings and chooses from that camera's product list.
 5. **Decide again**, by expected score. The challenge punishes overstating stock (-3) more than understating it (-2), so the system answers "full" only when it is confident enough to be worth the risk. "Wrong product" is answered only when it is more likely than not.
 
 Every API answer is cached on disk, so re-running costs nothing.
@@ -118,6 +118,11 @@ python -m pipeline.pixel.features
 python -m pipeline.decide.decide --queue out/vlm_queue.txt
 python -m pipeline.vlm.ask --areas out/vlm_queue.txt
 python -m pipeline.decide.decide
+python -m pipeline.eval.score --pred out/submission.json --gt labels/dev.json
+./scripts/run_all.sh            # all of the above, in order (VLM off)
+IMAGES=<validation dir> ./scripts/run_all.sh   # submission: out/submission.json, validation frames only
+USE_VLM=1 ./scripts/run_all.sh  # also ask Gemini about the low-confidence areas (needs GEMINI_API_KEY)
+WORKERS=1 ./scripts/run_all.sh  # serial, if the parallel stages ever misbehave (same output)
 ```
 
 ### Repository map

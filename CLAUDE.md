@@ -15,7 +15,7 @@ Goal: WIN. 5 engineers, each driving a Claude Code session. Read this file, then
 - v1 decision = hand-tuned weighted average of VLM, embedding-probe and kNN probabilities, then the EV rule. A learned stacker is an experiment, adopted only with a clear LOFO gain.
 
 ## Layout (pipeline stages talk only through files in `out/`, see CONTRACTS.md)
-`crop` -> `pixel` + `vlm` -> `decide` -> `eval` / `dashboard`. Paths live in `pipeline/common/config.py`. Setup and run commands are in `README.md`. `crop` writes `out/run_frames.json` (the frames of the current run) and every later stage processes only those frames. `IMAGES=<dir> scripts/run_all.sh` is a validation run: its crops are appended to the train crops so kNN and temporal features still work. `NO_API=1` skips the VLM.
+`crop` -> `pixel` + `vlm` -> `decide` -> `eval` / `dashboard`. Paths live in `pipeline/common/config.py`. Setup and run commands are in `README.md`. `crop` writes `out/run_frames.json` (the frames of the current run) and every later stage processes only those frames. `IMAGES=<dir> scripts/run_all.sh` is a validation run: its crops are appended to the train crops so kNN and temporal features still work. The VLM is off by default (`USE_VLM=1` asks it about the low-confidence areas; `NO_API=1` then skips the calls).
 
 ## Workstreams and ownership (edit ONLY your files)
 | WS | Owns |
@@ -46,4 +46,4 @@ Cross-cutting change in a file you do not own? Add a one-line request to `docs/D
 Is an empty area compliant? Validation layout, handover time and deadline? Partly visible areas? Half vs full boundary? Submission feedback and limits? Are validation frames from late evening? Is a stable mismatch (bananas all day in an "oranges" area such as 6215_7) annotated non-compliant? What is the label of an area behind the night blind (6383, 6386 at 06:12), and can validation frames have the blind down?
 
 ## Safe submission
-Tag `submit-safe` marks the last known-good commit. To produce a submission: check it out, then `IMAGES=<validation dir> scripts/run_all.sh` (add `NO_API=1` if the network is down); the file to hand in is `out/submission.json`, which contains the validation frames only.
+Tag `submit-safe` marks the last known-good commit. To produce a submission: check it out, then `IMAGES=<validation dir> scripts/run_all.sh` (the VLM is off unless `USE_VLM=1`); the file to hand in is `out/submission.json`, which contains the validation frames only.

@@ -60,3 +60,13 @@ def test_closer_time_of_day_wins(tmp_path):
     add_neighbours(out, index, labels)
     knn = out["c1"]["0.jpg"]["c1_1"]["knn"]
     assert knn["full"] > knn["half"]
+
+
+def test_wrong_neighbours_vote_the_observed_product(tmp_path):
+    index, out = _setup(tmp_path, [RED, RED, RED, RED])
+    wrong = lambda pid: {**_lab("full", False), "observed_product_id": pid}
+    labels = {"c1": {"100.jpg": {"c1_1": wrong("11908")}, "200.jpg": {"c1_1": wrong("11908")}, "300.jpg": {"c1_1": wrong("11906")}}}
+    add_neighbours(out, index, labels)
+    obs = out["c1"]["400.jpg"]["c1_1"]["knn"]["observed"]
+    assert list(obs) == ["11908", "11906"] and abs(sum(obs.values()) - 1) < 1e-3
+    assert "observed" not in out["c1"]["100.jpg"]["c1_1"]["knn"] or "11908" in out["c1"]["100.jpg"]["c1_1"]["knn"]["observed"]
