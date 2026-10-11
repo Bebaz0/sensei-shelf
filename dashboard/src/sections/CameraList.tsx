@@ -2,7 +2,7 @@ import { cameraName } from '../lib/format'
 import { type Cell, count, type Filter, issueParts, STATUS, STATUSES } from '../lib/status'
 
 export type CameraSummary = { id: string; cells: Cell[]; thumb: string }
-type Props = { cams: CameraSummary[]; active: string; filter: Filter; onPick: (id: string) => void }
+type Props = { cams: CameraSummary[]; active: string | null; filter: Filter; onPick: (id: string) => void }
 
 // Cameras sorted by urgency, each with a bar of its area statuses.
 export default function CameraList({ cams, active, filter, onPick }: Props) {
@@ -25,12 +25,7 @@ export default function CameraList({ cams, active, filter, onPick }: Props) {
               <img className="cam-thumb h-[43px] w-[76px] flex-none rounded-[9px] object-cover" src={c.thumb} alt="" />
               <span className="min-w-0 flex-1">
                 <span className="block truncate text-[13.5px] font-medium">{cameraName(c.id)}</span>
-                <span className="mt-2.5 flex h-1.5 gap-0.5">
-                  {STATUSES.map((st) => {
-                    const n = count(c.cells, st)
-                    return n ? <span key={st} className="rounded-sm" style={{ flexGrow: n, background: STATUS[st].bar }} /> : null
-                  })}
-                </span>
+                <StatusBar cells={c.cells} />
               </span>
             </button>
           )
@@ -39,3 +34,13 @@ export default function CameraList({ cams, active, filter, onPick }: Props) {
     </nav>
   )
 }
+
+// One segment per status, as wide as its share of the camera's areas.
+export const StatusBar = ({ cells }: { cells: Cell[] }) => (
+  <span className="mt-2.5 flex h-1.5 gap-0.5">
+    {STATUSES.map((st) => {
+      const n = count(cells, st)
+      return n ? <span key={st} className="rounded-sm" style={{ flexGrow: n, background: STATUS[st].bar }} /> : null
+    })}
+  </span>
+)

@@ -1,13 +1,21 @@
+import type { CSSProperties } from 'react'
 import { hm } from '../lib/format'
 import type { Camera } from '../lib/results'
-import { cellsOf, count, STATUS, STATUSES, type Status } from '../lib/status'
+import { cellsOf, count, type Filter, STATUS, STATUSES, type Status } from '../lib/status'
 
-type Props = { camera: Camera; frame: number; done: Record<string, boolean>; onPick: (frame: number | null) => void }
+type Props = {
+  camera: Camera
+  frame: number
+  done: Record<string, boolean>
+  filter: Filter // this camera only, independent of the store cards
+  onPick: (frame: number | null) => void
+  onFilter: (f: Filter) => void
+}
 
 const STACK: Status[] = ['ok', 'low', 'wrong', 'empty'] // bottom to top
 
 // One column per capture of the selected camera; clicking one goes back to it.
-export default function Timeline({ camera, frame, done, onPick }: Props) {
+export default function Timeline({ camera, frame, done, filter, onPick, onFilter }: Props) {
   const last = camera.captures.length - 1
   const cellsAt = (i: number) => cellsOf(camera, camera.captures[i], i === last ? done : {})
   const current = cellsAt(frame)
@@ -20,19 +28,26 @@ export default function Timeline({ camera, frame, done, onPick }: Props) {
           <div className="mono text-[32px] leading-none font-medium tracking-[-0.03em]">{hm(camera.captures[frame].ts)}</div>
           <div className="mt-1.5 text-xs text-muted">{frame === last ? 'Latest capture' : 'Earlier capture'}</div>
         </div>
-        {/* Small on purpose: the store totals above are the headline, these only describe this capture */}
-        <dl className="flex flex-wrap gap-2">
+        {/* Small on purpose: the store totals above are the headline, these only describe and filter this capture */}
+        <div className="flex flex-wrap gap-2" role="group" aria-label="Filter this camera">
           {STATUSES.map((st) => {
             const n = count(current, st)
+            const on = filter === st
             return (
-              <div key={st} className={`flex h-8 items-center gap-2 rounded-full border border-line px-3 text-[13px] ${n ? '' : 'opacity-45'}`}>
+              <button
+                key={st}
+                className={`chip flex h-8 items-center gap-2 rounded-full border px-3 text-[13px] ${on ? 'on' : `border-line hover:border-line3 ${filter === 'all' ? '' : 'off'}`} ${n ? '' : 'zero'}`}
+                style={{ '--kpi': STATUS[st].color } as CSSProperties}
+                aria-pressed={on}
+                onClick={() => onFilter(on ? 'all' : st)}
+              >
                 <span className="size-2 flex-none rounded-full" style={{ background: STATUS[st].color }} />
-                <dd className="font-semibold tabular-nums">{n}</dd>
-                <dt className="text-fg2">{STATUS[st].label}</dt>
-              </div>
+                <span className="font-semibold tabular-nums">{n}</span>
+                <span className="text-fg2">{STATUS[st].label}</span>
+              </button>
             )
           })}
-        </dl>
+        </div>
       </div>
       <div className="flex flex-wrap items-baseline justify-between gap-3 border-t border-line px-1 pt-4">
         <span className="text-[15px] font-semibold">Throughout the day</span>
