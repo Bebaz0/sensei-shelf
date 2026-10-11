@@ -1,27 +1,31 @@
 {
  "fallback_p": {
-  "empty": 0.0369,
-  "half": 0.1502,
-  "full": 0.8129
+  "empty": 0.0335,
+  "half": 0.1752,
+  "full": 0.7913
  },
  "weights": {
-  "gemini": 0.7,
+  "gemini": 1.0,
   "claude": 0.0,
   "knn": 1.0,
   "probe": 0.0,
   "gb": 1.0,
-  "temporal": 0.25
+  "temporal": 0.5
  },
  "platt": {
-  "a": -1.5,
-  "b": 2.5
+  "a": 0.5514069336710109,
+  "b": 1.9319109385163575
  },
- "knn_wrong_weight": 0.0,
+ "knn_wrong_weight": 0.75,
  "fill_sigma": 10.0,
- "stock_bias": 0.4,
- "temporal_below": 0.8,
+ "stock_bias": 0.2,
+ "temporal_below": 0.7,
+ "odds": {
+  "half": 0.0,
+  "full": 0.0
+ },
  "gate": {
-  "min_top_p": 0.7,
+  "min_top_p": 0.6,
   "wrong_band": [
    0.3,
    0.7

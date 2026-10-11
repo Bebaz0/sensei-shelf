@@ -51,6 +51,24 @@ RESTOCK_P = {"empty": 0.05, "half": 0.1, "full": 0.85}
 # Mentor thresholds on covered share: empty 0-10%, half 10-50%, full above 50%.
 EMPTY_MAX_PCT, HALF_MAX_PCT = 10.0, 50.0
 
+# Pre-opening: the first ~2 frames of the day (06:12, 07:20 Lisbon per CLAUDE.md) can have shelves still empty.
+# ts_of_day under this cutoff + kNN hints empty -> force empty. 23400s UTC = 07:30 Lisbon (WEST summer).
+PRE_OPEN_UTC_S = 23400
+PRE_OPEN_KNN_EMPTY = 0.25
+
+
+def _pre_opening_empty(filename: str | None, features: dict | None) -> bool:
+    if not filename:
+        return False
+    try:
+        ts = int(Path(filename).stem)
+    except ValueError:
+        return False
+    if ts % 86400 >= PRE_OPEN_UTC_S:
+        return False
+    knn = (features or {}).get("knn") or {}
+    return float(knn.get("empty", 0.0)) >= PRE_OPEN_KNN_EMPTY
+
 
 def load_params(path: Path = PARAMS_PATH) -> dict:
     """DEFAULT_PARAMS overridden by the committed params.json, if present."""
@@ -200,7 +218,7 @@ def product_changed(area: dict, features: dict | None, vlm: dict | None) -> bool
     return bool(before and now and str(before) != str(now))
 
 
-def decide_area(area: dict, features: dict | None, vlm: dict | None, params: dict) -> dict:
+def decide_area(area: dict, features: dict | None, vlm: dict | None, params: dict, filename: str | None = None) -> dict:
     """One results.json row. Never raises: broken inputs fall back to the prior and compliant."""
     try:
         sources = stock_sources(features, vlm, params["fill_sigma"])
@@ -210,6 +228,9 @@ def decide_area(area: dict, features: dict | None, vlm: dict | None, params: dic
             params = {**params, "weights": {**params["weights"], "restock": 1.0}}
         p_stock = stock_probs(sources, params)
         level = stock_level(p_stock, params["stock_bias"])
+        if _pre_opening_empty(filename, features):
+            level = "empty"
+            p_stock = {"empty": 1.0, "half": 0.0, "full": 0.0}
         pw = p_wrong(features, vlm, params)
         compliant = is_compliant(pw) or (level == "empty" and EMPTY_IS_COMPLIANT)
         votes = ", ".join(f"{n}: {max(p, key=p.get)}" for n, p in sources.items()) or "no sources, prior"
@@ -260,6 +281,7 @@ def decide_frames(
                 features.get(camera_id, {}).get(filename, {}).get(area_id),
                 vlm.get(camera_id, {}).get(filename, {}).get(area_id),
                 params,
+                filename=filename,
             )
             row["crop"] = ((crops or {}).get(camera_id, {}).get(filename, {}).get(area_id) or {}).get("ctx")
             results.setdefault(camera_id, {}).setdefault(filename, {})[area_id] = row
