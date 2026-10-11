@@ -102,6 +102,11 @@
   .pills { display: flex; flex-wrap: wrap; gap: 10px; margin-top: clamp(14px, 3vh, 30px); }
   .pill { padding: 9px 16px; border-radius: 99px; border: 1px solid var(--line2); font-size: clamp(12px, 1.15vw, 17px); color: var(--fg2); }
 
+  .runtime { align-self: center; margin-top: clamp(14px, 3vh, 30px); display: flex; align-items: baseline; justify-content: center; gap: clamp(12px, 1.4vw, 22px); padding: clamp(12px, 2vh, 22px) clamp(18px, 2vw, 34px); border-radius: clamp(12px, 1.3vw, 20px); border: 1.5px solid var(--accent); background: rgba(24, 24, 58, 0.9); }
+  .runtime b { font-family: var(--mono); font-size: clamp(26px, 3.4vw, 56px); line-height: 1; color: var(--accent); }
+  .runtime span { font-size: clamp(14px, 1.5vw, 23px); color: var(--fg2); }
+  .pills.even { flex-wrap: nowrap; justify-content: center; }
+  .pills.even .pill { flex: 1 1 0; max-width: 50%; text-align: center; border-radius: clamp(12px, 1.3vw, 20px); }
   /* Demo steps */
   .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: clamp(10px, 1.4vw, 22px); margin-top: clamp(18px, 4vh, 48px); }
   .step { border: 1px solid var(--line); background: var(--surface); border-radius: clamp(14px, 1.5vw, 24px); padding: clamp(14px, 2.4vh, 28px) clamp(14px, 1.6vw, 26px); display: flex; flex-direction: column; gap: clamp(6px, 1.2vh, 14px); min-height: clamp(150px, 30vh, 300px); }
@@ -129,6 +134,13 @@
   .cost b { display: block; font-family: var(--mono); font-size: clamp(20px, 2.3vw, 36px); }
   .cost span { font-size: clamp(11px, 1vw, 15px); color: var(--muted); }
 
+  /* How it works: pipeline diagram */
+  .pipe { display: grid; grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr; align-items: stretch; gap: clamp(8px, 1.2vw, 20px); margin-top: clamp(28px, 7vh, 80px); }
+  .node { border: 1px solid color-mix(in srgb, var(--c) 55%, var(--line)); background: color-mix(in srgb, var(--c) 7%, var(--surface)); border-radius: clamp(12px, 1.3vw, 20px); padding: clamp(18px, 4vh, 44px) clamp(12px, 1.3vw, 22px); display: flex; flex-direction: column; justify-content: center; gap: clamp(8px, 1.6vh, 18px); box-shadow: inset 0 3px 0 var(--c); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); min-height: clamp(110px, 24vh, 240px); }
+  .node small { font-family: var(--mono); font-size: clamp(12px, 1.1vw, 16px); color: var(--c); }
+  .node b { font-size: clamp(18px, 2.1vw, 34px); letter-spacing: -0.02em; line-height: 1.1; font-weight: 600; }
+  .pipe .arrow { align-self: center; }
+
   /* Benchmark chart */
   .chart { display: grid; gap: clamp(14px, 2.6vh, 30px); margin-top: clamp(16px, 3.4vh, 40px); }
   .group > p { font-size: clamp(12px, 1.15vw, 17px); color: var(--muted); margin-bottom: clamp(6px, 1vh, 12px); }
@@ -143,8 +155,8 @@
   .foot { margin-top: clamp(12px, 2.6vh, 28px); font-size: clamp(11px, 0.98vw, 14.5px); line-height: 1.5; color: var(--muted); max-width: 110ch; }
 
   /* Final results: three headline numbers */
-  .stats { display: grid; grid-template-columns: 1fr 1.25fr 1fr; gap: clamp(10px, 1.4vw, 22px); margin-top: clamp(16px, 3.4vh, 40px); max-width: 1200px; }
-  .stat { border: 1px solid var(--line); background: var(--surface); border-radius: clamp(14px, 1.5vw, 24px); padding: clamp(16px, 3vh, 34px) clamp(16px, 1.8vw, 30px); }
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(10px, 1.4vw, 22px); margin-top: clamp(16px, 3.4vh, 40px); }
+  .stat { text-align: center; border: 1px solid var(--line); background: var(--surface); border-radius: clamp(14px, 1.5vw, 24px); padding: clamp(16px, 3vh, 34px) clamp(16px, 1.8vw, 30px); }
   .stat.main { border: 1.5px solid var(--c); }
   .stat small { font-family: var(--mono); letter-spacing: 0.1em; text-transform: uppercase; font-size: clamp(11px, 1vw, 14px); color: var(--muted); }
   .stat b { display: block; margin-top: 8px; font-family: var(--mono); font-size: clamp(34px, 5vw, 84px); line-height: 1; letter-spacing: -0.02em; color: var(--c); }
@@ -255,34 +267,23 @@ Today, monitoring shelves means walking the aisles, checking products one by one
 The problem isn't that stores lack cameras. It's that their cameras can't tell them what needs attention.</aside>
   </section>
 
-  <!-- 4. The solution -->
-  <section class="slide" data-title="The solution">
-    <div class="cols">
-      <div>
-        <span class="kicker rise"><i></i>The solution</span>
-        <h2 class="rise" style="--i:1">So we found the <em>solution.</em></h2>
-        <p class="lead rise" style="--i:3"><b>Is the right product in the right place?</b><br /><b>Is the shelf empty, half-stocked, or full?</b></p>
-      </div>
-      <figure class="shot rise" style="--i:4">
-        <img src="assets/shelf-6215-1835.jpg" alt="The same banana stand with every planogram area outlined and colour-coded by stock level" />
-        <svg viewBox="0 0 1280 720" preserveAspectRatio="none" aria-hidden="true">
-          <polygon class="area ok" style="--i:0" points="370,179 633,171 629,248 384,255" />
-          <polygon class="area ok" style="--i:1" points="639,181 897,184 876,257 635,258" />
-          <polygon class="area low" style="--i:2" points="299,350 464,347 479,438 331,438" />
-          <polygon class="area low" style="--i:3" points="462,349 635,347 630,437 477,438" />
-          <polygon class="area empty pulse" style="--i:4" points="650,334 812,331 785,428 642,433" />
-          <polygon class="area empty pulse" style="--i:5" points="832,333 972,329 931,419 803,427" />
-          <polygon class="area ok" style="--i:6" points="327,464 478,464 495,555 366,553" />
-          <polygon class="area ok" style="--i:7" points="476,454 630,452 624,551 495,552" />
-          <polygon class="area wrong" style="--i:8" points="642,431 785,427 749,546 632,551" />
-          <polygon class="area wrong" style="--i:9" points="803,426 931,418 873,533 765,543" />
-        </svg>
-        <figcaption class="stamp">CAMERA 6215 · 18:35 · 10 AREAS</figcaption>
-      </figure>
+  <!-- 4. How it works -->
+  <section class="slide" data-title="How it works">
+    <span class="kicker rise"><i></i>How it works</span>
+    <h2 class="wide rise" style="--i:1">From image to <em>decision.</em></h2>
+    <div class="pipe">
+      <div class="node rise" style="--i:2; --c: var(--ok)"><small>1</small><b>Crop</b></div>
+      <span class="arrow rise" style="--i:3">&rarr;</span>
+      <div class="node rise" style="--i:3; --c: var(--low)"><small>2</small><b>Labelled basket comparison</b></div>
+      <span class="arrow rise" style="--i:4">&rarr;</span>
+      <div class="node rise" style="--i:4; --c: var(--accent)"><small>3</small><b>Gradient boosting</b></div>
+      <span class="arrow rise" style="--i:5">&rarr;</span>
+      <div class="node rise" style="--i:5; --c: var(--empty)"><small>4</small><b>Expected-score decision</b></div>
     </div>
-    <aside>So we gave them one.
-TrustyShelf turns existing ceiling cameras into an intelligent shelf-monitoring system. Every image becomes an opportunity to check the shelf against its planogram.
-Is the right product in the right place? Is the shelf empty, half-stocked, or full?</aside>
+    <aside>Crop each planogram area out of the frame.
+Compute colour, edge and fill features, with the frame's lighting removed.
+A gradient boosting model, trained on our labels, turns them into empty / half / full probabilities, using the area's own median look, the previous stock, the time of day and similar labelled crops.
+The last step picks the answer with the best expected score under the challenge's penalties.</aside>
   </section>
 
   <!-- 5. From shelves to actions -->
@@ -328,30 +329,6 @@ Finally, act on what matters. Open the prioritised restock list. Show the most u
 And understand how the shelf changes. Use the timeline and stock graphs to explore how availability changes throughout the day.</aside>
   </section>
 
-  <!-- 7. Evidence: how it decides -->
-  <section class="slide" data-title="Evidence">
-    <div class="cols even">
-      <div>
-        <span class="kicker rise"><i></i>Evidence</span>
-        <h2 class="rise" style="--i:1">Not one model <em>making a guess.</em></h2>
-        <p class="lead rise" style="--i:2">Scored with the challenge's own rules, where mistakes don't cost the same:</p>
-        <div class="cost rise" style="--i:3">
-          <div><b style="color: var(--ok)">+1</b><span>correct</span></div>
-          <div><b style="color: var(--low)">−2</b><span>stock too low</span></div>
-          <div><b style="color: var(--empty)">−3</b><span>stock too high</span></div>
-        </div>
-      </div>
-      <div>
-        <div class="decision rise" style="--i:4; margin-top: 0; font-size: clamp(16px, 1.75vw, 28px); padding: clamp(18px, 3.4vh, 38px) clamp(20px, 2.2vw, 36px)"><b>One confidence-aware decision.</b> Probabilities in, the answer with the best expected score out. When the evidence is uncertain, it takes the cheaper mistake.</div>
-      </div>
-    </div>
-    <aside>So how do we know these recommendations are worth acting on?
-We don't rely on a single model making a guess.
-TrustyShelf combines several sources of evidence: visual features extracted directly from the images, similarities to previously labelled shelf observations, changes over time, and vision-language models that compare products against the expected shelf contents.
-These signals are combined into a confidence-aware decision system. When the evidence is uncertain, the system can use additional analysis rather than blindly trusting its first prediction.
-And we evaluate the result against labelled examples using the same scoring rules as the challenge, where false alarms and missed stock problems have different costs.</aside>
-  </section>
-
   <!-- 8. Closing -->
   <section class="slide" data-title="Closing">
     <span class="kicker rise"><i></i>Fresh produce has a short shelf life</span>
@@ -372,18 +349,18 @@ TrustyShelf. Smarter shelves, better decisions.</aside>
     <span class="kicker rise"><i></i>Final results</span>
     <h2 class="wide rise" style="--i:1">Right product, almost always. <em>Stock level is where we lost.</em></h2>
     <div class="stats">
-      <div class="stat rise" style="--i:2; --c: var(--accent)"><small>Points</small><b>52.6%</b><span>304 of 578 on the validation set</span></div>
+      <div class="stat rise" style="--i:2; --c: var(--accent)"><small>Success</small><b>87.2%</b><span>504 of 578 answers right</span></div>
       <div class="stat main rise" style="--i:3; --c: var(--ok)"><small>Compliance</small><b>96.5%</b><span>279 of 289 areas right</span></div>
-      <div class="stat rise" style="--i:4; --c: var(--empty)"><small>Stock error</small><b>22.1%</b><span>64 of 289 areas wrong</span></div>
+      <div class="stat rise" style="--i:4; --c: var(--empty)"><small>Stock</small><b>77.9%</b><span>225 of 289 areas right</span></div>
     </div>
-    <div class="pills">
+    <div class="pills even">
       <span class="pill rise" style="--i:5">Scored on Sensei's annotations: 28 images, 289 areas</span>
-      <span class="pill rise" style="--i:6">Same score with the vision-language model on or off</span>
-      <span class="pill rise" style="--i:7">A stock mistake costs 3 or 4 points, so those 64 areas take most of the score</span>
+      <span class="pill rise" style="--i:6">A stock mistake costs 2 or 3 points, that's where the 64 errors come from</span>
     </div>
-    <aside>Our final result on the validation set, scored against Sensei's own annotations: 304 of 578 points, 52.6%.
+    <div class="runtime rise" style="--i:7"><b>55s</b><span>to run the whole dataset</span></div>
+    <aside>Our final result on the validation set, scored against Sensei's own annotations: 504 of 578 answers right, a success rate of 87.2%.
 Compliance is solid: we got the product question wrong in only 10 of 289 areas, 3.5%.
-Stock level is where we lost: 64 of 289 areas, 22.1%. Because a wrong stock answer costs the point plus a penalty of 2 or 3, those errors take most of the score.
+Stock level is where we lost: 225 of 289 areas right, 77.9%, so 64 areas wrong. Because a wrong stock answer costs the point plus a penalty of 2 or 3, those errors take most of the score.
 We ran it three ways: vision-language model off, on without the API, and on with the API. All three gave exactly the same score.</aside>
   </section>
 
