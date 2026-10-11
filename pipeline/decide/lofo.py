@@ -23,6 +23,7 @@ import numpy as np
 from sklearn.linear_model import LogisticRegression
 
 from pipeline.common.config import EMPTY_IS_COMPLIANT, FEATURES, LABELS, PLANOGRAM, STOCK_VALUES, VLM
+from pipeline.common.parallel import pmap
 from pipeline.common.planogram import load_planogram
 from pipeline.decide.decide import (
     DEFAULT_PARAMS, LEVELS, PARAMS_PATH, _pre_opening_empty, decide_frames, knn_wrong, stock_sources, to_submission,
@@ -170,10 +171,11 @@ def lofo_predictions(
     if len(frames) < 2:
         raise SystemExit(f"LOFO needs at least 2 labelled frames, got {len(frames)}")
     frame_of = np.array([frames.index(f) for f in t["frame"]])
+    def held_out(i: int) -> dict:
+        return decide_frames([frames[i]], planogram, features, vlm, fit(t, np.flatnonzero(frame_of != i), allowed))
+
     pred: dict = {}
-    for i, frame in enumerate(frames):
-        params = fit(t, np.flatnonzero(frame_of != i), allowed)
-        rows = decide_frames([frame], planogram, features, vlm, params)
+    for rows in pmap(held_out, range(len(frames))):  # one process per held-out frame, results in frame order
         if probs is not None:
             probs.update({(c, f, a): r["p_stock"] for c, fs in rows.items() for f, areas in fs.items() for a, r in areas.items()})
         if low is not None:

@@ -7,6 +7,7 @@ import cv2
 import numpy as np
 
 from pipeline.common.config import CROPS_INDEX, FEATURES, LABELS, OUT
+from pipeline.common.parallel import tmap
 
 _RUN_FRAMES = OUT / "run_frames.json"
 _HSV_BINS = 32
@@ -115,29 +116,29 @@ def run(index_path: Path, out_path: Path, run_frames: list[tuple[str, str]] | No
                 if lab.get("planogram_compliant") is True and not lab.get("unsure"):
                     compliant.setdefault((cam_id, area_id), []).append(filename)
 
-    out: dict = {}
+    tasks = []
     for cam_id, frames in index.items():
         for filename, areas in frames.items():
             if frame_set is not None and (cam_id, filename) not in frame_set:
                 continue
             for area_id, meta in areas.items():
-                loaded = _load_image(meta.get("warp", ""))
-                if loaded is None:
-                    continue
-                crop, mask = loaded
-
-                ref = None
                 ref_fn = next((f for f in compliant.get((cam_id, area_id), []) if f != filename), None)
-                if ref_fn and ref_fn in frames:
-                    ref = _load_image(frames[ref_fn].get(area_id, {}).get("warp", ""))
+                ref_path = frames[ref_fn].get(area_id, {}).get("warp", "") if ref_fn and ref_fn in frames else None
+                tasks.append((cam_id, filename, area_id, meta, ref_path))
 
-                feats = area_features(
-                    crop,
-                    visible_fraction=meta.get("visible_fraction", 1.0),
-                    reference=ref,
-                    mask=mask,
-                )
-                out.setdefault(cam_id, {}).setdefault(filename, {})[area_id] = feats
+    def one(task: tuple) -> dict | None:
+        _, _, _, meta, ref_path = task
+        loaded = _load_image(meta.get("warp", ""))
+        if loaded is None:
+            return None
+        crop, mask = loaded
+        ref = _load_image(ref_path) if ref_path is not None else None
+        return area_features(crop, visible_fraction=meta.get("visible_fraction", 1.0), reference=ref, mask=mask)
+
+    out: dict = {}
+    for (cam_id, filename, area_id, _, _), feats in zip(tasks, tmap(one, tasks)):  # threads: cv2 releases the GIL
+        if feats is not None:
+            out.setdefault(cam_id, {}).setdefault(filename, {})[area_id] = feats
 
     from pipeline.pixel.neighbours import add_neighbours  # here: neighbours imports this module's helpers
     add_neighbours(out, index, labels)

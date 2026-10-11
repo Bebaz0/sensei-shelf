@@ -9,6 +9,7 @@ from pathlib import Path
 import numpy as np
 
 from pipeline.common.config import STOCK_VALUES
+from pipeline.common.parallel import tmap
 from pipeline.pixel.features import _chi2_dist, _hsv_hist, _load_image
 
 LEVELS = ("empty", "half", "full")
@@ -76,6 +77,10 @@ def add_neighbours(out: dict, index: dict, labels: dict, causal: bool = False) -
             loaded = _load_image(path) if path else None
             hists[path] = _hsv_hist(*loaded) if loaded else None
         return hists[path]
+
+    paths = [d.get("warp", "") for frames in index.values() for areas in frames.values() for d in areas.values()]
+    paths = [p for p in dict.fromkeys(paths) if p]
+    hists.update(zip(paths, tmap(lambda p: (lambda loaded: _hsv_hist(*loaded) if loaded else None)(_load_image(p)), paths)))
 
     by_area: dict[tuple[str, str], list[tuple[str, dict]]] = {}
     for c, f, a, lab in rows:
