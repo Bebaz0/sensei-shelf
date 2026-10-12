@@ -22,7 +22,7 @@ from pathlib import Path
 import numpy as np
 from sklearn.linear_model import LogisticRegression
 
-from pipeline.common.config import EMPTY_IS_COMPLIANT, FEATURES, LABELS, PLANOGRAM, STOCK_VALUES, VLM
+from pipeline.common.config import EMPTY_IS_COMPLIANT, FEATURES, LABELS, PLANOGRAM, SENSEI_LABELS, STOCK_VALUES, VLM
 from pipeline.common.parallel import pmap
 from pipeline.common.planogram import load_planogram
 from pipeline.decide.decide import (
@@ -165,7 +165,7 @@ def restrict(features: dict, vlm: dict, allowed: tuple[str, ...]) -> tuple[dict,
 
 def lofo_predictions(
     labels: dict, features: dict, vlm: dict, planogram: dict, allowed: tuple[str, ...] = SOURCES,
-    probs: dict | None = None, low: dict | None = None, observed: dict | None = None,
+    probs: dict | None = None, low: dict | None = None, observed: dict | None = None, only: dict | None = None,
 ) -> dict:
     """Submission-format predictions for every labelled frame, each made with parameters fitted without it.
     probs, if given, is filled with {(cam, filename, area_id): p_stock} for log-loss; low with the low_confidence flag."""
@@ -175,11 +175,13 @@ def lofo_predictions(
     if len(frames) < 2:
         raise SystemExit(f"LOFO needs at least 2 labelled frames, got {len(frames)}")
     frame_of = np.array([frames.index(f) for f in t["frame"]])
+    # only: predict just these frames ({cam: {filename: ...}}), still fitting on every other labelled frame
+    todo = [i for i, (c, f) in enumerate(frames) if only is None or f in only.get(c, {})]
     def held_out(i: int) -> dict:
         return decide_frames([frames[i]], planogram, features, vlm, fit(t, np.flatnonzero(frame_of != i), allowed))
 
     pred: dict = {}
-    for rows in pmap(held_out, range(len(frames))):  # one process per held-out frame, results in frame order
+    for rows in pmap(held_out, todo):  # one process per held-out frame, results in frame order
         if probs is not None:
             probs.update({(c, f, a): r["p_stock"] for c, fs in rows.items() for f, areas in fs.items() for a, r in areas.items()})
         if low is not None:
@@ -310,12 +312,20 @@ if __name__ == "__main__":
     ap.add_argument("--forward", action="store_true", help="LOFO with kNN and temporal from earlier frames only")
     ap.add_argument("--gate", action="store_true", help="no-VLM LOFO split into confident vs queued areas")
     ap.add_argument("--params", type=Path, default=PARAMS_PATH)
+    ap.add_argument("--eval", type=Path, default=SENSEI_LABELS,
+                    help="score only the labelled frames of this file (default Sensei's validation set); every label still trains")
     args = ap.parse_args()
 
     labels, features, vlm = _clean_labels(_load(args.labels)), _load(args.features), _load(args.vlm)
     planogram = load_planogram(args.planogram)
     n_areas = sum(len(a) for fs in labels.values() for a in fs.values())
     print(f"{n_areas} labelled areas in {sum(len(fs) for fs in labels.values())} frames")
+    eval_frames = _load(args.eval)
+    gt = {c: {f: a for f, a in fs.items() if f in eval_frames.get(c, {})} for c, fs in labels.items()} if eval_frames else labels
+    gt = {c: fs for c, fs in gt.items() if fs}
+    only = gt if eval_frames else None
+    print(f"scored on {sum(len(a) for fs in gt.values() for a in fs.values())} areas in {sum(len(fs) for fs in gt.values())} frames"
+          f" ({args.eval.name if eval_frames else 'every label'}), each predicted without its own frame")
 
     if args.forward:
         for name, causal in (("LOFO (both sides)", False), ("forward in time", True)):
@@ -323,18 +333,18 @@ if __name__ == "__main__":
             print(f"== {name}")
             for src, allowed in (("prior only", ()), ("kNN only", ("knn",)), ("temporal only", ("temporal",)), ("kNN + temporal", ("knn", "temporal")), ("gb only", ("gb",)), ("kNN + gb + temporal", NO_VLM)):
                 probs: dict = {}
-                print(_row(src, lofo_predictions(labels, feats, vlm, planogram, allowed, probs), labels, probs))
+                print(_row(src, lofo_predictions(labels, feats, vlm, planogram, allowed, probs, only=only), gt, probs))
             low: dict = {}
             probs: dict = {}
             observed: dict = {}
-            fused = lofo_predictions(labels, feats, vlm, planogram, NO_VLM, probs=probs, low=low, observed=observed)
-            print(gate_report(fused, labels, low))
-            print(product_report(fused, labels, observed))
+            fused = lofo_predictions(labels, feats, vlm, planogram, NO_VLM, probs=probs, low=low, observed=observed, only=only)
+            print(gate_report(fused, gt, low))
+            print(product_report(fused, gt, observed))
             if causal:
-                kt = lofo_predictions(labels, feats, vlm, planogram, ("knn", "temporal"))
-                m, lo, hi = paired_bootstrap(kt, fused, labels)
+                kt = lofo_predictions(labels, feats, vlm, planogram, ("knn", "temporal"), only=only)
+                m, lo, hi = paired_bootstrap(kt, fused, gt)
                 print(f"kNN+gb+temporal minus kNN+temporal: {m:+.3f} pts/area, 95% frame-bootstrap [{lo:+.3f}, {hi:+.3f}]")
-                print(f"{review_list(probs, labels, Path('out/label_review.txt'))} labels flagged for review -> out/label_review.txt")
+                print(f"{review_list(probs, gt, Path('out/label_review.txt'))} labels flagged for review -> out/label_review.txt")
     elif args.fit:
         # Fit on forward-in-time features (what an evening validation frame sees), for the local sources only: the VLM
         # keys (gemini weight, platt, knn_wrong_weight, gate) stay as committed, there are no VLM answers to fit them on.
@@ -350,8 +360,8 @@ if __name__ == "__main__":
         print(f"wrote {args.params}: {json.dumps(params)}")
     elif args.gate:
         low: dict = {}
-        pred = lofo_predictions(labels, features, vlm, planogram, NO_VLM, low=low)
-        print(gate_report(pred, labels, low))
+        pred = lofo_predictions(labels, features, vlm, planogram, NO_VLM, low=low, only=only)
+        print(gate_report(pred, gt, low))
     else:
         sets = {"v1 (all)": SOURCES}
         if args.ablation:
@@ -359,4 +369,4 @@ if __name__ == "__main__":
                     "no vlm": NO_VLM, "no vlm, no temporal": ("knn", "probe"), **sets}
         for name, allowed in sets.items():
             probs: dict = {}
-            print(_row(name, lofo_predictions(labels, features, vlm, planogram, allowed, probs), labels, probs))
+            print(_row(name, lofo_predictions(labels, features, vlm, planogram, allowed, probs, only=only), gt, probs))
