@@ -342,7 +342,10 @@ if __name__ == "__main__":
         fitted = fit(t, np.arange(len(t["T"])), NO_VLM)
         params = load_params(args.params)
         params.update({k: fitted[k] for k in ("fallback_p", "stock_bias", "stock_bias_late", "temporal_below", "odds")})
-        params["weights"].update({s: fitted["weights"][s] for s in NO_VLM})
+        # The fusion is a weighted average, so only weight ratios matter: rescale the fitted local weights to the committed
+        # scale, else a fit of (2, 2) silently halves the committed gemini weight relative to them.
+        scale = max(params["weights"].get(s, 0.0) for s in NO_VLM) / max(max(fitted["weights"][s] for s in NO_VLM), 1e-12)
+        params["weights"].update({s: round(fitted["weights"][s] * (scale or 1.0), 4) for s in NO_VLM})
         args.params.write_text(json.dumps(params, indent=1) + "\n")
         print(f"wrote {args.params}: {json.dumps(params)}")
     elif args.gate:
