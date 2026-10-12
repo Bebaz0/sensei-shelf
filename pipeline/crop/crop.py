@@ -12,7 +12,7 @@ import cv2
 import numpy as np
 
 from pipeline.common.config import (
-    CROPS_DIR, CROPS_INDEX, CTX_FILL, CTX_OUTLINE, CTX_PAD, FRAME_SIZE, IMAGES_DIR, PLANOGRAM, QA_DIR, ROOT, RUN_FRAMES,
+    CROPS_DIR, CROPS_INDEX, CTX_FILL, CTX_OUTLINE, CTX_PAD, FRAME_SIZE, IMAGES_DIR, PLANOGRAM, QA_DIR, ROOT, RUN_FRAMES, TRAIN_IMAGE_DIRS,
     WARP_SIZE,
 )
 from pipeline.common.images import list_images, load_image
@@ -93,14 +93,22 @@ def run(
     found in images_dir, including any that failed to crop, so `decide` still outputs them.
     """
     planogram = load_planogram(planogram_path)
-    frames = list_images(images_dir)
+    # The train run (default folder, no append) also crops the other labelled folders of TRAIN_IMAGE_DIRS.
+    dirs = [images_dir]
+    if not append and Path(images_dir) == IMAGES_DIR:
+        dirs += [d for d in TRAIN_IMAGE_DIRS if d != IMAGES_DIR and d.is_dir()]
+    source: dict[tuple[str, str], Path] = {}
+    for d in dirs:
+        for frame in list_images(d):
+            source.setdefault(frame, d)
+    frames = sorted(source)
     index = json.loads(index_path.read_text()) if append and index_path.exists() else {}
 
     done: dict[str, list[str]] = {}
     failed = 0
     for camera_id, filename in frames:
         try:
-            img = load_image(camera_id, filename, images_dir)
+            img = load_image(camera_id, filename, source[(camera_id, filename)])
             if (img.shape[1], img.shape[0]) != FRAME_SIZE:  # planogram coordinates assume FRAME_SIZE
                 print(f"WARNING {camera_id}/{filename} is {img.shape[1]}x{img.shape[0]}, resized to {FRAME_SIZE}")
                 img = cv2.resize(img, FRAME_SIZE, interpolation=cv2.INTER_AREA)

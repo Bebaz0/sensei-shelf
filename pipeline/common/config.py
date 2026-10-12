@@ -8,6 +8,10 @@ PLANOGRAM = DATA / "planogram.json"
 PRODUCTS_EN = DATA / "products_en.json"
 # <camera_id>/<unix_ts>.jpg: train and test are mixed, there are no split folders.
 IMAGES_DIR = DATA / "Frutas e Legumes (train & test)"
+# Sensei's validation set (26 annotated frames, labels/sensei_validation.json), released after the competition and used
+# as extra labelled training frames. The train run crops every folder here that exists.
+VALIDATION_IMAGES_DIR = DATA / "Frutas e Legumes (validation)"
+TRAIN_IMAGE_DIRS = (IMAGES_DIR, VALIDATION_IMAGES_DIR)
 
 OUT = ROOT / "out"
 RUN_FRAMES = OUT / "run_frames.json"
@@ -21,6 +25,8 @@ RESULTS = OUT / "results.json"
 SUBMISSION = OUT / "submission.json"
 
 LABELS = ROOT / "labels" / "dev.json"
+# Sensei's own annotations of the validation frames: the evaluation set of lofo.py (scored held out, frame by frame).
+SENSEI_LABELS = ROOT / "labels" / "sensei_validation.json"
 CALIBRATION = ROOT / "labels" / "calibration.txt"
 
 STOCK_VALUES = {"empty": 0.0, "half": 0.5, "full": 1.0}

@@ -14,11 +14,11 @@ DEV_JSON = LABELS_DIR / "dev.json"
 _STOCK = {"empty": 0.0, "half": 0.5, "full": 1.0}
 
 
-def _load_label_files(labels_dir: Path) -> dict[str, dict]:
-    """Return {labeller_name: data} for every <name>.json except dev.json."""
+def _load_label_files(labels_dir: Path, only: list[str] | None = None) -> dict[str, dict]:
+    """Return {labeller_name: data} for every <name>.json except dev.json (only the named ones when `only` is given)."""
     result = {}
     for p in sorted(labels_dir.glob("*.json")):
-        if p.name == "dev.json":
+        if p.name == "dev.json" or (only is not None and p.stem not in only):
             continue
         try:
             result[p.stem] = json.loads(p.read_text())
@@ -37,9 +37,9 @@ def _resolve(areas: list[dict]) -> dict:
     return {**pick, "planogram_compliant": best_comp, "stock_value": best_stock}
 
 
-def merge(labels_dir: Path = LABELS_DIR, out_path: Path = DEV_JSON) -> dict:
-    """Merge all labeller files into dev.json; return the merged dict."""
-    labellers = _load_label_files(labels_dir)
+def merge(labels_dir: Path = LABELS_DIR, out_path: Path = DEV_JSON, only: list[str] | None = None) -> dict:
+    """Merge all labeller files (or only the named ones) into dev.json; return the merged dict."""
+    labellers = _load_label_files(labels_dir, only)
     if not labellers:
         print("No label files found.", file=sys.stderr)
         merged: dict = {}
@@ -109,9 +109,10 @@ if __name__ == "__main__":
     ap.add_argument("--labels-dir", type=Path, default=LABELS_DIR)
     ap.add_argument("--out", type=Path, default=DEV_JSON)
     ap.add_argument("--agreement", action="store_true", help="Report disagreements instead of merging")
+    ap.add_argument("--only", help="comma-separated label file names to merge, e.g. andre,sensei_validation")
     args = ap.parse_args()
 
     if args.agreement:
         agreement(args.labels_dir)
     else:
-        merge(args.labels_dir, args.out)
+        merge(args.labels_dir, args.out, args.only.split(",") if args.only else None)

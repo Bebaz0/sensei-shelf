@@ -18,7 +18,7 @@ import cv2
 import numpy as np
 
 from pipeline.common.config import (
-    CALIBRATION, CROPS_INDEX, IMAGES_DIR, PLANOGRAM, ROOT, RUN_FRAMES, STOCK_VALUES,
+    CALIBRATION, CROPS_INDEX, PLANOGRAM, ROOT, RUN_FRAMES, STOCK_VALUES, TRAIN_IMAGE_DIRS,
 )
 from pipeline.common.planogram import area_polygon, load_planogram
 from pipeline.crop.qa import frame_time
@@ -72,7 +72,7 @@ def _unique_products(areas: list[dict]) -> list[dict]:
 
 
 def _load_frame(cam: str, filename: str) -> np.ndarray | None:
-    img = cv2.imread(str(IMAGES_DIR / cam / filename))
+    img = next((im for d in TRAIN_IMAGE_DIRS if (im := cv2.imread(str(d / cam / filename))) is not None), None)
     if img is None:
         return None
     if (img.shape[1], img.shape[0]) != (1280, 720):

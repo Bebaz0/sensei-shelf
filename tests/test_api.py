@@ -68,7 +68,7 @@ def client(tmp_path, monkeypatch):
     Image.new("RGB", (120, 80), (200, 100, 50)).save(frames_dir / "6215" / "f.jpg", "JPEG")
     Image.new("RGBA", (64, 64), (0, 200, 0, 255)).save(crops_dir / "6215" / "f_6215_1_ctx.png")
 
-    monkeypatch.setattr(dashboard, "IMAGES_DIR", frames_dir)
+    monkeypatch.setattr(dashboard, "TRAIN_IMAGE_DIRS", (frames_dir,))
     monkeypatch.setattr(dashboard, "CROPS_DIR", crops_dir)
     monkeypatch.setattr(dashboard, "CACHE_DIR", cache_dir)
 

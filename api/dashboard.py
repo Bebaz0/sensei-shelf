@@ -4,7 +4,7 @@ from pathlib import Path
 from fastapi import APIRouter, HTTPException, Query
 from fastapi.responses import FileResponse
 
-from pipeline.common.config import CROPS_DIR, IMAGES_DIR, OUT, RESULTS
+from pipeline.common.config import CROPS_DIR, OUT, RESULTS, TRAIN_IMAGE_DIRS
 
 from api.cache import load_json_cached
 from api.thumbs import thumbnail_cached
@@ -41,7 +41,7 @@ def results() -> dict:
 
 @router.get("/frames/{cam}/{filename}")
 def frame(cam: str, filename: str, max: int | None = Query(default=None, ge=16, le=4096)) -> FileResponse:
-    src = IMAGES_DIR / cam / filename
+    src = next((d / cam / filename for d in TRAIN_IMAGE_DIRS if (d / cam / filename).is_file()), TRAIN_IMAGE_DIRS[0] / cam / filename)
     if not src.is_file():
         raise HTTPException(status_code=404, detail=f"frame not found: {cam}/{filename}")
     if max is None:
