@@ -647,6 +647,110 @@
         "stock_level": "full",
         "stock_value": 1.0
       }
+    },
+    "1751052241.jpg": {
+      "6215_1": {
+        "planogram_compliant": true,
+        "stock_level": "half",
+        "stock_value": 0.5
+      },
+      "6215_10": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6215_2": {
+        "planogram_compliant": true,
+        "stock_level": "half",
+        "stock_value": 0.5
+      },
+      "6215_4": {
+        "planogram_compliant": true,
+        "stock_level": "half",
+        "stock_value": 0.5
+      },
+      "6215_6": {
+        "planogram_compliant": true,
+        "stock_level": "half",
+        "stock_value": 0.5
+      },
+      "6215_8": {
+        "planogram_compliant": true,
+        "stock_level": "empty",
+        "stock_value": 0
+      },
+      "6215_3": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6215_5": {
+        "planogram_compliant": true,
+        "stock_level": "empty",
+        "stock_value": 0
+      },
+      "6215_7": {
+        "planogram_compliant": true,
+        "stock_level": "empty",
+        "stock_value": 0
+      },
+      "6215_9": {
+        "planogram_compliant": false,
+        "stock_level": "half",
+        "stock_value": 0.5
+      }
+    },
+    "1751056120.jpg": {
+      "6215_1": {
+        "planogram_compliant": true,
+        "stock_level": "half",
+        "stock_value": 0.5
+      },
+      "6215_10": {
+        "planogram_compliant": true,
+        "stock_level": "half",
+        "stock_value": 0.5
+      },
+      "6215_2": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6215_4": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6215_6": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6215_8": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6215_3": {
+        "planogram_compliant": true,
+        "stock_level": "empty",
+        "stock_value": 0
+      },
+      "6215_5": {
+        "planogram_compliant": true,
+        "stock_level": "empty",
+        "stock_value": 0
+      },
+      "6215_7": {
+        "planogram_compliant": true,
+        "stock_level": "empty",
+        "stock_value": 0
+      },
+      "6215_9": {
+        "planogram_compliant": false,
+        "stock_level": "full",
+        "stock_value": 1
+      }
     }
   },
   "6371": {
@@ -1259,6 +1363,100 @@
         "planogram_compliant": true,
         "stock_level": "full",
         "stock_value": 1.0
+      }
+    },
+    "1751051964.jpg": {
+      "6371_1": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6371_6": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6371_7": {
+        "planogram_compliant": true,
+        "stock_level": "half",
+        "stock_value": 0.5
+      },
+      "6371_2": {
+        "planogram_compliant": true,
+        "stock_level": "half",
+        "stock_value": 0.5
+      },
+      "6371_4": {
+        "planogram_compliant": true,
+        "stock_level": "half",
+        "stock_value": 0.5
+      },
+      "6371_8": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6371_3": {
+        "planogram_compliant": true,
+        "stock_level": "half",
+        "stock_value": 0.5
+      },
+      "6371_5": {
+        "planogram_compliant": true,
+        "stock_level": "half",
+        "stock_value": 0.5
+      },
+      "6371_9": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      }
+    },
+    "1751056144.jpg": {
+      "6371_1": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6371_6": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6371_7": {
+        "planogram_compliant": true,
+        "stock_level": "half",
+        "stock_value": 0.5
+      },
+      "6371_2": {
+        "planogram_compliant": true,
+        "stock_level": "half",
+        "stock_value": 0.5
+      },
+      "6371_4": {
+        "planogram_compliant": true,
+        "stock_level": "half",
+        "stock_value": 0.5
+      },
+      "6371_8": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6371_3": {
+        "planogram_compliant": true,
+        "stock_level": "half",
+        "stock_value": 0.5
+      },
+      "6371_5": {
+        "planogram_compliant": true,
+        "stock_level": "half",
+        "stock_value": 0.5
+      },
+      "6371_9": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
       }
     }
   },
@@ -2067,6 +2265,130 @@
         "planogram_compliant": true,
         "stock_level": "full",
         "stock_value": 1.0
+      }
+    },
+    "1751052130.jpg": {
+      "6373_1": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6373_6": {
+        "planogram_compliant": true,
+        "stock_level": "half",
+        "stock_value": 0.5
+      },
+      "6373_9": {
+        "planogram_compliant": true,
+        "stock_level": "half",
+        "stock_value": 0.5
+      },
+      "6373_12": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6373_3": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6373_4": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6373_7": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6373_10": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6373_2": {
+        "planogram_compliant": true,
+        "stock_level": "empty",
+        "stock_value": 0
+      },
+      "6373_5": {
+        "planogram_compliant": true,
+        "stock_level": "half",
+        "stock_value": 0.5
+      },
+      "6373_8": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6373_11": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      }
+    },
+    "1751055879.jpg": {
+      "6373_1": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6373_6": {
+        "planogram_compliant": true,
+        "stock_level": "half",
+        "stock_value": 0.5
+      },
+      "6373_9": {
+        "planogram_compliant": true,
+        "stock_level": "half",
+        "stock_value": 0.5
+      },
+      "6373_12": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6373_3": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6373_4": {
+        "planogram_compliant": true,
+        "stock_level": "half",
+        "stock_value": 0.5
+      },
+      "6373_7": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6373_10": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6373_2": {
+        "planogram_compliant": true,
+        "stock_level": "empty",
+        "stock_value": 0
+      },
+      "6373_5": {
+        "planogram_compliant": true,
+        "stock_level": "half",
+        "stock_value": 0.5
+      },
+      "6373_8": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6373_11": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
       }
     }
   },
@@ -3163,6 +3485,170 @@
         "stock_level": "full",
         "stock_value": 1.0
       }
+    },
+    "1751052751.jpg": {
+      "6376_2": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6376_10": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6376_14": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6376_12": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6376_1": {
+        "planogram_compliant": true,
+        "stock_level": "half",
+        "stock_value": 0.5
+      },
+      "6376_6": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6376_15": {
+        "planogram_compliant": true,
+        "stock_level": "half",
+        "stock_value": 0.5
+      },
+      "6376_11": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6376_3": {
+        "planogram_compliant": true,
+        "stock_level": "empty",
+        "stock_value": 0
+      },
+      "6376_4": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6376_5": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6376_7": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6376_8": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6376_9": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6376_16": {
+        "planogram_compliant": true,
+        "stock_level": "half",
+        "stock_value": 0.5
+      },
+      "6376_13": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      }
+    },
+    "1751056833.jpg": {
+      "6376_2": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6376_10": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6376_14": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6376_12": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6376_1": {
+        "planogram_compliant": true,
+        "stock_level": "half",
+        "stock_value": 0.5
+      },
+      "6376_6": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6376_15": {
+        "planogram_compliant": true,
+        "stock_level": "half",
+        "stock_value": 0.5
+      },
+      "6376_11": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6376_3": {
+        "planogram_compliant": true,
+        "stock_level": "empty",
+        "stock_value": 0
+      },
+      "6376_4": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6376_5": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6376_7": {
+        "planogram_compliant": true,
+        "stock_level": "empty",
+        "stock_value": 0
+      },
+      "6376_8": {
+        "planogram_compliant": true,
+        "stock_level": "half",
+        "stock_value": 0.5
+      },
+      "6376_9": {
+        "planogram_compliant": true,
+        "stock_level": "half",
+        "stock_value": 0.5
+      },
+      "6376_16": {
+        "planogram_compliant": true,
+        "stock_level": "half",
+        "stock_value": 0.5
+      },
+      "6376_13": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      }
     }
   },
   "6383": {
@@ -3725,6 +4211,53 @@
         "stock_value": 1.0
       },
       "6383_9": {
+        "planogram_compliant": true,
+        "stock_level": "half",
+        "stock_value": 0.5
+      }
+    },
+    "1751052990.jpg": {
+      "6383_5": {
+        "planogram_compliant": true,
+        "stock_level": "half",
+        "stock_value": 0.5
+      },
+      "6383_6": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6383_7": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6383_3": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6383_4": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6383_9": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6383_8": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6383_1": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6383_2": {
         "planogram_compliant": true,
         "stock_level": "half",
         "stock_value": 0.5
@@ -4389,6 +4922,100 @@
         "stock_level": "full",
         "stock_value": 1.0
       }
+    },
+    "1751055476.jpg": {
+      "6385_2": {
+        "planogram_compliant": true,
+        "stock_level": "half",
+        "stock_value": 0.5
+      },
+      "6385_6": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6385_7": {
+        "planogram_compliant": true,
+        "stock_level": "half",
+        "stock_value": 0.5
+      },
+      "6385_1": {
+        "planogram_compliant": true,
+        "stock_level": "half",
+        "stock_value": 0.5
+      },
+      "6385_5": {
+        "planogram_compliant": true,
+        "stock_level": "half",
+        "stock_value": 0.5
+      },
+      "6385_9": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6385_3": {
+        "planogram_compliant": true,
+        "stock_level": "half",
+        "stock_value": 0.5
+      },
+      "6385_4": {
+        "planogram_compliant": true,
+        "stock_level": "empty",
+        "stock_value": 0
+      },
+      "6385_8": {
+        "planogram_compliant": true,
+        "stock_level": "empty",
+        "stock_value": 0
+      }
+    },
+    "1751462198.jpg": {
+      "6385_2": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6385_6": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6385_7": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6385_1": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6385_5": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6385_9": {
+        "planogram_compliant": true,
+        "stock_level": "half",
+        "stock_value": 0.5
+      },
+      "6385_3": {
+        "planogram_compliant": true,
+        "stock_level": "half",
+        "stock_value": 0.5
+      },
+      "6385_4": {
+        "planogram_compliant": true,
+        "stock_level": "half",
+        "stock_value": 0.5
+      },
+      "6385_8": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      }
     }
   },
   "6386": {
@@ -4774,6 +5401,38 @@
         "planogram_compliant": true,
         "stock_level": "full",
         "stock_value": 1.0
+      }
+    },
+    "1751052239.jpg": {
+      "6386_4": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6386_3": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6386_1": {
+        "planogram_compliant": true,
+        "stock_level": "half",
+        "stock_value": 0.5
+      },
+      "6386_2": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6386_5": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6386_6": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
       }
     }
   },
@@ -5594,6 +6253,140 @@
         "stock_value": 1.0,
         "observed_product_id": "19127"
       }
+    },
+    "1751051987.jpg": {
+      "6443_1": {
+        "planogram_compliant": true,
+        "stock_level": "half",
+        "stock_value": 0.5
+      },
+      "6443_13": {
+        "planogram_compliant": true,
+        "stock_level": "half",
+        "stock_value": 0.5
+      },
+      "6443_2": {
+        "planogram_compliant": true,
+        "stock_level": "empty",
+        "stock_value": 0
+      },
+      "6443_6": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6443_8": {
+        "planogram_compliant": true,
+        "stock_level": "half",
+        "stock_value": 0.5
+      },
+      "6443_11": {
+        "planogram_compliant": true,
+        "stock_level": "half",
+        "stock_value": 0.5
+      },
+      "6443_3": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6443_5": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6443_4": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6443_7": {
+        "planogram_compliant": true,
+        "stock_level": "half",
+        "stock_value": 0.5
+      },
+      "6443_10": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6443_9": {
+        "planogram_compliant": true,
+        "stock_level": "half",
+        "stock_value": 0.5
+      },
+      "6443_12": {
+        "planogram_compliant": true,
+        "stock_level": "half",
+        "stock_value": 0.5
+      }
+    },
+    "1751055902.jpg": {
+      "6443_1": {
+        "planogram_compliant": true,
+        "stock_level": "half",
+        "stock_value": 0.5
+      },
+      "6443_13": {
+        "planogram_compliant": true,
+        "stock_level": "half",
+        "stock_value": 0.5
+      },
+      "6443_2": {
+        "planogram_compliant": true,
+        "stock_level": "empty",
+        "stock_value": 0
+      },
+      "6443_6": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6443_8": {
+        "planogram_compliant": true,
+        "stock_level": "half",
+        "stock_value": 0.5
+      },
+      "6443_11": {
+        "planogram_compliant": true,
+        "stock_level": "half",
+        "stock_value": 0.5
+      },
+      "6443_3": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6443_5": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6443_4": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6443_7": {
+        "planogram_compliant": true,
+        "stock_level": "half",
+        "stock_value": 0.5
+      },
+      "6443_10": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6443_9": {
+        "planogram_compliant": true,
+        "stock_level": "half",
+        "stock_value": 0.5
+      },
+      "6443_12": {
+        "planogram_compliant": true,
+        "stock_level": "half",
+        "stock_value": 0.5
+      }
     }
   },
   "6462": {
@@ -6209,6 +7002,100 @@
         "planogram_compliant": true,
         "stock_level": "half",
         "stock_value": 0.5
+      }
+    },
+    "1751051664.jpg": {
+      "6462_3": {
+        "planogram_compliant": true,
+        "stock_level": "half",
+        "stock_value": 0.5
+      },
+      "6462_7": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6462_4": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6462_2": {
+        "planogram_compliant": true,
+        "stock_level": "half",
+        "stock_value": 0.5
+      },
+      "6462_9": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6462_5": {
+        "planogram_compliant": true,
+        "stock_level": "half",
+        "stock_value": 0.5
+      },
+      "6462_1": {
+        "planogram_compliant": true,
+        "stock_level": "half",
+        "stock_value": 0.5
+      },
+      "6462_8": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6462_6": {
+        "planogram_compliant": true,
+        "stock_level": "half",
+        "stock_value": 0.5
+      }
+    },
+    "1751055308.jpg": {
+      "6462_3": {
+        "planogram_compliant": true,
+        "stock_level": "half",
+        "stock_value": 0.5
+      },
+      "6462_7": {
+        "planogram_compliant": true,
+        "stock_level": "empty",
+        "stock_value": 0
+      },
+      "6462_4": {
+        "planogram_compliant": true,
+        "stock_level": "empty",
+        "stock_value": 0
+      },
+      "6462_2": {
+        "planogram_compliant": true,
+        "stock_level": "half",
+        "stock_value": 0.5
+      },
+      "6462_9": {
+        "planogram_compliant": true,
+        "stock_level": "empty",
+        "stock_value": 0
+      },
+      "6462_5": {
+        "planogram_compliant": true,
+        "stock_level": "empty",
+        "stock_value": 0
+      },
+      "6462_1": {
+        "planogram_compliant": true,
+        "stock_level": "empty",
+        "stock_value": 0
+      },
+      "6462_8": {
+        "planogram_compliant": true,
+        "stock_level": "empty",
+        "stock_value": 0
+      },
+      "6462_6": {
+        "planogram_compliant": true,
+        "stock_level": "empty",
+        "stock_value": 0
       }
     }
   },
@@ -7316,6 +8203,170 @@
         "stock_level": "full",
         "stock_value": 1.0
       }
+    },
+    "1751053190.jpg": {
+      "6468_1": {
+        "planogram_compliant": true,
+        "stock_level": "half",
+        "stock_value": 0.5
+      },
+      "6468_8": {
+        "planogram_compliant": true,
+        "stock_level": "half",
+        "stock_value": 0.5
+      },
+      "6468_7": {
+        "planogram_compliant": true,
+        "stock_level": "half",
+        "stock_value": 0.5
+      },
+      "6468_9": {
+        "planogram_compliant": true,
+        "stock_level": "half",
+        "stock_value": 0.5
+      },
+      "6468_15": {
+        "planogram_compliant": true,
+        "stock_level": "half",
+        "stock_value": 0.5
+      },
+      "6468_3": {
+        "planogram_compliant": true,
+        "stock_level": "half",
+        "stock_value": 0.5
+      },
+      "6468_5": {
+        "planogram_compliant": true,
+        "stock_level": "half",
+        "stock_value": 0.5
+      },
+      "6468_4": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6468_10": {
+        "planogram_compliant": true,
+        "stock_level": "empty",
+        "stock_value": 0
+      },
+      "6468_16": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6468_2": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6468_6": {
+        "planogram_compliant": true,
+        "stock_level": "half",
+        "stock_value": 0.5
+      },
+      "6468_11": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6468_12": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6468_13": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6468_14": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      }
+    },
+    "1751057407.jpg": {
+      "6468_1": {
+        "planogram_compliant": true,
+        "stock_level": "half",
+        "stock_value": 0.5
+      },
+      "6468_8": {
+        "planogram_compliant": true,
+        "stock_level": "half",
+        "stock_value": 0.5
+      },
+      "6468_7": {
+        "planogram_compliant": true,
+        "stock_level": "half",
+        "stock_value": 0.5
+      },
+      "6468_9": {
+        "planogram_compliant": true,
+        "stock_level": "half",
+        "stock_value": 0.5
+      },
+      "6468_15": {
+        "planogram_compliant": true,
+        "stock_level": "half",
+        "stock_value": 0.5
+      },
+      "6468_3": {
+        "planogram_compliant": true,
+        "stock_level": "half",
+        "stock_value": 0.5
+      },
+      "6468_5": {
+        "planogram_compliant": true,
+        "stock_level": "half",
+        "stock_value": 0.5
+      },
+      "6468_4": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6468_10": {
+        "planogram_compliant": true,
+        "stock_level": "empty",
+        "stock_value": 0
+      },
+      "6468_16": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6468_2": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6468_6": {
+        "planogram_compliant": true,
+        "stock_level": "half",
+        "stock_value": 0.5
+      },
+      "6468_11": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6468_12": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6468_13": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6468_14": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      }
     }
   },
   "6491": {
@@ -7994,6 +9045,110 @@
         "stock_level": "half",
         "stock_value": 0.5
       }
+    },
+    "1751052617.jpg": {
+      "6491_1": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6491_2": {
+        "planogram_compliant": true,
+        "stock_level": "half",
+        "stock_value": 0.5
+      },
+      "6491_3": {
+        "planogram_compliant": true,
+        "stock_level": "half",
+        "stock_value": 0.5
+      },
+      "6491_5": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6491_7": {
+        "planogram_compliant": true,
+        "stock_level": "half",
+        "stock_value": 0.5
+      },
+      "6491_9": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6491_4": {
+        "planogram_compliant": true,
+        "stock_level": "half",
+        "stock_value": 0.5
+      },
+      "6491_6": {
+        "planogram_compliant": true,
+        "stock_level": "half",
+        "stock_value": 0.5
+      },
+      "6491_8": {
+        "planogram_compliant": true,
+        "stock_level": "half",
+        "stock_value": 0.5
+      },
+      "6491_10": {
+        "planogram_compliant": true,
+        "stock_level": "half",
+        "stock_value": 0.5
+      }
+    },
+    "1751056408.jpg": {
+      "6491_1": {
+        "planogram_compliant": true,
+        "stock_level": "empty",
+        "stock_value": 0
+      },
+      "6491_2": {
+        "planogram_compliant": true,
+        "stock_level": "empty",
+        "stock_value": 0
+      },
+      "6491_3": {
+        "planogram_compliant": true,
+        "stock_level": "empty",
+        "stock_value": 0
+      },
+      "6491_5": {
+        "planogram_compliant": true,
+        "stock_level": "empty",
+        "stock_value": 0
+      },
+      "6491_7": {
+        "planogram_compliant": true,
+        "stock_level": "empty",
+        "stock_value": 0
+      },
+      "6491_9": {
+        "planogram_compliant": true,
+        "stock_level": "empty",
+        "stock_value": 0
+      },
+      "6491_4": {
+        "planogram_compliant": true,
+        "stock_level": "empty",
+        "stock_value": 0
+      },
+      "6491_6": {
+        "planogram_compliant": true,
+        "stock_level": "empty",
+        "stock_value": 0
+      },
+      "6491_8": {
+        "planogram_compliant": true,
+        "stock_level": "empty",
+        "stock_value": 0
+      },
+      "6491_10": {
+        "planogram_compliant": true,
+        "stock_level": "empty",
+        "stock_value": 0
+      }
     }
   },
   "6591": {
@@ -8671,6 +9826,110 @@
         "planogram_compliant": true,
         "stock_level": "full",
         "stock_value": 1.0
+      }
+    },
+    "1751052250.jpg": {
+      "6591_1": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6591_6": {
+        "planogram_compliant": true,
+        "stock_level": "empty",
+        "stock_value": 0
+      },
+      "6591_8": {
+        "planogram_compliant": true,
+        "stock_level": "half",
+        "stock_value": 0.5
+      },
+      "6591_7": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6591_3": {
+        "planogram_compliant": false,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6591_5": {
+        "planogram_compliant": true,
+        "stock_level": "half",
+        "stock_value": 0.5
+      },
+      "6591_9": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6591_2": {
+        "planogram_compliant": true,
+        "stock_level": "half",
+        "stock_value": 0.5
+      },
+      "6591_4": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6591_10": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      }
+    },
+    "1751056178.jpg": {
+      "6591_1": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6591_6": {
+        "planogram_compliant": true,
+        "stock_level": "empty",
+        "stock_value": 0
+      },
+      "6591_8": {
+        "planogram_compliant": true,
+        "stock_level": "half",
+        "stock_value": 0.5
+      },
+      "6591_7": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6591_3": {
+        "planogram_compliant": false,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6591_5": {
+        "planogram_compliant": true,
+        "stock_level": "half",
+        "stock_value": 0.5
+      },
+      "6591_9": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6591_2": {
+        "planogram_compliant": true,
+        "stock_level": "half",
+        "stock_value": 0.5
+      },
+      "6591_4": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6591_10": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
       }
     }
   },
@@ -9553,6 +10812,140 @@
         "stock_level": "full",
         "stock_value": 1.0
       }
+    },
+    "1751053743.jpg": {
+      "6594_1": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6594_4": {
+        "planogram_compliant": true,
+        "stock_level": "half",
+        "stock_value": 0.5
+      },
+      "6594_10": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6594_8": {
+        "planogram_compliant": true,
+        "stock_level": "half",
+        "stock_value": 0.5
+      },
+      "6594_2": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6594_6": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6594_11": {
+        "planogram_compliant": true,
+        "stock_level": "half",
+        "stock_value": 0.5
+      },
+      "6594_12": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6594_9": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6594_3": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6594_5": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6594_13": {
+        "planogram_compliant": true,
+        "stock_level": "half",
+        "stock_value": 0.5
+      },
+      "6594_7": {
+        "planogram_compliant": true,
+        "stock_level": "half",
+        "stock_value": 0.5
+      }
+    },
+    "1751057827.jpg": {
+      "6594_1": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6594_4": {
+        "planogram_compliant": true,
+        "stock_level": "half",
+        "stock_value": 0.5
+      },
+      "6594_10": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6594_8": {
+        "planogram_compliant": true,
+        "stock_level": "half",
+        "stock_value": 0.5
+      },
+      "6594_2": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6594_6": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6594_11": {
+        "planogram_compliant": true,
+        "stock_level": "half",
+        "stock_value": 0.5
+      },
+      "6594_12": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6594_9": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6594_3": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6594_5": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6594_13": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6594_7": {
+        "planogram_compliant": true,
+        "stock_level": "half",
+        "stock_value": 0.5
+      }
     }
   },
   "6781": {
@@ -10230,6 +11623,110 @@
         "planogram_compliant": true,
         "stock_level": "full",
         "stock_value": 1.0
+      }
+    },
+    "1751053569.jpg": {
+      "6781_1": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6781_10": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6781_3": {
+        "planogram_compliant": true,
+        "stock_level": "half",
+        "stock_value": 0.5
+      },
+      "6781_4": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6781_6": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6781_9": {
+        "planogram_compliant": true,
+        "stock_level": "half",
+        "stock_value": 0.5
+      },
+      "6781_2": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6781_5": {
+        "planogram_compliant": true,
+        "stock_level": "half",
+        "stock_value": 0.5
+      },
+      "6781_7": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6781_8": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      }
+    },
+    "1751057281.jpg": {
+      "6781_1": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6781_10": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6781_3": {
+        "planogram_compliant": true,
+        "stock_level": "half",
+        "stock_value": 0.5
+      },
+      "6781_4": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6781_6": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6781_9": {
+        "planogram_compliant": true,
+        "stock_level": "half",
+        "stock_value": 0.5
+      },
+      "6781_2": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6781_5": {
+        "planogram_compliant": true,
+        "stock_level": "half",
+        "stock_value": 0.5
+      },
+      "6781_7": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
+      },
+      "6781_8": {
+        "planogram_compliant": true,
+        "stock_level": "full",
+        "stock_value": 1
       }
     }
   }
