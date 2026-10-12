@@ -15,7 +15,8 @@ type AreaResult = {
 type ResultsFile = Record<string, Record<string, Record<string, AreaResult>>>
 
 // The page's view of it: per camera, the planogram areas plus every capture oldest first.
-export type Verdict = { planogram_compliant: boolean; stock_level: StockLevel; seen_product: string | null }
+// fill: expected stock value from the model's probabilities (empty 0, half 0.5, full 1), for the run-out estimate
+export type Verdict = { planogram_compliant: boolean; stock_level: StockLevel; seen_product: string | null; fill: number }
 export type Area = { area_id: string; product_name: string; polygon: [number, number][] }
 export type Capture = { image: string; ts: number; verdicts: Record<string, Verdict> }
 export type Camera = { areas: Area[]; captures: Capture[] }
@@ -48,6 +49,7 @@ export async function loadResults(): Promise<Results> {
                 planogram_compliant: a.pred.planogram_compliant,
                 stock_level: a.pred.stock_level,
                 seen_product: a.observed_product_id ? (PRODUCT_NAMES.get(a.observed_product_id) ?? a.observed_product_id) : null,
+                fill: a.p_stock ? 0.5 * a.p_stock.half + a.p_stock.full : a.pred.stock_value,
               },
             ]),
           ),

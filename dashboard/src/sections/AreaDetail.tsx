@@ -1,5 +1,6 @@
 import { cameraName, hm, pretty } from '../lib/format'
 import type { Camera } from '../lib/results'
+import { runsEmptyAt } from '../lib/runout'
 import { type Cell, LEVEL_INDEX, STATUS, type Status, statusOf } from '../lib/status'
 import { btn, Icon } from '../lib/ui'
 
@@ -24,6 +25,10 @@ export default function AreaDetail({ cam, camera, frame, cell, resolved, flagged
   const isLatest = frame === last
   const product = pretty(cell.area.product_name)
   const lit = cell.done ? 2 : LEVEL_INDEX[cell.v.stock_level]
+  // Only for a compliant area, from the captures up to the one shown (never the future)
+  const emptyAt = cell.v.planogram_compliant && !cell.done
+    ? runsEmptyAt(camera.captures.slice(0, frame + 1).map((c) => ({ ts: c.ts, fill: c.verdicts[id]?.fill ?? 1 })))
+    : null
 
   return (
     <div className="panel flex flex-col gap-[18px] rounded-[22px] border border-line bg-surface p-[22px]">
@@ -55,6 +60,12 @@ export default function AreaDetail({ cam, camera, frame, cell, resolved, flagged
         </dd>*/}
         <dt className="text-muted">Capture</dt>
         <dd className="mono">{hm(camera.captures[frame].ts)}</dd>
+        {emptyAt !== null && (
+          <>
+            <dt className="text-muted">Runs empty</dt>
+            <dd className="mono" title="Straight-line trend of this area since its last restock">~{hm(emptyAt)}</dd>
+          </>
+        )}
       </dl>
 
       <div>
